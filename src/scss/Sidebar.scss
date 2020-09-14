@@ -1,0 +1,143 @@
+
+
+.Sidebar {
+    position:fixed;
+    top:0; left:0;
+    width:15.625rem;
+    height:100vh;
+    
+    &__head {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position:relative;
+        padding:0.9375rem;
+        min-height:7.8125rem;
+        color:white;
+        background:$primary-color-emerald;
+    }
+    &__name {
+        display:block;
+        margin-bottom:0.625rem;
+        font-size: 1.5rem;
+        small {
+            font-size:0.6em;
+        }
+    }
+    &__latest {
+        font-size:0.75rem;
+        opacity:0.5;
+    }
+    &__memberNav {
+        font-size:0.8125rem;
+        .off {
+            display:none;
+        }
+        a {
+            display:inline-block;
+            position:relative; 
+            padding:0 0.9375rem;
+            font-weight:bold;
+            &.Sidebar__login {
+                padding-left:0;
+            }
+            &.SideBar__logout {
+                padding-left:0;
+                &:after {
+                    content:"";
+                    position:absolute;
+                    top:0; right:0;
+                    width:2px; height:100%;
+                    background:white;
+                }
+            }
+        }
+    }
+    &__close {
+        position:absolute;
+        bottom:2.1875rem; right:1.5625rem;
+    }
+    &__menu {
+        display:flex;
+        flex-direction:row;
+        min-height:85%;
+    }
+
+    &__mainMenu {
+        flex:1;
+        background:white; 
+        .mainMenu__list {
+            display:block;
+            padding:0.625rem 0.625rem;
+            &.on {
+                .mainMenu__link {
+                    background:$primary-color-emerald;
+                    b {
+                        color:white;
+                    }
+                }
+            }
+        }
+        .mainMenu__link {
+            display:block;
+            padding:0.625rem 0;
+            text-align:center;
+            border-radius:0.625rem;
+            transition:background 300ms;
+            .iconWrapper {
+                display:block; 
+                margin:0 auto 0.4375rem auto;
+            }
+            b {
+       
+                font-size:0.8125rem;
+                transition:color 300ms;
+            }
+            &:hover {
+                background:$primary-color-emerald;
+                b {
+                    color:white;
+                }
+            }
+        }
+    }
+
+    &__subMenu {
+        flex:2;
+        background:#eeeeee;
+        .subMenu__list {
+            padding-left:1.875rem;
+            border-bottom:1px solid #dbdbdb;
+        }
+        .subMenu__link {
+            display:flex;
+            align-items:center;
+            padding:0.9375rem 0;
+     
+            b {
+                margin-left:0.9375rem;
+                font-size:0.8125rem;
+            }
+        }
+    }
+
+}
+
+
+@media screen and (min-width:600px) {
+    
+
+}
+
+
+
+@media screen and (min-width:1024px) {
+    
+
+}
+
+
+
+@media screen and (min-width:1600px) {
+    
+}

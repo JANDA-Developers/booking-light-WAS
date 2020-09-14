@@ -1,0 +1,45 @@
+$header-bgcolor: #7ac3a6;
+$header-white-1:#fffeff;
+.header {
+    &__top {
+        position:relative;
+        height:2.8125rem;
+        color:$header-white-1;
+        background:$header-bgcolor;
+        border-bottom:1px solid #fbfbfb; 
+    }
+    &__version {
+        position:absolute;
+        right:1.875rem;
+        bottom:0.9375rem;
+    }
+    &__bottom {
+        position:relative;
+        height:5rem;
+        background:$header-bgcolor;
+        path {
+            fill:$header-white-1;
+        }
+    }
+    &__items {
+        position:absolute;
+        top:50%; right:1.875rem;
+        transform:translate(0, -50%);
+        .iconWrapper {
+            display:inline-block;
+            margin-right:1.25rem;
+            &:last-child(){
+                margin-right:0;
+            }
+        }
+    }
+}
+
+@media screen and (min-width:600px) {
+
+}
+
+@media screen and (min-width:1024px) {
+    
+}
+
