@@ -32,7 +32,8 @@ const ProductViewer: React.FC<IProps> = ({ date, datas, onDateChange }) => {
         const items = itemDatas.map(i => i.item);
 
         console.log(date);
-        console.log(items);
+        console.log(i);
+
 
         return { Date, items };
     })
