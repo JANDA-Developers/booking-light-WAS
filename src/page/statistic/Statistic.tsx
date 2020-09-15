@@ -1,8 +1,8 @@
 import { JDcontainer } from "@janda-com/front";
 import { JDcolumn } from "@janda-com/janda-table";
 import React from "react";
-import { IGraphViewMode } from "../component/graph/components/ViewIcons";
-import JDgraph from "../component/graph/Graph";
+import { IGraphViewMode } from "../../component/graph/components/ViewIcons";
+import JDgraph from "../../component/graph/Graph";
 
 interface IProps {
 }

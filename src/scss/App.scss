@@ -5,3 +5,9 @@
 @import "Sidebar.scss";
 @import "MypageModal.scss";
 @import "Home.scss";
+
+
+
+.container {
+    border-left: $sidebar-width solid transparent
+}

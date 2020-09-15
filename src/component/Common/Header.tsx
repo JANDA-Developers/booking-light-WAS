@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const Header:React.FC<IProps> = ({version, icons}) => {
-    console.log(icons.find);
+
     return (
         <header className="header">
             <div className="header__top">
@@ -19,7 +19,7 @@ const Header:React.FC<IProps> = ({version, icons}) => {
             <div className="header__bottom">
                 <div className="header__items">
                     {icons.map((list)=> {
-                        return  <JDicon icon={list}/>
+                        return  <JDicon icon={list} key={`headIcon-${list}`}/>
                     })}
                 </div>
             </div>
