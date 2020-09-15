@@ -1,0 +1,57 @@
+.statistic {
+    &__table {
+        margin-top: $standard-margin-bottom;
+    }
+
+    &__shortBtnsWrap {
+        white-space: noWrap;
+        display: flex;
+        @extend %JDscrollbar--slender;
+
+        @include response($tablet) {
+            .JDbtn {
+                min-width: 90px;
+            }
+        }
+    }
+
+    &__iconsWrap {
+        display: flex;
+
+        @include response($tablet) {
+            justify-content: space-around;
+        }
+    }
+
+    &__graphCard {
+        min-height: 0.25rem * 40;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .statistic__graphWrap {
+            flex: 1 1;
+            display: flex;
+            align-items: center;
+
+            .chartjs-render-monitor {
+                flex: 1 1;
+            }
+        }
+
+        .statistic__graphPreloader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .preloader--large {
+                // bottom: calc(50% - 3rem);
+            }
+        }
+    }
+}
