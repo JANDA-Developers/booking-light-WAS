@@ -13,7 +13,7 @@
         padding: 0.9375rem;
         min-height: 7.8125rem;
         color: white;
-        background: $primary-color-emerald;
+        background: $primary-color;
     }
 
     &__name {
@@ -86,7 +86,7 @@
 
             &.on {
                 .mainMenu__link {
-                    background: $primary-color-emerald;
+                    background: $primary-color;
 
                     b {
                         color: white;
@@ -114,7 +114,7 @@
             }
 
             &:hover {
-                background: $primary-color-emerald;
+                background: $primary-color;
 
                 b {
                     color: white;
