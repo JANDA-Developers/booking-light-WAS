@@ -6,8 +6,16 @@
 @import "MypageModal.scss";
 @import "Home.scss";
 
+#root.sideOpen #sidePlaceHolder {
+    width: $sidebar-width;
+    height: 20px;
 
+}
+
+#contentWrapper {
+    width: 100%;
+}
 
 .container {
-    border-left: $sidebar-width solid transparent
+    flex-grow: 1;
 }

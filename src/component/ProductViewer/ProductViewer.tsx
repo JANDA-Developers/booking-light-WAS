@@ -20,21 +20,14 @@ interface IProps {
   onDateChange: (date: Date) => void;
 }
 
-interface ITest {
-  name: string;
-  count: number;
-  total: number;
-}
-
 const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange }) => {
 
   const handleDateArrow = (positive: boolean) => {
     // toDate 메서드를통해서 momnet객체에서 Date 객체로 변환가능
     const nextDate = moment(date)
-      .add(positive ? 1 : -1)
+      .add(positive ? 1 : -1, "days")
       .toDate();
     onDateChange(nextDate);
-
   };
 
   const renderData = Array(7)
@@ -47,7 +40,6 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
         return moment(Date).isSame(dayList.date, "day")
       });
       const items = itemDatas.map((i) => i.item);
-
       return { Date, items };
     });
 
@@ -109,10 +101,7 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
                     );
                   })
                 })}
-                {
-                  dataLeng != 0 ? <li>
-                    <a href="" className="statusMore">더보기</a></li> : false
-                }
+                <JDbutton mode={'flat'} thema="positive" label={'더보기'} />
               </ul>
             </div>
           );

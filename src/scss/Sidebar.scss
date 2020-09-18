@@ -5,6 +5,10 @@
     width: $sidebar-width;
     height: 100vh;
 
+    &--close {
+        display: none;
+    }
+
     &__head {
         display: flex;
         flex-direction: column;

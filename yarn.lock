@@ -1344,10 +1344,10 @@
     react-tooltip "^4.2.6"
     react-window-size "^1.2.2"
 
-"@janda-com/front@^3.0.9":
-  version "3.0.9"
-  resolved "https://registry.npmjs.org/@janda-com/front/-/front-3.0.9.tgz#96feef90736e2e8377ce221bd0fadea54d7bf6aa"
-  integrity sha512-11Pct5s1C7IHB+FHiYr795KCXtSYUsCAdjCLnKP2lLf7GXYDNfDF6oPSVFauz46SVXyjGch2ORpoAWiOSZmq1w==
+"@janda-com/front@^3.1.7":
+  version "3.1.7"
+  resolved "https://registry.npmjs.org/@janda-com/front/-/front-3.1.7.tgz#d264cf111fe3b8e5b651aec34cd6d2082c529ef9"
+  integrity sha512-8IAP/tHWlKdFAlraGRP29l6QXnb8Io81h0bt2fC+6dezkNF4uOSCZUVd5h0pZ2dcJ6SWUmuTkR+sQYAQxwuZMg==
   dependencies:
     "@apollo/react-common" "^3.1.3"
     "@types/classnames" "^2.2.10"

@@ -1,25 +1,29 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { JDicon } from '@janda-com/front';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 
 export type TSidebarSub = {
-    icon:IIcons,
-    title:string
+    icon: IIcons,
+    title: string
 }
 
 interface IProps {
-    subMenu:TSidebarSub[],
+    subMenu: TSidebarSub[],
+    subMenuClick: (location: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
-const SidebarSubMenu:React.FC<IProps> = ({subMenu}) => {
-    
+const SidebarSubMenu: React.FC<IProps> = ({ subMenu, subMenuClick }) => {
+
     return (
         <ul className="Sidebar__subMenu">
             {
-                subMenu.map((list,index)=>{
-                    return  <li className="subMenu__list" key={`submenuList-${index}`}>
-                        <a href="" className="subMenu__link">
-                            <JDicon  icon={list.icon}/>
+                subMenu.map((list, index) => {
+                    return <li className="subMenu__list" key={`submenuList-${index}`}>
+                        <a href="" className="subMenu__link" onClick={(e) => {
+                            e.preventDefault();
+                            subMenuClick(e)
+                        }}>
+                            <JDicon icon={list.icon} />
                             <b>{list.title}</b>
                         </a>
                     </li>
@@ -27,7 +31,7 @@ const SidebarSubMenu:React.FC<IProps> = ({subMenu}) => {
             }
         </ul>
     )
-    
+
 }
 
 export default SidebarSubMenu

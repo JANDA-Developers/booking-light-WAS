@@ -1,68 +1,68 @@
-import React, {useState} from 'react'
-import SidebarMainMenu, {TSidebarMain} from './SidebarMainMenu'
-import SidebarSubMenu, {TSidebarSub} from './SidebarSubMenu'
+import React, { useEffect, useState } from 'react'
+import SidebarMainMenu, { TSidebarMain } from './SidebarMainMenu'
+import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { JDicon } from '@janda-com/front';
 
 interface IMainMenu {
-    key:string,
-    icon : IIcons,
-    title : string,
+    key: string,
+    icon: IIcons,
+    title: string,
 }
 interface ISubMenu {
-    title:string;
+    title: string;
     sub: TSidebarSub[];
 }
 
-const Data_SideMain:IMainMenu[] = [
+const Data_SideMain: IMainMenu[] = [
     {
-      key:"home",
-      icon:"houseGear",
-      title:"홈"
+        key: "home",
+        icon: "houseGear",
+        title: "홈"
     },
     {
-      key:"item",
-      icon:"gearBox",
-      title:"상품"
+        key: "item",
+        icon: "gearBox",
+        title: "상품"
     },
     {
-      key:"store",
-      icon:"location",
-      title:"상점"
+        key: "store",
+        icon: "location",
+        title: "상점"
     },
     {
-      key:"payment",
-      icon:"file",
-      title:"결제"
+        key: "payment",
+        icon: "file",
+        title: "결제"
     },
     {
-      key:"sms",
-      icon:"camera",
-      title:"SMS"
+        key: "sms",
+        icon: "camera",
+        title: "SMS"
     },
     {
-      key:"service",
-      icon:"speechBubble2",
-      title:"고객센터"
+        key: "service",
+        icon: "speechBubble2",
+        title: "고객센터"
     }
 ]
 
 
-const Data_SubMain:ISubMenu[] = [
+const Data_SubMain: ISubMenu[] = [
     {
         title: "sidebar_home",
         sub: [
             {
-                icon:"menu",
-                title:"home - 상품설명"
+                icon: "menu",
+                title: "home - 상품설명"
             },
-            { 
-                icon:"menu",
-                title:"home - 판매목록"
+            {
+                icon: "menu",
+                title: "home - 판매목록"
             },
-            { 
-                icon:"menu",
-                title:"home - 판매목록"
+            {
+                icon: "menu",
+                title: "home - 판매목록"
             }
         ]
     },
@@ -70,16 +70,16 @@ const Data_SubMain:ISubMenu[] = [
         title: "sidebar_item",
         sub: [
             {
-                icon:"menu",
-                title:"item - 상품설명"
+                icon: "menu",
+                title: "item - 상품설명"
             },
-            { 
-                icon:"menu",
-                title:"item - 판매목록"
+            {
+                icon: "menu",
+                title: "item - 판매목록"
             },
-            { 
-                icon:"menu",
-                title:"item - 판매목록"
+            {
+                icon: "menu",
+                title: "item - 판매목록"
             }
         ]
     },
@@ -87,16 +87,16 @@ const Data_SubMain:ISubMenu[] = [
         title: "sidebar_store",
         sub: [
             {
-                icon:"menu",
-                title:"store - 상품설명"
+                icon: "menu",
+                title: "store - 상품설명"
             },
-            { 
-                icon:"menu",
-                title:"store - 판매목록"
+            {
+                icon: "menu",
+                title: "store - 판매목록"
             },
-            { 
-                icon:"menu",
-                title:"store - 판매목록"
+            {
+                icon: "menu",
+                title: "store - 판매목록"
             }
         ]
     },
@@ -104,16 +104,16 @@ const Data_SubMain:ISubMenu[] = [
         title: "sidebar_payment",
         sub: [
             {
-                icon:"menu",
-                title:"pay - 상품설명"
+                icon: "menu",
+                title: "pay - 상품설명"
             },
-            { 
-                icon:"menu",
-                title:"pay - 판매목록"
+            {
+                icon: "menu",
+                title: "pay - 판매목록"
             },
-            { 
-                icon:"menu",
-                title:"pay - 판매목록"
+            {
+                icon: "menu",
+                title: "pay - 판매목록"
             }
         ]
     },
@@ -121,16 +121,16 @@ const Data_SubMain:ISubMenu[] = [
         title: "sidebar_sms",
         sub: [
             {
-                icon:"menu",
-                title:"sms - 상품설명"
+                icon: "menu",
+                title: "sms - 상품설명"
             },
-            { 
-                icon:"menu",
-                title:"sms - 판매목록"
+            {
+                icon: "menu",
+                title: "sms - 판매목록"
             },
-            { 
-                icon:"menu",
-                title:"sms - 판매목록"
+            {
+                icon: "menu",
+                title: "sms - 판매목록"
             }
         ]
     },
@@ -138,67 +138,80 @@ const Data_SubMain:ISubMenu[] = [
         title: "sidebar_service",
         sub: [
             {
-                icon:"menu",
-                title:"service - 상품설명"
+                icon: "menu",
+                title: "service - 상품설명"
             },
-            { 
-                icon:"menu",
-                title:"service - 판매목록"
+            {
+                icon: "menu",
+                title: "service - 판매목록"
             },
-            { 
-                icon:"menu",
-                title:"service - 판매목록"
+            {
+                icon: "menu",
+                title: "service - 판매목록"
             }
         ]
     }
 ]
 
-const handleLogin = (e:React.MouseEvent<HTMLAnchorElement, MouseEvent>, state:boolean) => {
-    e.preventDefault();
+
+type TUserInfo = {
+    name: string;
+    [key: string]: any
+}
+export interface IProps {
+    onClose: () => void,
+    onMypage: () => void,
+    onLogin: (isLogout: boolean) => void
+    useInfo: TUserInfo;
+    isOpen: boolean;
 }
 
-const handleMypage = (e:React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-}
-
-const handleSidebar = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    
-}
-
-const Sidebar = () => {
-
-    const [menuKey, SetmenuKey] = useState<string>('sidebar_home');
-    const menuKeyUpdate = (key:string) => {
-        SetmenuKey(key)
+const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen }) => {
+    const [menuKey, setMenuKey] = useState<string>('sidebar_home');
+    const menuKeyUpdate = (key: string) => {
+        setMenuKey(key)
     }
 
     let subMenuList = Data_SubMain.find(list => list.title === menuKey) || Data_SubMain[0];
 
-    // 로그인 onclick, login, logout 추가 
+    useEffect(() => {
+        if (isOpen)
+            document.getElementById("root")?.classList.add("sideOpen")
+        else
+            document.getElementById("root")?.classList.remove("sideOpen")
 
+    }, [isOpen])
+
+    const subMenuClick = (location: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        console.log(location);
+    }
+
+    // 로그인 onclick, login, logout 추가 y
     return (
-        <div className="Sidebar">
+        <div className={`Sidebar ${isOpen || 'Sidebar--close'}`}>
             <div className="Sidebar__head">
                 <strong className="Sidebar__name">
-                    이서진<small>님</small>
+                    {useInfo.name}<small>님</small>
                 </strong>
                 <p className="Sidebar__latest">
                     최근 접속일 2020 09 03 13:58:00
                 </p>
                 <div className="Sidebar__memberNav">
-                    <a href="" className="Sidebar__login off" onClick={(e)=>{handleLogin(e,true)}}>로그인</a>
-                    <a href="" className="SideBar__logout" onClick={(e)=>{handleLogin(e,false)}}>로그아웃</a>
-                    <a href="" className="SideBar__mypage" onClick={(e)=>{handleMypage(e)}}>마이페이지</a>
+                    <a href="#" className="Sidebar__login off" onClick={() => { onLogin(false) }}>로그인</a>
+                    <a href="#" className="SideBar__logout" onClick={() => { onLogin(true) }}>로그아웃</a>
+                    <a href="#" className="SideBar__mypage" onClick={() => { onMypage() }}>마이페이지</a>
                 </div>
-                <div className="Sidebar__close" onClick={(e)=>{
-                    handleSidebar(e)
+                <div className="Sidebar__close" onClick={() => {
+                    onClose()
                 }}>
-                    <JDicon icon="close"/>
+                    <JDicon icon="close" />
                 </div>
             </div>
             <nav className="Sidebar__menu">
                 <SidebarMainMenu mainMenu={Data_SideMain} menuKey={menuKey} menuKeyUpdate={menuKeyUpdate} />
-                <SidebarSubMenu subMenu={subMenuList.sub} />
+                <SidebarSubMenu subMenu={subMenuList.sub} subMenuClick={(location) => {
+                    subMenuClick(location);
+                }} />
             </nav>
         </div>
     )
