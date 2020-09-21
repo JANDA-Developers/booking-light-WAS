@@ -1,12 +1,14 @@
 import React from 'react';
-import { JDcontainer, JDsignUpUI, WindowSize } from "@janda-com/front"
-
+import { JDcard, JDcontainer, JDsignUpUI, WindowSize } from "@janda-com/front"
+import Policy from "./Policy";
 interface IProp { }
 
 export const SignUp: React.FC<IProp> = () => {
     return <JDcontainer verticalPadding size={WindowSize.md} >
-        <JDsignUpUI Policy={JDsign} onSignUpClick={() => {
-        }} onPhoneVerification={async () => false} />
+        <JDcard>
+            <JDsignUpUI Policy={Policy} onSignUpClick={() => {
+            }} onPhoneVerification={async () => false} />
+        </JDcard>
     </JDcontainer>;
 };
 

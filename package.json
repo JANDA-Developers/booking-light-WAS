@@ -19,7 +19,7 @@
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
     "react-day-picker": "^7.4.8",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,9 +37,6 @@
     "production": [
       ">0.2%",
       "not dead",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "typescript": "~3.7.2"
       "not op_mini all"
     ],
     "development": [

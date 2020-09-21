@@ -1,0 +1,14 @@
+.account {
+    &__cover {
+        background-color: rgba(0, 0, 0, .7);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0
+    }
+
+    &__infoCard {
+        background-color: $grey-level1;
+    }
+}
