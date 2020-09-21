@@ -5,7 +5,7 @@ interface IProp { }
 
 export const SignUp: React.FC<IProp> = () => {
     return <JDcontainer verticalPadding size={WindowSize.md} >
-        <JDsignUpUI onSignUpClick={() => {
+        <JDsignUpUI Policy={JDsign} onSignUpClick={() => {
         }} onPhoneVerification={async () => false} />
     </JDcontainer>;
 };
