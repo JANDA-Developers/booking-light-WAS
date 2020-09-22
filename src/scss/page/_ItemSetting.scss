@@ -1,0 +1,184 @@
+$color-itemSetting:$primary-color; 
+
+$margin-bottom-1:40px; 
+$margin-bottom-2:15px;
+$padding-bottom-1:40px;
+$padding-bottom-2:15px;
+$padding-ver-1:0.9375rem;
+$padding-hor-1:1.5625rem;
+
+.itemSetting {
+
+    &__btn1 {
+        font-size:0.9375rem;
+        padding:0.625rem 1.25rem;
+    }
+  
+    &__control {
+        display:flex; 
+        flex-direction: column;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom: $margin-bottom-1;
+        padding:$padding-ver-1 $padding-hor-1;
+        background:#ffffff;
+        border:1px solid $grey-level1;
+        border-radius:5px;
+        .controlDate {
+            display:flex;
+            align-items: center;
+            margin:1.25rem 0;
+            &__selected {
+                margin: 0 0.9375rem;
+                font-weight:bold;
+            }
+        }
+        .JDselect  {
+            margin:0;
+        }
+    }
+
+    &__today {
+        border:1px solid $color-itemSetting;
+        color:$color-itemSetting !important;
+        transition:background 300ms !important;
+        &:hover {
+            background:$color-itemSetting !important;
+            color:#ffffff !important;
+        }
+    }
+    
+    &__calendar {
+        font-size:0.9375rem;
+        padding:0.625rem 1.25rem;
+        background:$color-itemSetting !important;
+    }
+
+    &__item {
+        display:flex; 
+        flex-direction: row;
+        padding:$padding-ver-1 $padding-hor-1;
+        background:#ffffff;
+        .settingListImage {
+            width:300px;
+            height:200px;
+            border:1px solid red;
+            background-position:center;
+            background-size:cover;
+            background-repeat: no-repeat;
+        }
+        .settingListInfo {
+            flex:1;
+            padding:10px 0 0 2.5rem;
+            &__top {
+                display:flex;
+                justify-content: space-between;
+                padding-bottom:$padding-bottom-2;
+                border-bottom:1px solid $grey-level1;
+                section:nth-child(2) {
+                    text-align:right;
+                }
+                .infoTag {
+                    display:inline-block;
+                    margin-bottom:$margin-bottom-2;
+                    padding:0.125rem 0.625rem;
+                    font-size:0.625rem;
+                    font-weight:bold;
+                    color: $color-itemSetting;
+                    border:1px solid $color-itemSetting;
+                    border-radius:20px;
+                }
+                strong {
+                    display:block;
+                    margin:0 0 $margin-bottom-2 0;
+                    font-size: 1.5625rem;
+                }
+                b {
+                    font-size:0.8125rem;
+                }
+                .infoEdit {
+                    display:inline-block;
+                    margin-bottom:$margin-bottom-2;
+                    padding:0.3125rem 0.9375rem;
+                    font-size:0.75rem;
+                    font-weight:bold;
+                    color:$color-itemSetting;
+                    background:#E0FEF2;
+                    border:none;
+                }
+                .infoPrice {
+                    font-size:1.875rem;
+                }
+            }
+        }
+    }
+
+}
+
+
+
+@media screen and (min-width:600px) {
+    
+}
+
+
+
+@media screen and (min-width:1024px) {
+    $margin-bottom-1:50px; 
+    $padding-ver-1:0.9375rem;
+    $padding-hor-1:1.5625rem;
+    .itemSetting {
+
+        &__btn1 {
+            font-size:0.9375rem;
+            padding:0.625rem 1.25rem;
+        }
+    
+        &__control {
+            display:flex; 
+            flex-direction: row;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom: $margin-bottom-1;
+            padding:$padding-ver-1 $padding-hor-1;
+            background:#ffffff;
+            border:1px solid $grey-level1;
+            border-radius:5px;
+            .controlDate {
+                display:flex;
+                align-items: center;
+                margin:0;
+                &__selected {
+                    margin: 0 0.9375rem;
+                    font-weight:bold;
+                }
+            }
+            .JDselect  {
+                margin:0;
+            }
+        }
+
+        &__today {
+            border:1px solid $color-itemSetting;
+            color:$color-itemSetting !important;
+            transition:background 300ms !important;
+            &:hover {
+                background:$color-itemSetting !important;
+                color:#ffffff !important;
+            }
+        }
+        
+        &__calendar {
+            font-size:0.9375rem;
+            padding:0.625rem 1.25rem;
+            background:$color-itemSetting !important;
+        }
+    }
+    
+}
+
+
+
+@media screen and (min-width:1600px) {
+    
+}

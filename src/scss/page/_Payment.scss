@@ -1,0 +1,10 @@
+.paymentAdd {
+    position: absolute;
+    background: #ffffff;
+
+    &__title {
+        display: flex;
+        align-items: center;
+        padding: 0.625rem;
+    }
+}

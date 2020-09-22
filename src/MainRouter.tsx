@@ -1,13 +1,12 @@
 import { JDpreloader } from "@janda-com/front";
-import { IIcons } from "@janda-com/front/dist/components/icons/declation";
-import PriceViewer from "@janda-com/front/dist/components/priceViewer/PriceViewer";
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import Header from "./component/Common/Header";
 import MypageModal from "./component/Mypage/MypageModal";
 import Sidebar from "./component/Sidebar/Sidebar";
+import ItemSetting from './component/ItemSetting/ItemSetting';
 
-const StasticPage = React.lazy(() => import('./page/calculate-payment/Statistic'));
+const SalesPage = React.lazy(() => import('./page/sales/Sales'));
 const DashboardPage = React.lazy(() => import('./page/dashboard/Dashboard'));
 
 const MainRouter = () => {
@@ -47,26 +46,26 @@ const MainRouter = () => {
         render={() => {
           return <DashboardPage />;
         }}
-      />
+      /> */}
       <Route
         exact={true}
-        path={"/pay-to-janda"}
+        path={"/pay-from-janda"}
         render={() => {
-          return <DashboardPage />;
+          return <SalesPage />;
         }}
       />
-      <Route
-        exact={true}
-        path={"/calculate-payment"}
-        render={() => {
-          return <StasticPage />;
-        }}
-      />*/}
       <Route
         exact={true}
         path={"/"}
         render={() => {
           return <DashboardPage />;
+        }}
+      />
+      <Route
+        exact={true}
+        path={"/itemset"}
+        render={() => {
+          return <ItemSetting />;
         }}
       />
     </Suspense>

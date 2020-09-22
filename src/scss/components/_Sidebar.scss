@@ -4,6 +4,7 @@
     left: 0;
     width: $sidebar-width;
     height: 100vh;
+    @include shadow(1);
 
     &--close {
         display: none;
