@@ -21,7 +21,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
         <Section>
             <JDtypho flex={{
                 between: true,
-                vCenter: true
+                vCenter: true,
             }} weight={600}>
                 출금 가능 금액
                 <JDtypho color="point" flex weight={600} size="h6">
@@ -32,36 +32,58 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                 </JDtypho>
                 <JDsplinter />
                 <JDtypho>출금 신청 금액</JDtypho>
-                <InputText />
+                <InputText style={{
+                    width: "100%"
+                }} />
                 <JDtypho weight={300} color="grey1" size="tiny">
                     원
                 </JDtypho>
             </JDtypho>
         </Section>
         <Section>
-            <div>
-                <JDtypho weight={600}>
-                    예금주명
-                </JDtypho>
-                <JDtypho weight={600}>
-                    은행
-                </JDtypho>
-                <JDtypho weight={600}>
-                    계좌번호
-                </JDtypho>
-            </div>
-            <div>
+            <JDalign flex={{
+                between: true
+            }}>
+                <JDalign flex>
+                    <JDtypho mr="large" weight={600}>
+                        <JDalign mb="normal">
+                            예금주명
+                        </JDalign>
+                        <JDalign mb="normal">
+                            은행
+                        </JDalign>
+                        <JDalign mb="normal">
+                            계좌번호
+                        </JDalign>
+                    </JDtypho>
+                    <JDalign>
+                        <JDalign mb="normal">
+                            이서진
+                        </JDalign>
+                        <JDalign mb="normal">
+                            국민은행
+                        </JDalign>
+                        <JDalign mb="normal">
+                            555927834702
+                        </JDalign>
+                    </JDalign>
+                </JDalign>
                 <div>
-                    <JDbutton mb="normal" mode="border" padding="huge">
-                        계좌정보 수정
-                    </JDbutton>
+                    <div>
+                        <JDbutton br="square" mb="normal" mode="border" padding="huge">
+                            계좌정보 수정
+                        </JDbutton>
+                    </div>
+                    <div>
+                        <JDbutton style={{
+                            width: "100%"
+                        }} br="square" mode="flat" padding="huge" thema="point">
+                            출금 신청
+                        </JDbutton>
+                    </div>
                 </div>
-                <div>
-                    <JDbutton mode="flat" padding="huge" thema="point">
-                        출금 신청
-                    </JDbutton>
-                </div>
-            </div>
+            </JDalign>
+
             {registered || <JDalign flex={{
                 center: true,
                 vCenter: true
@@ -74,41 +96,43 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                 </JDbutton>
             </JDalign>}
         </Section>
-        <JDcard foot={{
-        }} className="account__infoCard">
-            <div>
-                <JDtypho size="small" color="grey4" grid>
-                    <JDalign col={{
-                        full: 6,
-                        md: 12
-                    }}>
-                        <JDtypho mb="normal" color="grey4">
-                            - 매주 목요일 오후 4시 이전에 지급 됩니다.
+        <Section>
+            <JDcard foot={{
+            }} className="account__infoCard">
+                <div>
+                    <JDtypho size="small" color="grey4" grid>
+                        <JDalign col={{
+                            full: 6,
+                            md: 12
+                        }}>
+                            <JDtypho mb="normal" color="grey4">
+                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
                     </JDtypho>
-                        <JDtypho mb="normal" color="grey4">
-                            - 매주 목요일 오후 4시 이전에 지급 됩니다.
+                            <JDtypho mb="normal" color="grey4">
+                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
                     </JDtypho>
-                        <JDtypho mb="normal" color="grey4">
-                            - 매주 목요일 오후 4시 이전에 지급 됩니다.
+                            <JDtypho mb="normal" color="grey4">
+                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
                     </JDtypho>
-                    </JDalign>
-                    <JDalign col={{
-                        full: 6,
-                        md: 12
-                    }}>
-                        <JDtypho mb="normal" color="grey4">
-                            - 매주 목요일 오후 4시 이전에 지급 됩니다.
+                        </JDalign>
+                        <JDalign col={{
+                            full: 6,
+                            md: 12
+                        }}>
+                            <JDtypho mb="normal" color="grey4">
+                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
                     </JDtypho>
-                        <JDtypho mb="normal" color="grey4">
-                            - 매주 목요일 오후 4시 이전에 지급 됩니다.
+                            <JDtypho mb="normal" color="grey4">
+                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
                     </JDtypho>
-                        <JDtypho mb="normal" color="grey4">
-                            - 매주 목요일 오후 4시 이전에 지급 됩니다.
+                            <JDtypho mb="normal" color="grey4">
+                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
                     </JDtypho>
-                    </JDalign>
-                </JDtypho>
-            </div>
-        </JDcard>
+                        </JDalign>
+                    </JDtypho>
+                </div>
+            </JDcard>
+        </Section>
         <AccountRegistModal onSubmit={() => { }} modalHook={accountModalHook} />
     </div>
 }

@@ -65,16 +65,13 @@ export const AccountRegistModal: React.FC<IProp> = ({ modalHook, onSubmit }) => 
 
         <JDtypho size="h6" decoration="bar">계좌번호 입력</JDtypho>
         <JDalign flex={{
-            vCenter: true
+            vCenter: true,
+            grow: true
         }}>
-            <div>
-                <InputText value={info.accountHolder} onChange={(v: any) => {
-                    set("accountHolder", v)
-                }} label="예금주" />
-            </div>
-            <div>
-                <JDselect label="은행" {...bankHook} />
-            </div>
+            <InputText value={info.accountHolder} onChange={(v: any) => {
+                set("accountHolder", v)
+            }} label="예금주" />
+            <JDselect autoSize label="은행" {...bankHook} />
         </JDalign>
         <JDalign>
             <InputText value={info.account} onChange={(v: any) => {

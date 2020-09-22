@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 
 
 const SalesPage = React.lazy(() => import('./page/sales/Sales'));
-const StasticPage = React.lazy(() => import('./page/calculate-payment/Statistic'));
 const DashboardPage = React.lazy(() => import('./page/dashboard/Dashboard'));
 
 const MainRouter = () => {
