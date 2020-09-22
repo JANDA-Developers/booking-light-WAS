@@ -47,21 +47,27 @@ const DataMypageInfo = {
 function App() {
   return (
     <div className="App">
-      <Header version={JDVERSION} icons={Data_headIcon} />
-      <SideBarWrap />
-      <MypageModal modalInfo={DataMypageInfo} />
-      <JDalign flex>
-        <div id="sidePlaceHolder" />
-        <Router >
-          <Switch>
-            <Route path="/auth" render={() => <AuthRouter />} />
-            <Route
-              path={"/"}
-              render={() => <MainRouter />}
-            />
-          </Switch>
-        </Router>
-      </JDalign>
+
+          <Header version={JDVERSION} icons={Data_headIcon} />
+          <Router >
+            <Switch>
+              <SideBarWrap />
+            </Switch>
+          </Router>
+          <MypageModal modalInfo={DataMypageInfo} />
+          <JDalign flex>
+            <div id="sidePlaceHolder" />
+            <Router >
+              <Switch>
+                <Route path="/auth" render={() => <AuthRouter />} />
+                <Route
+                  path={"/"}
+                  render={() => <MainRouter />}
+                />
+              </Switch>
+            </Router>
+          </JDalign>
+    
     </div>
   );
 }

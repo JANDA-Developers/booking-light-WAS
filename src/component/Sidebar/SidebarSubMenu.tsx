@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { Link } from "react-router-dom";
 import { JDicon } from '@janda-com/front';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 
 export type TSidebarSub = {
     icon: IIcons,
-    title: string
+    title: string,
+    path:string
 }
 
 interface IProps {
@@ -18,14 +20,14 @@ const SidebarSubMenu: React.FC<IProps> = ({ subMenu, subMenuClick }) => {
         <ul className="Sidebar__subMenu">
             {
                 subMenu.map((list, index) => {
+                    console.log(list);
                     return <li className="subMenu__list" key={`submenuList-${index}`}>
-                        <a href="" className="subMenu__link" onClick={(e) => {
-                            e.preventDefault();
-                            subMenuClick(e)
-                        }}>
+                        <Link to={list.path} className="subMenu__link" onClick={ (e) => {
+                            subMenuClick(e);
+                        }}> 
                             <JDicon icon={list.icon} />
                             <b>{list.title}</b>
-                        </a>
+                        </Link>
                     </li>
                 })
             }

@@ -54,15 +54,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "home - 상품설명"
+                title: "home - 상품설명",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "home - 판매목록"
+                title: "home - 판매목록",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "home - 판매목록"
+                title: "home - 판매목록",
+                path:"/"
             }
         ]
     },
@@ -71,15 +74,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "item - 상품설명"
+                title: "item - 상품설명",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "item - 판매목록"
+                title: "item - 판매목록",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "item - 판매목록"
+                title: "item - 판매목록",
+                path:"/"
             }
         ]
     },
@@ -88,15 +94,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "store - 상품설명"
+                title: "store - 상품설명",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "store - 판매목록"
+                title: "store - 판매목록",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "store - 판매목록"
+                title: "store - 판매목록",
+                path:"/"
             }
         ]
     },
@@ -105,15 +114,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "pay - 상품설명"
+                title: "pay - 상품설명",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "pay - 판매목록"
+                title: "pay - 판매목록",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "pay - 판매목록"
+                title: "pay - 판매목록",
+                path:"/"
             }
         ]
     },
@@ -122,15 +134,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "sms - 상품설명"
+                title: "sms - 상품설명",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "sms - 판매목록"
+                title: "sms - 판매목록",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "sms - 판매목록"
+                title: "sms - 판매목록",
+                path:"/"
             }
         ]
     },
@@ -139,15 +154,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "service - 상품설명"
+                title: "service - 상품설명",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "service - 판매목록"
+                title: "service - 판매목록",
+                path:"/"
             },
             {
                 icon: "menu",
-                title: "service - 판매목록"
+                title: "service - 판매목록",
+                path:"/"
             }
         ]
     }
@@ -179,7 +197,6 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
             document.getElementById("root")?.classList.add("sideOpen")
         else
             document.getElementById("root")?.classList.remove("sideOpen")
-
     }, [isOpen])
 
     const subMenuClick = (location: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
