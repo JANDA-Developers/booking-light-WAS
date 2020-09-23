@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect } from "@janda-com/front";
+import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
 import ItemSettingList from './ItemSettingList';
 const ItemSetting = () => {
     const [itemDay, setItemDay] = useState<Date>(new Date());
@@ -32,7 +33,7 @@ const ItemSetting = () => {
         }
     ]
 
-    const noRefCheck = (selected) => {
+    const noRefCheck = (selected: IselectedOption<any>) => {
         console.info(selected);
     }
 
