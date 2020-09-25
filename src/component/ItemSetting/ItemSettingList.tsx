@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect } from "@janda-com/front";
-
+import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect, IUseModal } from "@janda-com/front";
 
 type TitemSettingList = {
     image: string,
@@ -17,11 +16,11 @@ type TitemSettingList = {
 
 interface IProps {
     itemInfo: TitemSettingList[]
+    modalHook_add: IUseModal
 }
 
 
-const ItemSettingList: React.FC<IProps> = ({ itemInfo }) => {
-
+const ItemSettingList: React.FC<IProps> = ({ itemInfo, modalHook_add }) => {
     const [personNum, setPersonNum] = useState<number>(1);
     const [totalPrice, setTotalPrice] = useState("15,000");
 
@@ -39,7 +38,7 @@ const ItemSettingList: React.FC<IProps> = ({ itemInfo }) => {
     // }
 
     const handleAddItem = () => {
-        console.log('item added');
+        modalHook_add.openModal();
     }
 
     return (
@@ -47,9 +46,13 @@ const ItemSettingList: React.FC<IProps> = ({ itemInfo }) => {
         <div>
             {
                 itemInfo.map((itemList) => {
-                    return <div className="itemSetting__list">
+                    return <div className="itemSetting__list" key={`list-${itemList.info2}`}>
                         <div className="itemSetting__item">
-                            <div className="settingListImage" style={{ backgroundImage: `url(${itemList.image})` }}></div>
+                            <div>
+                                <div className="settingListImage" style={{ backgroundImage: `url(${itemList.image})` }}>
+
+                                </div>
+                            </div>
                             <div className="settingListInfo">
                                 <section className="settingListInfo__top">
                                     <div className="topblock">
