@@ -3,7 +3,9 @@ import moment from 'moment'
 import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect } from "@janda-com/front";
 import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
 import ItemSettingList from './ItemSettingList';
+
 const ItemSetting = () => {
+
     const [itemDay, setItemDay] = useState<Date>(new Date());
 
     const changeDay = (state: boolean) => {
@@ -40,24 +42,37 @@ const ItemSetting = () => {
 
     const itemInfo = [
         {
-            image: "a.jpg",
-            text1: "a.jpg",
-            text2: "a.jpg",
-            text3: "a.jpg",
-            price: "a.jpg",
+            image: "/img/itemset/1.jpg",
+            info1: "부산",
+            info2: "잔다 특별관",
+            info3: "1인 2매",
+            price: "25,000",
+            currency: "KRW",
             sold: 200,
             available: 100,
-            address: "a.jpg",
+            address: "부산남구대로 193-12",
         },
         {
-            image: "a.jpg",
-            text1: "a.jpg",
-            text2: "a.jpg",
-            text3: "a.jpg",
-            price: "a.jpg",
-            sold: 300,
+            image: "/img/itemset/1.jpg",
+            info1: "부산 2",
+            info2: "잔다 특별관 2",
+            info3: "1인 2매",
+            price: "25,000",
+            currency: "KRW",
+            sold: 200,
             available: 100,
-            address: "a.jpg",
+            address: "부산남구대로 193-12",
+        },
+        {
+            image: "/img/itemset/1.jpg",
+            info1: "부산 3",
+            info2: "잔다 특별관 3",
+            info3: "1인 2매",
+            price: "25,000",
+            currency: "KRW",
+            sold: 200,
+            available: 100,
+            address: "부산남구대로 193-12",
         }
     ]
 
@@ -65,7 +80,7 @@ const ItemSetting = () => {
         <JDcontainer size={WindowSize.full}>
             <div className="itemSetting">
                 <JDpageHeader displayIcon={false} desc={"판매 중인 상품의 상세 내용을 변경할 수 있습니다"} title={"상품설정"} />
-                <div className="itemSetting__list">
+                <div>
                     <div className="itemSetting__control">
                         <section>
                             <JDbutton mb="no" thema="positive" label={'날짜선택'} className="itemSetting__calendar itemSetting__btn1" />
