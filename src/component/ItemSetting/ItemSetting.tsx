@@ -50,7 +50,7 @@ const ItemSetting = () => {
     ]
 
     const handleSelect = (selected: IselectedOption<any>) => {
-        console.info(selected);
+
     }
 
 
@@ -60,7 +60,7 @@ const ItemSetting = () => {
             info1: "부산",
             info2: "잔다 특별관",
             info3: "1인 2매",
-            price: "25,000",
+            price: 25000,
             currency: "KRW",
             sold: 200,
             available: 100,
@@ -71,7 +71,7 @@ const ItemSetting = () => {
             info1: "부산 2",
             info2: "잔다 특별관 2",
             info3: "1인 2매",
-            price: "25,000",
+            price: 25000,
             currency: "KRW",
             sold: 200,
             available: 100,
@@ -82,7 +82,7 @@ const ItemSetting = () => {
             info1: "부산 3",
             info2: "잔다 특별관 3",
             info3: "1인 2매",
-            price: "25,000",
+            price: 25000,
             currency: "KRW",
             sold: 200,
             available: 100,

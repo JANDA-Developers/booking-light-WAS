@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect, IUseModal } from "@janda-com/front";
 
@@ -7,7 +7,7 @@ type TitemSettingList = {
     info1: string,
     info2: string,
     info3: string,
-    price: string,
+    price: number,
     currency: string,
     sold: number,
     available: number,
@@ -21,31 +21,55 @@ interface IProps {
 
 
 const ItemSettingList: React.FC<IProps> = ({ itemInfo, modalHook_add }) => {
-    const [personNum, setPersonNum] = useState<number>(1);
-    const [totalPrice, setTotalPrice] = useState("15,000");
 
-    const handlePersonNum = (state: boolean) => {
+    const [personNum, setPersonNum] = useState<number[]>([
+        ...itemInfo.map((list) => {
+            return 1;
+        })
+    ]);
+    const [totalPrice, setTotalPrice] = useState<number[]>([
+        ...itemInfo.map((list) => {
+            return list.price;
+        })
+    ]);
+
+
+    const handlePersonNum = (state: boolean, index: number) => {
         if (state) {
-            setPersonNum(personNum + 1)
+            setPersonNum(
+                personNum.map((number, listIndex) => {
+                    return listIndex === index ? number + 1 : number;
+                })
+            )
         } else {
-            personNum > 1 ? setPersonNum(personNum - 1) : setPersonNum(1)
+
+            if (personNum[index] > 1) {
+                setPersonNum(
+                    personNum.map((number, listIndex) => {
+                        return listIndex === index ? number - 1 : number;
+                    })
+                )
+            }
         }
     }
 
-    /* when to allow input typing */
-    // const handlePersonOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     e.target.value != "" ? setPersonNum(parseInt(e.target.value)) : setPersonNum(1)
-    // }
-
     const handleAddItem = () => {
         modalHook_add.openModal();
+    }
+
+    const handleTotalPrice = (price: number, num: number) => {
+        return numberFormat(price * num);
+    }
+
+    const numberFormat = (price: number) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     return (
 
         <div>
             {
-                itemInfo.map((itemList) => {
+                itemInfo.map((itemList, index) => {
                     return <div className="itemSetting__list" key={`list-${itemList.info2}`}>
                         <div className="itemSetting__item">
                             <div>
@@ -62,7 +86,7 @@ const ItemSettingList: React.FC<IProps> = ({ itemInfo, modalHook_add }) => {
                                     </div>
                                     <div className="topblock">
                                         <button className="infoEdit">수정하기</button>
-                                        <strong className="infoPrice">{itemList.currency} {itemList.price}</strong>
+                                        <strong className="infoPrice">{itemList.currency} {numberFormat(itemList.price)}</strong>
                                     </div>
                                 </section>
                                 <section className="settingListInfo__bottom">
@@ -90,19 +114,18 @@ const ItemSettingList: React.FC<IProps> = ({ itemInfo, modalHook_add }) => {
                                     <b>인원추가</b>
                                 </div>
                                 <div className="controller">
-                                    <button onClick={() => { handlePersonNum(false) }}>
+                                    <button onClick={() => { handlePersonNum(false, index) }}>
                                         <JDicon icon="plus" size="tiny" className="controller__minus"></JDicon>
                                     </button>
-                                    <input type="text" className="controller__number" value={personNum} readOnly />
-                                    <button onClick={() => { handlePersonNum(true) }}>
+                                    <input type="text" className="controller__number" value={personNum[index]} readOnly />
+                                    <button onClick={() => { handlePersonNum(true, index) }}>
                                         <JDicon icon="plus" size="tiny" className="controller__plus"></JDicon>
                                     </button>
                                 </div>
                             </section>
                             <section className="price">
                                 <strong>
-                                    {itemList.currency}
-                                    {totalPrice}
+                                    {itemList.currency} {handleTotalPrice(totalPrice[index], personNum[index])}
                                 </strong>
                             </section>
                         </div>
