@@ -1,27 +1,36 @@
-import React from 'react'
-import { JDicon, IUseModal } from "@janda-com/front";
+import React from 'react';
+import { JDicon } from "@janda-com/front";
 
 interface IProps {
     index: number,
-    key: string,
     image: string,
     info1: string,
     info2: string,
     info3: string,
+    price: number,
     currency: string,
-    price: string,
     sold: number,
     available: number,
     address: string,
+    personNum: number,
+    totalPrice: number,
     handlePersonNum: (state: boolean, index: number) => void,
-    personNum: number[],
-    totalPrice: number[]
-    handleTotalPrice: (price: number, num: number) => void
+    handleAddItem: (index: number) => void;
 }
 
-const ItemSettingItem: React.FC<IProps> = ({ index, key, image, info1, info2, info3, currency, price, sold, available, address, handlePersonNum, personNum, totalPrice, handleTotalPrice }) => {
+const ItemSettingListNew: React.FC<IProps> = ({ index, image, info1, info2, info3, price, currency, sold, available, address, personNum, totalPrice, handlePersonNum, handleAddItem }) => {
+
+    const numberFormat = (price: number) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    const handleTotalPrice = (price: number, num: number) => {
+        return numberFormat(price * num);
+    }
+
+
     return (
-        <div className="itemSetting__list" key={`list-${key}`}>
+        <div className="itemSetting__list" key={`list-${info2}`}>
             <div className="itemSetting__item">
                 <div>
                     <div className="settingListImage" style={{ backgroundImage: `url(${image})` }}>
@@ -37,7 +46,7 @@ const ItemSettingItem: React.FC<IProps> = ({ index, key, image, info1, info2, in
                         </div>
                         <div className="topblock">
                             <button className="infoEdit">수정하기</button>
-                            <strong className="infoPrice">{currency} {price}</strong>
+                            <strong className="infoPrice">{currency} {numberFormat(price)}</strong>
                         </div>
                     </section>
                     <section className="settingListInfo__bottom">
@@ -68,7 +77,7 @@ const ItemSettingItem: React.FC<IProps> = ({ index, key, image, info1, info2, in
                         <button onClick={() => { handlePersonNum(false, index) }}>
                             <JDicon icon="plus" size="tiny" className="controller__minus"></JDicon>
                         </button>
-                        <input type="text" className="controller__number" value={personNum[index]} readOnly />
+                        <input type="text" className="controller__number" value={personNum} readOnly />
                         <button onClick={() => { handlePersonNum(true, index) }}>
                             <JDicon icon="plus" size="tiny" className="controller__plus"></JDicon>
                         </button>
@@ -76,13 +85,16 @@ const ItemSettingItem: React.FC<IProps> = ({ index, key, image, info1, info2, in
                 </section>
                 <section className="price">
                     <strong>
-                        {currency} {handleTotalPrice(totalPrice[index], personNum[index])}
+                        {currency} {handleTotalPrice(totalPrice, personNum)}
                     </strong>
                 </section>
             </div>
+            <button className="itemSetting__additem" onClick={() => { handleAddItem(index) }}>
+                <JDicon icon="plus" className="controller__plus"></JDicon>
+                <strong>부가상품 추가하기</strong>
+            </button>
         </div>
-
     )
 }
 
-export default ItemSettingItem
+export default ItemSettingListNew

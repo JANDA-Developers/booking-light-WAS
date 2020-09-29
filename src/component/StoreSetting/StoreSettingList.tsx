@@ -1,8 +1,9 @@
-import React from 'react'
-import { JDicon } from "@janda-com/front";
+import React from 'react';
+import { JDicon, JDcard } from "@janda-com/front";
 import moment from 'moment';
 
-type TstoreList = {
+interface IProps {
+    index: string,
     image: string,
     name: string,
     address: string,
@@ -10,65 +11,117 @@ type TstoreList = {
     sold: number,
     generated: Date,
     member: number,
-    desc: string
+    desc: string,
+    handleEdit: (index: string) => void,
+    handleDelete: (index: string) => void
 }
 
-interface IProps {
-    storeList: TstoreList[]
-}
+const StoreSettingList: React.FC<IProps> = ({ index, image, name, address, goods, sold, generated, member, desc, handleEdit, handleDelete }) => {
 
-const StoreSettingList: React.FC<IProps> = ({ storeList }) => {
+    const onEdit = (index: string) => {
+        handleEdit(index);
+    }
+
+    const onDelete = (index: string) => {
+        handleDelete(index);
+    }
+
     return (
-        <div>
-            {
-                storeList.map((storeItem) => {
-                    return <div className="storeSetting__list storeList">
-                        <div className="storeList__imageBlock">
-                            <div className="storeList__image" style={{ backgroundImage: `url(${storeItem.image})` }}></div>
-                        </div>
-                        <div className="storeList__infoBlock">
-                            <div className="infoBlock__name">
-                                <strong>{storeItem.name}</strong>
-                                <b><JDicon icon="location"></JDicon> {storeItem.address}</b>
-                            </div>
-                            <div className="infoBlock__sold">
-                                <div className="infoBlock__soldList">
-                                    <strong>상품</strong>
-                                    <span>{storeItem.goods}</span>
-                                </div>
-                                <div className="infoBlock__soldDeco"></div>
-                                <div className="infoBlock__soldList">
-                                    <strong>판매</strong>
-                                    <span>{storeItem.sold}</span>
-                                </div>
-                                <div className="infoBlock__soldDeco"></div>
-                                <div className="infoBlock__soldList">
-                                    <strong>생성일</strong>
-                                    <span>{moment(storeItem.generated).format('YYYY-MM-DD')}</span>
-                                </div>
-                                <div className="infoBlock__soldDeco"></div>
-                                <div className="infoBlock__soldList">
-                                    <strong>회원</strong>
-                                    <span>{storeItem.member}</span>
-                                </div>
-                            </div>
-                            <div className="infoBlock__desc">
-                                <p>
-                                    {storeItem.desc}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="storeList__controlBlock">
-                            <button className="storeList__edit">수정하기</button>
-                            <button className="storeList__delete">삭제하기</button>
-                        </div>
+        <JDcard className="storeSetting__list storeList">
+
+            <div className="storeList__imageBlock">
+                <div className="storeList__image" style={{ backgroundImage: `url(${image})` }}></div>
+            </div>
+            <div className="storeList__infoBlock">
+                <div className="infoBlock__name">
+                    <strong>{name}</strong>
+                    <b><JDicon icon="location"></JDicon> {address}</b>
+                </div>
+                <div className="infoBlock__sold">
+                    <div className="infoBlock__soldList">
+                        <strong>상품</strong>
+                        <span>{goods}</span>
                     </div>
-                })
-            }
-        </div>
+                    <div className="infoBlock__soldDeco"></div>
+                    <div className="infoBlock__soldList">
+                        <strong>판매</strong>
+                        <span>{sold}</span>
+                    </div>
+                    <div className="infoBlock__soldDeco"></div>
+                    <div className="infoBlock__soldList">
+                        <strong>생성일</strong>
+                        <span>{moment(generated).format('YYYY-MM-DD')}</span>
+                    </div>
+                    <div className="infoBlock__soldDeco"></div>
+                    <div className="infoBlock__soldList">
+                        <strong>회원</strong>
+                        <span>{member}</span>
+                    </div>
+                </div>
+                <div className="infoBlock__desc">
+                    <p>
+                        {desc}
+                    </p>
+                </div>
+            </div>
+            <div className="storeList__controlBlock">
+                <button className="storeList__edit" onClick={() => { onEdit(index) }}>수정하기</button>
+                <button className="storeList__delete" onClick={() => { onDelete(index) }}>삭제하기</button>
+            </div>
 
-
+        </JDcard>
     )
+
+    // return (
+    //     <div>
+    //         {
+    //             storeList.map((storeItem) => {
+    //                 return <div className="storeSetting__list storeList">
+    //                     <div className="storeList__imageBlock">
+    //                         <div className="storeList__image" style={{ backgroundImage: `url(${storeItem.image})` }}></div>
+    //                     </div>
+    //                     <div className="storeList__infoBlock">
+    //                         <div className="infoBlock__name">
+    //                             <strong>{storeItem.name}</strong>
+    //                             <b><JDicon icon="location"></JDicon> {storeItem.address}</b>
+    //                         </div>
+    //                         <div className="infoBlock__sold">
+    //                             <div className="infoBlock__soldList">
+    //                                 <strong>상품</strong>
+    //                                 <span>{storeItem.goods}</span>
+    //                             </div>
+    //                             <div className="infoBlock__soldDeco"></div>
+    //                             <div className="infoBlock__soldList">
+    //                                 <strong>판매</strong>
+    //                                 <span>{storeItem.sold}</span>
+    //                             </div>
+    //                             <div className="infoBlock__soldDeco"></div>
+    //                             <div className="infoBlock__soldList">
+    //                                 <strong>생성일</strong>
+    //                                 <span>{moment(storeItem.generated).format('YYYY-MM-DD')}</span>
+    //                             </div>
+    //                             <div className="infoBlock__soldDeco"></div>
+    //                             <div className="infoBlock__soldList">
+    //                                 <strong>회원</strong>
+    //                                 <span>{storeItem.member}</span>
+    //                             </div>
+    //                         </div>
+    //                         <div className="infoBlock__desc">
+    //                             <p>
+    //                                 {storeItem.desc}
+    //                             </p>
+    //                         </div>
+    //                     </div>
+    //                     <div className="storeList__controlBlock">
+    //                         <button className="storeList__edit">수정하기</button>
+    //                         <button className="storeList__delete">삭제하기</button>
+    //                     </div>
+    //                 </div>
+    //             })
+    //         }
+    //     </div>
+    // )
+
 }
 
 export default StoreSettingList

@@ -5,6 +5,7 @@ $color-storeSetting2:#b0b4bf;
 $color-storeSetting3:#8c8c8c;
 $color-storeSetting4:#eeeeee;
 $color-storeSetting5:#ff6761;
+
 /* ::::: Margin ::::: */
 $storeSet-margin-1:2.5rem; 
 $storeSet-margin-2:1.875rem;
@@ -15,177 +16,83 @@ $storeSet-margin-right:40px;
 /* ::::: Padding ::::: */
 $storeSet-padding-1:0.9375rem 1.5625rem;
 
-
-.storeSetting {
-
-    .PageHeader__inner {
-        justify-content:center;
-    }
-
-    &__content {
-        padding:20px;
-        background:#ffffff;
-    }
-
-
-    &__additem {
-        display:flex;
-        justify-content:center;
-        align-items: center;
-        margin-bottom:$storeSet-margin-2;
-        padding:$storeSet-padding-1;
-        width:100%;
-        font-size:1.125rem;
-        text-align:center;
-        cursor:pointer;
-        color:$color-storeSetting2;
-        background:#ffffff;
-        border:2px dashed $color-storeSetting2;
-        transition:background 500ms;
-        .iconWrapper {
-            margin-right:0.9375rem;
-        }
-        &:hover {
-            color:#ffffff;
-            background:$color-storeSetting2;
-        }
-    }
-
-
-    .storeList {
-        display:flex;
-        flex-direction: column;
-        margin-bottom:0.625rem;
-        padding:40px;
-        @include shadow(2);
-        &__imageBlock {
-            display:flex; 
-            justify-content: center;
-            align-items: center;
-            margin-bottom:$storeSet-margin-3;
-            padding: 0 10px;
-            .storeList__image {
-                width:120px;
-                height:120px;
-                background-size:cover;
-                background-position:center;
-                background-repeat:no-repeat;
-                border-radius:100%;
-            }
-        }
-
-    
-        &__infoBlock {
-            flex:3;
-            min-height:150px;
-            .infoBlock__name {
-                display:flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom:$storeSet-margin-4;
-                strong {
-                    margin-bottom:0.625rem;
-                    font-size:1.5rem;
-                }
-
-                .iconWrapper {
-                    margin:0 0.625rem;
-                    font-size:0.8125rem;
-                }
-                b {
-                    font-size:1.1rem;
-                }
-            }
-
-            .infoBlock__sold {
-                display:flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom:$storeSet-margin-4;
-                padding:0.3125rem 0 0.625rem 0;
-                font-size:1rem;
-                border-bottom:1px solid $color-storeSetting4; 
-
-                .infoBlock__soldList {
-                    display:flex;
-                    align-items: center;
-                    margin-bottom:0.3125rem;
-                    strong {
-                        margin-right:$storeSet-margin-3;
-                    }
-                    span {
-                        margin-right:$storeSet-margin-3;
-                    }
-                }
-    
-                .infoBlock__soldDeco {
-                    display:none;
-                    margin-right:$storeSet-margin-3;
-                    width:1px;
-                    height:15px;
-                    background:$color-storeSetting3;
-                }
-
-            }
-
-            .infoBlock__desc {
-                margin-bottom:20px;
-                font-size:1rem;
-                color:$color-storeSetting3;
-            }
-
-        }
-    
-        &__controlBlock {
-            display:flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-bottom:$storeSet-margin-4;
-            button {
-                padding:0.4375rem 1.25rem;
-                font-size:1rem;
-                font-weight:bold;
-                cursor:pointer;
-            }
-
-            .storeList__edit {
-                margin-bottom:0.9375rem;
-                color:$color-storeSetting2;
-                background:#ffffff;
-                border:1px solid $color-storeSetting2;
-                border-radius:5px;
-            }
-            .storeList__delete {
-                color:#ffffff;
-                background:$color-storeSetting5;
-                border:1px solid $color-storeSetting5;
-                border-radius:5px;
-            }
-
-        }
-    
-    }
-
-}
-
-
-
-@media screen and (min-width:600px) {
-
-
-
-}
-
-
-
-@media screen and (min-width:1024px) {
-    
-    
     .storeSetting {
 
         .PageHeader__inner {
             justify-content:center;
+        }
+
+        &__addNew {
+            position:fixed; z-index:1000;
+            top:50%; left:50%; 
+            transform:translate(-50%, -50%);
+            margin:0;
+            padding:0.625rem 0.9375rem;
+            width:500px; max-width:100%;
+            background:#ffffff;
+            border-radius:5px;
+            h3 {
+                margin-bottom:5px;
+                font-size:0.9375rem;
+                color:$color-itemSetting3;
+            }
+            input, textarea {
+                width:100%;
+                border-radius:5px;
+                border:1px solid $color-itemSetting2;
+            }
+            textarea {
+                padding:0.6rem;
+                min-height:6.25rem;
+                outline:none;
+            }
+            
+            .addNew {
+                margin-bottom:1.25rem;
+                &:nth-last-child(1) {
+                    margin-bottom:0;
+                }
+                &__image {
+       
+                    .avatar  {
+                        margin:20px auto;
+                    }
+
+                    .addNew__imageFile {
+                        display:none;
+                    }
+                }
+                &__input {
+                    padding:5px;
+                    width:100%;
+                } 
+                &__btn {
+                    display:flex;
+                }
+            }
+
+            .JDmodal__head {
+                padding: 0.6rem;
+            }
+
+            .JDbtn {
+                width:100% !important;
+                &:hover {
+                    color:#ffffff;
+                    background:#000000 !important;
+                }
+            }
+
+            .extrablock__submit {
+                color:#ffffff;
+                background:#555555;
+            }
+            .extrablock__calcel {
+                color:#555555;
+                background:white;
+                border:1px solid #555555;
+            }
+
         }
 
         &__content {
@@ -219,11 +126,12 @@ $storeSet-padding-1:0.9375rem 1.5625rem;
 
 
         .storeList {
+            .JDcard__body {
             display:flex;
             flex-direction: row;
             margin-bottom:0.625rem;
-            padding:40px;
-            box-shadow: 3px 7px 20px -7px rgba(125,125,125,1);
+
+            }
             &__imageBlock {
                 display:flex; 
                 justify-content: center;
@@ -333,14 +241,240 @@ $storeSet-padding-1:0.9375rem 1.5625rem;
         }
 
     }
-    
+
+
+
+@include response($mobile) {
+
+    .storeSetting {
+
+        .PageHeader__inner {
+            justify-content:center;
+        }
+
+        &__addNew {
+            position:fixed; z-index:1000;
+            top:50%; left:50%; 
+            transform:translate(-50%, -50%);
+            margin:0;
+            padding:0.625rem 0.9375rem;
+            width:500px; max-width:100%;
+            background:#ffffff;
+            border-radius:5px;
+            h3 {
+                margin-bottom:5px;
+                font-size:0.9375rem;
+                color:$color-itemSetting3;
+            }
+            input, textarea {
+                width:100%;
+                border-radius:5px;
+                border:1px solid $color-itemSetting2;
+            }
+            textarea {
+                padding:0.6rem;
+                min-height:6.25rem;
+                outline:none;
+            }
+            
+            .addNew {
+                margin-bottom:1.25rem;
+                &:nth-last-child(1) {
+                    margin-bottom:0;
+                }
+                &__image {
+  
+                    .addNew__imageFile {
+                        display:none;
+                    }
+                }
+                &__input {
+                    padding:5px;
+                    width:100%;
+                } 
+                &__btn {
+                    display:flex;
+                }
+            }
+
+            .JDmodal__head {
+                padding: 0.6rem;
+            }
+
+            .JDbtn {
+                width:100% !important;
+                &:hover {
+                    color:#ffffff;
+                    background:#000000 !important;
+                }
+            }
+
+            .extrablock__submit {
+                color:#ffffff;
+                background:#555555;
+            }
+            .extrablock__calcel {
+                color:#555555;
+                background:white;
+                border:1px solid #555555;
+            }
+
+        }
+
+        &__content {
+            padding:20px;
+            background:#ffffff;
+        }
+
+
+        &__additem {
+            display:flex;
+            justify-content:center;
+            align-items: center;
+            margin-bottom:$storeSet-margin-2;
+            padding:$storeSet-padding-1;
+            width:100%;
+            font-size:1.125rem;
+            text-align:center;
+            cursor:pointer;
+            color:$color-storeSetting2;
+            background:#ffffff;
+            border:2px dashed $color-storeSetting2;
+            outline:none;
+            transition:background 500ms;
+            .iconWrapper {
+                margin-right:0.9375rem;
+            }
+            &:hover {
+                color:#ffffff;
+                background:$color-storeSetting2;
+            }
+        }
+
+
+        .storeList {
+            display:flex;
+            flex-direction: column;
+            margin-bottom:0.625rem;
+            padding:40px;
+            &__imageBlock {
+                display:flex; 
+                justify-content: center;
+                align-items: center;
+                margin:0 0 $storeSet-margin-3 0;
+                padding: 0 10px;
+                .storeList__image {
+                    width:120px;
+                    height:120px;
+                    background-size:cover;
+                    background-position:center;
+                    background-repeat:no-repeat;
+                    border-radius:100%;
+                }
+            }
+
+        
+            &__infoBlock {
+                flex:3;
+                margin-right:0px;
+                min-height:150px;
+                .infoBlock__name {
+                    display:flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-bottom:$storeSet-margin-4;
+                    strong {
+                        margin-bottom:0.625rem;
+                        font-size:1.5rem;
+                    }
+
+                    .iconWrapper {
+                        margin:0 0.625rem;
+                        font-size:0.8125rem;
+                    }
+                    b {
+                        font-size:1.1rem;
+                    }
+                }
+
+                .infoBlock__sold {
+                    display:flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-bottom:$storeSet-margin-4;
+                    padding:0.3125rem 0 0.625rem 0;
+                    font-size:1rem;
+                    border-bottom:1px solid $color-storeSetting4; 
+
+                    .infoBlock__soldList {
+                        display:flex;
+                        align-items: center;
+                        margin-bottom:0.3125rem;
+                        strong {
+                            margin-right:$storeSet-margin-3;
+                        }
+                        span {
+                            margin-right:$storeSet-margin-3;
+                        }
+                    }
+        
+                    .infoBlock__soldDeco {
+                        display:none;
+                        margin-right:$storeSet-margin-3;
+                        width:1px;
+                        height:15px;
+                        background:$color-storeSetting3;
+                    }
+
+                }
+
+                .infoBlock__desc {
+                    margin-bottom:20px;
+                    font-size:1rem;
+                    color:$color-storeSetting3;
+                }
+
+            }
+        
+            &__controlBlock {
+                display:flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-bottom:$storeSet-margin-4;
+                button {
+                    padding:0.4375rem 1.25rem;
+                    font-size:1rem;
+                    font-weight:bold;
+                    cursor:pointer;
+                }
+
+                .storeList__edit {
+                    margin-bottom:0.9375rem;
+                    color:$color-storeSetting2;
+                    background:#ffffff;
+                    border:1px solid $color-storeSetting2;
+                    border-radius:5px;
+                }
+
+                .storeList__delete {
+                    color:#ffffff;
+                    background:$color-storeSetting5;
+                    border:1px solid $color-storeSetting5;
+                    border-radius:5px;
+                }
+
+            }
+        
+        }
+
+    }
+
 }
 
 
-@media screen and (min-width:1600px) {
-    
 
-}
+
 
 
 

@@ -54,18 +54,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "home - 상품설명",
-                path:"/"
+                title: "상품설명",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "home - 판매목록",
-                path:"/"
+                title: "판매목록",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "home - 판매목록",
-                path:"/"
+                title: "판매목록",
+                path: "/"
             }
         ]
     },
@@ -74,18 +74,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "item - 상품설명",
-                path:"/"
+                title: "상품목록 1",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "item - 판매목록",
-                path:"/"
+                title: "상품목록 2",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "item - 판매목록",
-                path:"/"
+                title: "상품목록 3",
+                path: "/"
             }
         ]
     },
@@ -94,18 +94,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "store - 상품설명",
-                path:"/"
+                title: "상점설정 1",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "store - 판매목록",
-                path:"/"
+                title: "상점설정 2",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "store - 판매목록",
-                path:"/"
+                title: "상점설정 3",
+                path: "/"
             }
         ]
     },
@@ -114,18 +114,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "pay - 상품설명",
-                path:"/"
+                title: "결제설정 1",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "pay - 판매목록",
-                path:"/"
+                title: "결제설정 2",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "pay - 판매목록",
-                path:"/"
+                title: "결제설정 3",
+                path: "/"
             }
         ]
     },
@@ -134,18 +134,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "sms - 상품설명",
-                path:"/"
+                title: "SMS 설정1",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "sms - 판매목록",
-                path:"/"
+                title: "SMS 설정2",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "sms - 판매목록",
-                path:"/"
+                title: "SMS 설정3",
+                path: "/"
             }
         ]
     },
@@ -154,18 +154,18 @@ const Data_SubMain: ISubMenu[] = [
         sub: [
             {
                 icon: "menu",
-                title: "service - 상품설명",
-                path:"/"
+                title: "Service 설정 1",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "service - 판매목록",
-                path:"/"
+                title: "Service 설정 2",
+                path: "/"
             },
             {
                 icon: "menu",
-                title: "service - 판매목록",
-                path:"/"
+                title: "Service 설정 3",
+                path: "/"
             }
         ]
     }

@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Header from "./component/Common/Header";
 import MypageModal from "./component/Mypage/MypageModal";
 import Sidebar from "./component/Sidebar/Sidebar";
-import StoreSetting from './component/StoreSetting/StoreSetting';
+import StoreSettingWrap from './component/StoreSetting/StoreSettingWrap';
 import ItemSettingWrap from "./component/ItemSetting/ItemSettingWrap";
 
 const SalesPage = React.lazy(() => import('./page/sales/Sales'));
@@ -73,7 +73,7 @@ const MainRouter = () => {
         exact={true}
         path={"/storeset"}
         render={() => {
-          return <StoreSetting />;
+          return <StoreSettingWrap />;
         }}
       />
     </Suspense>

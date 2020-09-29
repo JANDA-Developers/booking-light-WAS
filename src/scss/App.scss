@@ -4,6 +4,9 @@
 @import "./components/Components";
 @import "./page/Page";
 
+html, body, #root, #JDoutWrapper {
+    overflow-x:visible;
+}
 #root.sideOpen #sidePlaceHolder {
     min-width: $sidebar-width;
     height: 20px;

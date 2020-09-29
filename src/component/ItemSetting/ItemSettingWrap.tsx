@@ -3,6 +3,11 @@ import ItemSetting from "./ItemSetting";
 
 const ItemSettingWrap = () => {
 
+    const headInfo = {
+        title: "상품설정",
+        desc: "판매 중인 상품의 상세 내용을 변경할 수 있습니다"
+    }
+
     const itemSort = [
         {
             label: 'Strawberry',
@@ -55,7 +60,7 @@ const ItemSettingWrap = () => {
     ];
 
 
-    return <ItemSetting itemSort={itemSort} itemInfo={itemInfo} />
+    return <ItemSetting headInfo={headInfo} itemSort={itemSort} itemInfo={itemInfo} />
 }
 
 export default ItemSettingWrap
