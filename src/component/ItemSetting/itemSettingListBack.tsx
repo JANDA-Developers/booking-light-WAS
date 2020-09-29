@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect, IUseModal } from "@janda-com/front";
-import ItemSettingItem from './ItemSettingItem';
 
 type TitemSettingList = {
     image: string,
@@ -14,10 +13,12 @@ type TitemSettingList = {
     available: number,
     address: string
 }
+
 interface IProps {
     itemInfo: TitemSettingList[]
     modalHook_add: IUseModal
 }
+
 
 const ItemSettingList: React.FC<IProps> = ({ itemInfo, modalHook_add }) => {
 
@@ -67,28 +68,6 @@ const ItemSettingList: React.FC<IProps> = ({ itemInfo, modalHook_add }) => {
 
     return (
         <div>
-            {/* {
-                itemInfo.map((itemList, index) => {
-                    return <ItemSettingItem
-                        index={index}
-                        key={itemList.info2}
-                        image={itemList.image}
-                        info1={itemList.info1}
-                        info2={itemList.info2}
-                        info3={itemList.info3}
-                        currency={itemList.currency}
-                        price={numberFormat(itemList.price)}
-                        sold={itemList.sold}
-                        available={itemList.available}
-                        address={itemList.address}
-                        handlePersonNum={handlePersonNum(false, index)}
-                        personNum={personNum}
-                        totalPrice={totalPrice}
-                        handleTotalPrice={handleTotalPrice(totalPrice[index], personNum[index])}
-                    ></ItemSettingItem>
-                })
-            } */}
-
             {
                 itemInfo.map((itemList, index) => {
                     return <div className="itemSetting__list" key={`list-${itemList.info2}`}>
