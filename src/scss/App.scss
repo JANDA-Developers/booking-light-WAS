@@ -1,7 +1,9 @@
 @import "./system/variables";
 @import "~@janda-com/front/src/scss/all.scss";
 @import "~@janda-com/janda-table/src/scss/Table.scss";
+@import "~@janda-com/price-table/src/scss/PriceTable.scss";
 @import "./components/Components";
+@import "./atom/Atom.scss";
 @import "./page/Page";
 
 #root.sideOpen #sidePlaceHolder {
@@ -16,4 +18,24 @@
 
 #sidePlaceHolder+div {
     width: 100%;
+}
+
+html {
+    @include response($full, desktophd) {
+        font-size: 1.1rem; //이것이 모든 타이포에 영향을줌
+    }
+
+    font-size: 1rem; //이것이 모든 타이포에 영향을줌
+
+    @include response($tablet) {
+        font-size: .9rem; //이것이 모든 타이포에 영향을줌
+    }
+
+    @include response($mobile) {
+        font-size: 0.8rem; //이것이 모든 타이포에 영향을줌
+    }
+
+    @include response($smobile) {
+        font-size: 0.75rem; //이것이 모든 타이포에 영향을줌
+    }
 }

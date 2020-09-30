@@ -1,4 +1,4 @@
-import { JDalign, JDcard, JDcontainer } from "@janda-com/front";
+import { JDalign, JDcard, JDcontainer, JDtypho } from "@janda-com/front";
 import { JDcolumn } from "@janda-com/janda-table";
 import React from "react";
 import { IGraphViewMode } from "../../../component/graph/components/ViewIcons";
@@ -34,14 +34,31 @@ const Statistic: React.FC<IProps> = () => {
         }
     ];
 
-    return <JDcontainer>
 
+    type TTitleProp = {
+        title: string;
+        desc: string;
+    }
+
+    const TitlePart: React.FC<TTitleProp> = ({ desc, title }) => {
+        return <JDalign mb="normal" style={{
+            alignItems: "end"
+        }} flex>
+            <JDtypho mr="small" mb="no" size="h6" weight={600}>{title}</JDtypho>
+            <JDtypho style={{
+                alignSelf: "flex-end"
+            }} >{desc}</JDtypho>
+        </JDalign>
+    }
+
+    return <div>
         <JDalign grid >
             <JDalign col={{
                 full: 6,
                 md: 12
             }}>
-                <JDcard>
+                <JDcard mode="border">
+                    <TitlePart title="잔다영화관" desc="상점 총 매출" />
                     <JDgraph viewMode={IGraphViewMode.doughnut} data={DummyData} />
                 </JDcard>
             </JDalign>
@@ -49,19 +66,20 @@ const Statistic: React.FC<IProps> = () => {
                 full: 6,
                 md: 12
             }}>
-                <JDcard>
+                <JDcard mode="border">
+                    <TitlePart title="잔다영화관" desc="상점 총 매출" />
                     <JDgraph viewMode={IGraphViewMode.line} data={DummyData} />
                 </JDcard>
             </JDalign>
         </JDalign>
-        <JDcard>
+        <JDcard mode="border" >
             <JDgraph
                 viewMode={IGraphViewMode.list}
                 data={DummyData}
                 columns={columns}
             />
         </JDcard>
-    </JDcontainer>
+    </div>
 
 }
 

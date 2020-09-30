@@ -1,7 +1,9 @@
 import React from 'react';
 import { JDcolumn, JDtable } from '@janda-com/janda-table';
-import { DEFAULT_PAGINATION_SETTING, JDalign, JDbutton, JDcard, JDpagination, JDselect, usePagination } from '@janda-com/front';
+import { DEFAULT_PAGINATION_SETTING, IUseDayPicker, IusePagination, IUseSelect, JDalign, JDbutton, JDcard, JDdoubleInputRange, JDpagination, JDselect, usePagination } from '@janda-com/front';
 import { InputText } from '@janda-com/front';
+import JDsearchBar from '../../../atom/SearchBar';
+import DoubleInputRange from '@janda-com/front/dist/components/dayPicker/component/inputComponent/DoubleInputRange';
 
 type TData = {
     _id: string;
@@ -46,7 +48,7 @@ const DUMMY_COLUMNS: JDcolumn<TData>[] = [
         },
     },
     {
-        Header: () => <div>예약자명예약자명예약자명예약자명예약자명</div>,
+        Header: () => <div>예약자명</div>,
         accessor: 'name',
         Cell: ({ value }) => {
             return <div>{value}</div>;
@@ -68,16 +70,28 @@ const DUMMY_COLUMNS: JDcolumn<TData>[] = [
     },
 ];
 
-interface IProp { }
+type TFilterList = "ex1" | "ex2" | "ex3" | "ex4";
 
-export const StaticList: React.FC<IProp> = () => {
+interface IProp {
+    dayPickerHook: IUseDayPicker;
+    paginationHook: IusePagination;
+    productHook: IUseSelect<string>;
+    storeHook: IUseSelect<string>;
+    statusHook: IUseSelect<string>;
+}
 
-    const paginationHook = usePagination(0);
+export const StaticList: React.FC<IProp> = ({ storeHook, statusHook, productHook, paginationHook, dayPickerHook }) => {
+
 
     return <div>
-        <JDcard>
-            <JDalign>
-
+        <JDcard padding="small" mode="border">
+            <JDalign flex={{
+                grow: true
+            }}>
+                <JDdoubleInputRange dayPickerHook={dayPickerHook} />
+                <JDselect mb="no" mr="normal" {...storeHook} />
+                <JDselect mb="no" mr="normal" {...productHook} />
+                <JDselect mb="no" mr="normal" {...statusHook} />
             </JDalign>
         </JDcard>
         <div>
@@ -91,12 +105,11 @@ export const StaticList: React.FC<IProp> = () => {
             {...DEFAULT_PAGINATION_SETTING}
             {...paginationHook}
         />
-        <JDalign flex>
-            <JDselect autoSize size="small" />
-            <InputText /> <JDbutton br="round" mode="flat" thema="black" size="small">검색</JDbutton>
-        </JDalign>
+        <JDsearchBar<TFilterList> onSearch={() => { }} defaultOp={{
+            label: "ex1",
+            value: "ex1"
+        }} filterOps={[]} />
     </div>
-        ;
 };
 
 export default StaticList;
