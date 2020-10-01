@@ -63,7 +63,7 @@ export const AccountRegistModal: React.FC<IProp> = ({ modalHook, onSubmit }) => 
         title: "계좌번호 등록하기"
     }} {...modalHook}>
 
-        <JDtypho size="h6" decoration="bar">계좌번호 입력</JDtypho>
+        <JDtypho mb="large" size="h6" decoration="bar">계좌번호 입력</JDtypho>
         <JDalign flex={{
             vCenter: true,
             grow: true
@@ -79,16 +79,13 @@ export const AccountRegistModal: React.FC<IProp> = ({ modalHook, onSubmit }) => 
             }} label="계좌번호('-'없이 숫자만 입력 해주세요)" />
         </JDalign>
 
-        <JDsingleUploader labelProp={{
+        <JDsingleUploader mb="largest" labelProp={{
             txt: "통장사본"
-        }} fileUploaderHook={account_copyHook} buttonProps={{
-            label: "파일 선택",
-            thema: "grey1",
-            mode: 'flat',
-            br: "square"
-        }} />
+        }} fileUploaderHook={account_copyHook} />
 
-        <JDtypho size="h6" decoration="bar">세금 계산서 정보 입력</JDtypho>
+        <JDtypho mb="large" size="h6" style={{
+            borderColor: "#555"
+        }} decoration="bar">세금 계산서 정보 입력</JDtypho>
         <JDalign grid>
             <JDalign col={{
                 full: 6,

@@ -14,11 +14,11 @@ interface IProps {
     address: string,
     personNum: number,
     totalPrice: number,
-    handlePersonNum: (state: boolean, index: number) => void,
-    handleAddItem: (index: number) => void;
+    onPersonNum: (state: boolean, index: number) => void,
+    onAddItem: (index: number) => void;
 }
 
-const ItemSettingList: React.FC<IProps> = ({ index, image, info1, info2, info3, price, currency, sold, available, address, personNum, totalPrice, handlePersonNum, handleAddItem }) => {
+const ItemSettingLi: React.FC<IProps> = ({ index, image, info1, info2, info3, price, currency, sold, available, address, personNum, totalPrice, onAddItem, onPersonNum }) => {
 
     const numberFormat = (price: number) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -74,11 +74,11 @@ const ItemSettingList: React.FC<IProps> = ({ index, image, info1, info2, info3, 
                         <b>인원추가</b>
                     </div>
                     <div className="controller">
-                        <button onClick={() => { handlePersonNum(false, index) }}>
+                        <button onClick={() => { onPersonNum(false, index) }}>
                             <JDicon icon="plus" size="tiny" className="controller__minus"></JDicon>
                         </button>
                         <input type="text" className="controller__number" value={personNum} readOnly />
-                        <button onClick={() => { handlePersonNum(true, index) }}>
+                        <button onClick={() => { onPersonNum(true, index) }}>
                             <JDicon icon="plus" size="tiny" className="controller__plus"></JDicon>
                         </button>
                     </div>
@@ -89,7 +89,7 @@ const ItemSettingList: React.FC<IProps> = ({ index, image, info1, info2, info3, 
                     </strong>
                 </section>
             </div>
-            <button className="itemSetting__additem" onClick={() => { handleAddItem(index) }}>
+            <button className="itemSetting__additem" onClick={() => { onAddItem(index) }}>
                 <JDicon icon="plus" className="controller__plus"></JDicon>
                 <strong>부가상품 추가하기</strong>
             </button>
@@ -97,4 +97,4 @@ const ItemSettingList: React.FC<IProps> = ({ index, image, info1, info2, info3, 
     )
 }
 
-export default ItemSettingList
+export default ItemSettingLi

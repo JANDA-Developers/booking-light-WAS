@@ -1,38 +1,38 @@
 import React from 'react';
-import { JDicon } from '@janda-com/front';
+import { JDicon, JDtypho } from '@janda-com/front';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 
 export type TSidebarMain = {
-    key:string,
-    icon : IIcons,
-    title : string,
+    key: string,
+    icon: IIcons,
+    title: string,
 }
 interface IProps {
-    mainMenu:TSidebarMain[],
-    menuKey:string,
-    menuKeyUpdate(key:string):void
+    mainMenu: TSidebarMain[],
+    menuKey: string,
+    menuKeyUpdate(key: string): void
 }
-const SidebarMainMenu:React.FC<IProps> = ({menuKey, mainMenu, menuKeyUpdate}) => {
+const SidebarMainMenu: React.FC<IProps> = ({ menuKey, mainMenu, menuKeyUpdate }) => {
     return (
         <ul className="Sidebar__mainMenu">
-             {
-                mainMenu.map((list)=>{
+            {
+                mainMenu.map((list) => {
                     let listClicked = menuKey == `sidebar_${list.key}` ? "on" : "";
-                    return  <li className={`mainMenu__list ${listClicked}`} key={`sidebar_${list.key}`}>
-                        <a href="" 
-                           id={`sidebar_${list.key}`} 
-                           className="mainMenu__link"
-                           onClick={
-                               (e)=>{
+                    return <li className={`mainMenu__list ${listClicked}`} key={`sidebar_${list.key}`}>
+                        <a href=""
+                            id={`sidebar_${list.key}`}
+                            className="mainMenu__link"
+                            onClick={
+                                (e) => {
                                     e.preventDefault();
                                     let target = e.currentTarget.getAttribute('id');
-                                    if(target)
+                                    if (target)
                                         menuKeyUpdate(target);
-                               }
-                           }
+                                }
+                            }
                         >
-                            <JDicon icon={list.icon}/>
-                            <b>{list.title}</b>
+                            <JDicon icon={list.icon} />
+                            <JDtypho>{list.title}</JDtypho>
                         </a>
                     </li>
                 })

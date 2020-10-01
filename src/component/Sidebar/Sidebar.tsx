@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SidebarMainMenu, { TSidebarMain } from './SidebarMainMenu'
 import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { JDicon } from '@janda-com/front';
+import { JDicon, JDtypho } from '@janda-com/front';
 
 interface IMainMenu {
     key: string,
@@ -207,12 +207,12 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
     return (
         <div className={`Sidebar ${isOpen || 'Sidebar--close'}`}>
             <div className="Sidebar__head">
-                <strong className="Sidebar__name">
-                    {useInfo.name}<small>님</small>
-                </strong>
-                <p className="Sidebar__latest">
+                <JDtypho mb="small" size="h5" weight={600}>
+                    {useInfo.name}<JDtypho component="span" size="small">님</JDtypho>
+                </JDtypho>
+                <JDtypho mb="small" size="tiny">
                     최근 접속일 2020 09 03 13:58:00
-                </p>
+                </JDtypho>
                 <div className="Sidebar__memberNav">
                     <a href="#" className="Sidebar__login off" onClick={() => { onLogin(false) }}>로그인</a>
                     <a href="#" className="SideBar__logout" onClick={() => { onLogin(true) }}>로그아웃</a>

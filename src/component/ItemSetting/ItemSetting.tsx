@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import moment from 'moment'
-import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect, JDmodal, JDdayPickerModal, useDayPicker } from "@janda-com/front";
-import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
-import DayPicker, { CaptionElementProps, NavbarElementProps } from "react-day-picker";
-import { InputText } from '@janda-com/front';
+import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect, JDmodal, JDdayPickerModal, useDayPicker, toast } from "@janda-com/front";
 import { useModal } from '@janda-com/front';
-import ItemSettingList from './ItemSettingList';
-import ItemSettingListNew from './ItemSettingListNew';
+import ItemSettingLi from './ItemSettingLi';
+import { InputText } from '@janda-com/front';
+import { IselectedOption } from '@janda-com/front/dist/types/interface';
 
 type TheadInfo = {
     title: string,
@@ -18,7 +16,7 @@ type TitemSort = {
     value: string
 }
 
-type TitemSettingList = {
+type TItemInfo = {
     image: string,
     info1: string,
     info2: string,
@@ -31,7 +29,7 @@ type TitemSettingList = {
 }
 
 interface IProps {
-    itemInfo: TitemSettingList[]
+    itemInfo: TItemInfo[]
     itemSort: TitemSort[]
     headInfo: TheadInfo
 }
@@ -78,22 +76,19 @@ const ItemSetting: React.FC<IProps> = ({ headInfo, itemSort, itemInfo }) => {
     }
 
     const handleAddItem = (index: number) => {
-        alert(`modal index ${index}`)
         modalHook_add.openModal();
-
     }
-
 
     const changeDay = (state: string) => {
 
         if (state == 'next') {
-            let newDate = moment(DayPickerHook.from).add(1, 'day').toDate();
+            const newDate = moment(DayPickerHook.from).add(1, 'day').toDate();
             DayPickerHook.setDate(newDate);
         } else if (state == 'prev') {
-            let selectedDay = moment(DayPickerHook.from).format('YYYY-MM-DD');
-            let today = moment(dateToday).format('YYYY-MM-DD');
+            const selectedDay = moment(DayPickerHook.from).format('YYYY-MM-DD');
+            const today = moment(dateToday).format('YYYY-MM-DD');
             if (selectedDay == today) {
-                alert('오늘 이전으로 설정할 수 없습니다');
+                toast.warn('오늘 이전으로 설정할 수 없습니다');
             } else {
                 let newDate = moment(DayPickerHook.from).subtract(1, 'day').toDate();
                 DayPickerHook.setDate(newDate);
@@ -104,7 +99,6 @@ const ItemSetting: React.FC<IProps> = ({ headInfo, itemSort, itemInfo }) => {
     }
 
     const handleSelect = (selected: IselectedOption<any>) => {
-
     }
 
     const handleExtra = (state: boolean) => {
@@ -142,7 +136,7 @@ const ItemSetting: React.FC<IProps> = ({ headInfo, itemSort, itemInfo }) => {
                 </section>
             </JDmodal>
             <div className="itemSetting">
-                <JDpageHeader displayIcon={false} title={headInfo.title} desc={headInfo.desc} />
+                <JDpageHeader title={headInfo.title} desc={headInfo.desc} />
                 <div className="itemSetting__content">
                     <div className="itemSetting__control">
                         <section>
@@ -174,21 +168,13 @@ const ItemSetting: React.FC<IProps> = ({ headInfo, itemSort, itemInfo }) => {
                     </div>
                     {
                         itemInfo.map((list, index) => {
-                            return <ItemSettingList
+                            return <ItemSettingLi
+                                {...list}
                                 index={index}
-                                image={list.image}
-                                info1={list.info1}
-                                info2={list.info2}
-                                info3={list.info3}
-                                price={list.price}
-                                currency={list.currency}
-                                sold={list.sold}
-                                available={list.available}
-                                address={list.address}
                                 personNum={personNum[index]}
                                 totalPrice={totalPrice[index]}
-                                handlePersonNum={handlePersonNum}
-                                handleAddItem={handleAddItem}
+                                onPersonNum={handlePersonNum}
+                                onAddItem={handleAddItem}
                             />
                         })
                     }

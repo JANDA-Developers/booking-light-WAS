@@ -1,5 +1,6 @@
 .Sidebar {
-    position: fixed; z-index:1000;
+    position: fixed;
+    z-index: 1000;
     top: 0;
     left: 0;
     width: $sidebar-width;
@@ -15,29 +16,18 @@
         flex-direction: column;
         justify-content: center;
         position: relative;
-        padding: 0.9375rem;
-        min-height: 7.8125rem;
+        padding: space(2);
+        min-height: $header-height;
         color: white;
         background: $primary-color;
     }
 
-    &__name {
-        display: block;
-        margin-bottom: 0.625rem;
-        font-size: 1.5rem;
-
-        small {
-            font-size: 0.6em;
-        }
-    }
-
     &__latest {
-        font-size: 0.75rem;
         opacity: 0.5;
     }
 
     &__memberNav {
-        font-size: 0.8125rem;
+        font-size: $typho-small;
 
         .off {
             display: none;
@@ -46,7 +36,7 @@
         a {
             display: inline-block;
             position: relative;
-            padding: 0 0.9375rem;
+            padding: 0 space(2);
             font-weight: bold;
 
             &.Sidebar__login {
@@ -71,8 +61,8 @@
 
     &__close {
         position: absolute;
-        bottom: 2.1875rem;
-        right: 1.5625rem;
+        bottom: space(5);
+        right: space(4);
     }
 
     &__menu {
@@ -87,33 +77,29 @@
 
         .mainMenu__list {
             display: block;
-            padding: 0.625rem 0.625rem;
+            padding: space(1) space(1);
 
             &.on {
                 .mainMenu__link {
+                    color: white;
                     background: $primary-color;
-
-                    b {
-                        color: white;
-                    }
                 }
             }
         }
 
         .mainMenu__link {
             display: block;
-            padding: 0.625rem 0;
+            padding: space(1) 0;
             text-align: center;
-            border-radius: 0.625rem;
+            border-radius: $br2;
             transition: background 300ms;
 
             .iconWrapper {
                 display: block;
-                margin: 0 auto 0.4375rem auto;
+                margin: 0 auto space(1) auto;
             }
 
             b {
-
                 font-size: 0.8125rem;
                 transition: color 300ms;
             }
@@ -130,22 +116,17 @@
 
     &__subMenu {
         flex: 2;
-        background: #eeeeee;
+        background: $grey-level0;
 
         .subMenu__list {
-            padding-left: 1.875rem;
-            border-bottom: 1px solid #dbdbdb;
+            padding-left: space(4);
+            border-bottom: 1px solid $grey-level1;
         }
 
         .subMenu__link {
             display: flex;
             align-items: center;
-            padding: 0.9375rem 0;
-
-            b {
-                margin-left: 0.9375rem;
-                font-size: 0.8125rem;
-            }
+            padding: space(2) 0;
         }
     }
 

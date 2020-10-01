@@ -1,10 +1,10 @@
 import { JDcard, JDcontainer, JDpageHeader, WindowSize } from "@janda-com/front";
 import React, { useState } from "react";
 import Account from "./components/Account";
-import StaticList from "./components/StaticList";
+import { StaticListWrap } from "./components/StaticListWrap";
 import Statistic from "./components/Statistic";
 
-export const Sales = () => {
+export const Static = () => {
 
     const [tap, setTap] = useState(1);
 
@@ -33,8 +33,8 @@ export const Sales = () => {
                     },
                 ]}>
                 <div>
-                    {tap === 1 ? <Account registered /> : undefined}
-                    {tap === 2 ? <StaticList /> : undefined}
+                    {tap === 1 ? <Account /> : undefined}
+                    {tap === 2 ? <StaticListWrap /> : undefined}
                     {tap === 3 ? <Statistic /> : undefined}
                 </div>
             </JDcard>
@@ -42,4 +42,4 @@ export const Sales = () => {
     </div>
 }
 
-export default Sales
+export default Static

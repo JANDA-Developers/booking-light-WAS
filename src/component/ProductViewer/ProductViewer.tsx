@@ -1,8 +1,10 @@
-import React from "react";
 import moment from "moment";
-import { JDicon, JDbutton } from "@janda-com/front";
+import { JDicon, JDbutton, JDtypho, JDalign } from "@janda-com/front";
+import Item from "./components/Item";
+import React, { useState } from "react";
+import { Arrows } from "./components/Arrows";
 
-type TItem = {
+export type TItem = {
   name: string;
   count: number;
   total: number;
@@ -21,7 +23,7 @@ interface IProps {
 }
 
 const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange }) => {
-
+  const [expend, setExpend] = useState([]);
   const handleDateArrow = (positive: boolean) => {
     // toDate 메서드를통해서 momnet객체에서 Date 객체로 변환가능
     const nextDate = moment(date)
@@ -36,77 +38,54 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
       const Date = moment(date)
         .add(index - 3, "day")
         .toDate();
-      const itemDatas = datas.filter((dayList) => {
+      const itemDatas = datas.find((dayList) => {
         return moment(Date).isSame(dayList.date, "day")
       });
-      const items = itemDatas.map((i) => i.item);
-      return { Date, items };
+
+      return { Date, items: itemDatas?.item || [] };
     });
 
   return (
-    <div className="dashboard__saleStatus">
-      <div className="statusNav">
-        <span className="statusNav__date">
+    <div className="productViewer">
+      <JDalign flex={{
+        vCenter: true
+      }} className="productViewer__nav">
+        <JDtypho weight={600} size={"h6"}>
           {moment(date).format("YYYY.MM.DD")}
-        </span>
-        <span className="statusNav__arrow">
-          <JDicon
-            icon="shortLeft"
-            className="statusPrev"
-            onClick={() => {
-              handleDateArrow(false);
-            }}
-          />
-          <JDicon
-            icon="shortRight"
-            className="statusNext"
-            onClick={() => {
-              handleDateArrow(true);
-            }}
-          />
-        </span>
-      </div>
-      <div className="statusListWrap">
-        {renderData.map((itemInfo) => {
-          let selectedDay = moment(date).isSame(itemInfo.Date, "day");
-          let dayInfo = moment(itemInfo.Date).format('YYYYMMDD');
-          let dataLeng = itemInfo.items.length;
+        </JDtypho>
+        <Arrows onDateArrow={handleDateArrow} />
+      </JDalign>
+      <JDalign flex={{
+        grow: true
+      }} className="productViewer__ul">
+        {renderData.map((itemInfo, i) => {
+          const { Date, items } = itemInfo;
+          const selectedDay = moment(date).isSame(itemInfo.Date, "day");
+          const dayInfo = moment(Date).format('YYYYMMDD');
+          const dataLeng = items.length;
+          const sliced = items.slice(0, 8);
+          const expended = expend.find(index => index === i);
+          let visibleData = expended ? itemInfo.items : sliced
+
           return (
-            <div className="statusList" key={`status-${dayInfo}`}>
-              <div className={`statusList__date ${selectedDay && "selected"}`}>
+            <div className="productViewer__li" key={`status-${dayInfo}`}>
+              <JDalign mb="large" flex={{
+                vCenter: true,
+                between: true
+              }} className={`productViewer__date ${selectedDay && "selected"}`}>
                 <span>{moment(itemInfo.Date).format("DD")}</span>
                 <span>{moment(itemInfo.Date).format("ddd")}</span>
-              </div>
-              <ul className="statusList__itemBlock">
-                {itemInfo.items.map((item) => {
-                  return item.slice(0, listNum).map((infoList) => {
-                    return (
-                      <li className="items selected" key={`statusList-${infoList.name}`}>
-                        <div className="items__deco"></div>
-                        <div className="items__info">
-                          <div className="items__name">
-                            {infoList.name}
-                          </div>
-                          <div className="items__count">
-                            <span className="items__booked">
-                              {infoList.count}
-                            </span>
-                            <span> / </span>
-                            <span className="items__total">
-                              {infoList.total}
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  })
-                })}
-                <JDbutton mode={'flat'} thema="positive" label={'더보기'} />
+              </JDalign>
+              <ul className="productViewer__itemsWrap">
+                {visibleData.map((item) => <Item key={`productViewer-${item.name}`} info={item} />)}
+                {(dataLeng > 8 && !expended) && <JDbutton style={{
+                  width: "100%"
+                }} size="small" mode={'flat'} thema="primary" label={'더보기'} />}
               </ul>
             </div>
           );
         })}
-      </div>
+      </JDalign>
     </div>
   );
 };

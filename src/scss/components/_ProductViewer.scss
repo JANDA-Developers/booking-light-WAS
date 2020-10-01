@@ -1,0 +1,63 @@
+@import "../system/variables";
+
+$color-statusList-border: $grey-level1;
+$color-statusNav-border:$grey-level1;
+$padding-saleStatus: space(1);
+
+/* :::::::: Title :::::::: */
+$fontSize-title: $typho-huge;
+$fontsize-subtitle: $typho-large;
+$margin-title: space(3);
+$margin-bottom-subtitle: space(4);
+
+
+$common-border: 1px solid $outborder-color;
+/* :::::::: Items :::::::: */
+$color-itemBorder : $grey-level1;
+$color-itemDeco:$grey-level1;
+$color-itembg:rgba(167, 167, 167, 0.2);
+$color-itemBorderOn :$error-color;
+$color-itemDecoOn: $error-color;
+$color-itembgOn:rgba(233, 15, 15, 0.2);
+
+/* :::::::: Btns :::::::: */
+$color-viewmore-bg:$primary-color;
+$color-viewmore-border:$primary-color;
+
+/* ::::::::::: Override ::::::::::: */
+.dashboard {}
+
+.productViewer {
+    &__ul {
+        border: $common-border;
+
+        &--today {}
+    }
+
+    &__li {
+        padding: space(2);
+        border-right: $common-border;
+
+        &:last-child {
+            border-right: none;
+        }
+
+
+    }
+
+    .item {
+        font-size: $typho-small;
+        background-color: $grey-level1;
+        padding: space(1);
+        margin-bottom: space(1);
+        border-radius: $br1;
+
+        &__deco {
+            margin-right: space(2);
+            background-color: $grey-level2;
+            width: space(1);
+            border-radius: $br1;
+        }
+    }
+
+}

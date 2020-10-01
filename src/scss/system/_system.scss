@@ -1,0 +1,39 @@
+html,
+body,
+#root,
+#JDoutWrapper {
+    overflow-x: visible;
+}
+
+#root.sideOpen #sidePlaceHolder {
+    min-width: $sidebar-width;
+    height: 20px;
+}
+
+#contentWrapper {
+    width: 100%;
+}
+
+#sidePlaceHolder+div {
+    width: 100%;
+}
+
+html {
+    @include response($full, desktophd) {
+        font-size: 1.1rem; //이것이 모든 타이포에 영향을줌
+    }
+
+    font-size: 1rem; //이것이 모든 타이포에 영향을줌
+
+    @include response($tablet) {
+        font-size: .9rem; //이것이 모든 타이포에 영향을줌
+    }
+
+    @include response($mobile) {
+        font-size: 0.8rem; //이것이 모든 타이포에 영향을줌
+    }
+
+    @include response($smobile) {
+        font-size: 0.75rem; //이것이 모든 타이포에 영향을줌
+    }
+}

@@ -1,24 +1,26 @@
 import { autoComma, InputText, JDalign, JDbutton, JDcard, JDsplinter, JDtypho, useModal } from "@janda-com/front";
+import { IProps } from "@janda-com/front/dist/components/checkbox/CheckBox";
+import { IDiv } from "@janda-com/front/dist/types/interface";
 import React from "react";
+import { PolicyCard } from "../../../component/Common/PolicyCard";
 import AccountRegistModal from "./AccountRegistModal";
 
-const Section: React.FC = ({ children }) => {
-    return <div className="JDselection">
+const Section: React.FC<IDiv> = ({ children, className, ...props }) => {
+    return <div className={`JDselection ${className}`} {...props}>
         {children}
     </div>
 }
 
-
 interface Iprops {
-    registered: boolean;
+    registered?: boolean;
 }
 
 const Account: React.FC<Iprops> = ({ registered }) => {
 
-    const accountModalHook = useModal(true);
+    const accountModalHook = useModal(false);
 
     return <div className="account">
-        <Section>
+        <Section className="account__body">
             <JDtypho flex={{
                 between: true,
                 vCenter: true,
@@ -40,7 +42,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                 </JDtypho>
             </JDtypho>
         </Section>
-        <Section>
+        <Section className="account__body">
             <JDalign flex={{
                 between: true
             }}>
@@ -52,7 +54,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         <JDalign mb="normal">
                             은행
                         </JDalign>
-                        <JDalign mb="normal">
+                        <JDalign mb="no">
                             계좌번호
                         </JDalign>
                     </JDtypho>
@@ -63,7 +65,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         <JDalign mb="normal">
                             국민은행
                         </JDalign>
-                        <JDalign mb="normal">
+                        <JDalign mb="no">
                             555927834702
                         </JDalign>
                     </JDalign>
@@ -75,7 +77,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         </JDbutton>
                     </div>
                     <div>
-                        <JDbutton style={{
+                        <JDbutton mb="no" style={{
                             width: "100%"
                         }} br="square" mode="flat" padding="huge" thema="point">
                             출금 신청
@@ -83,57 +85,22 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                     </div>
                 </div>
             </JDalign>
-
-            {registered || <JDalign flex={{
-                center: true,
-                vCenter: true
-            }} className="Account__cover">
-                <JDtypho color="white">
-                    등록된 계좌번호가 없습니다.
-                </JDtypho>
-                <JDbutton onClick={accountModalHook.openModal} mode="flat">
-                    등록하기
-                </JDbutton>
+            {registered || <JDalign text={"center"} className="account__cover">
+                <div>
+                    <JDtypho mb="large" color="white">
+                        등록된 계좌번호가 없습니다.
+                    </JDtypho>
+                    <JDbutton onClick={accountModalHook.openModal} mode="flat">
+                        등록하기
+                    </JDbutton>
+                </div>
             </JDalign>}
         </Section>
         <Section>
-            <JDcard foot={{
-            }} className="account__infoCard">
-                <div>
-                    <JDtypho size="small" color="grey4" grid>
-                        <JDalign col={{
-                            full: 6,
-                            md: 12
-                        }}>
-                            <JDtypho mb="normal" color="grey4">
-                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
-                    </JDtypho>
-                            <JDtypho mb="normal" color="grey4">
-                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
-                    </JDtypho>
-                            <JDtypho mb="normal" color="grey4">
-                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
-                    </JDtypho>
-                        </JDalign>
-                        <JDalign col={{
-                            full: 6,
-                            md: 12
-                        }}>
-                            <JDtypho mb="normal" color="grey4">
-                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
-                    </JDtypho>
-                            <JDtypho mb="normal" color="grey4">
-                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
-                    </JDtypho>
-                            <JDtypho mb="normal" color="grey4">
-                                - 매주 목요일 오후 4시 이전에 지급 됩니다.
-                    </JDtypho>
-                        </JDalign>
-                    </JDtypho>
-                </div>
-            </JDcard>
+            <PolicyCard contents={[' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.']} />
         </Section>
-        <AccountRegistModal onSubmit={() => { }} modalHook={accountModalHook} />
+        <AccountRegistModal onSubmit={(select, search) => {
+        }} modalHook={accountModalHook} />
     </div>
 }
 

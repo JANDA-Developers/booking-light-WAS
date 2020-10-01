@@ -1,24 +1,24 @@
 $header-bgcolor: $primary-color;
-$header-white-1:#fffeff;
+$header-white-1: $grey-level0;
 
 .header {
     &__top {
         position: relative;
-        height: 2.8125rem;
+        height: space(6);
         color: $header-white-1;
         background: $header-bgcolor;
-        border-bottom: 1px solid #fbfbfb;
+        border-bottom: 1px solid $grey-level0;
     }
 
     &__version {
         position: absolute;
-        right: 1.875rem;
-        bottom: 0.9375rem;
+        right: space(4);
+        bottom: space(2);
     }
 
     &__bottom {
         position: relative;
-        height: 5rem;
+        height: space(12);
         background: $header-bgcolor;
 
         path {
@@ -29,12 +29,12 @@ $header-white-1:#fffeff;
     &__items {
         position: absolute;
         top: 50%;
-        right: 1.875rem;
+        right: space(4);
         transform: translate(0, -50%);
 
         .iconWrapper {
             display: inline-block;
-            margin-right: 1.25rem;
+            margin-right: space(3);
 
             &:last-child() {
                 margin-right: 0;

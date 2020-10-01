@@ -99,7 +99,7 @@ const StoreSetting: React.FC<IProps> = ({ headInfo, storeList }) => {
                 </section>
             </JDmodal>
             <div className="storeSetting">
-                <JDpageHeader displayIcon={false}
+                <JDpageHeader
                     title={headInfo.title}
                     desc={headInfo.desc}
                 />

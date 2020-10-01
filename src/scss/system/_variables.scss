@@ -2,3 +2,7 @@ $primary-color : #7ac3a6;
 $primary-color-dark : darken(#7ac3a6, 10);
 $point-color: #ff6760;
 $sidebar-width: 15.625rem;
+
+$header-top-height: space(6);
+$header-bottom-height: space(12);
+$header-height: $header-top-height+$header-bottom-height
