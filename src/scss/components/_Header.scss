@@ -1,10 +1,20 @@
 $header-bgcolor: $primary-color;
 $header-white-1: $grey-level0;
 
+
 .header {
+
+    .iconSearch {
+        color: white !important;
+    }
+
+    .iconSearch--open {
+        color: $html-color !important;
+    }
+
     &__top {
         position: relative;
-        height: space(6);
+        height: $header-top-height;
         color: $header-white-1;
         background: $header-bgcolor;
         border-bottom: 1px solid $grey-level0;
@@ -18,29 +28,16 @@ $header-white-1: $grey-level0;
 
     &__bottom {
         position: relative;
-        height: space(12);
+        height: $header-bottom-height;
         background: $header-bgcolor;
+        padding: space(4);
 
-        path {
-            fill: $header-white-1;
-        }
     }
 
     &__items {
-        position: absolute;
-        top: 50%;
-        right: space(4);
-        transform: translate(0, -50%);
-
-        .iconWrapper {
-            display: inline-block;
-            margin-right: space(3);
-
-            &:last-child() {
-                margin-right: 0;
-            }
-        }
+        height: 100%;
     }
+
 }
 
 @media screen and (min-width:600px) {}

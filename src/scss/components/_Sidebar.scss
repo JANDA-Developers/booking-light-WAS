@@ -1,6 +1,6 @@
 .Sidebar {
     position: fixed;
-    z-index: 1000;
+    z-index: $z-index-7;
     top: 0;
     left: 0;
     width: $sidebar-width;
@@ -99,17 +99,9 @@
                 margin: 0 auto space(1) auto;
             }
 
-            b {
-                font-size: 0.8125rem;
-                transition: color 300ms;
-            }
-
             &:hover {
                 background: $primary-color;
-
-                b {
-                    color: white;
-                }
+                color: white;
             }
         }
     }

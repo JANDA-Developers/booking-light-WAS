@@ -89,9 +89,9 @@ export const StaticList: React.FC<IProp> = ({ storeHook, statusHook, productHook
                 grow: true
             }}>
                 <JDdoubleInputRange dayPickerHook={dayPickerHook} />
-                <JDselect mb="no" mr="normal" {...storeHook} />
-                <JDselect mb="no" mr="normal" {...productHook} />
-                <JDselect mb="no" mr="normal" {...statusHook} />
+                <JDselect mr="normal" {...storeHook} />
+                <JDselect mr="normal" {...productHook} />
+                <JDselect mr="normal" {...statusHook} />
             </JDalign>
         </JDcard>
         <div>

@@ -1,16 +1,16 @@
 import React from "react"
-import moment from "moment"
+import dayjs from "dayjs"
 import { JDicon } from "@janda-com/front"
 
 
-type TItem = {
-    name:string;
-    count:number;
+type TProduct = {
+    name: string;
+    count: number;
 }
 
 type TData = {
     date: Date,
-    item: TItem
+    product: TProduct
 }
 
 interface IProps {
@@ -22,20 +22,20 @@ interface IProps {
 const ProductViewer: React.FC<IProps> = ({ date, datas, onDateChange }) => {
     const handleDateArrow = (positive: boolean) => {
         // toDate 메서드를통해서 momnet객체에서 Date 객체로 변환가능
-        const nextDate = moment(date).add(positive ? 1 : -1).toDate()
+        const nextDate = dayjs(date).add(positive ? 1 : -1, "d").toDate()
         onDateChange(nextDate)
     }
 
     const renderData = Array(7).fill(null).map((_, i) => {
-        const Date = moment(date).add(i - 3, "day").toDate()
-        const itemDatas = datas.filter(i => moment(date).isSame(i.date));
-        const items = itemDatas.map(i => i.item);
+        const Date = dayjs(date).add(i - 3, "day").toDate()
+        const productDatas = datas.filter(i => dayjs(date).isSame(i.date));
+        const products = productDatas.map(i => i.product);
 
         console.log(date);
         console.log(i);
 
 
-        return { Date, items };
+        return { Date, products };
     })
 
     return <div>
@@ -46,13 +46,13 @@ const ProductViewer: React.FC<IProps> = ({ date, datas, onDateChange }) => {
             <JDicon icon="shortRight" onClick={() => {
                 handleDateArrow(true)
             }} />
-            {moment(date).format("YYYY.MM.DD")}
+            {dayjs(date).format("YYYY.MM.DD")}
         </div>
         {renderData.map(date => {
             return <div>
-                {date.items.map(i => {
+                {date.products.map(i => {
                     return <div>
-                        
+
                         {/* 아이템 출력 */}
                     </div>
                 })}

@@ -1,10 +1,10 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { JDicon, JDbutton, JDtypho, JDalign } from "@janda-com/front";
-import Item from "./components/Item";
+import Product from "./components/Product";
 import React, { useState } from "react";
 import { Arrows } from "./components/Arrows";
 
-export type TItem = {
+export type TProduct = {
   name: string;
   count: number;
   total: number;
@@ -12,7 +12,7 @@ export type TItem = {
 
 type TData = {
   date: Date;
-  item: TItem[];
+  product: TProduct[];
 };
 
 interface IProps {
@@ -26,8 +26,8 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
   const [expend, setExpend] = useState([]);
   const handleDateArrow = (positive: boolean) => {
     // toDate 메서드를통해서 momnet객체에서 Date 객체로 변환가능
-    const nextDate = moment(date)
-      .add(positive ? 1 : -1, "days")
+    const nextDate = dayjs(date)
+      .add(positive ? 1 : -1, "d")
       .toDate();
     onDateChange(nextDate);
   };
@@ -35,14 +35,14 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
   const renderData = Array(7)
     .fill(null)
     .map((_, index) => {
-      const Date = moment(date)
+      const Date = dayjs(date)
         .add(index - 3, "day")
         .toDate();
-      const itemDatas = datas.find((dayList) => {
-        return moment(Date).isSame(dayList.date, "day")
+      const productDatas = datas.find((dayList) => {
+        return dayjs(Date).isSame(dayList.date, "day")
       });
 
-      return { Date, items: itemDatas?.item || [] };
+      return { Date, products: productDatas?.product || [] };
     });
 
   return (
@@ -51,21 +51,21 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
         vCenter: true
       }} className="productViewer__nav">
         <JDtypho weight={600} size={"h6"}>
-          {moment(date).format("YYYY.MM.DD")}
+          {dayjs(date).format("YYYY.MM.DD")}
         </JDtypho>
         <Arrows onDateArrow={handleDateArrow} />
       </JDalign>
       <JDalign flex={{
         grow: true
       }} className="productViewer__ul">
-        {renderData.map((itemInfo, i) => {
-          const { Date, items } = itemInfo;
-          const selectedDay = moment(date).isSame(itemInfo.Date, "day");
-          const dayInfo = moment(Date).format('YYYYMMDD');
-          const dataLeng = items.length;
-          const sliced = items.slice(0, 8);
+        {renderData.map((productInfo, i) => {
+          const { Date, products } = productInfo;
+          const selectedDay = dayjs(date).isSame(productInfo.Date, "day");
+          const dayInfo = dayjs(Date).format('YYYYMMDD');
+          const dataLeng = products.length;
+          const sliced = products.slice(0, 8);
           const expended = expend.find(index => index === i);
-          let visibleData = expended ? itemInfo.items : sliced
+          let visibleData = expended ? productInfo.products : sliced
 
           return (
             <div className="productViewer__li" key={`status-${dayInfo}`}>
@@ -73,11 +73,11 @@ const ProductViewer: React.FC<IProps> = ({ listNum, date, datas, onDateChange })
                 vCenter: true,
                 between: true
               }} className={`productViewer__date ${selectedDay && "selected"}`}>
-                <span>{moment(itemInfo.Date).format("DD")}</span>
-                <span>{moment(itemInfo.Date).format("ddd")}</span>
+                <span>{dayjs(productInfo.Date).format("DD")}</span>
+                <span>{dayjs(productInfo.Date).format("ddd")}</span>
               </JDalign>
-              <ul className="productViewer__itemsWrap">
-                {visibleData.map((item) => <Item key={`productViewer-${item.name}`} info={item} />)}
+              <ul className="productViewer__productsWrap">
+                {visibleData.map((product) => <Product key={`productViewer-${product.name}`} info={product} />)}
                 {(dataLeng > 8 && !expended) && <JDbutton style={{
                   width: "100%"
                 }} size="small" mode={'flat'} thema="primary" label={'더보기'} />}

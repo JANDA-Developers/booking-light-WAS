@@ -12,7 +12,7 @@ export const PolicyCard: React.FC<IProp> = ({ contents, ...props }) => {
     const contentLeft = contents.slice(0, Math.floor(contents.length / 2));
     const contentRight = contents.slice(Math.ceil(contents.length / 2), contents.length);
 
-    return <JDcard mb="no" {...props} mode="border" className="PolicyCard">
+    return <JDcard  {...props} mode="border" className="PolicyCard">
         <div>
             <JDtypho size="small" color="grey4" grid>
                 <JDalign mr="huge" col={{

@@ -11,7 +11,7 @@ const LoginPage = () => {
     const history = useHistory();
     const passwordFind = authManagerHook.info === "password";
 
-    return <JDcontainer size={WindowSize.md}> <JDlogin2 activeBookMark={activate}
+    return <JDcontainer verticalPadding size={WindowSize.md}> <JDlogin2 activeBookMark={activate}
         onFindPasswordClick={() => {
             authManagerHook.openModal("password");
         }}

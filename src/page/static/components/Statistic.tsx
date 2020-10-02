@@ -44,7 +44,7 @@ const Statistic: React.FC<IProps> = () => {
         return <JDalign mb="normal" style={{
             alignItems: "end"
         }} flex>
-            <JDtypho mr="small" mb="no" size="h6" weight={600}>{title}</JDtypho>
+            <JDtypho mr="small" size="h6" weight={600}>{title}</JDtypho>
             <JDtypho style={{
                 alignSelf: "flex-end"
             }} >{desc}</JDtypho>

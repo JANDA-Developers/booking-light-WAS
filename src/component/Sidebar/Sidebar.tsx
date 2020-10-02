@@ -3,6 +3,8 @@ import SidebarMainMenu, { TSidebarMain } from './SidebarMainMenu'
 import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { JDicon, JDtypho } from '@janda-com/front';
+import { Paths } from '../../MainRouter';
+import { useHistory } from 'react-router-dom';
 
 interface IMainMenu {
     key: string,
@@ -21,28 +23,30 @@ const Data_SideMain: IMainMenu[] = [
         title: "홈"
     },
     {
-        key: "item",
-        icon: "gearBox",
+        key: "product",
+        icon: "box2",
         title: "상품"
     },
     {
         key: "store",
-        icon: "location",
+        // @ts-ignore
+        icon: "store",
         title: "상점"
     },
     {
         key: "payment",
-        icon: "file",
+        icon: "book",
         title: "결제"
     },
     {
         key: "sms",
-        icon: "camera",
+        // @ts-ignore
+        icon: "sms",
         title: "SMS"
     },
     {
         key: "service",
-        icon: "speechBubble2",
+        icon: "info",
         title: "고객센터"
     }
 ]
@@ -50,123 +54,68 @@ const Data_SideMain: IMainMenu[] = [
 
 const Data_SubMain: ISubMenu[] = [
     {
-        title: "sidebar_home",
+        title: "home",
         sub: [
             {
-                icon: "menu",
-                title: "상품설명",
-                path: "/"
+                icon: "home",
+                title: "홈",
+                path: Paths.main
             },
-            {
-                icon: "menu",
-                title: "판매목록",
-                path: "/"
-            },
-            {
-                icon: "menu",
-                title: "판매목록",
-                path: "/"
-            }
         ]
     },
     {
-        title: "sidebar_item",
+        title: "product",
         sub: [
             {
                 icon: "menu",
                 title: "상품목록 1",
-                path: "/"
+                path: Paths.productset
             },
-            {
-                icon: "menu",
-                title: "상품목록 2",
-                path: "/"
-            },
-            {
-                icon: "menu",
-                title: "상품목록 3",
-                path: "/"
-            }
         ]
     },
     {
-        title: "sidebar_store",
+        title: "store",
         sub: [
             {
                 icon: "menu",
                 title: "상점설정 1",
-                path: "/"
+                path: Paths.storeset
             },
-            {
-                icon: "menu",
-                title: "상점설정 2",
-                path: "/"
-            },
-            {
-                icon: "menu",
-                title: "상점설정 3",
-                path: "/"
-            }
         ]
     },
     {
-        title: "sidebar_payment",
+        title: "payment",
         sub: [
             {
                 icon: "menu",
-                title: "결제설정 1",
-                path: "/"
+                title: "정산관리",
+                path: Paths.payFromJanda
             },
             {
                 icon: "menu",
-                title: "결제설정 2",
-                path: "/"
+                title: "멤버쉽",
+                path: Paths.payToJanda
             },
-            {
-                icon: "menu",
-                title: "결제설정 3",
-                path: "/"
-            }
         ]
     },
     {
-        title: "sidebar_sms",
+        title: "sms",
         sub: [
             {
                 icon: "menu",
                 title: "SMS 설정1",
-                path: "/"
+                path: Paths.sms
             },
-            {
-                icon: "menu",
-                title: "SMS 설정2",
-                path: "/"
-            },
-            {
-                icon: "menu",
-                title: "SMS 설정3",
-                path: "/"
-            }
         ]
     },
     {
-        title: "sidebar_service",
+        title: "service",
         sub: [
             {
                 icon: "menu",
                 title: "Service 설정 1",
                 path: "/"
             },
-            {
-                icon: "menu",
-                title: "Service 설정 2",
-                path: "/"
-            },
-            {
-                icon: "menu",
-                title: "Service 설정 3",
-                path: "/"
-            }
         ]
     }
 ]
@@ -189,8 +138,13 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
     const menuKeyUpdate = (key: string) => {
         setMenuKey(key)
     }
+    const history = useHistory();
 
-    let subMenuList = Data_SubMain.find(list => list.title === menuKey) || Data_SubMain[0];
+    const subMenuList = Data_SubMain.find(list => list.title === menuKey) || Data_SubMain[0];
+
+    const subMenuClick = (path: string) => {
+        history.push(path);
+    }
 
     useEffect(() => {
         if (isOpen)
@@ -199,9 +153,10 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
             document.getElementById("root")?.classList.remove("sideOpen")
     }, [isOpen])
 
-    const subMenuClick = (location: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        console.log(location);
-    }
+    useEffect(() => {
+        const { path } = subMenuList.sub[0]
+        history.push(path)
+    }, [menuKey])
 
     // 로그인 onclick, login, logout 추가 y
     return (
@@ -226,8 +181,8 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
             </div>
             <nav className="Sidebar__menu">
                 <SidebarMainMenu mainMenu={Data_SideMain} menuKey={menuKey} menuKeyUpdate={menuKeyUpdate} />
-                <SidebarSubMenu subMenu={subMenuList.sub} subMenuClick={(location) => {
-                    subMenuClick(location);
+                <SidebarSubMenu subMenu={subMenuList.sub} subMenuClick={(path) => {
+                    subMenuClick(path);
                 }} />
             </nav>
         </div>

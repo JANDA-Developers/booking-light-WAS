@@ -16,23 +16,21 @@ const SidebarMainMenu: React.FC<IProps> = ({ menuKey, mainMenu, menuKeyUpdate })
     return (
         <ul className="Sidebar__mainMenu">
             {
-                mainMenu.map((list) => {
-                    let listClicked = menuKey == `sidebar_${list.key}` ? "on" : "";
-                    return <li className={`mainMenu__list ${listClicked}`} key={`sidebar_${list.key}`}>
+                mainMenu.map((menu) => {
+                    const listClicked = menuKey == menu.key ? "on" : "";
+                    return <li className={`mainMenu__list ${listClicked}`} key={`sidebar_${menu.key}`}>
                         <a href=""
-                            id={`sidebar_${list.key}`}
+                            id={`sidebar_${menu.key}`}
                             className="mainMenu__link"
                             onClick={
                                 (e) => {
                                     e.preventDefault();
-                                    let target = e.currentTarget.getAttribute('id');
-                                    if (target)
-                                        menuKeyUpdate(target);
+                                    menuKeyUpdate(menu.key);
                                 }
                             }
                         >
-                            <JDicon icon={list.icon} />
-                            <JDtypho>{list.title}</JDtypho>
+                            <JDicon icon={menu.icon} />
+                            <JDtypho>{menu.title}</JDtypho>
                         </a>
                     </li>
                 })

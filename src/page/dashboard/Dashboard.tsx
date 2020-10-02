@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 import { JDcard, JDcontainer, JDpageHeader, WindowSize } from "@janda-com/front";
 import ProductViewer from "../../component/ProductViewer/ProductViewer";
 
@@ -19,23 +19,23 @@ const Dashboard: React.FC<IProps> = () => {
   const datas = [
     {
       date: new Date(),
-      item: [
+      product: [
         { name: "Room 1", count: 20, total: 100 },
         { name: "Room 2", count: 30, total: 100 },
         { name: "Room 3", count: 50, total: 100 }
       ]
     },
     {
-      date: moment(new Date()).add(-1, "days").toDate(),
-      item: [
+      date: dayjs(new Date()).add(-1, "d").toDate(),
+      product: [
         { name: "Room 1", count: 20, total: 100 },
         { name: "Room 2", count: 30, total: 100 },
         { name: "Room 3", count: 50, total: 100 }
       ]
     },
     {
-      date: moment(new Date()).add(1, "days").toDate(),
-      item: [
+      date: dayjs(new Date()).add(1, "d").toDate(),
+      product: [
         { name: "Room 1", count: 20, total: 100 },
         { name: "Room 2", count: 30, total: 100 },
         { name: "Room 3", count: 50, total: 100 }
@@ -46,7 +46,7 @@ const Dashboard: React.FC<IProps> = () => {
   return (
     <div>
       <JDpageHeader desc={"판매 상품 현황을 확인할 수 있습니다"} title={"Booking Light Home"} />
-      <JDcard mr="no" className="dashboard">
+      <JDcard className="dashboard">
         <ProductViewer
           listNum={2}
           date={selectedDay}

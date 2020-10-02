@@ -1,14 +1,14 @@
 import React from 'react'
-import { JDicon } from '@janda-com/front';
+import { JDalign, JDicon } from '@janda-com/front';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { TElements } from '@janda-com/front/dist/types/interface';
 
 interface IProps {
     version: string;
-    items: TElements
+    products: TElements
 }
 
-const Header: React.FC<IProps> = ({ version, items }) => {
+const Header: React.FC<IProps> = ({ version, products }) => {
 
     return (
         <header className="header">
@@ -18,9 +18,17 @@ const Header: React.FC<IProps> = ({ version, items }) => {
                 </div>
             </div>
             <div className="header__bottom">
-                <div className="header__items">
-                    {items}
-                </div>
+                <JDalign flex={{
+                    vCenter: true,
+                    between: true
+                }} className="header__items">
+                    <div>
+                        <JDicon icon="menu" />
+                    </div>
+                    <div>
+                        {products}
+                    </div>
+                </JDalign>
             </div>
         </header>
     )

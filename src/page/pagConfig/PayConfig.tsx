@@ -1,10 +1,10 @@
-import { JDalign, JDcard, JDcheckBox, JDcontainer, JDmodal, JDpageHeader, WindowSize, JDPrivacyPolicy, JDbutton, JDlabel, JDtypho, JDsplinter, toast } from '@janda-com/front';
+import { JDalign, JDcard, JDcheckBox, JDcontainer, JDmodal, JDpageHeader, WindowSize, JDPrivacyPolicy, JDbutton, JDlabel, JDtypho, JDsplinter, toast, JDlink } from '@janda-com/front';
 import { useModal, JDpolicyViewer } from '@janda-com/front';
 import { autoComma } from '@janda-com/front';
 import { InputText } from '@janda-com/front';
 import { totalmem } from 'os';
 import React, { useState } from 'react';
-import JDlink from '../../atom/Link';
+import { Horizen, Split, Vertical } from '../../atom/B';
 import { PolicyCard } from '../../component/Common/PolicyCard';
 
 const Policies = {
@@ -89,7 +89,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
         <JDpageHeader title="결제설정" desc="결제 방식을 설정 할수 있습니다." />
         <JDcontainer size={WindowSize.full}>
             <JDcard>
-                <JDalign mb="large" grid>
+                <JDalign mb="huge" grid>
                     <JDalign col={{
                         full: 3
                     }}>
@@ -107,10 +107,10 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                         <JDalign mb="normal" flex={{
 
                         }}>
-                            <InputText value={cardNumber.slice(0, 4)} onChange={(v: any) => { handleCardNumChange(v, 0) }} mb="no" mr="no" maxLength={4} /><JDsplinter>-</JDsplinter>
-                            <InputText value={cardNumber.slice(4, 8)} onChange={(v: any) => { handleCardNumChange(v, 1) }} mb="no" mr="no" maxLength={4} /><JDsplinter>-</JDsplinter>
-                            <InputText value={cardNumber.slice(8, 12)} onChange={(v: any) => { handleCardNumChange(v, 2) }} mb="no" mr="no" maxLength={4} /><JDsplinter>-</JDsplinter>
-                            <InputText value={cardNumber.slice(12, cardNumber.length)} onChange={(v: any) => { handleCardNumChange(v, 3) }} mb="no" mr="no" />
+                            <InputText value={cardNumber.slice(0, 4)} onChange={(v: any) => { handleCardNumChange(v, 0) }} maxLength={4} /><JDsplinter>-</JDsplinter>
+                            <InputText value={cardNumber.slice(4, 8)} onChange={(v: any) => { handleCardNumChange(v, 1) }} maxLength={4} /><JDsplinter>-</JDsplinter>
+                            <InputText value={cardNumber.slice(8, 12)} onChange={(v: any) => { handleCardNumChange(v, 2) }} maxLength={4} /><JDsplinter>-</JDsplinter>
+                            <InputText value={cardNumber.slice(12, cardNumber.length)} onChange={(v: any) => { handleCardNumChange(v, 3) }} />
                         </JDalign>
                         <JDlabel txt="생년월일 6자리 또는 사업자번호 13자리(법인)" />
                         <InputText placeholder="881231 또는 5925500270" />
@@ -119,8 +119,12 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                         full: 3
                     }}>
                         <JDlabel txt="유효기간" />
-                        <JDalign flex >
-                            <InputText /> / <InputText />
+                        <JDalign mb flex >
+                            <InputText max={2} style={{
+                                width: "60px"
+                            }} /><Split>/</Split><InputText style={{
+                                width: "60px"
+                            }} />
                         </JDalign>
                         <div>
                             <div>
@@ -128,17 +132,20 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                                 <JDalign flex={{
                                     vCenter: true
                                 }}>
-                                    <InputText mb="no" maxLength={2} />
-                                    <JDtypho mb="no" size="large">●●</JDtypho>
+                                    <InputText mr max={2} style={{
+                                        width: "60px"
+                                    }} maxLength={2} />
+                                    <JDtypho size="large">●●</JDtypho>
                                 </JDalign>
                             </div>
                         </div>
                     </JDalign>
                 </JDalign>
-                <JDalign mb="normal" flex={{
+                <Horizen margin={4} />
+                <JDalign mb flex={{
                     vCenter: true,
                 }}>
-                    <JDcheckBox mb="no" mr="tiny" size="tiny" checked={allToogle} onChange={() => {
+                    <JDcheckBox mr="tiny" size="tiny" checked={allToogle} onChange={() => {
                         changeAll()
                     }} />
                     <span>모든 필수약관에 동의합니다.</span>
@@ -153,7 +160,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                             setPolicyAgrees({
                                 ...policyAgrees
                             })
-                        }} checked={policyAgrees.po1} mb="no" size="tiny" />
+                        }} checked={policyAgrees.po1} size="tiny" />
                     전자금융거래 이용약관1
                 </span>
                     <JDlink onClick={() => {
@@ -170,7 +177,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                                 ...policyAgrees
                             })
                         }} checked={policyAgrees.po2}
-                            mb="no" size="tiny" />
+                            size="tiny" />
                     전자금융거래 이용약관2
                 </span>
                     <JDlink onClick={() => {
@@ -187,7 +194,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                                 ...policyAgrees
                             })
                         }} checked={policyAgrees.po3}
-                            mb="no" size="tiny" />
+                            size="tiny" />
                     전자금융거래 이용약관3
                 </span>
                     <JDlink onClick={() => {
@@ -198,7 +205,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                     vCenter: true
                 }}>
                     <span>
-                        <JDcheckBox mb="no" size="tiny" />
+                        <JDcheckBox size="tiny" />
                     전자금융거래 이용약관4
                 </span>
                     <JDlink onClick={() => {
@@ -210,7 +217,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                 <JDalign flex={{
                     end: true
                 }}>
-                    <JDbutton mr="small" onClick={() => {
+                    <JDbutton width="huge" padding="large" mr="small" onClick={() => {
                         if (!allSelected) {
                             toast.warn("필수 약관에 모두 동의 해주세요.")
                             return

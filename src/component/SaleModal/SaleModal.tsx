@@ -1,8 +1,8 @@
 import { IUseModal, JDalign, JDbutton, JDlabel, JDmodal, JDmodalConfigProps, JDtypho, toast } from '@janda-com/front';
 import React from 'react';
-import moment from "moment"
+import dayjs from "dayjs"
 import { autoComma, copytoClipboard } from '@janda-com/front/dist/utils/utils';
-import { InputText } from '@janda-com/front/dist/components/InputText/InputText';
+import { InputText } from '@janda-com/front';
 
 export interface IProp extends JDmodalConfigProps {
     modalHook: IUseModal
@@ -25,7 +25,7 @@ export const SaleModal: React.FC<IProp> = ({ modalHook, ...prop }) => {
                 <div>
                     <JDlabel txt="예약일" />
                     <JDtypho>
-                        {moment().format("YY.MM.DD HH:mm")}
+                        {dayjs().format("YY.MM.DD HH:mm")}
                     </JDtypho>
                 </div>
                 <div>

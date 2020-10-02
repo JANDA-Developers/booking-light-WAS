@@ -1,0 +1,18 @@
+.JDdottedButton {
+    width: 100%;
+    border: 2px dotted $grey-level2;
+    color: $grey-level2;
+    padding: space(2);
+    background-color: white;
+    cursor: pointer;
+
+
+    &:hover {
+        color: $grey-level3;
+        background-color: $grey-level1;
+
+        .iconWrapper {
+            color: $grey-level3;
+        }
+    }
+}

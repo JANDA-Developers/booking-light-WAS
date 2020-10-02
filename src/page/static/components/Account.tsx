@@ -54,7 +54,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         <JDalign mb="normal">
                             은행
                         </JDalign>
-                        <JDalign mb="no">
+                        <JDalign >
                             계좌번호
                         </JDalign>
                     </JDtypho>
@@ -65,7 +65,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         <JDalign mb="normal">
                             국민은행
                         </JDalign>
-                        <JDalign mb="no">
+                        <JDalign >
                             555927834702
                         </JDalign>
                     </JDalign>
@@ -77,7 +77,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         </JDbutton>
                     </div>
                     <div>
-                        <JDbutton mb="no" style={{
+                        <JDbutton style={{
                             width: "100%"
                         }} br="square" mode="flat" padding="huge" thema="point">
                             출금 신청

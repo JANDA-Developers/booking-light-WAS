@@ -8,6 +8,7 @@ interface IProp {
 export const Arrows: React.FC<IProp> = ({ onDateArrow }) => {
     return <JDalign className="arrows">
         <JDicon
+            hover
             icon="shortLeft"
             className="arrows__prev"
             onClick={() => {
@@ -15,6 +16,7 @@ export const Arrows: React.FC<IProp> = ({ onDateArrow }) => {
             }}
         />
         <JDicon
+            hover
             icon="shortRight"
             className="arrows__next"
             onClick={() => {
