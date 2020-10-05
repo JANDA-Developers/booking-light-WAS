@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './scss/App.scss';
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import MainRouter from './MainRouter';
 import AuthRouter from './AuthRouter';
 import HeaderWrap from './component/Common/HeaderWrap';
-import Sidebar from './component/sidebar/Sidebar';
-import ProfileModal from './component/profile/ProfileModal';
-import { JDVERSION } from "../src/type/const"
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { SideBarWrap } from './component/sidebar/SidebarWrap';
-import { JDalign, useDropDown } from '@janda-com/front';
+import { JDalign } from '@janda-com/front';
 
 const Data_headIcon: IIcons[] = [
   "help",
@@ -40,7 +37,6 @@ function App() {
           </Switch>
         </Router>
       </JDalign>
-
     </div>
   );
 }

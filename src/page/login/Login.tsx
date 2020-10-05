@@ -1,7 +1,6 @@
-import { JDcontainer, JDPasswordReseter, useModal, WindowSize } from "@janda-com/front";
+import { JDcontainer, JDPasswordReseter, useModal, WindowSize, JDlogin2 } from "@janda-com/front";
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { JDlogin2 } from "@janda-com/front"
 
 
 

@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+
 export const F_COLLECTION_DATA_INTERFACE =gql`
     fragment FcollectionDataInterface on CollectionDataInterface {
         _id
@@ -10,7 +11,7 @@ export const F_COLLECTION_DATA_INTERFACE =gql`
 `
 
 export const F_ZONE_INFO = gql`
-    fragment FzoneInfo on ZoneInfo {
+    fragment FzoneInfo on Zoneinfo {
         timezone
         offset
         callingCode
@@ -18,16 +19,28 @@ export const F_ZONE_INFO = gql`
     }
 `
 
+export const F_FILE = gql`
+    fragment Ffile on File {
+        name
+        description
+        extension
+        fileType
+        uri
+        tags {
+            key
+            value
+        }
+    }
+`
+
 export const F_USER = gql`
   fragment Fuser on User {
-    _id
-    createdAt
-    updatedAt
-    isDeleted
     name
     email
     phoneNumber
-    profileImage
+    profileImage {
+        ...Ffile
+    }
     isVerifiedPhoneNumber
     isVerifiedEmail
     role
@@ -38,35 +51,7 @@ export const F_USER = gql`
     smsKey
     ...FcollectionDataInterface
   }
+  ${F_FILE}
   ${F_ZONE_INFO}
   ${F_COLLECTION_DATA_INTERFACE}
-`;
-
-export const SIGNUP = gql`
-  mutation signUp(
-      $name: String!,
-      $email: String!,
-      $phoneNumber: String!,
-      $password: String!,
-      $company: String
-    ) {
-    SignUp(
-        name: $name
-        email: $email
-        phoneNumber: $phoneNumber
-        password: $password
-        company: $company
-      ) {
-      ok
-      error {
-        code
-        message
-        details
-      }
-      data {
-        ...Fuser
-      }
-    }
-  }
-  ${F_USER}
 `;

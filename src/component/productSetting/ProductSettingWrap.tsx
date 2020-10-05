@@ -2,7 +2,7 @@ import { s4 } from "@janda-com/front";
 import React from "react";
 import ProductSetting from "./ProductSetting";
 import { TProduct } from "./ProductSetting";
-const ProductSettingWrap = () => {
+const ProductSettingWrap:React.FC = () => {
 
     const headInfo = {
         title: "상품설정",

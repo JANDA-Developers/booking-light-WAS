@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import dayjs from 'dayjs'
-import { JDcontainer, JDpageHeader, WindowSize, JDbutton, JDicon, JDselect, JDmodal, JDdayPickerModal, useDayPicker, toast, JDcard, JDalign, useSelect } from "@janda-com/front";
-import { useModal } from '@janda-com/front';
-import { IselectedOption } from '@janda-com/front/dist/types/interface';
-import { s4 } from '@janda-com/front';
+import { s4, useModal, JDcontainer, JDpageHeader, WindowSize, JDbutton,  JDselect, JDdayPickerModal, useDayPicker, toast, JDcard,  useSelect } from "@janda-com/front";
 import ProductModal from './components/ProductModal';
 import Product from './components/Product';
 import ArrowDate from '../../atom/ArrowDate';
@@ -45,7 +42,7 @@ const SELECTOP = [{
 }]
 
 
-const ProductSetting: React.FC<IProps> = ({ headInfo, productSort, productInfo }) => {
+const ProductSetting: React.FC<IProps> = ({ headInfo, productInfo }) => {
 
     const productModalHook = useModal();
     const dateToday = new Date();
@@ -56,12 +53,12 @@ const ProductSetting: React.FC<IProps> = ({ headInfo, productSort, productInfo }
 
     const handleAddProduct = () => {
         modalHook_add.openModal();
-    }
+    };
 
-    const changeDay = (next: boolean | "today") => {
+    const changeDay = (next: boolean | 'today') => {
         const date = dayPickerHook.from || new Date();
 
-        if (next === "today") {
+        if (next === 'today') {
             dayPickerHook.setDate(dateToday);
             return;
         }
@@ -119,9 +116,9 @@ const ProductSetting: React.FC<IProps> = ({ headInfo, productSort, productInfo }
                         </Flex>
                     </JDcard>
                     {
-                        productInfo.map((list, index) => {
+                        productInfo.map((product, index) => {
                             return <Product
-                                {...list}
+                                {...product}
                                 _id={s4()}
                                 key={index + "pi"}
                                 index={index}

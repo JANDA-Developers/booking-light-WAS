@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SidebarMainMenu, { TSidebarMain } from './SidebarMainMenu'
 import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { JDicon, JDtypho } from '@janda-com/front';
+import { JDicon, JDtypho, toast } from '@janda-com/front';
 import { Paths } from '../../MainRouter';
 import { useHistory } from 'react-router-dom';
 
@@ -145,7 +145,7 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
     const subMenuClick = (path: string) => {
         history.push(path);
     }
-
+    
     useEffect(() => {
         if (isOpen)
             document.getElementById("root")?.classList.add("sideOpen")
