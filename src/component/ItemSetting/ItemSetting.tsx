@@ -6,7 +6,6 @@ import DayPicker, { CaptionElementProps, NavbarElementProps } from "react-day-pi
 import { InputText } from '@janda-com/front';
 import { useModal } from '@janda-com/front';
 import ItemSettingList from './ItemSettingList';
-import ItemSettingListNew from './ItemSettingListNew';
 
 type TheadInfo = {
     title: string,
