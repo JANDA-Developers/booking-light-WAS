@@ -1,7 +1,6 @@
-import { JDcontainer, JDPasswordReseter, useModal, WindowSize } from "@janda-com/front";
+import { JDcontainer, JDPasswordReseter, useModal, WindowSize, JDlogin2 } from "@janda-com/front";
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { JDlogin2 } from "@janda-com/front"
 
 
 
@@ -11,7 +10,7 @@ const LoginPage = () => {
     const history = useHistory();
     const passwordFind = authManagerHook.info === "password";
 
-    return <JDcontainer size={WindowSize.md}> <JDlogin2 activeBookMark={activate}
+    return <JDcontainer verticalPadding size={WindowSize.md}> <JDlogin2 activeBookMark={activate}
         onFindPasswordClick={() => {
             authManagerHook.openModal("password");
         }}

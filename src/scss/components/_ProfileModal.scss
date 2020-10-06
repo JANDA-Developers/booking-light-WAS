@@ -1,0 +1,30 @@
+.profileModal {
+    position: relative;
+    padding: space(3);
+
+    &__userInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 space(4);
+        text-align: center;
+        border-bottom: 1px solid $grey-level0;
+    }
+
+    &__username {
+        margin: space(1) 0;
+    }
+
+    &__version {
+        white-space: nowrap;
+    }
+
+    &__service {
+        font-size: $typho-small;
+    }
+
+    &__serviceList {
+        display: block;
+        margin: space(1) 0;
+    }
+}

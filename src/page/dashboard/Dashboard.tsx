@@ -1,9 +1,8 @@
 
 import React, { useState } from "react";
-import moment from "moment";
-import { JDcontainer, JDpageHeader, WindowSize } from "@janda-com/front";
+import dayjs from "dayjs";
+import { JDcard, JDcontainer, JDpageHeader, WindowSize } from "@janda-com/front";
 import ProductViewer from "../../component/ProductViewer/ProductViewer";
-import "../../scss/Dashboard/Dashboard.scss";
 
 interface IProps {
 }
@@ -20,23 +19,23 @@ const Dashboard: React.FC<IProps> = () => {
   const datas = [
     {
       date: new Date(),
-      item: [
+      product: [
         { name: "Room 1", count: 20, total: 100 },
         { name: "Room 2", count: 30, total: 100 },
         { name: "Room 3", count: 50, total: 100 }
       ]
     },
     {
-      date: moment(new Date()).add(-1, "days").toDate(),
-      item: [
+      date: dayjs(new Date()).add(-1, "d").toDate(),
+      product: [
         { name: "Room 1", count: 20, total: 100 },
         { name: "Room 2", count: 30, total: 100 },
         { name: "Room 3", count: 50, total: 100 }
       ]
     },
     {
-      date: moment(new Date()).add(1, "days").toDate(),
-      item: [
+      date: dayjs(new Date()).add(1, "d").toDate(),
+      product: [
         { name: "Room 1", count: 20, total: 100 },
         { name: "Room 2", count: 30, total: 100 },
         { name: "Room 3", count: 50, total: 100 }
@@ -45,20 +44,17 @@ const Dashboard: React.FC<IProps> = () => {
   ];
 
   return (
-    <JDcontainer size={WindowSize.full}>
-
-      <div className="dashboard">
-        <JDpageHeader displayIcon={false} desc={"판매 상품 현황을 확인할 수 있습니다"} title={"Booking Light Home"} />
-        <JDcontainer>
-          <ProductViewer
-            listNum={2}
-            date={selectedDay}
-            datas={datas}
-            onDateChange={(newDay) => { onDateChange(newDay) }}
-          />
-        </JDcontainer>
-      </div>
-    </JDcontainer>
+    <div>
+      <JDpageHeader desc={"판매 상품 현황을 확인할 수 있습니다"} title={"Booking Light Home"} />
+      <JDcard className="dashboard">
+        <ProductViewer
+          listNum={2}
+          date={selectedDay}
+          datas={datas}
+          onDateChange={(newDay) => { onDateChange(newDay) }}
+        />
+      </JDcard>
+    </div>
   );
 };
 
