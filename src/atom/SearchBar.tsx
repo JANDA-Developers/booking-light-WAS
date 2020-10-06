@@ -9,7 +9,7 @@ interface IProp<T> {
     defaultOp: IselectedOption<T>
 }
 
-export const JDsearchBar = <T,>({ defaultOp, onSearch, filterOps }: PropsWithChildren<IProp<T>>) => {
+export const JDsearchBar = <T,>({ defaultOp, onSearch, filterOps }: PropsWithChildren<IProp<T>>):JSX.Element => {
     const selectBoxHook = useSelect(defaultOp, filterOps);
     const inputTextHook = useInput("");
 

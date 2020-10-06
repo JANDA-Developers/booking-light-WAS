@@ -4,6 +4,86 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: signUp
+// ====================================================
+
+export interface signUp_SignUp_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface signUp_SignUp_data_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface signUp_SignUp_data_profileImage {
+  __typename: "File";
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string;
+  uri: string;
+  tags: signUp_SignUp_data_profileImage_tags[];
+}
+
+export interface signUp_SignUp_data_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface signUp_SignUp_data {
+  __typename: "User";
+  name: string;
+  email: string;
+  phoneNumber: string;
+  profileImage: signUp_SignUp_data_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: signUp_SignUp_data_zoneinfo;
+  smsKey: string | null;
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  isDeleted: boolean | null;
+}
+
+export interface signUp_SignUp {
+  __typename: "SignUpResponse";
+  ok: boolean;
+  error: signUp_SignUp_error | null;
+  data: signUp_SignUp_data | null;
+}
+
+export interface signUp {
+  SignUp: signUp_SignUp;
+}
+
+export interface signUpVariables {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  company?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: FcollectionDataInterface
 // ====================================================
 

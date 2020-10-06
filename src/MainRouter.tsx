@@ -1,7 +1,7 @@
 import { JDpreloader } from "@janda-com/front";
 import React, { Suspense } from "react";
 import { Route, Switch } from 'react-router-dom';
-import SMSRouter from "./SMSrouter";
+import SMSRouter from "./page/sms/SMSrouter";
 const ProductSettingWrap = React.lazy(() => import("./component/productSetting/ProductSettingWrap"));
 const StoreSettingWrap = React.lazy(() => import("./component/storeSetting/StoreSettingWrap"));
 const DailyPricePage = React.lazy(() => import('./page/price/DailyPriceWrap'));
@@ -28,7 +28,6 @@ const MainRouter = () => {
   return <Switch>
     <Suspense fallback={<JDpreloader page loading />}>
       <Route
-        exact={true}
         path={Paths.sms}
         render={() => {
           return <SMSRouter />;

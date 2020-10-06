@@ -1,5 +1,4 @@
-import { autoComma, InputText, JDalign, JDbutton, JDcard, JDsplinter, JDtypho, useModal } from "@janda-com/front";
-import { IProps } from "@janda-com/front/dist/components/checkbox/CheckBox";
+import { autoComma, InputText, JDalign, JDbutton, Split, JDtypho, useModal } from "@janda-com/front";
 import { IDiv } from "@janda-com/front/dist/types/interface";
 import React from "react";
 import { PolicyCard } from "../../../component/Common/PolicyCard";
@@ -32,7 +31,7 @@ const Account: React.FC<Iprops> = ({ registered }) => {
                         원
                     </JDtypho>
                 </JDtypho>
-                <JDsplinter />
+                <Split />
                 <JDtypho>출금 신청 금액</JDtypho>
                 <InputText style={{
                     width: "100%"
@@ -100,6 +99,8 @@ const Account: React.FC<Iprops> = ({ registered }) => {
             <PolicyCard contents={[' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.', ' - 매주 목요일 오후 4시 이전에 지급 됩니다.']} />
         </Section>
         <AccountRegistModal onSubmit={(select, search) => {
+            console.log(search)
+            console.log(select)
         }} modalHook={accountModalHook} />
     </div>
 }

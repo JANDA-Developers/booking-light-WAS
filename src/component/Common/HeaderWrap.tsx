@@ -1,9 +1,7 @@
-import { JDnoti, JDavatar, JDicon, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput } from '@janda-com/front';
-import IconSearchInput from '@janda-com/front';
+import { JDnoti, JDavatar, JDicon, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold } from '@janda-com/front';
 import React, { useState } from 'react';
 import ProfileModal, { Tservice } from '../profile/ProfileModal';
 import Header from './Header';
-import { B } from '../../atom/B';
 
 
 const DataMypageInfo = {
@@ -35,7 +33,9 @@ const service: Tservice[] = [
 
 
 
-interface IProp { }
+interface IProp {
+    key?: string;
+}
 
 export const HeaderWrap: React.FC<IProp> = () => {
     const uploader = useFilesManager();
@@ -53,7 +53,9 @@ export const HeaderWrap: React.FC<IProp> = () => {
                 SearchComponent={(prop) => <div>
                     <JDiconSearchInput {...prop} />
                 </div>}
-                onSelectData={() => { }}
+                onSelectData={() => {
+                    console.log("");
+                }}
                 onSearchChange={v => {
                     setSearch(v);
                 }}
@@ -62,14 +64,14 @@ export const HeaderWrap: React.FC<IProp> = () => {
                 dataList={[]}
                 searchValue={search}
             />
-            <B mr="large">
+            <Bold mr="large">
                 <JDnoti iconProp={{
                     badge: "1",
                     size: "normal",
                     color: "white",
                     tooltip: "새로운 알림이 N개 있습니다.",
                 }} />
-            </B>
+            </Bold>
             <JDavatar hover size="normal" onClick={(e) => {
                 e.stopPropagation();
                 dropDownHook.open(undefined, {

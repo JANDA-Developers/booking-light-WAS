@@ -1,15 +1,13 @@
 import React from 'react';
-import { JDicon, JDsplinter, JDcard, JDphotoFrame, JDbutton, JDtypho, JDalign } from "@janda-com/front";
-import moment from 'moment';
+import { JDicon, JDcard, JDphotoFrame, JDbutton, JDtypho, JDalign, Bold, Thin, Split, JDhorizen } from "@janda-com/front";
 import { Tstroe } from './StoreSetting';
-import { B, Horizen, Split, Thin } from '../../atom/B';
 
 interface IProps {
     store: Tstroe
 }
 
 const Store: React.FC<IProps> = ({ store }) => {
-    const { _id, address, desc, generated, goodsCount, image, member, name, sold } = store;
+    const { address, desc, image, name} = store;
     return <JDcard className="store">
         <JDalign flex={{
             between: true,
@@ -40,35 +38,35 @@ const Store: React.FC<IProps> = ({ store }) => {
                     <JDalign flex={{
                         vCenter: true
                     }}>
-                        <B mr="normal">
+                        <Bold mr="normal">
                             상품
-                    </B>
+                    </Bold>
                         <Thin >
                             5
                         </Thin>
                         <Split />
-                        <B mr="normal">
+                        <Bold mr="normal">
                             판매
-                    </B>
+                    </Bold>
                         <Thin>
                             54건
                     </Thin>
                         <Split />
-                        <B mr="normal">
+                        <Bold mr="normal">
                             생성일
-                    </B>
+                    </Bold>
                         <Thin >
                             2020-08-25
                     </Thin>
-                        <JDsplinter />
-                        <B mr="normal">
+                        <Split />
+                        <Bold mr="normal">
                             회원
-                    </B>
+                    </Bold>
                         <Thin >
                             42명
                     </Thin>
                     </JDalign>
-                    <Horizen margin={2} />
+                    <JDhorizen margin={2} />
                     <Thin size="small">
                         {desc}
                     </Thin>

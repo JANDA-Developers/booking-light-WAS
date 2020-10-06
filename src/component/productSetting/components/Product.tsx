@@ -1,31 +1,29 @@
 import React from 'react';
-import PhotoFrame, { autoComma, JDalign, JDbadge, JDbutton, JDcard, JDicon, JDphotoFrame, JDtypho, s4 } from "@janda-com/front";
+import  { autoComma,JDhorizen, Bold, Flex, JDalign, JDbadge, JDbutton, JDcard, JDphotoFrame, JDtypho, s4, Split, Thin } from "@janda-com/front";
 import { TProduct } from '../ProductSetting';
-import { B, Flex, Horizen, Split, Thin } from '../../../atom/B';
 import DottedButton from '../../dottedButton/DottedButton';
 
-interface IProps extends TProduct { }
+interface IProps extends TProduct {
+    _id: string;
+}
 
 const Product: React.FC<IProps> = ({ _id, tags, title, desc, address, price }) => {
 
-    const handleTotalPrice = (price: number, num: number) => {
-        return autoComma(price * num);
-    }
 
     return (
         <>
-            <JDcard className="product" key={`list-${_id}`}>
+            <JDcard mb className="product" key={`list-${_id}`}>
                 <Flex oneone >
                     <JDphotoFrame mr="large" isBgImg className="product__photo" />
                     <div>
                         <Flex between>
                             <div>
                                 <Flex mb="small">
-                                    {tags.map(t => <JDbadge size="small" thema="primary" mode="border" key={s4()} >{t}</JDbadge>)}
+                                    {tags.map(tag => <JDbadge size="small" thema="primary" mode="border" key={s4()} >{tag}</JDbadge>)}
                                 </Flex>
-                                <B weight={700} mb="small" size="h6">
+                                <Bold weight={700} mb="small" size="h6">
                                     {title}
-                                </B>
+                                </Bold>
                                 <JDtypho>{desc}</JDtypho>
                             </div>
                             <JDalign text="right">
@@ -35,15 +33,15 @@ const Product: React.FC<IProps> = ({ _id, tags, title, desc, address, price }) =
                                 </JDtypho>
                             </JDalign>
                         </Flex>
-                        <Horizen margin={3} />
+                        <JDhorizen margin={3} />
                         <Flex style={{
                             width: "100%"
                         }} between>
                             <Flex>
-                                <B mr="normal">판매</B>
+                                <Bold mr="normal">판매</Bold>
                                 <Thin mr="normal">162</Thin>
                                 <Split />
-                                <B mr="normal">판매</B>
+                                <Bold mr="normal">판매</Bold>
                                 <Thin>162</Thin>
                             </Flex>
                             <JDtypho>{address}</JDtypho>

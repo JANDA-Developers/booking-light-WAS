@@ -1,7 +1,6 @@
-import { JDalign, JDicon } from '@janda-com/front';
+import { Flex, JDicon } from '@janda-com/front';
 import React from 'react';
 import dayjs from "dayjs";
-import { Flex } from './B';
 
 interface IProp {
     date: Date;

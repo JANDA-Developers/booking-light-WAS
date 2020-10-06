@@ -1,10 +1,8 @@
-import { JDalign, JDcard, JDcheckBox, JDcontainer, JDmodal, JDpageHeader, WindowSize, JDPrivacyPolicy, JDbutton, JDlabel, JDtypho, JDsplinter, toast, JDlink } from '@janda-com/front';
+import { JDalign, JDcard, JDcheckBox, JDcontainer, JDmodal, JDpageHeader, WindowSize, JDPrivacyPolicy, JDbutton, JDlabel, JDtypho, toast, JDlink, Split, JDhorizen } from '@janda-com/front';
 import { useModal, JDpolicyViewer } from '@janda-com/front';
 import { autoComma } from '@janda-com/front';
 import { InputText } from '@janda-com/front';
-import { totalmem } from 'os';
 import React, { useState } from 'react';
-import { Horizen, Split, Vertical } from '../../atom/B';
 import { PolicyCard } from '../../component/Common/PolicyCard';
 
 const Policies = {
@@ -53,7 +51,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
         po4: false
     })
 
-    const { busiOrIdNum, cardNumber, limitDate, password } = cardInfo;
+    const { busiOrIdNum, cardNumber } = cardInfo;
     const modalHook = useModal<TpolictType>(false);
     const key = modalHook.info?.key || "po1";
     const policy = Policies[key];
@@ -107,9 +105,9 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                         <JDalign mb="normal" flex={{
 
                         }}>
-                            <InputText value={cardNumber.slice(0, 4)} onChange={(v: any) => { handleCardNumChange(v, 0) }} maxLength={4} /><JDsplinter>-</JDsplinter>
-                            <InputText value={cardNumber.slice(4, 8)} onChange={(v: any) => { handleCardNumChange(v, 1) }} maxLength={4} /><JDsplinter>-</JDsplinter>
-                            <InputText value={cardNumber.slice(8, 12)} onChange={(v: any) => { handleCardNumChange(v, 2) }} maxLength={4} /><JDsplinter>-</JDsplinter>
+                            <InputText value={cardNumber.slice(0, 4)} onChange={(v: any) => { handleCardNumChange(v, 0) }} maxLength={4} /><Split>-</Split>
+                            <InputText value={cardNumber.slice(4, 8)} onChange={(v: any) => { handleCardNumChange(v, 1) }} maxLength={4} /><Split>-</Split>
+                            <InputText value={cardNumber.slice(8, 12)} onChange={(v: any) => { handleCardNumChange(v, 2) }} maxLength={4} /><Split>-</Split>
                             <InputText value={cardNumber.slice(12, cardNumber.length)} onChange={(v: any) => { handleCardNumChange(v, 3) }} />
                         </JDalign>
                         <JDlabel txt="생년월일 6자리 또는 사업자번호 13자리(법인)" />
@@ -141,7 +139,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                         </div>
                     </JDalign>
                 </JDalign>
-                <Horizen margin={4} />
+                <JDhorizen margin={4} />
                 <JDalign mb flex={{
                     vCenter: true,
                 }}>
@@ -150,7 +148,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                     }} />
                     <span>모든 필수약관에 동의합니다.</span>
                 </JDalign>
-                <PolicyCard contents={[<JDalign flex={{
+                <PolicyCard contents={[<JDalign key="policyLine1" flex={{
                     between: true,
                     vCenter: true
                 }}>
@@ -166,7 +164,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                     <JDlink onClick={() => {
                         handleDetailOpen("po1")
                     }}>상세보기</JDlink>
-                </JDalign>, <JDalign flex={{
+                </JDalign>, <JDalign key="policyLine2" flex={{
                     between: true,
                     vCenter: true
                 }}>
@@ -183,7 +181,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                     <JDlink onClick={() => {
                         handleDetailOpen("po2")
                     }}>상세보기</JDlink>
-                </JDalign>, <JDalign flex={{
+                </JDalign>, <JDalign key="policyLine3" flex={{
                     between: true,
                     vCenter: true
                 }}>
@@ -200,7 +198,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                     <JDlink onClick={() => {
                         handleDetailOpen("po3")
                     }}>상세보기</JDlink>
-                </JDalign>, <JDalign flex={{
+                </JDalign>, <JDalign key="Plicy4" flex={{
                     between: true,
                     vCenter: true
                 }}>

@@ -1,8 +1,7 @@
 import React from 'react'
-import { JDdropDown, JDicon, JDavatar, JDtypho } from '@janda-com/front';
+import { JDdropDown, JDhorizen, JDicon, JDavatar, JDtypho } from '@janda-com/front';
 import { IUseDropDown } from '@janda-com/front/dist/hooks/hook';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { Horizen } from '../../atom/B';
 
 export type TuserInfo = {
     image: string,
@@ -28,7 +27,7 @@ const ProfileModal: React.FC<IProps> = ({ userInfo, services, dropBoxHook }) => 
         <JDdropDown position="absolute" closeOnWindowClick  {...dropBoxHook} >
             <div className="profileModal">
                 <div className="profileModal__userInfo">
-                    <JDavatar img={image} size="large" onClick={() => { }} />
+                    <JDavatar img={image} size="large"  />
                     <strong className="profileModal__username">
                         {name}
                     </strong>
@@ -36,7 +35,7 @@ const ProfileModal: React.FC<IProps> = ({ userInfo, services, dropBoxHook }) => 
                         {version}
                     </JDtypho>
                 </div>
-                <Horizen margin={3} />
+                <JDhorizen margin={3} />
                 <div className="profileModal__service">
                     <ul>
                         {

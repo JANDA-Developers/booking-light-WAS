@@ -1,10 +1,9 @@
 import React from 'react'
 import dayjs from 'dayjs'
-import { s4, useModal, JDcontainer, JDpageHeader, WindowSize, JDbutton,  JDselect, JDdayPickerModal, useDayPicker, toast, JDcard,  useSelect } from "@janda-com/front";
+import { s4, useModal, JDcontainer, JDpageHeader, WindowSize, JDbutton,  JDselect, JDdayPickerModal, useDayPicker, toast, JDcard,  useSelect, Flex } from "@janda-com/front";
 import ProductModal from './components/ProductModal';
 import Product from './components/Product';
 import ArrowDate from '../../atom/ArrowDate';
-import { Flex } from '../../atom/B';
 
 type TheadInfo = {
     title: string;
@@ -48,7 +47,7 @@ const ProductSetting: React.FC<IProps> = ({ headInfo, productInfo }) => {
     const dateToday = new Date();
     const modalHook_add = useModal(false);
     const modalHook_cal = useModal();
-    const dayPickerHook = useDayPicker(new Date(), null);
+    const dayPickerHook = useDayPicker(new Date(), new Date());
     const selectHook = useSelect(SELECTOP[0], SELECTOP);
 
     const handleAddProduct = () => {
@@ -107,13 +106,11 @@ const ProductSetting: React.FC<IProps> = ({ headInfo, productInfo }) => {
                             }} date={dayPickerHook.from || new Date()} />
                             <section>
                                 <JDselect
-
-
                                     autoSize
                                     {...selectHook}
                                 />
                             </section>
-                        </Flex>
+                    </Flex>
                     </JDcard>
                     {
                         productInfo.map((product, index) => {

@@ -5,6 +5,7 @@ import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { JDicon, JDtypho, toast } from '@janda-com/front';
 import { Paths } from '../../MainRouter';
 import { useHistory } from 'react-router-dom';
+import { SmsPaths } from '../../page/sms/SMSrouter';
 
 interface IMainMenu {
     key: string,
@@ -29,7 +30,6 @@ const Data_SideMain: IMainMenu[] = [
     },
     {
         key: "store",
-        // @ts-ignore
         icon: "store",
         title: "상점"
     },
@@ -40,7 +40,6 @@ const Data_SideMain: IMainMenu[] = [
     },
     {
         key: "sms",
-        // @ts-ignore
         icon: "sms",
         title: "SMS"
     },
@@ -102,9 +101,24 @@ const Data_SubMain: ISubMenu[] = [
         title: "sms",
         sub: [
             {
-                icon: "menu",
-                title: "SMS 설정1",
-                path: Paths.sms
+                icon: "info",
+                title: "시작하기",
+                path: SmsPaths.init
+            },
+            {
+                icon: "addCircle",
+                title: "템플릿 설정",
+                path: SmsPaths.template
+            },
+            {
+                icon: "email",
+                title: "발신자 관리",
+                path: SmsPaths.sender
+            },
+            {
+                icon: "historyWatch",
+                title: "발신 히스토리",
+                path: SmsPaths.history
             },
         ]
     },
@@ -145,7 +159,7 @@ const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen
     const subMenuClick = (path: string) => {
         history.push(path);
     }
-    
+
     useEffect(() => {
         if (isOpen)
             document.getElementById("root")?.classList.add("sideOpen")
