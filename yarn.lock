@@ -1411,10 +1411,10 @@
     react-tooltip "^4.2.6"
     react-window-size "^1.2.2"
 
-"@janda-com/front@^3.4.8":
-  version "3.4.8"
-  resolved "https://registry.npmjs.org/@janda-com/front/-/front-3.4.8.tgz#b64458ece8b77585b7c3b82f845530e7985a0580"
-  integrity sha512-iIqel8V1v/+jX3jkM9eacIjv+V2+fVSW3JNUGvGqdViX2DomhpG9skZpirvbhHX0cTvvbuAUPmtxqAdJlDVXiA==
+"@janda-com/front@^3.4.15":
+  version "3.4.15"
+  resolved "https://registry.npmjs.org/@janda-com/front/-/front-3.4.15.tgz#b8790be5441499d143795fe1271360ec727a4d17"
+  integrity sha512-TE/XjeQYT1WxQYhNoJUmMfiMBGeRl0kz0BgbmfiMRPC+rdfG/3gLSDw0MFNrwJfZG+DiiX/IqdZRBTAga/7FNg==
   dependencies:
     "@apollo/react-common" "^3.1.4"
     "@types/classnames" "^2.2.10"
@@ -10798,6 +10798,11 @@ react-color@^2.18.1:
     prop-types "^15.5.10"
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
+
+react-compound-timer@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/react-compound-timer/-/react-compound-timer-1.2.0.tgz#52df2980dce0b63ddaf5718235a51188cb223d1d"
+  integrity sha512-BEFT0Z/+vusfAy4Ci1+G5lr8mI+dk3ddRJuu1DIYA5xGS+5P+M0o4krHmFMKgHuaIY9H3xx0KCvf3ilb1+HFWA==
 
 react-day-picker@^7.4.8:
   version "7.4.8"

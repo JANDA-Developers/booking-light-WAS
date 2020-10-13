@@ -1,24 +1,23 @@
 import React from 'react';
-import { JDicon, JDcard, JDphotoFrame, JDbutton, JDtypho, JDalign, Bold, Thin, Split, JDhorizen } from "@janda-com/front";
-import { Tstroe } from './StoreSetting';
+import { JDicon, JDcard, JDphotoFrame, JDbutton, JDtypho, JDalign, Bold, Thin, Split, JDhorizen, Flex } from "@janda-com/front";
+import { IStore } from './interface';
 
 interface IProps {
-    store: Tstroe
+    store: IStore
 }
 
 const Store: React.FC<IProps> = ({ store }) => {
-    const { address, desc, image, name} = store;
+    const { name, _id, images, description, code, zoneinfo } = store;
+    const img = images?.[0]?.uri || undefined;
+
     return <JDcard className="store">
-        <JDalign flex={{
-            between: true,
-            vCenter: true
-        }}>
+        <Flex between center>
             <JDalign mr="huge" flex={{
                 vCenter: true
             }} style={{
                 width: '100%'
             }}>
-                <JDphotoFrame mr="huge" isBgImg className="store__img" src={image} />
+                <JDphotoFrame mr="huge" isBgImg className="store__img" src={img} />
                 <div style={{
                     width: '100%'
                 }} >
@@ -31,7 +30,7 @@ const Store: React.FC<IProps> = ({ store }) => {
                         }}>
                             <JDicon mr="tiny" icon="location" />
                             <Thin weight={100}>
-                                {address}
+                                {zoneinfo.callingCode}
                             </Thin>
                         </JDalign>
                     </JDalign>
@@ -68,7 +67,7 @@ const Store: React.FC<IProps> = ({ store }) => {
                     </JDalign>
                     <JDhorizen margin={2} />
                     <Thin size="small">
-                        {desc}
+                        {description}
                     </Thin>
                 </div>
             </JDalign>
@@ -78,8 +77,7 @@ const Store: React.FC<IProps> = ({ store }) => {
                 <JDbutton mb="normal" br="square" mode="border">수정하기</JDbutton>
                 <JDbutton br="square" mode="flat" thema="point">삭제하기</JDbutton>
             </div>
-        </JDalign>
-
+        </Flex>
     </JDcard>
 }
 

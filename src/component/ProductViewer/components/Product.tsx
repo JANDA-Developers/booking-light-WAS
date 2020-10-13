@@ -5,13 +5,13 @@ interface IProp {
     info: TProduct
 }
 
-export const Product: React.FC<IProp> = ({ info}) => {
+export const Product: React.FC<IProp> = ({ info }) => {
 
     const { count, name, total } = info;
     return <JDalign mb flex className="product">
         <div className="product__deco"></div>
         <div className="product__info">
-            <div  className="product__name">
+            <div className="product__name">
                 {name}
             </div>
             <div className="product__count">

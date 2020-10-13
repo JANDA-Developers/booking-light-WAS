@@ -7,6 +7,7 @@ import HeaderWrap from './component/Common/HeaderWrap';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { SideBarWrap } from './component/sidebar/SidebarWrap';
 import { JDalign } from '@janda-com/front';
+import NiceElments from './nice/NiceElments';
 
 const Data_headIcon: IIcons[] = [
   "help",

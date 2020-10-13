@@ -1,14 +1,13 @@
 import React from 'react';
-import  { autoComma,JDhorizen, Bold, Flex, JDalign, JDbadge, JDbutton, JDcard, JDphotoFrame, JDtypho, s4, Split, Thin } from "@janda-com/front";
-import { TProduct } from '../ProductSetting';
+import { autoComma, JDhorizen, Bold, Flex, JDalign, JDbadge, JDbutton, JDcard, JDphotoFrame, JDtypho, s4, Split, Thin } from "@janda-com/front";
 import DottedButton from '../../dottedButton/DottedButton';
+import { IProduct } from '../interface';
 
-interface IProps extends TProduct {
-    _id: string;
+interface IProps extends IProduct {
 }
 
-const Product: React.FC<IProps> = ({ _id, tags, title, desc, address, price }) => {
-
+const Product: React.FC<IProps> = ({ _id, capacity, code, createdAt, dailySchedulePolicy, images, name, price, subtitle, description }) => {
+    const tags: any[] = [];
 
     return (
         <>
@@ -22,9 +21,9 @@ const Product: React.FC<IProps> = ({ _id, tags, title, desc, address, price }) =
                                     {tags.map(tag => <JDbadge size="small" thema="primary" mode="border" key={s4()} >{tag}</JDbadge>)}
                                 </Flex>
                                 <Bold weight={700} mb="small" size="h6">
-                                    {title}
+                                    {name}
                                 </Bold>
-                                <JDtypho>{desc}</JDtypho>
+                                <JDtypho>{description}</JDtypho>
                             </div>
                             <JDalign text="right">
                                 <JDbutton mb="normal" size="small" label="수정하기" br="square" mode="flat" thema="lightPrimary" />
@@ -44,7 +43,7 @@ const Product: React.FC<IProps> = ({ _id, tags, title, desc, address, price }) =
                                 <Bold mr="normal">판매</Bold>
                                 <Thin>162</Thin>
                             </Flex>
-                            <JDtypho>{address}</JDtypho>
+                            <JDtypho>{location}</JDtypho>
                         </Flex>
                     </div>
                 </Flex>

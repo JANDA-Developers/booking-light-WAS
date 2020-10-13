@@ -1,39 +1,90 @@
-import { InputText, IUseModal, JDavatar, JDbutton, JDmodal, useFilesManager } from '@janda-com/front';
+import { InputText, IUseModal, JDavatar, JDbutton, JDmodal, toast, useFilesManager } from '@janda-com/front';
 import { TlocalFile } from '@janda-com/front/dist/hooks/hook';
 import React, { useState } from 'react';
+import { storeCreateVariables, storeDeleteVariables, storeUpdateVariables } from '../../../type/api';
+import { foucs } from '../../../utils/focus';
+import { IStore } from '../interface';
 
 
-type ModalInfo = {
-    mode: "edit" | "create"
+export type TMode = "create" | "update"
+
+export type ModalInfo = {
+    mode: TMode
+    store?: IStore
 }
 
-
-type TStoreSubmitInfo = {
-    name: string;
-    location: string;
-    introduce: string;
-    storeImg?: TlocalFile;
+export interface ISubmitData extends Partial<IStore> {
+    uploadImage?: TlocalFile
 }
 
 interface IProp {
     modalHook: IUseModal<ModalInfo>
-    onSubmit: (info: TStoreSubmitInfo) => void;
+    onCreate: (info: storeCreateVariables) => void;
+    onDelete: (info: storeDeleteVariables) => void;
+    onUpdate: (info: storeUpdateVariables) => void;
 }
 
-export const StoreSettingModal: React.FC<IProp> = ({ modalHook, onSubmit }) => {
+export const StoreSettingModal: React.FC<IProp> = ({ modalHook,
+    onCreate,
+    onUpdate,
+    onDelete: handleDelete,
+}) => {
+    if (!modalHook.info) throw Error("should provide modal info");
+    const mode = modalHook.info?.mode;
+    const originalStore = modalHook.info?.store;
+    const isCreate = mode === "create";
+    const default_info: ISubmitData = {}
+
     const storeImgHook = useFilesManager();
+    const [submitData, setSubmitData] = useState<ISubmitData>(originalStore || default_info);
+    const { name, description, _id: id } = submitData;
+    const uploadImage = storeImgHook.localFiles[0];
+    const submitInfo: ISubmitData = { ...submitData, uploadImage };
 
-    const [info, setInfo] = useState<TStoreSubmitInfo>({
-        introduce: "",
-        location: "",
-        name: "",
-    });
-    const { introduce, location, name } = info;
-
-    const storeImg = storeImgHook.localFiles[0]
-    function set<T extends keyof TStoreSubmitInfo>(key: T, value: TStoreSubmitInfo[T]) {
-        setInfo({ ...info, [key]: value });
+    function set<T extends keyof ISubmitData>(key: T, value: ISubmitData[T]) {
+        setSubmitData({ ...submitData, [key]: value });
     }
+
+    const createValidate = () => {
+        if (!name) {
+            toast.warn("상품이름 값을 입력해주세요.");
+            foucs("productName");
+            return false;
+        }
+
+        if (!description) {
+            toast.warn("상점소개 값을 입력해주세요.");
+            foucs("productDesc");
+            return false;
+        }
+
+        return true;
+    }
+
+    const idValid = !!id;
+
+    const handleCreate = () => {
+        if (!createValidate()) return;
+
+        onCreate({
+            name: name!,
+            description
+        })
+    }
+
+    const handleUpdate = () => {
+        if (!createValidate()) return;
+        if (!idValid) throw Error("no id provided");
+
+        onUpdate({
+            id,
+            input: {
+                description,
+                name
+            }
+        })
+    }
+
 
 
     return <JDmodal {...modalHook}
@@ -41,15 +92,19 @@ export const StoreSettingModal: React.FC<IProp> = ({ modalHook, onSubmit }) => {
             title: "상점 생성하기"
         }}
         foot={
-            <div >
+            <div>
                 <JDbutton onClick={() => {
-                    onSubmit({ ...info, storeImg })
+                    isCreate ? handleCreate() : handleUpdate();
                 }}>
-                    생성 확인
+                    {isCreate ? "생성하기" : "수정하기"}
                 </JDbutton>
-                <JDbutton onClick={modalHook.closeModal}>
-                    생성 취소
-                </JDbutton>
+                {isCreate || <JDbutton onClick={() => {
+                    if (!idValid) throw Error("no id provided");
+
+                    handleDelete({
+                        storeId: id
+                    })
+                }} thema="error">삭제하기</JDbutton>}
             </div>}
     >
         <section >
@@ -58,20 +113,19 @@ export const StoreSettingModal: React.FC<IProp> = ({ modalHook, onSubmit }) => {
             </div>
         </section>
         <section >
-            <InputText value={introduce} onChange={(value: any) => {
+            <InputText id="productName" value={name || ""} onChange={(value: any) => {
                 set("name", value);
             }} label="상품이름" />
         </section>
         <section >
             <InputText onChange={(value: any) => {
-                set("location", value);
-            }} value={location} label="상점주소" />
+                // set("location", value);
+            }} value={""} label="상점주소" />
         </section>
         <section >
-            {/* <h3>상점소개</h3> */}
-            <InputText onChange={(value: any) => {
-                set("introduce", value);
-            }} value={introduce} textarea={true} label="상점소개" className="addNew__textarea" />
+            <InputText id="productDesc" onChange={(value: any) => {
+                set("description", value);
+            }} value={description || ""} textarea label="상점소개" />
         </section>
     </JDmodal>
 };

@@ -1,8 +1,6 @@
 import { gql } from "@apollo/client";
 import { F_COLLECTION_DATA_INTERFACE, F_FILE, F_USER, F_ZONE_INFO, F_PRODUCT, F_STORE, F_PRODUCTGROUP, F_DAILYSCHEDULEPOLICIES, F_USERERROR, F_VERIFICATION } from "./fragments";
 
-
-
 /* :::::::::::::::::::::::::::::::::::::: 
 
   Queries 
@@ -10,7 +8,7 @@ import { F_COLLECTION_DATA_INTERFACE, F_FILE, F_USER, F_ZONE_INFO, F_PRODUCT, F_
 :::::::::::::::::::::::::::::::::::::: */
 
 
-export const ERRORGENERATOR = gql`
+export const ERROR_GENERATOR = gql`
   query errorGenerate(
       $code: String!
       $message: String!
@@ -81,7 +79,6 @@ export const PRODUCT_LIST = gql`
   ${F_PRODUCTGROUP}
 `;
 
-
 export const STORE_LIST = gql`
   query storeList(
       $sort: [_StoreSort!]
@@ -145,7 +142,7 @@ export const ME = gql`
 
 
 
-export const GETPROFILE = gql`
+export const GET_PROFILE = gql`
   query getprofile {
     GetProfile {
       ok
@@ -181,293 +178,6 @@ export const USERS = gql`
       }
   }
   ${F_USER}
-`;
-
-
-/* :::::::::::::::::::::::::::::::::::::: 
-
-    Mutations 
-    
-:::::::::::::::::::::::::::::::::::::: */
-
-
-export const FILEUPLOADS = gql`
-  mutation fileUploads(
-      $files: [FileInput!]!
-    ) {
-    FileUploads(
-        files: $files
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Ffile
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_FILE}
-`;
-
-
-export const PRODUCTCREATE = gql`
-  mutation productCreate(
-      $input:ProductCreateInput!
-      $storeId:ObjectId!
-    ) {
-    ProductCreate(
-        input: $input
-        storeId:$storeId
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fproduct
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_PRODUCT}
-`;
-
-
-export const PRODUCTDELETE = gql`
-  mutation productDelete(
-      $productId:ObjectId!
-    ) {
-    ProductDelete(
-        productId:$productId
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fproduct
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_PRODUCT}
-`;
-
-
-
-export const PRODUCTUPDATE = gql`
-  mutation productUpdate(
-      $input: ProductUpdateInput!
-      $id:ObjectId!
-    ) {
-    ProductUpdate(
-        input:$input
-        id:$id
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fproduct
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_PRODUCT}
-`
-
-
-export const STORECREATE = gql`
-  mutation storeCreate(
-      $name: String!
-      $description:String
-    ) {
-    StoreCreate(
-        name:$name
-        description:$description
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fstore
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_STORE}
-`;
-
-
-
-export const STOREDELETE = gql`
-  mutation storeDelete(
-      $storeId: ObjectId!
-    ) {
-    StoreDelete(
-        storeId:$storeId
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fstore
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_STORE}
-`;
-
-
-export const STOREUPDATE = gql`
-  mutation storeUpdate(
-      $input: StoreUpdateInput!
-      $id: ObjectId!
-    ) {
-    StoreUpdate(
-        input:$input
-        id:$id
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fstore
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_STORE}
-`;
-
-
-
-export const SIGNIN = gql`
-  mutation signIn(
-      $email: String!
-      $password: String!
-    ) {
-    SignIn(
-        email:$email
-        password:$password
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fuser
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_USER}
-`;
-
-
-
-export const SIGNOUT = gql`
-  mutation signOut {
-    SignOut {
-      ok
-      error {
-        ...FuserError
-      }
-    }
-  }
-  ${F_USERERROR}
-`;
-
-
-
-export const SIGNUP = gql`
-  mutation signUp(
-      $name: String!
-      $email: String!
-      $phoneNumber: String!
-      $password: String!
-      $company: String
-    ) {
-    SignUp(
-      name: $name
-      email: $email
-      phoneNumber: $phoneNumber
-      password: $password
-      company: $company) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fuser
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_USER}
-`;
-
-
-
-export const VERIFICATIONSTART = gql`
-  mutation verificationStart(
-      $target: VerificationTarget!
-      $payload: String!
-      $event: VerificationEvent!
-      $storeGroupId: ObjectId
-    ) {
-    VerificationStart(
-      target:$target
-      payload:$payload
-      event:$event
-      storeGroupId:$storeGroupId
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fverification
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_VERIFICATION}
-`;
-
-
-
-export const VERIFICATIONCOMPLETE = gql`
-  mutation verificationComplete(
-      $verificationId: ObjectId!
-      $target: VerificationTarget!
-      $code: String!
-      $payload: String!
-    ) {
-      VerificationComplete(
-      verificationId:$verificationId
-      target:$target
-      code:$code
-      payload:$payload
-      ) {
-      ok
-      error {
-        ...FuserError
-      }
-      data {
-        ...Fverification
-      }
-    }
-  }
-  ${F_USERERROR}
-  ${F_VERIFICATION}
 `;
 
 

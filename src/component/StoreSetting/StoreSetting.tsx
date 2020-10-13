@@ -1,63 +1,48 @@
 import React from 'react'
-import { useModal, useFilesManager, JDpageHeader, WindowSize, JDbutton, JDcontainer, JDcard } from "@janda-com/front"
+import { useModal, useFilesManager, JDpageHeader, WindowSize, JDbutton, JDcontainer, JDcard, toast } from "@janda-com/front"
 import Store from './Store'
 import DottedButton from '../dottedButton/DottedButton'
-
-type TheadInfo = {
-    title: string,
-    desc: string
-}
-
-
-export type Tstroe = {
-    _id: string;
-    image: string,
-    name: string,
-    address: string,
-    goodsCount: number,
-    sold: number,
-    generated: Date,
-    member: number,
-    desc: string
-}
+import { IStore } from './interface'
+import { IStoreWrapContext } from "./StoreSettingWrap";
+import StoreSettingModal, { ModalInfo } from './components/StoreSettingModal'
+import { storeCreateVariables, storeDeleteVariables, storeUpdateVariables } from '../../type/api'
 
 interface IProps {
-    headInfo: TheadInfo
-    storeList: Tstroe[]
+    storeList: IStore[]
+    context: IStoreWrapContext
 }
 
+const StoreSetting: React.FC<IProps> = ({ context, storeList }) => {
+    const { loading, storeCreate, storeDelete, storeUpdate } = context;
 
-const StoreSetting: React.FC<IProps> = ({ headInfo, storeList }) => {
-
-    const modalHook_newStore = useModal();
+    const storeModalHook = useModal<ModalInfo>();
 
     const uploader = useFilesManager();
 
-    const handleNewStore = () => {
-        modalHook_newStore.openModal();
+    const handleCreate = (info: storeCreateVariables) => {
+        storeCreate(info)
     }
 
-    const handleAddNew = () => {
-        alert('상품 생성이 완료되었습니다');
+    const handleDelete = (info: storeDeleteVariables) => {
+        storeDelete(info)
     }
 
-    const handleCancelNew = () => {
-        const calcelConfirm = window.confirm('작성을 취소하시겠습니까?');
-        if (calcelConfirm) {
-            modalHook_newStore.closeModal();
-        }
+    const handleUpdate = (info: storeUpdateVariables) => {
+        storeUpdate(info)
     }
 
     return (
         <div>
             <JDpageHeader
-                title={headInfo.title}
-                desc={headInfo.desc}
+                title="상점설정"
+                desc="운영중인 상품을 생성하고 관리할 수 있습니다"
             />
             <JDcard>
                 <div className="storeSetting">
                     <section className="storeSetting__content">
-                        <DottedButton mb="normal" />
+                        <DottedButton mb="normal" onClick={() => {
+                            storeModalHook.openModal()
+                        }} />
                         {
                             storeList.map((store) => {
                                 return <Store
@@ -68,9 +53,9 @@ const StoreSetting: React.FC<IProps> = ({ headInfo, storeList }) => {
                         }
                     </section>
                 </div>
+                <StoreSettingModal onCreate={handleCreate} onDelete={handleDelete} onUpdate={handleUpdate} modalHook={storeModalHook} />
             </JDcard>
         </div>
     )
 }
-
 export default StoreSetting

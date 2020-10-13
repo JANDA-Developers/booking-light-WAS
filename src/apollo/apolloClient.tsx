@@ -4,7 +4,7 @@ import uri from "./uri";
 import cache from "./cache";
 // @ts-ignore
 import { createUploadLink } from "apollo-upload-client";
-import {  toast } from "@janda-com/front";
+import { toast } from "@janda-com/front";
 import { onError } from "@apollo/client/link/error";
 
 const headers = {

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.1.11",
-    "@janda-com/front": "^3.4.8",
+    "@janda-com/front": "^3.4.15",
     "@janda-com/janda-table": "^1.0.2",
     "@janda-com/price-table": "^1.0.5",
     "@janda-com/sms": "^2.0.2",
@@ -20,6 +20,7 @@
     "randomcolor": "^0.6.2",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
+    "react-compound-timer": "^1.2.0",
     "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
@@ -32,7 +33,7 @@
     "eject": "react-scripts eject",
     "upload": "./upload.sh",
     "precodegen": "apollo schema:download --endpoint=https://dev-booking-lite.stayjanda.cloud/",
-    "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/* --queries=src/apollo/queries.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat"
+    "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/* --queries=src/apollo/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat"
   },
   "eslintConfig": {
     "extends": "react-app"
