@@ -1,8 +1,7 @@
-import { JDnoti, JDavatar, JDicon, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold } from '@janda-com/front';
+import { JDnoti, JDavatar, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold } from '@janda-com/front';
 import React, { useState } from 'react';
 import ProfileModal, { Tservice } from '../profile/ProfileModal';
 import Header from './Header';
-
 
 const DataMypageInfo = {
     userInfo: {
@@ -30,8 +29,6 @@ const service: Tservice[] = [
         title: "로그아웃"
     }
 ]
-
-
 
 interface IProp {
     key?: string;
@@ -74,10 +71,11 @@ export const HeaderWrap: React.FC<IProp> = () => {
             </Bold>
             <JDavatar hover size="normal" onClick={(e) => {
                 e.stopPropagation();
-                dropDownHook.open(undefined, {
+                const cooldinate = {
                     top: '2.5rem',
                     right: 0
-                })
+                }
+                dropDownHook.open(undefined, cooldinate)
             }} uploader={uploader} />
             <ProfileModal dropBoxHook={dropDownHook} userInfo={DataMypageInfo.userInfo} services={service} />
         </JDalign>

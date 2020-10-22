@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { JDcard, JDcontainer, JDpageHeader, WindowSize } from "@janda-com/front";
-import ProductViewer from "../../component/ProductViewer/ProductViewer";
+import ProductViewer from "../../component/productView/ProductViewer";
 
 interface IProps {
 }

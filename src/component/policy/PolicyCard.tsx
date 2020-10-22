@@ -39,3 +39,5 @@ export const PolicyCard: React.FC<IProp> = ({ contents, ...props }) => {
         </div>
     </JDcard>;
 };
+
+export default PolicyCard;

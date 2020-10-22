@@ -1465,10 +1465,10 @@
   resolved "https://registry.npmjs.org/@janda-com/price-table/-/price-table-1.0.5.tgz#0c895b0cb5129fe4a8f5366b909e04acd2293beb"
   integrity sha512-FRh5vuLlgHJDWue/baRMhj4ypivV5CuDQUG6Xh+GLoMF2C4RcDNzjMR3IwQuFSIfrrLoHCm/mdS5ZO5kfahf2g==
 
-"@janda-com/sms@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/@janda-com/sms/-/sms-2.0.2.tgz#1711f11811c6d8b9bb3d80478e703851f72c73c4"
-  integrity sha512-HNzdMZD2m+nP/79ieZkKdiB1SopUWA0aVcFaANZ/0pd2kxCUw6G5R+LHxs1DS23F4dbX6Yr04rAF0u6xk7qhEw==
+"@janda-com/sms@^2.0.3":
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/@janda-com/sms/-/sms-2.0.4.tgz#3640139f36674a76534aebde780eecaf6b98ceef"
+  integrity sha512-CODdzQ4evLIxSRv8BT6jo3ws2qU8ArcCI/lLJY6UfTmF2sP/AGj2kvdfQf1JM5Wujl1e3ZkDRvgTZHFTtWI92A==
   dependencies:
     "@apollo/client" "^3.0.0"
     "@apollo/react-common" "^3.1.4"

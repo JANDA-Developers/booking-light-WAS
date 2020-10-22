@@ -1,6 +1,6 @@
 import React from 'react';
 import { autoComma, JDhorizen, Bold, Flex, JDalign, JDbadge, JDbutton, JDcard, JDphotoFrame, JDtypho, s4, Split, Thin } from "@janda-com/front";
-import DottedButton from '../../dottedButton/DottedButton';
+import DotButton from '../../../component/dotButton/DotButton';
 import { IProduct } from '../interface';
 
 interface IProps extends IProduct {
@@ -43,12 +43,12 @@ const Product: React.FC<IProps> = ({ _id, capacity, code, createdAt, dailySchedu
                                 <Bold mr="normal">판매</Bold>
                                 <Thin>162</Thin>
                             </Flex>
-                            <JDtypho>{location}</JDtypho>
+                            <JDtypho>"location"</JDtypho>
                         </Flex>
                     </div>
                 </Flex>
             </JDcard>
-            <DottedButton />
+            <DotButton />
         </>
     )
 }

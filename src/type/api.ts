@@ -4,6 +4,906 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: itemCreate
+// ====================================================
+
+export interface itemCreate_ItemCreate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface itemCreate_ItemCreate_data_pay {
+  __typename: "Pay";
+  amount: number;
+  currency: Currency;
+}
+
+export interface itemCreate_ItemCreate_data_product_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemCreate_ItemCreate_data_product_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemCreate_ItemCreate_data_product_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemCreate_ItemCreate_data_product_images_tags[];
+  owner: itemCreate_ItemCreate_data_product_images_owner;
+}
+
+export interface itemCreate_ItemCreate_data_product_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemCreate_ItemCreate_data_product_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface itemCreate_ItemCreate_data_product_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemCreate_ItemCreate_data_product_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface itemCreate_ItemCreate_data_product_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: itemCreate_ItemCreate_data_product_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: itemCreate_ItemCreate_data_product_productGroup_list[];
+}
+
+export interface itemCreate_ItemCreate_data_product {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: itemCreate_ItemCreate_data_product_images[] | null;
+  user: itemCreate_ItemCreate_data_product_user;
+  store: itemCreate_ItemCreate_data_product_store;
+  productGroup: itemCreate_ItemCreate_data_product_productGroup | null;
+}
+
+export interface itemCreate_ItemCreate_data_storeUser_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemCreate_ItemCreate_data_storeUser_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemCreate_ItemCreate_data_storeUser_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemCreate_ItemCreate_data_storeUser_profileImage_tags[];
+  owner: itemCreate_ItemCreate_data_storeUser_profileImage_owner;
+}
+
+export interface itemCreate_ItemCreate_data_storeUser_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface itemCreate_ItemCreate_data_storeUser {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: itemCreate_ItemCreate_data_storeUser_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: itemCreate_ItemCreate_data_storeUser_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface itemCreate_ItemCreate_data {
+  __typename: "Item";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  /**
+   * 회원 예약이라도 직접 입력 가능
+   */
+  phoneNumber: string | null;
+  /**
+   * 회원 예약이라도 직접 입력 가능.
+   */
+  name: string | null;
+  /**
+   * Email... 얘 존재하면 Notification 날려줘야됨 ㅎ
+   */
+  email: string | null;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  fromTm: any;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  toTm: any;
+  /**
+   * 예약한 Product 수
+   */
+  count: number;
+  /**
+   * 지불 금액 및 통화단위
+   */
+  pay: itemCreate_ItemCreate_data_pay | null;
+  message: string | null;
+  product: itemCreate_ItemCreate_data_product;
+  storeUser: itemCreate_ItemCreate_data_storeUser;
+}
+
+export interface itemCreate_ItemCreate {
+  __typename: "ItemCreateResponse";
+  ok: boolean;
+  error: itemCreate_ItemCreate_error | null;
+  data: itemCreate_ItemCreate_data | null;
+}
+
+export interface itemCreate {
+  ItemCreate: itemCreate_ItemCreate;
+}
+
+export interface itemCreateVariables {
+  params: ItemCreateInput;
+  productId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: itemDelete
+// ====================================================
+
+export interface itemDelete_ItemDelete_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface itemDelete_ItemDelete_data_pay {
+  __typename: "Pay";
+  amount: number;
+  currency: Currency;
+}
+
+export interface itemDelete_ItemDelete_data_product_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemDelete_ItemDelete_data_product_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemDelete_ItemDelete_data_product_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemDelete_ItemDelete_data_product_images_tags[];
+  owner: itemDelete_ItemDelete_data_product_images_owner;
+}
+
+export interface itemDelete_ItemDelete_data_product_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemDelete_ItemDelete_data_product_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface itemDelete_ItemDelete_data_product_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemDelete_ItemDelete_data_product_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface itemDelete_ItemDelete_data_product_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: itemDelete_ItemDelete_data_product_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: itemDelete_ItemDelete_data_product_productGroup_list[];
+}
+
+export interface itemDelete_ItemDelete_data_product {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: itemDelete_ItemDelete_data_product_images[] | null;
+  user: itemDelete_ItemDelete_data_product_user;
+  store: itemDelete_ItemDelete_data_product_store;
+  productGroup: itemDelete_ItemDelete_data_product_productGroup | null;
+}
+
+export interface itemDelete_ItemDelete_data_storeUser_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemDelete_ItemDelete_data_storeUser_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemDelete_ItemDelete_data_storeUser_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemDelete_ItemDelete_data_storeUser_profileImage_tags[];
+  owner: itemDelete_ItemDelete_data_storeUser_profileImage_owner;
+}
+
+export interface itemDelete_ItemDelete_data_storeUser_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface itemDelete_ItemDelete_data_storeUser {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: itemDelete_ItemDelete_data_storeUser_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: itemDelete_ItemDelete_data_storeUser_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface itemDelete_ItemDelete_data {
+  __typename: "Item";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  /**
+   * 회원 예약이라도 직접 입력 가능
+   */
+  phoneNumber: string | null;
+  /**
+   * 회원 예약이라도 직접 입력 가능.
+   */
+  name: string | null;
+  /**
+   * Email... 얘 존재하면 Notification 날려줘야됨 ㅎ
+   */
+  email: string | null;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  fromTm: any;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  toTm: any;
+  /**
+   * 예약한 Product 수
+   */
+  count: number;
+  /**
+   * 지불 금액 및 통화단위
+   */
+  pay: itemDelete_ItemDelete_data_pay | null;
+  message: string | null;
+  product: itemDelete_ItemDelete_data_product;
+  storeUser: itemDelete_ItemDelete_data_storeUser;
+}
+
+export interface itemDelete_ItemDelete {
+  __typename: "ItemDeleteResponse";
+  ok: boolean;
+  error: itemDelete_ItemDelete_error | null;
+  data: itemDelete_ItemDelete_data | null;
+}
+
+export interface itemDelete {
+  ItemDelete: itemDelete_ItemDelete;
+}
+
+export interface itemDeleteVariables {
+  itemId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: storeSignUp
+// ====================================================
+
+export interface storeSignUp_StoreSignUp_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface storeSignUp_StoreSignUp_data_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface storeSignUp_StoreSignUp_data_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeSignUp_StoreSignUp_data_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: storeSignUp_StoreSignUp_data_profileImage_tags[];
+  owner: storeSignUp_StoreSignUp_data_profileImage_owner;
+}
+
+export interface storeSignUp_StoreSignUp_data_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface storeSignUp_StoreSignUp_data {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: storeSignUp_StoreSignUp_data_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: storeSignUp_StoreSignUp_data_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface storeSignUp_StoreSignUp {
+  __typename: "StoreSignUpResponse";
+  ok: boolean;
+  error: storeSignUp_StoreSignUp_error | null;
+  data: storeSignUp_StoreSignUp_data | null;
+}
+
+export interface storeSignUp {
+  StoreSignUp: storeSignUp_StoreSignUp;
+}
+
+export interface storeSignUpVariables {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  company?: string | null;
+  location: LocationInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: itemUpdate
+// ====================================================
+
+export interface itemUpdate_ItemUpdate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface itemUpdate_ItemUpdate_data_pay {
+  __typename: "Pay";
+  amount: number;
+  currency: Currency;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemUpdate_ItemUpdate_data_product_images_tags[];
+  owner: itemUpdate_ItemUpdate_data_product_images_owner;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface itemUpdate_ItemUpdate_data_product_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: itemUpdate_ItemUpdate_data_product_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: itemUpdate_ItemUpdate_data_product_productGroup_list[];
+}
+
+export interface itemUpdate_ItemUpdate_data_product {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: itemUpdate_ItemUpdate_data_product_images[] | null;
+  user: itemUpdate_ItemUpdate_data_product_user;
+  store: itemUpdate_ItemUpdate_data_product_store;
+  productGroup: itemUpdate_ItemUpdate_data_product_productGroup | null;
+}
+
+export interface itemUpdate_ItemUpdate_data_storeUser_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_storeUser_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_storeUser_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemUpdate_ItemUpdate_data_storeUser_profileImage_tags[];
+  owner: itemUpdate_ItemUpdate_data_storeUser_profileImage_owner;
+}
+
+export interface itemUpdate_ItemUpdate_data_storeUser_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface itemUpdate_ItemUpdate_data_storeUser {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: itemUpdate_ItemUpdate_data_storeUser_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: itemUpdate_ItemUpdate_data_storeUser_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface itemUpdate_ItemUpdate_data {
+  __typename: "Item";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  /**
+   * 회원 예약이라도 직접 입력 가능
+   */
+  phoneNumber: string | null;
+  /**
+   * 회원 예약이라도 직접 입력 가능.
+   */
+  name: string | null;
+  /**
+   * Email... 얘 존재하면 Notification 날려줘야됨 ㅎ
+   */
+  email: string | null;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  fromTm: any;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  toTm: any;
+  /**
+   * 예약한 Product 수
+   */
+  count: number;
+  /**
+   * 지불 금액 및 통화단위
+   */
+  pay: itemUpdate_ItemUpdate_data_pay | null;
+  message: string | null;
+  product: itemUpdate_ItemUpdate_data_product;
+  storeUser: itemUpdate_ItemUpdate_data_storeUser;
+}
+
+export interface itemUpdate_ItemUpdate {
+  __typename: "ItemUpdateResponse";
+  ok: boolean;
+  error: itemUpdate_ItemUpdate_error | null;
+  data: itemUpdate_ItemUpdate_data | null;
+}
+
+export interface itemUpdate {
+  ItemUpdate: itemUpdate_ItemUpdate;
+}
+
+export interface itemUpdateVariables {
+  input: ItemUpdateInput;
+  id: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: productTagsAdd
+// ====================================================
+
+export interface productTagsAdd_ProductTagsAdd_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface productTagsAdd_ProductTagsAdd {
+  __typename: "ProductResponse";
+  ok: boolean;
+  error: productTagsAdd_ProductTagsAdd_error | null;
+}
+
+export interface productTagsAdd {
+  ProductTagsAdd: productTagsAdd_ProductTagsAdd;
+}
+
+export interface productTagsAddVariables {
+  productId: any;
+  tags: TagInput[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: productTagsRemove
+// ====================================================
+
+export interface productTagsRemove_ProductTagsRemove_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: productTagsRemove_ProductTagsRemove_data_images_tags[];
+  owner: productTagsRemove_ProductTagsRemove_data_images_owner;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface productTagsRemove_ProductTagsRemove_data_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: productTagsRemove_ProductTagsRemove_data_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productTagsRemove_ProductTagsRemove_data_productGroup_list[];
+}
+
+export interface productTagsRemove_ProductTagsRemove_data {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: productTagsRemove_ProductTagsRemove_data_images[] | null;
+  user: productTagsRemove_ProductTagsRemove_data_user;
+  store: productTagsRemove_ProductTagsRemove_data_store;
+  productGroup: productTagsRemove_ProductTagsRemove_data_productGroup | null;
+}
+
+export interface productTagsRemove_ProductTagsRemove {
+  __typename: "ProductResponse";
+  ok: boolean;
+  error: productTagsRemove_ProductTagsRemove_error | null;
+  data: productTagsRemove_ProductTagsRemove_data | null;
+}
+
+export interface productTagsRemove {
+  ProductTagsRemove: productTagsRemove_ProductTagsRemove;
+}
+
+export interface productTagsRemoveVariables {
+  keys: string[];
+  productId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: fileUploads
 // ====================================================
 
@@ -34,11 +934,10 @@ export interface fileUploads_FileUploads_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: fileUploads_FileUploads_data_tags[];
   owner: fileUploads_FileUploads_data_owner;
@@ -65,6 +964,294 @@ export interface fileUploadsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: productDailySchedulerAdd
+// ====================================================
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: productDailySchedulerAdd_ProductDailySchedulerAdd_data_images_tags[];
+  owner: productDailySchedulerAdd_ProductDailySchedulerAdd_data_images_owner;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: productDailySchedulerAdd_ProductDailySchedulerAdd_data_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productDailySchedulerAdd_ProductDailySchedulerAdd_data_productGroup_list[];
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd_data {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: productDailySchedulerAdd_ProductDailySchedulerAdd_data_images[] | null;
+  user: productDailySchedulerAdd_ProductDailySchedulerAdd_data_user;
+  store: productDailySchedulerAdd_ProductDailySchedulerAdd_data_store;
+  productGroup: productDailySchedulerAdd_ProductDailySchedulerAdd_data_productGroup | null;
+}
+
+export interface productDailySchedulerAdd_ProductDailySchedulerAdd {
+  __typename: "ProductDailySchedulerAddResponse";
+  ok: boolean;
+  error: productDailySchedulerAdd_ProductDailySchedulerAdd_error | null;
+  data: productDailySchedulerAdd_ProductDailySchedulerAdd_data | null;
+}
+
+export interface productDailySchedulerAdd {
+  ProductDailySchedulerAdd: productDailySchedulerAdd_ProductDailySchedulerAdd;
+}
+
+export interface productDailySchedulerAddVariables {
+  productId: any;
+  dailySchedulers: DailySchedulerInput[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: productGroupCreate
+// ====================================================
+
+export interface productGroupCreate_ProductGroupCreate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface productGroupCreate_ProductGroupCreate_data_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productGroupCreate_ProductGroupCreate_data_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface productGroupCreate_ProductGroupCreate_data {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: productGroupCreate_ProductGroupCreate_data_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productGroupCreate_ProductGroupCreate_data_list[];
+}
+
+export interface productGroupCreate_ProductGroupCreate {
+  __typename: "ProductGroupCreateResponse";
+  ok: boolean;
+  error: productGroupCreate_ProductGroupCreate_error | null;
+  data: productGroupCreate_ProductGroupCreate_data | null;
+}
+
+export interface productGroupCreate {
+  ProductGroupCreate: productGroupCreate_ProductGroupCreate;
+}
+
+export interface productGroupCreateVariables {
+  params: ProductGroupCreateInput;
+  storeId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: productGroupDelete
+// ====================================================
+
+export interface productGroupDelete_ProductGroupDelete_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface productGroupDelete_ProductGroupDelete {
+  __typename: "ProductGroupDeleteResponse";
+  ok: boolean;
+  error: productGroupDelete_ProductGroupDelete_error | null;
+}
+
+export interface productGroupDelete {
+  ProductGroupDelete: productGroupDelete_ProductGroupDelete;
+}
+
+export interface productGroupDeleteVariables {
+  productGroupId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: productGroupUpdate
+// ====================================================
+
+export interface productGroupUpdate_ProductGroupUpdate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface productGroupUpdate_ProductGroupUpdate_data_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productGroupUpdate_ProductGroupUpdate_data_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface productGroupUpdate_ProductGroupUpdate_data {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: productGroupUpdate_ProductGroupUpdate_data_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productGroupUpdate_ProductGroupUpdate_data_list[];
+}
+
+export interface productGroupUpdate_ProductGroupUpdate {
+  __typename: "ProductGroupUpdateResponse";
+  ok: boolean;
+  error: productGroupUpdate_ProductGroupUpdate_error | null;
+  data: productGroupUpdate_ProductGroupUpdate_data | null;
+}
+
+export interface productGroupUpdate {
+  ProductGroupUpdate: productGroupUpdate_ProductGroupUpdate;
+}
+
+export interface productGroupUpdateVariables {
+  params: ProductGroupUpdateInput;
+  productGroupId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: productCreate
 // ====================================================
 
@@ -76,129 +1263,6 @@ export interface productCreate_ProductCreate_error {
    * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
    */
   details: string[] | null;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productCreate_ProductCreate_data_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productCreate_ProductCreate_data_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: productCreate_ProductCreate_data_dailySchedulePolicy_SUN | null;
-  MON: productCreate_ProductCreate_data_dailySchedulePolicy_MON | null;
-  TUE: productCreate_ProductCreate_data_dailySchedulePolicy_TUE | null;
-  WED: productCreate_ProductCreate_data_dailySchedulePolicy_WED | null;
-  THU: productCreate_ProductCreate_data_dailySchedulePolicy_THU | null;
-  FRI: productCreate_ProductCreate_data_dailySchedulePolicy_FRI | null;
-  SAT: productCreate_ProductCreate_data_dailySchedulePolicy_SAT | null;
 }
 
 export interface productCreate_ProductCreate_data_images_tags {
@@ -218,11 +1282,10 @@ export interface productCreate_ProductCreate_data_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: productCreate_ProductCreate_data_images_tags[];
   owner: productCreate_ProductCreate_data_images_owner;
@@ -239,7 +1302,6 @@ export interface productCreate_ProductCreate_data_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -262,13 +1324,15 @@ export interface productCreate_ProductCreate_data_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: productCreate_ProductCreate_data_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: productCreate_ProductCreate_data_productGroup_list[];
 }
 
@@ -277,15 +1341,12 @@ export interface productCreate_ProductCreate_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: productCreate_ProductCreate_data_dailySchedulePolicy;
   images: productCreate_ProductCreate_data_images[] | null;
   user: productCreate_ProductCreate_data_user;
   store: productCreate_ProductCreate_data_store;
@@ -304,7 +1365,7 @@ export interface productCreate {
 }
 
 export interface productCreateVariables {
-  input: ProductCreateInput;
+  params: ProductCreateInput;
   storeId: any;
 }
 
@@ -327,129 +1388,6 @@ export interface productDelete_ProductDelete_error {
   details: string[] | null;
 }
 
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productDelete_ProductDelete_data_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productDelete_ProductDelete_data_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: productDelete_ProductDelete_data_dailySchedulePolicy_SUN | null;
-  MON: productDelete_ProductDelete_data_dailySchedulePolicy_MON | null;
-  TUE: productDelete_ProductDelete_data_dailySchedulePolicy_TUE | null;
-  WED: productDelete_ProductDelete_data_dailySchedulePolicy_WED | null;
-  THU: productDelete_ProductDelete_data_dailySchedulePolicy_THU | null;
-  FRI: productDelete_ProductDelete_data_dailySchedulePolicy_FRI | null;
-  SAT: productDelete_ProductDelete_data_dailySchedulePolicy_SAT | null;
-}
-
 export interface productDelete_ProductDelete_data_images_tags {
   __typename: "Tag";
   key: string;
@@ -467,11 +1405,10 @@ export interface productDelete_ProductDelete_data_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: productDelete_ProductDelete_data_images_tags[];
   owner: productDelete_ProductDelete_data_images_owner;
@@ -488,7 +1425,6 @@ export interface productDelete_ProductDelete_data_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -511,13 +1447,15 @@ export interface productDelete_ProductDelete_data_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: productDelete_ProductDelete_data_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: productDelete_ProductDelete_data_productGroup_list[];
 }
 
@@ -526,15 +1464,12 @@ export interface productDelete_ProductDelete_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: productDelete_ProductDelete_data_dailySchedulePolicy;
   images: productDelete_ProductDelete_data_images[] | null;
   user: productDelete_ProductDelete_data_user;
   store: productDelete_ProductDelete_data_store;
@@ -575,129 +1510,6 @@ export interface productUpdate_ProductUpdate_error {
   details: string[] | null;
 }
 
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productUpdate_ProductUpdate_data_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productUpdate_ProductUpdate_data_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: productUpdate_ProductUpdate_data_dailySchedulePolicy_SUN | null;
-  MON: productUpdate_ProductUpdate_data_dailySchedulePolicy_MON | null;
-  TUE: productUpdate_ProductUpdate_data_dailySchedulePolicy_TUE | null;
-  WED: productUpdate_ProductUpdate_data_dailySchedulePolicy_WED | null;
-  THU: productUpdate_ProductUpdate_data_dailySchedulePolicy_THU | null;
-  FRI: productUpdate_ProductUpdate_data_dailySchedulePolicy_FRI | null;
-  SAT: productUpdate_ProductUpdate_data_dailySchedulePolicy_SAT | null;
-}
-
 export interface productUpdate_ProductUpdate_data_images_tags {
   __typename: "Tag";
   key: string;
@@ -715,11 +1527,10 @@ export interface productUpdate_ProductUpdate_data_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: productUpdate_ProductUpdate_data_images_tags[];
   owner: productUpdate_ProductUpdate_data_images_owner;
@@ -736,7 +1547,6 @@ export interface productUpdate_ProductUpdate_data_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -759,13 +1569,15 @@ export interface productUpdate_ProductUpdate_data_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: productUpdate_ProductUpdate_data_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: productUpdate_ProductUpdate_data_productGroup_list[];
 }
 
@@ -774,15 +1586,12 @@ export interface productUpdate_ProductUpdate_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: productUpdate_ProductUpdate_data_dailySchedulePolicy;
   images: productUpdate_ProductUpdate_data_images[] | null;
   user: productUpdate_ProductUpdate_data_user;
   store: productUpdate_ProductUpdate_data_store;
@@ -801,7 +1610,7 @@ export interface productUpdate {
 }
 
 export interface productUpdateVariables {
-  input: ProductUpdateInput;
+  params: ProductUpdateInput;
   id: any;
 }
 
@@ -838,129 +1647,6 @@ export interface storeCreate_StoreCreate_data_user {
   name: string;
 }
 
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeCreate_StoreCreate_data_products_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeCreate_StoreCreate_data_products_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: storeCreate_StoreCreate_data_products_dailySchedulePolicy_SUN | null;
-  MON: storeCreate_StoreCreate_data_products_dailySchedulePolicy_MON | null;
-  TUE: storeCreate_StoreCreate_data_products_dailySchedulePolicy_TUE | null;
-  WED: storeCreate_StoreCreate_data_products_dailySchedulePolicy_WED | null;
-  THU: storeCreate_StoreCreate_data_products_dailySchedulePolicy_THU | null;
-  FRI: storeCreate_StoreCreate_data_products_dailySchedulePolicy_FRI | null;
-  SAT: storeCreate_StoreCreate_data_products_dailySchedulePolicy_SAT | null;
-}
-
 export interface storeCreate_StoreCreate_data_products_images_tags {
   __typename: "Tag";
   key: string;
@@ -978,11 +1664,10 @@ export interface storeCreate_StoreCreate_data_products_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeCreate_StoreCreate_data_products_images_tags[];
   owner: storeCreate_StoreCreate_data_products_images_owner;
@@ -999,7 +1684,6 @@ export interface storeCreate_StoreCreate_data_products_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -1022,13 +1706,15 @@ export interface storeCreate_StoreCreate_data_products_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: storeCreate_StoreCreate_data_products_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: storeCreate_StoreCreate_data_products_productGroup_list[];
 }
 
@@ -1037,15 +1723,12 @@ export interface storeCreate_StoreCreate_data_products {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: storeCreate_StoreCreate_data_products_dailySchedulePolicy;
   images: storeCreate_StoreCreate_data_products_images[] | null;
   user: storeCreate_StoreCreate_data_products_user;
   store: storeCreate_StoreCreate_data_products_store;
@@ -1069,11 +1752,10 @@ export interface storeCreate_StoreCreate_data_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeCreate_StoreCreate_data_images_tags[];
   owner: storeCreate_StoreCreate_data_images_owner;
@@ -1084,7 +1766,6 @@ export interface storeCreate_StoreCreate_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   zoneinfo: storeCreate_StoreCreate_data_zoneinfo;
   code: string;
@@ -1108,6 +1789,74 @@ export interface storeCreate {
 export interface storeCreateVariables {
   name: string;
   description?: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: storeImageAdd
+// ====================================================
+
+export interface storeImageAdd_StoreImageAdd_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface storeImageAdd_StoreImageAdd {
+  __typename: "StoreResponse";
+  ok: boolean;
+  error: storeImageAdd_StoreImageAdd_error | null;
+}
+
+export interface storeImageAdd {
+  StoreImageAdd: storeImageAdd_StoreImageAdd;
+}
+
+export interface storeImageAddVariables {
+  images: any[];
+  storeId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: storeSignIn
+// ====================================================
+
+export interface storeSignIn_StoreSignIn_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface storeSignIn_StoreSignIn {
+  __typename: "StoreSignInResponse";
+  ok: boolean;
+  error: storeSignIn_StoreSignIn_error | null;
+}
+
+export interface storeSignIn {
+  StoreSignIn: storeSignIn_StoreSignIn;
+}
+
+export interface storeSignInVariables {
+  email: string;
+  password: string;
 }
 
 /* tslint:disable */
@@ -1143,129 +1892,6 @@ export interface storeDelete_StoreDelete_data_user {
   name: string;
 }
 
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeDelete_StoreDelete_data_products_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeDelete_StoreDelete_data_products_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: storeDelete_StoreDelete_data_products_dailySchedulePolicy_SUN | null;
-  MON: storeDelete_StoreDelete_data_products_dailySchedulePolicy_MON | null;
-  TUE: storeDelete_StoreDelete_data_products_dailySchedulePolicy_TUE | null;
-  WED: storeDelete_StoreDelete_data_products_dailySchedulePolicy_WED | null;
-  THU: storeDelete_StoreDelete_data_products_dailySchedulePolicy_THU | null;
-  FRI: storeDelete_StoreDelete_data_products_dailySchedulePolicy_FRI | null;
-  SAT: storeDelete_StoreDelete_data_products_dailySchedulePolicy_SAT | null;
-}
-
 export interface storeDelete_StoreDelete_data_products_images_tags {
   __typename: "Tag";
   key: string;
@@ -1283,11 +1909,10 @@ export interface storeDelete_StoreDelete_data_products_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeDelete_StoreDelete_data_products_images_tags[];
   owner: storeDelete_StoreDelete_data_products_images_owner;
@@ -1304,7 +1929,6 @@ export interface storeDelete_StoreDelete_data_products_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -1327,13 +1951,15 @@ export interface storeDelete_StoreDelete_data_products_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: storeDelete_StoreDelete_data_products_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: storeDelete_StoreDelete_data_products_productGroup_list[];
 }
 
@@ -1342,15 +1968,12 @@ export interface storeDelete_StoreDelete_data_products {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: storeDelete_StoreDelete_data_products_dailySchedulePolicy;
   images: storeDelete_StoreDelete_data_products_images[] | null;
   user: storeDelete_StoreDelete_data_products_user;
   store: storeDelete_StoreDelete_data_products_store;
@@ -1374,11 +1997,10 @@ export interface storeDelete_StoreDelete_data_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeDelete_StoreDelete_data_images_tags[];
   owner: storeDelete_StoreDelete_data_images_owner;
@@ -1389,7 +2011,6 @@ export interface storeDelete_StoreDelete_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   zoneinfo: storeDelete_StoreDelete_data_zoneinfo;
   code: string;
@@ -1447,129 +2068,6 @@ export interface storeUpdate_StoreUpdate_data_user {
   name: string;
 }
 
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeUpdate_StoreUpdate_data_products_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SUN | null;
-  MON: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_MON | null;
-  TUE: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_TUE | null;
-  WED: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_WED | null;
-  THU: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_THU | null;
-  FRI: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_FRI | null;
-  SAT: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy_SAT | null;
-}
-
 export interface storeUpdate_StoreUpdate_data_products_images_tags {
   __typename: "Tag";
   key: string;
@@ -1587,11 +2085,10 @@ export interface storeUpdate_StoreUpdate_data_products_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeUpdate_StoreUpdate_data_products_images_tags[];
   owner: storeUpdate_StoreUpdate_data_products_images_owner;
@@ -1608,7 +2105,6 @@ export interface storeUpdate_StoreUpdate_data_products_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -1631,13 +2127,15 @@ export interface storeUpdate_StoreUpdate_data_products_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: storeUpdate_StoreUpdate_data_products_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: storeUpdate_StoreUpdate_data_products_productGroup_list[];
 }
 
@@ -1646,15 +2144,12 @@ export interface storeUpdate_StoreUpdate_data_products {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: storeUpdate_StoreUpdate_data_products_dailySchedulePolicy;
   images: storeUpdate_StoreUpdate_data_products_images[] | null;
   user: storeUpdate_StoreUpdate_data_products_user;
   store: storeUpdate_StoreUpdate_data_products_store;
@@ -1678,11 +2173,10 @@ export interface storeUpdate_StoreUpdate_data_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeUpdate_StoreUpdate_data_images_tags[];
   owner: storeUpdate_StoreUpdate_data_images_owner;
@@ -1693,7 +2187,6 @@ export interface storeUpdate_StoreUpdate_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   zoneinfo: storeUpdate_StoreUpdate_data_zoneinfo;
   code: string;
@@ -1755,11 +2248,10 @@ export interface signIn_SignIn_data_profileImage {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: signIn_SignIn_data_profileImage_tags[];
   owner: signIn_SignIn_data_profileImage_owner;
@@ -1778,10 +2270,9 @@ export interface signIn_SignIn_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
-  email: string;
-  phoneNumber: string;
+  email: string | null;
+  phoneNumber: string | null;
   profileImage: signIn_SignIn_data_profileImage | null;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmail: boolean;
@@ -1872,11 +2363,10 @@ export interface signUp_SignUp_data_profileImage {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: signUp_SignUp_data_profileImage_tags[];
   owner: signUp_SignUp_data_profileImage_owner;
@@ -1895,10 +2385,9 @@ export interface signUp_SignUp_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
-  email: string;
-  phoneNumber: string;
+  email: string | null;
+  phoneNumber: string | null;
   profileImage: signUp_SignUp_data_profileImage | null;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmail: boolean;
@@ -1925,6 +2414,7 @@ export interface signUpVariables {
   phoneNumber: string;
   password: string;
   company?: string | null;
+  location: LocationInput;
 }
 
 /* tslint:disable */
@@ -1951,7 +2441,6 @@ export interface verificationStart_VerificationStart_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   payload: string;
   target: VerificationTarget;
   isVerified: boolean;
@@ -1960,13 +2449,13 @@ export interface verificationStart_VerificationStart_data {
    *             	 - ex) UserVerifyPhone, UserVerifyEmail, UserFindPassword, UserFindEmail, UserUpdateInfo
    */
   event: VerificationEvent;
-  storeGroupCode: string;
+  storeCode: string;
   expiresAt: any;
   isExpire: boolean;
 }
 
 export interface verificationStart_VerificationStart {
-  __typename: "VerificationProcessResponse";
+  __typename: "VerificationResponse";
   ok: boolean;
   error: verificationStart_VerificationStart_error | null;
   data: verificationStart_VerificationStart_data | null;
@@ -1980,7 +2469,6 @@ export interface verificationStartVariables {
   target: VerificationTarget;
   payload: string;
   event: VerificationEvent;
-  storeGroupId?: any | null;
 }
 
 /* tslint:disable */
@@ -2007,7 +2495,6 @@ export interface verificationComplete_VerificationComplete_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   payload: string;
   target: VerificationTarget;
   isVerified: boolean;
@@ -2016,13 +2503,13 @@ export interface verificationComplete_VerificationComplete_data {
    *             	 - ex) UserVerifyPhone, UserVerifyEmail, UserFindPassword, UserFindEmail, UserUpdateInfo
    */
   event: VerificationEvent;
-  storeGroupCode: string;
+  storeCode: string;
   expiresAt: any;
   isExpire: boolean;
 }
 
 export interface verificationComplete_VerificationComplete {
-  __typename: "VerificationProcessResponse";
+  __typename: "VerificationResponse";
   ok: boolean;
   error: verificationComplete_VerificationComplete_error | null;
   data: verificationComplete_VerificationComplete_data | null;
@@ -2079,15 +2566,15 @@ export interface errorGenerateVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: productList
+// GraphQL query operation: fileList
 // ====================================================
 
-export interface productList_ProductList_pageInfo {
+export interface fileList_FileList_pageInfo {
   __typename: "OffsetPagingInfo";
   /**
    * 선택한 페이지 번호
    */
-  pageNumber: number;
+  pageIndex: number;
   /**
    * 페이지당 기준 데이터 수
    */
@@ -2102,127 +2589,785 @@ export interface productList_ProductList_pageInfo {
   totalPageCount: number;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+export interface fileList_FileList_items_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
+export interface fileList_FileList_items_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+export interface fileList_FileList_items {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: fileList_FileList_items_tags[];
+  owner: fileList_FileList_items_owner;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
+export interface fileList_FileList {
+  __typename: "OffsetPagenatedFileData";
+  pageInfo: fileList_FileList_pageInfo;
+  items: fileList_FileList_items[];
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+export interface fileList {
+  FileList: fileList_FileList;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
+export interface fileListVariables {
+  sort?: _FileSort[] | null;
+  filter?: _FileFilter | null;
+  pagingInput: OffsetPagingInput;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: itemList
+// ====================================================
+
+export interface itemList_ItemList_pageInfo {
+  __typename: "OffsetPagingInfo";
+  /**
+   * 선택한 페이지 번호
+   */
+  pageIndex: number;
+  /**
+   * 페이지당 기준 데이터 수
+   */
+  pageItemCount: number;
+  /**
+   * 현재 페이지에서 출력한 데이터 수
+   */
+  currentItemCount: number;
+  /**
+   * 전체 페이지 수
+   */
+  totalPageCount: number;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
+export interface itemList_ItemList_items_pay {
+  __typename: "Pay";
+  amount: number;
+  currency: Currency;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+export interface itemList_ItemList_items_product_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
+export interface itemList_ItemList_items_product_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+export interface itemList_ItemList_items_product_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemList_ItemList_items_product_images_tags[];
+  owner: itemList_ItemList_items_product_images_owner;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
+export interface itemList_ItemList_items_product_user {
+  __typename: "User";
+  _id: any;
+  name: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
+export interface itemList_ItemList_items_product_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
+export interface itemList_ItemList_items_product_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
 }
 
-export interface productList_ProductList_items_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: productList_ProductList_items_dailySchedulePolicy_SUN | null;
-  MON: productList_ProductList_items_dailySchedulePolicy_MON | null;
-  TUE: productList_ProductList_items_dailySchedulePolicy_TUE | null;
-  WED: productList_ProductList_items_dailySchedulePolicy_WED | null;
-  THU: productList_ProductList_items_dailySchedulePolicy_THU | null;
-  FRI: productList_ProductList_items_dailySchedulePolicy_FRI | null;
-  SAT: productList_ProductList_items_dailySchedulePolicy_SAT | null;
+export interface itemList_ItemList_items_product_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface itemList_ItemList_items_product_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: itemList_ItemList_items_product_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: itemList_ItemList_items_product_productGroup_list[];
+}
+
+export interface itemList_ItemList_items_product {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: itemList_ItemList_items_product_images[] | null;
+  user: itemList_ItemList_items_product_user;
+  store: itemList_ItemList_items_product_store;
+  productGroup: itemList_ItemList_items_product_productGroup | null;
+}
+
+export interface itemList_ItemList_items_storeUser_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemList_ItemList_items_storeUser_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface itemList_ItemList_items_storeUser_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: itemList_ItemList_items_storeUser_profileImage_tags[];
+  owner: itemList_ItemList_items_storeUser_profileImage_owner;
+}
+
+export interface itemList_ItemList_items_storeUser_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface itemList_ItemList_items_storeUser {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: itemList_ItemList_items_storeUser_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: itemList_ItemList_items_storeUser_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface itemList_ItemList_items {
+  __typename: "Item";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  /**
+   * 회원 예약이라도 직접 입력 가능
+   */
+  phoneNumber: string | null;
+  /**
+   * 회원 예약이라도 직접 입력 가능.
+   */
+  name: string | null;
+  /**
+   * Email... 얘 존재하면 Notification 날려줘야됨 ㅎ
+   */
+  email: string | null;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  fromTm: any;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  toTm: any;
+  /**
+   * 예약한 Product 수
+   */
+  count: number;
+  /**
+   * 지불 금액 및 통화단위
+   */
+  pay: itemList_ItemList_items_pay | null;
+  message: string | null;
+  product: itemList_ItemList_items_product;
+  storeUser: itemList_ItemList_items_storeUser;
+}
+
+export interface itemList_ItemList {
+  __typename: "OffsetPagenatedItemData";
+  pageInfo: itemList_ItemList_pageInfo;
+  items: itemList_ItemList_items[];
+}
+
+export interface itemList {
+  ItemList: itemList_ItemList;
+}
+
+export interface itemListVariables {
+  sort?: _ItemSort[] | null;
+  filter?: _ItemFilter | null;
+  pagingInput: OffsetPagingInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: storeFindByCode
+// ====================================================
+
+export interface storeFindByCode_StoreFindByCode_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: storeFindByCode_StoreFindByCode_products_images_tags[];
+  owner: storeFindByCode_StoreFindByCode_products_images_owner;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface storeFindByCode_StoreFindByCode_products_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: storeFindByCode_StoreFindByCode_products_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: storeFindByCode_StoreFindByCode_products_productGroup_list[];
+}
+
+export interface storeFindByCode_StoreFindByCode_products {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: storeFindByCode_StoreFindByCode_products_images[] | null;
+  user: storeFindByCode_StoreFindByCode_products_user;
+  store: storeFindByCode_StoreFindByCode_products_store;
+  productGroup: storeFindByCode_StoreFindByCode_products_productGroup | null;
+}
+
+export interface storeFindByCode_StoreFindByCode_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: storeFindByCode_StoreFindByCode_images_tags[];
+  owner: storeFindByCode_StoreFindByCode_images_owner;
+}
+
+export interface storeFindByCode_StoreFindByCode {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  zoneinfo: storeFindByCode_StoreFindByCode_zoneinfo;
+  code: string;
+  description: string | null;
+  user: storeFindByCode_StoreFindByCode_user;
+  products: storeFindByCode_StoreFindByCode_products[];
+  images: storeFindByCode_StoreFindByCode_images[] | null;
+}
+
+export interface storeFindByCode {
+  StoreFindByCode: storeFindByCode_StoreFindByCode | null;
+}
+
+export interface storeFindByCodeVariables {
+  code: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: storeUserProfile
+// ====================================================
+
+export interface storeUserProfile_StoreUserProfile_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface storeUserProfile_StoreUserProfile_data_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface storeUserProfile_StoreUserProfile_data_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface storeUserProfile_StoreUserProfile_data_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: storeUserProfile_StoreUserProfile_data_profileImage_tags[];
+  owner: storeUserProfile_StoreUserProfile_data_profileImage_owner;
+}
+
+export interface storeUserProfile_StoreUserProfile_data_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface storeUserProfile_StoreUserProfile_data {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: storeUserProfile_StoreUserProfile_data_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: storeUserProfile_StoreUserProfile_data_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface storeUserProfile_StoreUserProfile {
+  __typename: "StoreUserProfileResponse";
+  ok: boolean;
+  error: storeUserProfile_StoreUserProfile_error | null;
+  data: storeUserProfile_StoreUserProfile_data | null;
+}
+
+export interface storeUserProfile {
+  StoreUserProfile: storeUserProfile_StoreUserProfile;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: productGroupList
+// ====================================================
+
+export interface productGroupList_ProductGroupList_pageInfo {
+  __typename: "OffsetPagingInfo";
+  /**
+   * 선택한 페이지 번호
+   */
+  pageIndex: number;
+  /**
+   * 페이지당 기준 데이터 수
+   */
+  pageItemCount: number;
+  /**
+   * 현재 페이지에서 출력한 데이터 수
+   */
+  currentItemCount: number;
+  /**
+   * 전체 페이지 수
+   */
+  totalPageCount: number;
+}
+
+export interface productGroupList_ProductGroupList_items_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productGroupList_ProductGroupList_items_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface productGroupList_ProductGroupList_items {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: productGroupList_ProductGroupList_items_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productGroupList_ProductGroupList_items_list[];
+}
+
+export interface productGroupList_ProductGroupList {
+  __typename: "OffsetPagenatedProductGroupData";
+  pageInfo: productGroupList_ProductGroupList_pageInfo;
+  items: productGroupList_ProductGroupList_items[];
+}
+
+export interface productGroupList {
+  ProductGroupList: productGroupList_ProductGroupList;
+}
+
+export interface productGroupListVariables {
+  sort?: _ProductGroupSort[] | null;
+  filter: _ProductGroupFilter;
+  pagingInput: OffsetPagingInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: productGroupFindByCode
+// ====================================================
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: productGroupFindByCode_ProductGroupFindByCode_list_images_tags[];
+  owner: productGroupFindByCode_ProductGroupFindByCode_list_images_owner;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: productGroupFindByCode_ProductGroupFindByCode_list_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productGroupFindByCode_ProductGroupFindByCode_list_productGroup_list[];
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode_list {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: productGroupFindByCode_ProductGroupFindByCode_list_images[] | null;
+  user: productGroupFindByCode_ProductGroupFindByCode_list_user;
+  store: productGroupFindByCode_ProductGroupFindByCode_list_store;
+  productGroup: productGroupFindByCode_ProductGroupFindByCode_list_productGroup | null;
+}
+
+export interface productGroupFindByCode_ProductGroupFindByCode {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: productGroupFindByCode_ProductGroupFindByCode_list[];
+}
+
+export interface productGroupFindByCode {
+  ProductGroupFindByCode: productGroupFindByCode_ProductGroupFindByCode | null;
+}
+
+export interface productGroupFindByCodeVariables {
+  code: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: productList
+// ====================================================
+
+export interface productList_ProductList_pageInfo {
+  __typename: "OffsetPagingInfo";
+  /**
+   * 선택한 페이지 번호
+   */
+  pageIndex: number;
+  /**
+   * 페이지당 기준 데이터 수
+   */
+  pageItemCount: number;
+  /**
+   * 현재 페이지에서 출력한 데이터 수
+   */
+  currentItemCount: number;
+  /**
+   * 전체 페이지 수
+   */
+  totalPageCount: number;
+}
+
+export interface productList_ProductList_items_dailySchedulers_scheduler_timelinePolicies {
+  __typename: "TimelinePolicy";
+  /**
+   * Segments의 시작 지점. MinuteOfDay로 표시.
+   */
+  from: number;
+  /**
+   * Segments의 끝 지점. MinuteOfDay로 표시
+   */
+  to: number;
+  /**
+   * Segment의 크기. Minute 으로 표현함. 항상 5의 배수다.
+   */
+  size: number;
+  count: number;
+  /**
+   * Segments에서 예약이 불가능한 from의 배열
+   */
+  edges: number[];
+}
+
+export interface productList_ProductList_items_dailySchedulers_scheduler_priceSegmentTable {
+  __typename: "PriceSegmentTable";
+  price: number;
+  currency: Currency | null;
+}
+
+export interface productList_ProductList_items_dailySchedulers_scheduler {
+  __typename: "Scheduler";
+  from: number;
+  to: number;
+  timelinePolicies: productList_ProductList_items_dailySchedulers_scheduler_timelinePolicies[];
+  priceSegmentTable: productList_ProductList_items_dailySchedulers_scheduler_priceSegmentTable[];
+  /**
+   * 최대 수용 가능 인원 수
+   */
+  maxCapacity: number | null;
+}
+
+export interface productList_ProductList_items_dailySchedulers {
+  __typename: "DailyScheduler";
+  days: DayOfWeek[];
+  scheduler: productList_ProductList_items_dailySchedulers_scheduler;
 }
 
 export interface productList_ProductList_items_images_tags {
@@ -2242,366 +3387,13 @@ export interface productList_ProductList_items_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: productList_ProductList_items_images_tags[];
   owner: productList_ProductList_items_images_owner;
-}
-
-export interface productList_ProductList_items_user_profileImage_tags {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-export interface productList_ProductList_items_user_profileImage_owner {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_user_profileImage {
-  __typename: "File";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  description: string | null;
-  extension: string;
-  fileType: string;
-  uri: string;
-  tags: productList_ProductList_items_user_profileImage_tags[];
-  owner: productList_ProductList_items_user_profileImage_owner;
-}
-
-export interface productList_ProductList_items_user_zoneinfo {
-  __typename: "Zoneinfo";
-  timezone: string;
-  offset: number;
-  callingCode: string;
-  alpha2Code: string;
-}
-
-export interface productList_ProductList_items_user {
-  __typename: "User";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  profileImage: productList_ProductList_items_user_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
-  role: UserRole;
-  company: string | null;
-  zoneinfo: productList_ProductList_items_user_zoneinfo;
-  smsKey: string | null;
-}
-
-export interface productList_ProductList_items_store_zoneinfo {
-  __typename: "Zoneinfo";
-  timezone: string;
-  offset: number;
-  callingCode: string;
-  alpha2Code: string;
-}
-
-export interface productList_ProductList_items_store_user {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: productList_ProductList_items_store_products_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface productList_ProductList_items_store_products_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: productList_ProductList_items_store_products_dailySchedulePolicy_SUN | null;
-  MON: productList_ProductList_items_store_products_dailySchedulePolicy_MON | null;
-  TUE: productList_ProductList_items_store_products_dailySchedulePolicy_TUE | null;
-  WED: productList_ProductList_items_store_products_dailySchedulePolicy_WED | null;
-  THU: productList_ProductList_items_store_products_dailySchedulePolicy_THU | null;
-  FRI: productList_ProductList_items_store_products_dailySchedulePolicy_FRI | null;
-  SAT: productList_ProductList_items_store_products_dailySchedulePolicy_SAT | null;
-}
-
-export interface productList_ProductList_items_store_products_images_tags {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-export interface productList_ProductList_items_store_products_images_owner {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_store_products_images {
-  __typename: "File";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  description: string | null;
-  extension: string;
-  fileType: string;
-  uri: string;
-  tags: productList_ProductList_items_store_products_images_tags[];
-  owner: productList_ProductList_items_store_products_images_owner;
-}
-
-export interface productList_ProductList_items_store_products_user {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_store_products_store {
-  __typename: "Store";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-}
-
-export interface productList_ProductList_items_store_products_productGroup_user {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_store_products_productGroup_list {
-  __typename: "Product";
-  _id: any;
-  name: string;
-  code: string;
-  price: number;
-}
-
-export interface productList_ProductList_items_store_products_productGroup {
-  __typename: "ProductGroup";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  user: productList_ProductList_items_store_products_productGroup_user;
-  name: string;
-  type: GroupType;
-  code: string;
-  description: string | null;
-  hashTags: string[];
-  list: productList_ProductList_items_store_products_productGroup_list[];
-}
-
-export interface productList_ProductList_items_store_products {
-  __typename: "Product";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  subtitle: string;
-  code: string;
-  description: string | null;
-  price: number;
-  capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: productList_ProductList_items_store_products_dailySchedulePolicy;
-  images: productList_ProductList_items_store_products_images[] | null;
-  user: productList_ProductList_items_store_products_user;
-  store: productList_ProductList_items_store_products_store;
-  productGroup: productList_ProductList_items_store_products_productGroup | null;
-}
-
-export interface productList_ProductList_items_store_images_tags {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-export interface productList_ProductList_items_store_images_owner {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_store_images {
-  __typename: "File";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  description: string | null;
-  extension: string;
-  fileType: string;
-  uri: string;
-  tags: productList_ProductList_items_store_images_tags[];
-  owner: productList_ProductList_items_store_images_owner;
-}
-
-export interface productList_ProductList_items_store {
-  __typename: "Store";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  zoneinfo: productList_ProductList_items_store_zoneinfo;
-  code: string;
-  description: string | null;
-  user: productList_ProductList_items_store_user;
-  products: productList_ProductList_items_store_products[];
-  images: productList_ProductList_items_store_images[] | null;
-}
-
-export interface productList_ProductList_items_productGroup_user {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface productList_ProductList_items_productGroup_list {
-  __typename: "Product";
-  _id: any;
-  name: string;
-  code: string;
-  price: number;
-}
-
-export interface productList_ProductList_items_productGroup {
-  __typename: "ProductGroup";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  user: productList_ProductList_items_productGroup_user;
-  name: string;
-  type: GroupType;
-  code: string;
-  description: string | null;
-  hashTags: string[];
-  list: productList_ProductList_items_productGroup_list[];
 }
 
 export interface productList_ProductList_items {
@@ -2609,19 +3401,14 @@ export interface productList_ProductList_items {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: productList_ProductList_items_dailySchedulePolicy;
+  dailySchedulers: productList_ProductList_items_dailySchedulers[];
   images: productList_ProductList_items_images[] | null;
-  user: productList_ProductList_items_user;
-  store: productList_ProductList_items_store;
-  productGroup: productList_ProductList_items_productGroup | null;
 }
 
 export interface productList_ProductList {
@@ -2654,7 +3441,7 @@ export interface storeList_StoreList_pageInfo {
   /**
    * 선택한 페이지 번호
    */
-  pageNumber: number;
+  pageIndex: number;
   /**
    * 페이지당 기준 데이터 수
    */
@@ -2694,11 +3481,10 @@ export interface storeList_StoreList_items_user_profileImage {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeList_StoreList_items_user_profileImage_tags[];
   owner: storeList_StoreList_items_user_profileImage_owner;
@@ -2717,10 +3503,9 @@ export interface storeList_StoreList_items_user {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
-  email: string;
-  phoneNumber: string;
+  email: string | null;
+  phoneNumber: string | null;
   profileImage: storeList_StoreList_items_user_profileImage | null;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmail: boolean;
@@ -2728,129 +3513,6 @@ export interface storeList_StoreList_items_user {
   company: string | null;
   zoneinfo: storeList_StoreList_items_user_zoneinfo;
   smsKey: string | null;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: storeList_StoreList_items_products_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface storeList_StoreList_items_products_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: storeList_StoreList_items_products_dailySchedulePolicy_SUN | null;
-  MON: storeList_StoreList_items_products_dailySchedulePolicy_MON | null;
-  TUE: storeList_StoreList_items_products_dailySchedulePolicy_TUE | null;
-  WED: storeList_StoreList_items_products_dailySchedulePolicy_WED | null;
-  THU: storeList_StoreList_items_products_dailySchedulePolicy_THU | null;
-  FRI: storeList_StoreList_items_products_dailySchedulePolicy_FRI | null;
-  SAT: storeList_StoreList_items_products_dailySchedulePolicy_SAT | null;
 }
 
 export interface storeList_StoreList_items_products_images_tags {
@@ -2870,11 +3532,10 @@ export interface storeList_StoreList_items_products_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeList_StoreList_items_products_images_tags[];
   owner: storeList_StoreList_items_products_images_owner;
@@ -2891,7 +3552,6 @@ export interface storeList_StoreList_items_products_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -2914,13 +3574,15 @@ export interface storeList_StoreList_items_products_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: storeList_StoreList_items_products_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: storeList_StoreList_items_products_productGroup_list[];
 }
 
@@ -2929,15 +3591,12 @@ export interface storeList_StoreList_items_products {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: storeList_StoreList_items_products_dailySchedulePolicy;
   images: storeList_StoreList_items_products_images[] | null;
   user: storeList_StoreList_items_products_user;
   store: storeList_StoreList_items_products_store;
@@ -2961,11 +3620,10 @@ export interface storeList_StoreList_items_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: storeList_StoreList_items_images_tags[];
   owner: storeList_StoreList_items_images_owner;
@@ -2976,7 +3634,6 @@ export interface storeList_StoreList_items {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   zoneinfo: storeList_StoreList_items_zoneinfo;
   code: string;
@@ -3038,11 +3695,10 @@ export interface me_Me_data_profileImage {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: me_Me_data_profileImage_tags[];
   owner: me_Me_data_profileImage_owner;
@@ -3061,10 +3717,9 @@ export interface me_Me_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
-  email: string;
-  phoneNumber: string;
+  email: string | null;
+  phoneNumber: string | null;
   profileImage: me_Me_data_profileImage | null;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmail: boolean;
@@ -3121,11 +3776,10 @@ export interface getprofile_GetProfile_data_profileImage {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: getprofile_GetProfile_data_profileImage_tags[];
   owner: getprofile_GetProfile_data_profileImage_owner;
@@ -3144,10 +3798,9 @@ export interface getprofile_GetProfile_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
-  email: string;
-  phoneNumber: string;
+  email: string | null;
+  phoneNumber: string | null;
   profileImage: getprofile_GetProfile_data_profileImage | null;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmail: boolean;
@@ -3182,7 +3835,7 @@ export interface users_users_pageInfo {
   /**
    * 선택한 페이지 번호
    */
-  pageNumber: number;
+  pageIndex: number;
   /**
    * 페이지당 기준 데이터 수
    */
@@ -3197,63 +3850,9 @@ export interface users_users_pageInfo {
   totalPageCount: number;
 }
 
-export interface users_users_items_profileImage_tags {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-export interface users_users_items_profileImage_owner {
-  __typename: "User";
-  _id: any;
-  name: string;
-}
-
-export interface users_users_items_profileImage {
-  __typename: "File";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  description: string | null;
-  extension: string;
-  fileType: string;
-  uri: string;
-  tags: users_users_items_profileImage_tags[];
-  owner: users_users_items_profileImage_owner;
-}
-
-export interface users_users_items_zoneinfo {
-  __typename: "Zoneinfo";
-  timezone: string;
-  offset: number;
-  callingCode: string;
-  alpha2Code: string;
-}
-
-export interface users_users_items {
-  __typename: "User";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  isDeleted: boolean | null;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  profileImage: users_users_items_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
-  role: UserRole;
-  company: string | null;
-  zoneinfo: users_users_items_zoneinfo;
-  smsKey: string | null;
-}
-
 export interface users_users {
   __typename: "OffsetPagenatedUserData";
   pageInfo: users_users_pageInfo;
-  items: users_users_items[];
 }
 
 export interface users {
@@ -3262,6 +3861,197 @@ export interface users {
 
 export interface usersVariables {
   pageInput: OffsetPagingInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FoffsetPagingInfo
+// ====================================================
+
+export interface FoffsetPagingInfo {
+  __typename: "OffsetPagingInfo";
+  /**
+   * 선택한 페이지 번호
+   */
+  pageIndex: number;
+  /**
+   * 페이지당 기준 데이터 수
+   */
+  pageItemCount: number;
+  /**
+   * 현재 페이지에서 출력한 데이터 수
+   */
+  currentItemCount: number;
+  /**
+   * 전체 페이지 수
+   */
+  totalPageCount: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FtimelinePolicy
+// ====================================================
+
+export interface FtimelinePolicy {
+  __typename: "TimelinePolicy";
+  /**
+   * Segments의 시작 지점. MinuteOfDay로 표시.
+   */
+  from: number;
+  /**
+   * Segments의 끝 지점. MinuteOfDay로 표시
+   */
+  to: number;
+  /**
+   * Segment의 크기. Minute 으로 표현함. 항상 5의 배수다.
+   */
+  size: number;
+  count: number;
+  /**
+   * Segments에서 예약이 불가능한 from의 배열
+   */
+  edges: number[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FpriceSegmentTable
+// ====================================================
+
+export interface FpriceSegmentTable {
+  __typename: "PriceSegmentTable";
+  price: number;
+  currency: Currency | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Fscheduler
+// ====================================================
+
+export interface Fscheduler_timelinePolicies {
+  __typename: "TimelinePolicy";
+  /**
+   * Segments의 시작 지점. MinuteOfDay로 표시.
+   */
+  from: number;
+  /**
+   * Segments의 끝 지점. MinuteOfDay로 표시
+   */
+  to: number;
+  /**
+   * Segment의 크기. Minute 으로 표현함. 항상 5의 배수다.
+   */
+  size: number;
+  count: number;
+  /**
+   * Segments에서 예약이 불가능한 from의 배열
+   */
+  edges: number[];
+}
+
+export interface Fscheduler_priceSegmentTable {
+  __typename: "PriceSegmentTable";
+  price: number;
+  currency: Currency | null;
+}
+
+export interface Fscheduler {
+  __typename: "Scheduler";
+  from: number;
+  to: number;
+  timelinePolicies: Fscheduler_timelinePolicies[];
+  priceSegmentTable: Fscheduler_priceSegmentTable[];
+  /**
+   * 최대 수용 가능 인원 수
+   */
+  maxCapacity: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FdailyScheduler
+// ====================================================
+
+export interface FdailyScheduler_scheduler_timelinePolicies {
+  __typename: "TimelinePolicy";
+  /**
+   * Segments의 시작 지점. MinuteOfDay로 표시.
+   */
+  from: number;
+  /**
+   * Segments의 끝 지점. MinuteOfDay로 표시
+   */
+  to: number;
+  /**
+   * Segment의 크기. Minute 으로 표현함. 항상 5의 배수다.
+   */
+  size: number;
+  count: number;
+  /**
+   * Segments에서 예약이 불가능한 from의 배열
+   */
+  edges: number[];
+}
+
+export interface FdailyScheduler_scheduler_priceSegmentTable {
+  __typename: "PriceSegmentTable";
+  price: number;
+  currency: Currency | null;
+}
+
+export interface FdailyScheduler_scheduler {
+  __typename: "Scheduler";
+  from: number;
+  to: number;
+  timelinePolicies: FdailyScheduler_scheduler_timelinePolicies[];
+  priceSegmentTable: FdailyScheduler_scheduler_priceSegmentTable[];
+  /**
+   * 최대 수용 가능 인원 수
+   */
+  maxCapacity: number | null;
+}
+
+export interface FdailyScheduler {
+  __typename: "DailyScheduler";
+  days: DayOfWeek[];
+  scheduler: FdailyScheduler_scheduler;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Fpay
+// ====================================================
+
+export interface Fpay {
+  __typename: "Pay";
+  amount: number;
+  currency: Currency;
 }
 
 /* tslint:disable */
@@ -3293,186 +4083,10 @@ export interface FuserError {
 // ====================================================
 
 export interface FcollectionDataInterface {
-  __typename: "File" | "User" | "Verification" | "ProductGroup" | "Product" | "Store";
+  __typename: "File" | "User" | "Verification" | "ProductGroup" | "Product" | "Store" | "Item";
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FscheduleGenerator
-// ====================================================
-
-export interface FscheduleGenerator {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FscheduleGeneratorGroup
-// ====================================================
-
-export interface FscheduleGeneratorGroup_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FscheduleGeneratorGroup {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FscheduleGeneratorGroup_policies[];
-  from: number;
-  to: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FdailySchedulePolicies
-// ====================================================
-
-export interface FdailySchedulePolicies_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface FdailySchedulePolicies_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: FdailySchedulePolicies_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface FdailySchedulePolicies {
-  __typename: "DailySchedulePolicies";
-  SUN: FdailySchedulePolicies_SUN | null;
-  MON: FdailySchedulePolicies_MON | null;
-  TUE: FdailySchedulePolicies_TUE | null;
-  WED: FdailySchedulePolicies_WED | null;
-  THU: FdailySchedulePolicies_THU | null;
-  FRI: FdailySchedulePolicies_FRI | null;
-  SAT: FdailySchedulePolicies_SAT | null;
 }
 
 /* tslint:disable */
@@ -3533,11 +4147,10 @@ export interface Ffile {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: Ffile_tags[];
   owner: Ffile_owner;
@@ -3569,11 +4182,10 @@ export interface Fuser_profileImage {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: Fuser_profileImage_tags[];
   owner: Fuser_profileImage_owner;
@@ -3592,10 +4204,9 @@ export interface Fuser {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
-  email: string;
-  phoneNumber: string;
+  email: string | null;
+  phoneNumber: string | null;
   profileImage: Fuser_profileImage | null;
   isVerifiedPhoneNumber: boolean;
   isVerifiedEmail: boolean;
@@ -3633,13 +4244,15 @@ export interface FproductGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: FproductGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: FproductGroup_list[];
 }
 
@@ -3651,129 +4264,6 @@ export interface FproductGroup {
 // ====================================================
 // GraphQL fragment: Fproduct
 // ====================================================
-
-export interface Fproduct_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fproduct_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fproduct_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fproduct_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: Fproduct_dailySchedulePolicy_SUN | null;
-  MON: Fproduct_dailySchedulePolicy_MON | null;
-  TUE: Fproduct_dailySchedulePolicy_TUE | null;
-  WED: Fproduct_dailySchedulePolicy_WED | null;
-  THU: Fproduct_dailySchedulePolicy_THU | null;
-  FRI: Fproduct_dailySchedulePolicy_FRI | null;
-  SAT: Fproduct_dailySchedulePolicy_SAT | null;
-}
 
 export interface Fproduct_images_tags {
   __typename: "Tag";
@@ -3792,11 +4282,10 @@ export interface Fproduct_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: Fproduct_images_tags[];
   owner: Fproduct_images_owner;
@@ -3813,7 +4302,6 @@ export interface Fproduct_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -3836,13 +4324,15 @@ export interface Fproduct_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: Fproduct_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: Fproduct_productGroup_list[];
 }
 
@@ -3851,15 +4341,12 @@ export interface Fproduct {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: Fproduct_dailySchedulePolicy;
   images: Fproduct_images[] | null;
   user: Fproduct_user;
   store: Fproduct_store;
@@ -3889,129 +4376,6 @@ export interface Fstore_user {
   name: string;
 }
 
-export interface Fstore_products_dailySchedulePolicy_SUN_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_SUN {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_SUN_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy_MON_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_MON {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_MON_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy_TUE_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_TUE {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_TUE_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy_WED_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_WED {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_WED_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy_THU_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_THU {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_THU_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy_FRI_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_FRI {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_FRI_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy_SAT_policies {
-  __typename: "ScheduleGenerator";
-  from: number;
-  to: number;
-  segmentLength: number;
-  segmentCount: number;
-  segmentBlockedIndexes: number[];
-}
-
-export interface Fstore_products_dailySchedulePolicy_SAT {
-  __typename: "ScheduleGeneratorGroup";
-  policies: Fstore_products_dailySchedulePolicy_SAT_policies[];
-  from: number;
-  to: number;
-}
-
-export interface Fstore_products_dailySchedulePolicy {
-  __typename: "DailySchedulePolicies";
-  SUN: Fstore_products_dailySchedulePolicy_SUN | null;
-  MON: Fstore_products_dailySchedulePolicy_MON | null;
-  TUE: Fstore_products_dailySchedulePolicy_TUE | null;
-  WED: Fstore_products_dailySchedulePolicy_WED | null;
-  THU: Fstore_products_dailySchedulePolicy_THU | null;
-  FRI: Fstore_products_dailySchedulePolicy_FRI | null;
-  SAT: Fstore_products_dailySchedulePolicy_SAT | null;
-}
-
 export interface Fstore_products_images_tags {
   __typename: "Tag";
   key: string;
@@ -4029,11 +4393,10 @@ export interface Fstore_products_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: Fstore_products_images_tags[];
   owner: Fstore_products_images_owner;
@@ -4050,7 +4413,6 @@ export interface Fstore_products_store {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
 }
 
@@ -4073,13 +4435,15 @@ export interface Fstore_products_productGroup {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   user: Fstore_products_productGroup_user;
   name: string;
   type: GroupType;
   code: string;
   description: string | null;
   hashTags: string[];
+  /**
+   * Product List
+   */
   list: Fstore_products_productGroup_list[];
 }
 
@@ -4088,15 +4452,12 @@ export interface Fstore_products {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   subtitle: string;
   code: string;
   description: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
-  dailySchedulePolicy: Fstore_products_dailySchedulePolicy;
   images: Fstore_products_images[] | null;
   user: Fstore_products_user;
   store: Fstore_products_store;
@@ -4120,11 +4481,10 @@ export interface Fstore_images {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   description: string | null;
   extension: string;
-  fileType: string;
+  fileType: string | null;
   uri: string;
   tags: Fstore_images_tags[];
   owner: Fstore_images_owner;
@@ -4135,7 +4495,6 @@ export interface Fstore {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   name: string;
   zoneinfo: Fstore_zoneinfo;
   code: string;
@@ -4159,7 +4518,6 @@ export interface Fverification {
   _id: any;
   createdAt: any;
   updatedAt: any;
-  isDeleted: boolean | null;
   payload: string;
   target: VerificationTarget;
   isVerified: boolean;
@@ -4168,9 +4526,201 @@ export interface Fverification {
    *             	 - ex) UserVerifyPhone, UserVerifyEmail, UserFindPassword, UserFindEmail, UserUpdateInfo
    */
   event: VerificationEvent;
-  storeGroupCode: string;
+  storeCode: string;
   expiresAt: any;
   isExpire: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Fitem
+// ====================================================
+
+export interface Fitem_pay {
+  __typename: "Pay";
+  amount: number;
+  currency: Currency;
+}
+
+export interface Fitem_product_images_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface Fitem_product_images_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface Fitem_product_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: Fitem_product_images_tags[];
+  owner: Fitem_product_images_owner;
+}
+
+export interface Fitem_product_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface Fitem_product_store {
+  __typename: "Store";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface Fitem_product_productGroup_user {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface Fitem_product_productGroup_list {
+  __typename: "Product";
+  _id: any;
+  name: string;
+  code: string;
+  price: number;
+}
+
+export interface Fitem_product_productGroup {
+  __typename: "ProductGroup";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  user: Fitem_product_productGroup_user;
+  name: string;
+  type: GroupType;
+  code: string;
+  description: string | null;
+  hashTags: string[];
+  /**
+   * Product List
+   */
+  list: Fitem_product_productGroup_list[];
+}
+
+export interface Fitem_product {
+  __typename: "Product";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  subtitle: string;
+  code: string;
+  description: string | null;
+  price: number;
+  capacity: number;
+  images: Fitem_product_images[] | null;
+  user: Fitem_product_user;
+  store: Fitem_product_store;
+  productGroup: Fitem_product_productGroup | null;
+}
+
+export interface Fitem_storeUser_profileImage_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface Fitem_storeUser_profileImage_owner {
+  __typename: "User";
+  _id: any;
+  name: string;
+}
+
+export interface Fitem_storeUser_profileImage {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+  tags: Fitem_storeUser_profileImage_tags[];
+  owner: Fitem_storeUser_profileImage_owner;
+}
+
+export interface Fitem_storeUser_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface Fitem_storeUser {
+  __typename: "User";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  email: string | null;
+  phoneNumber: string | null;
+  profileImage: Fitem_storeUser_profileImage | null;
+  isVerifiedPhoneNumber: boolean;
+  isVerifiedEmail: boolean;
+  role: UserRole;
+  company: string | null;
+  zoneinfo: Fitem_storeUser_zoneinfo;
+  smsKey: string | null;
+}
+
+export interface Fitem {
+  __typename: "Item";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  /**
+   * 회원 예약이라도 직접 입력 가능
+   */
+  phoneNumber: string | null;
+  /**
+   * 회원 예약이라도 직접 입력 가능.
+   */
+  name: string | null;
+  /**
+   * Email... 얘 존재하면 Notification 날려줘야됨 ㅎ
+   */
+  email: string | null;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  fromTm: any;
+  /**
+   * Millisec단위 시간 => 숫자로 표시
+   */
+  toTm: any;
+  /**
+   * 예약한 Product 수
+   */
+  count: number;
+  /**
+   * 지불 금액 및 통화단위
+   */
+  pay: Fitem_pay | null;
+  message: string | null;
+  product: Fitem_product;
+  storeUser: Fitem_storeUser;
 }
 
 /* tslint:disable */
@@ -4181,6 +4731,28 @@ export interface Fverification {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+/**
+ * 통화
+ */
+export enum Currency {
+  JPY = "JPY",
+  KRW = "KRW",
+  USD = "USD",
+}
+
+/**
+ * 요일
+ */
+export enum DayOfWeek {
+  FRI = "FRI",
+  MON = "MON",
+  SAT = "SAT",
+  SUN = "SUN",
+  THU = "THU",
+  TUE = "TUE",
+  WED = "WED",
+}
 
 /**
  * 그룹 타입
@@ -4194,7 +4766,6 @@ export enum GroupType {
  * 유저 역할!
  */
 export enum UserRole {
-  ANONYMOUS = "ANONYMOUS",
   BUYER = "BUYER",
   SELLER = "SELLER",
   STORE_USER = "STORE_USER",
@@ -4205,6 +4776,8 @@ export enum UserRole {
  * 인증 타겟 Enum
  */
 export enum VerificationEvent {
+  SignInWithEmail = "SignInWithEmail",
+  SignInWithPhone = "SignInWithPhone",
   UserFindEmail = "UserFindEmail",
   UserFindPassword = "UserFindPassword",
   UserUpdateInfo = "UserUpdateInfo",
@@ -4223,23 +4796,76 @@ export enum VerificationTarget {
 /**
  * Auto generated sort type
  */
+export enum _FileSort {
+  createdAt_asc = "createdAt_asc",
+  createdAt_desc = "createdAt_desc",
+  description_asc = "description_asc",
+  description_desc = "description_desc",
+  fileType_asc = "fileType_asc",
+  fileType_desc = "fileType_desc",
+  name_asc = "name_asc",
+  name_desc = "name_desc",
+  updatedAt_asc = "updatedAt_asc",
+  updatedAt_desc = "updatedAt_desc",
+}
+
+/**
+ * Auto generated sort type
+ */
+export enum _ItemSort {
+  createdAt_asc = "createdAt_asc",
+  createdAt_desc = "createdAt_desc",
+  fromTm_asc = "fromTm_asc",
+  fromTm_desc = "fromTm_desc",
+  toTm_asc = "toTm_asc",
+  toTm_desc = "toTm_desc",
+  updatedAt_asc = "updatedAt_asc",
+  updatedAt_desc = "updatedAt_desc",
+}
+
+/**
+ * Auto generated sort type
+ */
+export enum _ProductGroupSort {
+  createdAt_asc = "createdAt_asc",
+  createdAt_desc = "createdAt_desc",
+  updatedAt_asc = "updatedAt_asc",
+  updatedAt_desc = "updatedAt_desc",
+}
+
+/**
+ * Auto generated sort type
+ */
 export enum _ProductSort {
   capacity_asc = "capacity_asc",
   capacity_desc = "capacity_desc",
-  maxSelectPinCount_asc = "maxSelectPinCount_asc",
-  maxSelectPinCount_desc = "maxSelectPinCount_desc",
+  createdAt_asc = "createdAt_asc",
+  createdAt_desc = "createdAt_desc",
   name_asc = "name_asc",
   name_desc = "name_desc",
+  selectableMinutesMax_asc = "selectableMinutesMax_asc",
+  selectableMinutesMax_desc = "selectableMinutesMax_desc",
   subtitle_asc = "subtitle_asc",
   subtitle_desc = "subtitle_desc",
+  updatedAt_asc = "updatedAt_asc",
+  updatedAt_desc = "updatedAt_desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _StoreSort {
+  createdAt_asc = "createdAt_asc",
+  createdAt_desc = "createdAt_desc",
   name_asc = "name_asc",
   name_desc = "name_desc",
+  updatedAt_asc = "updatedAt_asc",
+  updatedAt_desc = "updatedAt_desc",
+}
+
+export interface DailySchedulerInput {
+  days: DayOfWeek[];
+  schedulerInput: SchedulerInput;
 }
 
 /**
@@ -4247,17 +4873,38 @@ export enum _StoreSort {
  */
 export interface FileInput {
   upload: any;
-  tags?: GqlTagInput[] | null;
+  tags?: TagInput[] | null;
 }
 
-export interface GqlTagInput {
-  key: string;
-  value: string;
+export interface ItemCreateInput {
+  fromTm: any;
+  toTm: any;
+  paid?: PayInput | null;
+  count: number;
+  message?: string | null;
+  name?: string | null;
+  phoneNumber?: string | null;
+}
+
+export interface ItemUpdateInput {
+  message?: string | null;
+}
+
+export interface LocationInput {
+  address: string;
+  addressDetail?: string | null;
+  lat?: number | null;
+  lng?: number | null;
 }
 
 export interface OffsetPagingInput {
-  pageNumber: number;
+  pageIndex: number;
   pageItemCount: number;
+}
+
+export interface PayInput {
+  amount: number;
+  currency?: Currency | null;
 }
 
 export interface ProductCreateInput {
@@ -4266,19 +4913,96 @@ export interface ProductCreateInput {
   subtitle?: string | null;
   price: number;
   capacity: number;
-  maxSelectPinCount: number;
+  selectableMinutesMax: number;
+}
+
+export interface ProductGroupCreateInput {
+  description?: string | null;
+  name: string;
+  productIds: any[];
+  hashTags?: string[] | null;
+}
+
+export interface ProductGroupUpdateInput {
+  name?: string | null;
+  description?: string | null;
+  hashTags?: string[] | null;
+  listIdToAdd?: any[] | null;
+  listIdToRemove?: any[] | null;
 }
 
 export interface ProductUpdateInput {
   name?: string | null;
   description?: string | null;
   subtitle?: string | null;
-  maxSelectPinCount?: number | null;
+  selectableMinutesMax?: number | null;
+}
+
+export interface SchedulerInput {
+  maxCapacity?: number | null;
+  timelinePolicyInputs: TimelinePolicyInput[];
 }
 
 export interface StoreUpdateInput {
   name?: string | null;
   description?: string | null;
+  location?: LocationInput | null;
+}
+
+export interface TagInput {
+  key: string;
+  value: string;
+}
+
+export interface TimelinePolicyInput {
+  from: number;
+  size: number;
+  count: number;
+  edges?: number[] | null;
+}
+
+export interface _FileFilter {
+  AND?: _FileFilter[] | null;
+  OR?: _FileFilter[] | null;
+  name_eq?: string | null;
+  name_not_eq?: string | null;
+  name_contains?: string | null;
+  name_not_contains?: string | null;
+  name_in?: string[] | null;
+  name_not_in?: string[] | null;
+  description_eq?: string | null;
+  description_not_eq?: string | null;
+  description_contains?: string | null;
+  description_not_contains?: string | null;
+  fileType_eq?: string | null;
+  fileType_not_eq?: string | null;
+  fileType_in?: string[] | null;
+  fileType_not_in?: string[] | null;
+  _id_eq?: any | null;
+  _id_not_eq?: any | null;
+  _id_in?: any[] | null;
+  _id_not_in?: any[] | null;
+}
+
+export interface _ItemFilter {
+  AND?: _ItemFilter[] | null;
+  OR?: _ItemFilter[] | null;
+  fromTm_eq?: string | null;
+  fromTm_not_eq?: string | null;
+  fromTm_gt?: string | null;
+  fromTm_gte?: string | null;
+  fromTm_lte?: string | null;
+  fromTm_lt?: string | null;
+  toTm_eq?: string | null;
+  toTm_not_eq?: string | null;
+  toTm_gt?: string | null;
+  toTm_gte?: string | null;
+  toTm_lte?: string | null;
+  toTm_lt?: string | null;
+  _id_eq?: any | null;
+  _id_not_eq?: any | null;
+  _id_in?: any[] | null;
+  _id_not_in?: any[] | null;
 }
 
 export interface _ProductFilter {
@@ -4296,6 +5020,37 @@ export interface _ProductFilter {
   subtitle_not_contains?: string | null;
   subtitle_in?: string[] | null;
   subtitle_not_in?: string[] | null;
+  _id_eq?: any | null;
+  _id_not_eq?: any | null;
+  _id_in?: any[] | null;
+  _id_not_in?: any[] | null;
+}
+
+export interface _ProductGroupFilter {
+  AND?: _ProductGroupFilter[] | null;
+  OR?: _ProductGroupFilter[] | null;
+  hashTags_eq?: string[] | null;
+  hashTags_not_eq?: string[] | null;
+  hashTags_in?: string[] | null;
+  hashTags_not_in?: string[] | null;
+  _id_eq?: string | null;
+  _id_not_eq?: string | null;
+  _id_in?: string[] | null;
+  _id_not_in?: string[] | null;
+  _id_contains?: string | null;
+  _id_not_contains?: string | null;
+  name_eq?: string | null;
+  name_not_eq?: string | null;
+  name_in?: string[] | null;
+  name_not_in?: string[] | null;
+  name_contains?: string | null;
+  name_not_contains?: string | null;
+  description_eq?: string | null;
+  description_not_eq?: string | null;
+  description_in?: string[] | null;
+  description_not_in?: string[] | null;
+  description_contains?: string | null;
+  description_not_contains?: string | null;
 }
 
 export interface _StoreFilter {
@@ -4307,6 +5062,10 @@ export interface _StoreFilter {
   name_not_contains?: string | null;
   name_in?: string[] | null;
   name_not_in?: string[] | null;
+  _id_eq?: any | null;
+  _id_not_eq?: any | null;
+  _id_in?: any[] | null;
+  _id_not_in?: any[] | null;
 }
 
 //==============================================================

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useModal, useFilesManager, JDpageHeader, WindowSize, JDbutton, JDcontainer, JDcard, toast } from "@janda-com/front"
 import Store from './Store'
-import DottedButton from '../dottedButton/DottedButton'
+import DotButton from '../../component/dotButton/DotButton'
 import { IStore } from './interface'
 import { IStoreWrapContext } from "./StoreSettingWrap";
 import StoreSettingModal, { ModalInfo } from './components/StoreSettingModal'
@@ -40,7 +40,7 @@ const StoreSetting: React.FC<IProps> = ({ context, storeList }) => {
             <JDcard>
                 <div className="storeSetting">
                     <section className="storeSetting__content">
-                        <DottedButton mb="normal" onClick={() => {
+                        <DotButton mb="normal" onClick={() => {
                             storeModalHook.openModal()
                         }} />
                         {

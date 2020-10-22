@@ -1,5 +1,4 @@
-import { isEmpty } from "@janda-com/front";
-import { DEFAULT_PAGE_INFO } from "@janda-com/front/dist/types/defaults";
+import { DEFAULT_PAGE_INFO, isEmpty } from "@janda-com/front";
 import { IPageInfo } from "@janda-com/front/dist/types/interface";
 
 function extractDoc<T, K extends keyof T, C extends keyof T[K], D>(

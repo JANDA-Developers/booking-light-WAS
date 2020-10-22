@@ -1,5 +1,64 @@
 import { gql } from "@apollo/client";
 
+export const F_PAGEINFO = gql`
+    fragment FoffsetPagingInfo on OffsetPagingInfo {
+        pageIndex
+        pageItemCount
+        currentItemCount
+        totalPageCount
+    }
+`
+
+export const F_TIMELINE_POLICY = gql`
+    fragment FtimelinePolicy on TimelinePolicy {
+        from
+        to
+        size
+        count
+        edges
+    }
+`
+
+export const F_PRICE_SEGMENT_TABLE = gql`
+    fragment FpriceSegmentTable on PriceSegmentTable {
+        price
+        currency
+    }
+`
+
+export const F_SCHEDULER = gql`
+    fragment Fscheduler on Scheduler {
+        from
+        to
+        timelinePolicies {
+            ...FtimelinePolicy
+        }
+        priceSegmentTable {
+            ...FpriceSegmentTable
+        }
+        maxCapacity
+    }
+    ${F_TIMELINE_POLICY}
+    ${F_PRICE_SEGMENT_TABLE}
+`
+
+export const F_DAILY_SCHEDULER = gql` 
+    fragment FdailyScheduler on DailyScheduler {
+        days
+        scheduler {
+            ...Fscheduler
+        }
+    }
+    ${F_SCHEDULER}
+`
+
+export const F_PAY = gql`
+    fragment Fpay on Pay {
+        amount
+        currency
+    }
+`
+
 export const F_USERERROR = gql`
     fragment FuserError on UserError  {
         code
@@ -13,62 +72,8 @@ export const F_COLLECTION_DATA_INTERFACE = gql`
         _id
         createdAt
         updatedAt
-        isDeleted
     }
 `
-
-
-export const F_SCHEDULEGENERATOR = gql`
-    fragment FscheduleGenerator on ScheduleGenerator  {
-        from
-        to
-        segmentLength
-        segmentCount
-        segmentBlockedIndexes
-    }
-`
-
-
-export const F_SCHEDULEGENERATORGROUP = gql`
-    fragment FscheduleGeneratorGroup on ScheduleGeneratorGroup {
-        policies {
-            ...FscheduleGenerator
-        }
-        from
-        to
-    }
-    ${F_SCHEDULEGENERATOR}
-`
-
-
-export const F_DAILYSCHEDULEPOLICIES = gql`
-    fragment FdailySchedulePolicies on DailySchedulePolicies  {
-        SUN {
-            ...FscheduleGeneratorGroup
-        }
-        MON {
-            ...FscheduleGeneratorGroup
-        }
-        TUE {
-            ...FscheduleGeneratorGroup
-        }
-        WED {
-            ...FscheduleGeneratorGroup
-        }
-        THU {
-            ...FscheduleGeneratorGroup
-        }
-        FRI {
-            ...FscheduleGeneratorGroup
-        }
-        SAT {
-            ...FscheduleGeneratorGroup
-        }
-    }
-    ${F_SCHEDULEGENERATORGROUP}
-`
-
-
 export const F_ZONE_INFO = gql`
     fragment FzoneInfo on Zoneinfo {
         timezone
@@ -77,7 +82,6 @@ export const F_ZONE_INFO = gql`
         alpha2Code
     }
 `
-
 
 export const F_TAG = gql`
     fragment Ftag on Tag {
@@ -165,10 +169,6 @@ export const F_PRODUCT = gql`
         description
         price
         capacity
-        maxSelectPinCount
-        dailySchedulePolicy {
-            ...FdailySchedulePolicies
-        }
         images {
             ...Ffile
         }
@@ -186,7 +186,6 @@ export const F_PRODUCT = gql`
     }
     ${F_COLLECTION_DATA_INTERFACE}
     ${F_FILE}
-    ${F_DAILYSCHEDULEPOLICIES}
     ${F_USER}
     ${F_PRODUCTGROUP}
 `
@@ -228,11 +227,34 @@ export const F_VERIFICATION = gql`
         target
         isVerified
         event
-        storeGroupCode
+        storeCode
         expiresAt
         isExpire
     }
     ${F_COLLECTION_DATA_INTERFACE}
 `
-
-
+export const F_ITEM = gql`
+    fragment Fitem on Item {
+        ...FcollectionDataInterface
+        phoneNumber
+        name
+        email
+        fromTm
+        toTm
+        count
+        pay {
+           ...Fpay 
+        }
+        message
+        product {
+            ...Fproduct
+        }
+        storeUser {
+            ...Fuser
+        }
+    }
+    ${F_PRODUCT}
+    ${F_USER}
+    ${F_PAY}
+    ${F_COLLECTION_DATA_INTERFACE}
+`

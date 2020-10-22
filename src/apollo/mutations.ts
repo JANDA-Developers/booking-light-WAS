@@ -1,11 +1,149 @@
 
 import { gql } from "@apollo/client";
-import { F_FILE, F_PRODUCT, F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragments";
+import { F_FILE, F_ITEM, F_PRODUCT, F_PRODUCTGROUP, F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragments";
 /* :::::::::::::::::::::::::::::::::::::: 
 
     Mutations 
     
 :::::::::::::::::::::::::::::::::::::: */
+
+export const ITEM_CREATE = gql`
+  mutation itemCreate(
+    $params: ItemCreateInput!
+    $productId: ObjectId!
+  ) {
+    ItemCreate(
+      params: $params
+      productId: $productId
+    ) {
+      ok
+      error {
+        ...FuserError
+      }
+      data {
+        ...Fitem
+      }
+    }
+  }
+  ${F_USERERROR}
+  ${F_ITEM}
+`
+
+export const ITEM_DELETE = gql`
+  mutation itemDelete(
+    $itemId: ObjectId!
+  ) {
+    ItemDelete(
+      itemId: $itemId 
+    ) {
+      ok
+      error {
+        ...FuserError
+      }
+      data {
+        ...Fitem
+      }
+    }
+  }
+  ${F_USERERROR}
+  ${F_ITEM}
+`
+
+export const ITEM_SIGNUP = gql`
+  mutation storeSignUp(
+    $name: String!
+    $email: String!
+    $phoneNumber: String!
+    $password: String!
+    $company: String
+    $location: LocationInput!
+  ) {
+    StoreSignUp(
+      name: $name 
+      email: $email
+      phoneNumber: $phoneNumber 
+      password: $password
+      company: $company 
+      location: $location 
+    ) {
+      ok
+      error {
+        ...FuserError
+      }
+      data {
+        ...Fuser
+      }
+    }
+  }
+  ${F_USERERROR}
+  ${F_USER}
+`
+
+
+
+export const ITEM_UPDATE = gql`
+  mutation itemUpdate(
+    $input: ItemUpdateInput!
+    $id: ObjectId!
+  ) {
+    ItemUpdate(
+      id:$id
+      input:$input
+    ) {
+      ok
+      error {
+        ...FuserError
+      }
+      data {
+        ...Fitem
+      }
+    }
+  }
+  ${F_USERERROR}
+  ${F_ITEM}
+`
+
+export const PRODUCT_TAGS_ADD = gql`
+  mutation productTagsAdd(
+    $productId: ObjectId!
+    $tags: [TagInput!]!
+  ) {
+    ProductTagsAdd(
+      productId: $productId
+      tags: $tags
+    ) {
+      ok
+      error {
+        ...FuserError
+      }
+    }
+  }
+  ${F_USERERROR}
+`
+
+export const PRODUCT_TAGS_REMOVE = gql`
+  mutation productTagsRemove(
+    $keys: [String!]!
+    $productId: ObjectId!
+  ) {
+    ProductTagsRemove(
+      keys: $keys
+      productId: $productId
+    ) {
+        ok
+        error {
+          ...FuserError
+        }
+        data {
+          ...Fproduct
+        }
+      }
+    }
+  ${F_PRODUCT}
+  ${F_USERERROR}
+  ${F_ITEM}
+`
+
 
 export const FILE_UPLOADS = gql`
   mutation fileUploads(
@@ -27,14 +165,97 @@ export const FILE_UPLOADS = gql`
   ${F_FILE}
 `;
 
+export const FPRODUCT_DAILY_SCHEDULER_ADD = gql`
+  mutation productDailySchedulerAdd(
+      $productId: ObjectId!
+      $dailySchedulers: [DailySchedulerInput!]!
+    ) {
+      ProductDailySchedulerAdd(
+        productId: $productId
+        dailySchedulers: $dailySchedulers
+      ) {
+        ok
+        error {
+          ...FuserError
+        }
+        data {
+          ...Fproduct
+        }
+      }
+    }
+  ${F_USERERROR}
+  ${F_PRODUCT}
+`;
+
+
+export const FPRODUCT_GROUP_CREATE = gql`
+  mutation productGroupCreate(
+      $params: ProductGroupCreateInput!
+      $storeId: ObjectId!
+    ) {
+      ProductGroupCreate(
+        params: $params 
+        storeId: $storeId
+      ) {
+          ok
+          error {
+            ...FuserError
+          }
+          data {
+            ...FproductGroup
+          }
+        }
+      }
+  ${F_USERERROR}
+  ${F_PRODUCTGROUP}
+`;
+
+export const FPRODUCT_GROUP_DELETE = gql`
+  mutation productGroupDelete(
+      $productGroupId: ObjectId!
+    ) {
+      ProductGroupDelete(
+        productGroupId: $productGroupId 
+      ) {
+          ok
+          error {
+            ...FuserError
+          }
+        }
+      }
+  ${F_USERERROR}
+`;
+
+export const FPRODUCT_GROUP_UPDATE = gql`
+  mutation productGroupUpdate(
+    $params: ProductGroupUpdateInput!
+    $productGroupId: ObjectId!
+    ) {
+      ProductGroupUpdate(
+        productGroupId: $productGroupId
+        params: $params
+      ) {
+          ok
+          error {
+            ...FuserError
+          }
+          data {
+            ...FproductGroup
+          }
+        }
+      }
+  ${F_USERERROR}
+  ${F_PRODUCTGROUP}
+`;
+
 
 export const PRODU_CTCREATE = gql`
   mutation productCreate(
-      $input:ProductCreateInput!
+      $params:ProductCreateInput!
       $storeId:ObjectId!
     ) {
     ProductCreate(
-        input: $input
+        params: $params
         storeId:$storeId
       ) {
       ok
@@ -75,11 +296,11 @@ export const PRODUCT_DELETE = gql`
 
 export const PRODUCT_UPDATE = gql`
   mutation productUpdate(
-      $input: ProductUpdateInput!
+      $params: ProductUpdateInput!
       $id:ObjectId!
     ) {
     ProductUpdate(
-        input:$input
+        params:$params
         id:$id
       ) {
       ok
@@ -94,7 +315,6 @@ export const PRODUCT_UPDATE = gql`
   ${F_USERERROR}
   ${F_PRODUCT}
 `
-
 
 export const STORE_CREATE = gql`
   mutation storeCreate(
@@ -118,7 +338,41 @@ export const STORE_CREATE = gql`
   ${F_STORE}
 `;
 
+export const STORE_IMG_ADD = gql`
+  mutation storeImageAdd(
+      $images: [ObjectId!]!
+      $storeId: ObjectId!
+    ) {
+      StoreImageAdd(
+        images: $images
+        storeId: $storeId
+      ) {
+      ok
+      error {
+        ...FuserError
+      }
+    }
+  }
+  ${F_USERERROR}
+`;
 
+export const STORE_SIGN_IN = gql`
+  mutation storeSignIn(
+      $email: String!
+      $password: String!
+    ) {
+      StoreSignIn(
+        email:$email
+        password:$password
+      ) {
+        ok
+        error {
+          ...FuserError
+        }
+      }
+    }
+  ${F_USERERROR}
+`;
 
 export const STORE_DELETE = gql`
   mutation storeDelete(
@@ -210,12 +464,14 @@ export const SIGNUP = gql`
       $phoneNumber: String!
       $password: String!
       $company: String
+      $location: LocationInput!
     ) {
     SignUp(
       name: $name
       email: $email
       phoneNumber: $phoneNumber
       password: $password
+      location: $location
       company: $company) {
       ok
       error {
@@ -237,13 +493,11 @@ export const VERIFICATION_START = gql`
       $target: VerificationTarget!
       $payload: String!
       $event: VerificationEvent!
-      $storeGroupId: ObjectId
     ) {
     VerificationStart(
       target:$target
       payload:$payload
       event:$event
-      storeGroupId:$storeGroupId
       ) {
       ok
       error {

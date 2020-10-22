@@ -5,8 +5,8 @@ import React, { HTMLAttributes } from 'react';
 
 interface IProp extends JDatomExtentionSet, HTMLAttributes<HTMLButtonElement> { }
 
-export const DottedButton: React.FC<IProp> = ({ className, ...props }) => {
-    const classes = classNames('JDdottedButton', className, {
+export const DotButton: React.FC<IProp> = ({ className, ...props }) => {
+    const classes = classNames('JDDotButton', className, {
         ...JDatomClasses(props)
     })
 
@@ -17,4 +17,4 @@ export const DottedButton: React.FC<IProp> = ({ className, ...props }) => {
 };
 
 
-export default DottedButton;
+export default DotButton;

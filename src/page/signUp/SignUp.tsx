@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { JDcard, JDcontainer, JDsignUpUI, onCompletedMessage, WindowSize } from "@janda-com/front"
+import { JDcard, JDcontainer, JDsignUpUI, onCompletedMessage, WindowSize, useModal } from "@janda-com/front"
 import Policy from "./Policy";
 import { useMutation } from '@apollo/client';
 import { signUp, signUpVariables, verificationComplete, verificationCompleteVariables, VerificationEvent, verificationStart, verificationStartVariables, VerificationTarget } from '../../type/api';
 import { SIGNUP, VERIFICATION_COMPLETE, VERIFICATION_START } from '../../apollo/mutations';
-import PhoneVerificationModal from '../../component/Common/PhoneVerificationModal';
-import { useModal } from '@janda-com/front/dist/hooks/hook';
+import PhoneVerificationModal from '../../component/verfi/PhoneVerificationModal';
 import { TSignUpInfo } from '@janda-com/front/dist/components/form/SignUpUI';
 import { queryResultMsg } from '../../utils/onCompletedMessage';
 
@@ -95,9 +94,11 @@ export const SignUp: React.FC<IProp> = () => {
 
             }} />
         </JDcard>
-        <PhoneVerificationModal muLoading={totalLoading} onCompleteClick={(key: string) => {
-            completeVerifi(key).then(() => { signUp() });
-        }} modalHook={verifiModalHook} />
+        <PhoneVerificationModal
+            muLoading={totalLoading}
+            onComplete={(key: string) => {
+                completeVerifi(key).then(() => { signUp() });
+            }} modalHook={verifiModalHook} />
     </JDcontainer>;
 };
 

@@ -1,7 +1,7 @@
 import { autoComma, InputText, JDalign, JDbutton, Split, JDtypho, useModal } from "@janda-com/front";
 import { IDiv } from "@janda-com/front/dist/types/interface";
 import React from "react";
-import { PolicyCard } from "../../../component/Common/PolicyCard";
+import { PolicyCard } from "../../../component/policy/PolicyCard";
 import AccountRegistModal from "./AccountRegistModal";
 
 const Section: React.FC<IDiv> = ({ children, className, ...props }) => {

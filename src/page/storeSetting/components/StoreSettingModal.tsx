@@ -1,8 +1,7 @@
-import { InputText, IUseModal, JDavatar, JDbutton, JDmodal, toast, useFilesManager } from '@janda-com/front';
+import { foucs, InputText, IUseModal, JDavatar, JDbutton, JDmodal, toast, useFilesManager } from '@janda-com/front';
 import { TlocalFile } from '@janda-com/front/dist/hooks/hook';
 import React, { useState } from 'react';
 import { storeCreateVariables, storeDeleteVariables, storeUpdateVariables } from '../../../type/api';
-import { foucs } from '../../../utils/focus';
 import { IStore } from '../interface';
 
 

@@ -3,7 +3,7 @@ import { useModal, JDpolicyViewer } from '@janda-com/front';
 import { autoComma } from '@janda-com/front';
 import { InputText } from '@janda-com/front';
 import React, { useState } from 'react';
-import { PolicyCard } from '../../component/Common/PolicyCard';
+import { PolicyCard } from '../../component/policy/PolicyCard';
 
 const Policies = {
     po1: JDPrivacyPolicy,

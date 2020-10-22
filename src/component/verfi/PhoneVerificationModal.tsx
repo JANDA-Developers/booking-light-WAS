@@ -1,7 +1,4 @@
-import { IUseModal, JDbutton, JDmodal, JDmodalConfigProps } from "@janda-com/front";
-import { InputText } from "@janda-com/front/dist/components/InputText/InputText";
-import { useInput } from "@janda-com/front/dist/hooks/hook";
-import { TimePerMs } from "@janda-com/front/dist/types/enum";
+import { TimePerMs, useInput, InputText, IUseModal, JDbutton, JDmodal, JDmodalConfigProps } from "@janda-com/front";
 import React, { useState } from "react";
 import Timer from "react-compound-timer/build";
 import { toast } from 'react-toastify';
@@ -14,8 +11,8 @@ export interface IChainProp extends JDmodalConfigProps {
 let RE_SEND_COUNT = 10;
 
 interface IProps extends IChainProp {
-  onReSendClick?: () => void;
-  onCompleteClick: (key: string) => void;
+  onReSend?: () => void;
+  onComplete: (key: string) => void;
   muLoading: boolean;
 }
 
@@ -23,8 +20,8 @@ interface IProps extends IChainProp {
 const PhoneVerificationModal: React.FC<IProps> = ({
   modalHook,
   muLoading,
-  onReSendClick,
-  onCompleteClick,
+  onReSend: handleResend,
+  onComplete: handleComplete,
   ...props
 }) => {
   const keyHook = useInput("");
@@ -47,10 +44,10 @@ const PhoneVerificationModal: React.FC<IProps> = ({
               if (isTimeOver) {
                 toast.warn("시간이 초과하였습니다. 다시 인증요청을 해주세요.");
               }
-              handleCompleteBtnClick(keyHook.value);
+              handleComplete(keyHook.value);
             }}
           />
-          {handleReSend && (
+          {handleResend && (
             <JDbutton
               mode="flat"
               thema="grey2"
@@ -58,7 +55,7 @@ const PhoneVerificationModal: React.FC<IProps> = ({
               label={"인증번호 재발송"}
               onClick={() => {
                 if (muLoading) return;
-                handleReSend();
+                handleResend();
                 RE_SEND_COUNT = RE_SEND_COUNT - 1;
               }}
             />
