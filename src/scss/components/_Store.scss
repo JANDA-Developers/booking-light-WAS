@@ -1,8 +1,23 @@
 .store {
 
     &__img {
+        position: relative;
         min-width: 100px;
         height: 100px;
-        border-radius: 50%;
+        .photoFrame__bgimg {
+            border-radius: 50%;
+        }
+
+        &:hover {
+            .iconUploader {
+                display:block;
+            }
+        }
+    }
+
+    .iconUploader {
+        display:none;
+        right: 0;
+        bottom: 0;
     }
 }

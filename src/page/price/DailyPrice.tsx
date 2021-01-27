@@ -1,5 +1,5 @@
 import { JDalign, JDbutton, JDcontainer, JDpageHeader, JDselect, WindowSize } from '@janda-com/front';
-import PriceTable from '@janda-com/price-table';
+import DailyTable from '@janda-com/price-table';
 import React, { useState } from 'react';
 
 interface IProp { }
@@ -36,7 +36,7 @@ export const DailyPrice: React.FC<IProp> = () => {
         <div>
             <JDpageHeader title="가격설정" desc="상품별 일별 가격설정하기" />
             <JDcontainer size={WindowSize.full}>
-                <PriceTable
+                <DailyTable
                     onNavChange={() => {
                         setSelectedDays([]);
                         if (isSaved) {

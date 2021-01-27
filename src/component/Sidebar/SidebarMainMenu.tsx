@@ -1,41 +1,21 @@
 import React from 'react';
 import { JDicon, JDtypho } from '@janda-com/front';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
+import { IMenu } from "./Sidebar";
 
-export type TSidebarMain = {
-    key: string,
-    icon: IIcons,
-    title: string,
+export type IProps = {
+    menu: IMenu
+    index: number;
+    onMenuClick: (index: number) => void;
+    selected: boolean;
 }
-interface IProps {
-    mainMenu: TSidebarMain[],
-    menuKey: string,
-    menuKeyUpdate(key: string): void
-}
-const SidebarMainMenu: React.FC<IProps> = ({ menuKey, mainMenu, menuKeyUpdate }) => {
+
+const SidebarMainMenu: React.FC<IProps> = ({ menu, index, onMenuClick, selected }) => {
     return (
-        <ul className="Sidebar__mainMenu">
-            {
-                mainMenu.map((menu) => {
-                    const listClicked = menuKey == menu.key ? "on" : "";
-                    return <li className={`mainMenu__list ${listClicked}`} key={`sidebar_${menu.key}`}>
-                        <a href=""
-                            id={`sidebar_${menu.key}`}
-                            className="mainMenu__link"
-                            onClick={
-                                (e) => {
-                                    e.preventDefault();
-                                    menuKeyUpdate(menu.key);
-                                }
-                            }
-                        >
-                            <JDicon icon={menu.icon} />
-                            <JDtypho>{menu.title}</JDtypho>
-                        </a>
-                    </li>
-                })
-            }
-        </ul>
+        <li onClick={() => { onMenuClick(index) }} className={`mainMenu__list ${selected && "mainMenu__list--active"}`} key={`sidebar_${index}`}>
+            <JDicon size="small" icon={menu.icon} />
+            <JDtypho size="tiny">{menu.title}</JDtypho>
+        </li>
     )
 }
 

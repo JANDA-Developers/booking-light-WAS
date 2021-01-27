@@ -1,0 +1,33 @@
+$side-second-bg: #555555;
+
+
+.subMenu {
+    background-color: $side-second-bg;
+    &__list {
+        display: flex;
+        align-items: center;
+        padding: space(2) space(4);
+        margin: space(2);
+        color: white;
+        border-radius: $br1;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+
+
+        &:hover {
+            background-color: $primary-color;
+        }
+        
+        &--disabled {
+            color: $grey-level2;
+            &:hover {
+                background-color: inherit;
+            }
+        }
+
+        &--activate {
+            background-color: $primary-color;
+        }
+        
+    }
+}

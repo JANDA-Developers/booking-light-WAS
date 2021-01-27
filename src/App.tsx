@@ -1,37 +1,40 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './scss/App.scss';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import MainRouter from './MainRouter';
 import AuthRouter from './AuthRouter';
-import HeaderWrap from './component/header/HeaderWrap';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { SideBarWrap } from './component/sidebar/SidebarWrap';
-import { JDalign } from '@janda-com/front';
-import NiceElments from './nice/NiceElments';
-import client from "./apollo/apolloClient"
-import { ApolloProvider } from '@apollo/client';
+import { JDpreloader, JDtooltip, ReactTooltip } from '@janda-com/front';
+import { useQuery } from '@apollo/client';
+import { Toast } from '@janda-com/front';
+import { ME } from './apollo/queries';
+import { me, me_Me as IMe, me_Me_stores as IStore } from './type/api';
+import AppContext, { APPcontextProvider, useAppContext } from "./context"
+import extractDoc from './utils/dataExtraction';
+import { Layout } from './component/layout/Layout';
+import { IselectedOption } from '@janda-com/front/dist/types/interface';
+import { generateContext } from './helper';
+import { TRefech } from './type/interface';
 
-const Data_headIcon: IIcons[] = [
-  "help",
-  "search2",
-  "exclamation"
-]
+interface IAppProp {
+  me?: IMe
+  stores?: IStore[]
+  authRefetch?: TRefech<me>
+}
 
-function App() {
+const App: React.FC<IAppProp> = ({ me, stores, authRefetch }) => {
+  const context = useAppContext(generateContext(stores, me))
+
+  useEffect(() => {
+    context.updateContext(context)
+  }, [me])
 
 
   return (
     <div className="App">
-      <ApolloProvider client={client}>
-        <HeaderWrap />
+      <APPcontextProvider value={context}>
         <Router >
-          <Switch>
-            <SideBarWrap />
-          </Switch>
-        </Router>
-        <JDalign flex>
-          <div id="sidePlaceHolder" />
-          <Router >
+          <Layout>
             <Switch>
               <Route path="/auth" render={() => <AuthRouter />} />
               <Route
@@ -39,10 +42,12 @@ function App() {
                 render={() => <MainRouter />}
               />
             </Switch>
-          </Router>
-        </JDalign>
-      </ApolloProvider>
-    </div>
+          </Layout>
+        </Router>
+        <Toast />
+        <ReactTooltip id="mainTooltip" />
+      </APPcontextProvider>
+    </div >
   );
 }
 

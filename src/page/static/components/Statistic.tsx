@@ -1,4 +1,4 @@
-import { JDalign, JDcard, JDcontainer, JDtypho } from "@janda-com/front";
+import { JDalign, JDcard, JDtypho } from "@janda-com/front";
 import { JDcolumn } from "@janda-com/janda-table";
 import React from "react";
 import { IGraphViewMode } from "../../../component/graph/components/ViewIcons";

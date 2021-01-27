@@ -3,11 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './normalize.css';
 import './index.css';
-import App from './App';
+import AppWrap from './AppWrap';
 import * as serviceWorker from './serviceWorker';
+import { ApolloProvider } from '@apollo/client';
+import client from "./apollo/apolloClient"
 
 ReactDOM.render(
-  <App />,
+  <ApolloProvider client={client}>
+    <AppWrap />
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

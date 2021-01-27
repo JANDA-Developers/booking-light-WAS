@@ -1,4 +1,7 @@
 import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
+import { FoffsetPagingInfo, OffsetPagingInput, VerificationEvent, VerificationTarget } from "./api";
+import { ICreateSubmitInput } from "../component/itemModal/ItemCreateModal";
+import dayjs from "dayjs";
 
 const { version } = require("../../package.json");
 export const JDVERSION = version
@@ -53,6 +56,32 @@ export const BANK_LIST = {
     "099": "금융결제원"
 }
 
+export const DEFAULT_PAGE_SEARCH: OffsetPagingInput = {
+    pageItemCount: 20,
+    pageIndex: 0
+}
+
+export const DEFAULT_PAGE_INFO: FoffsetPagingInfo = {
+    __typename: "OffsetPagingInfo",
+    currentItemCount: 0,
+    pageIndex: 0,
+    pageItemCount: 0,
+    totalPageCount: 0
+}
+
+export const DEFAULT_VEIFI_METHOD = {
+    target: VerificationTarget.PHONE,
+    event: VerificationEvent.UserVerifyPhone,
+}
+
+
+export const DEFAULT_ADDRESS = {
+    address: "default",
+    addressDetail: "default",
+    lat: 0,
+    lng: 0
+}
+
 export const BANK_SELECT_OP: IselectedOption[] = Object.entries(BANK_LIST).map(([key, value]) => {
     return {
         label: value,
@@ -60,5 +89,33 @@ export const BANK_SELECT_OP: IselectedOption[] = Object.entries(BANK_LIST).map((
     }
 })
 
+export const GET_EVERY = {
+    pagingInput: {
+        pageIndex: 0,
+        pageItemCount: 99
+    }
+}
+
+export const DEFAULT_ITEM_CREATE: ICreateSubmitInput = process.env.NODE_ENV === "development" ? {
+    amount: 1000,
+    count: 1,
+    email: "colton950901@mgmail.com",
+    fromTm: dayjs(new Date()).valueOf(),
+    toTm: dayjs(new Date()).add(1, "d").valueOf(),
+    message: "테스트",
+    name: "김민재",
+    phoneNumber: "01052374492",
+    productId: "",
+} : {
+        amount: 0,
+        count: 0,
+        email: "",
+        fromTm: "",
+        message: "",
+        name: "",
+        phoneNumber: "",
+        productId: "",
+        toTm: ""
+    }
 
 export default ""

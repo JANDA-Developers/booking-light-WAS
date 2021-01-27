@@ -1,203 +1,243 @@
-import React, { useEffect, useState } from 'react'
-import SidebarMainMenu, { TSidebarMain } from './SidebarMainMenu'
+import React, { useContext, useEffect, useState } from 'react'
+import SidebarMainMenu from './SidebarMainMenu'
 import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { JDicon, JDtypho, toast } from '@janda-com/front';
+import { Bold, Flex, JDalign, JDtypho, Tiny } from '@janda-com/front';
 import { Paths } from '../../MainRouter';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { SmsPaths } from '../../page/sms/SMSrouter';
+import { getUrlIndex } from "./helper";
+import AppContext, { IAppContext } from '../../context';
+import dayjs from "dayjs";
+import { AuthPaths } from '../../AuthRouter';
+import { isEmpty } from 'lodash';
 
-interface IMainMenu {
-    key: string,
+export interface IMenu {
     icon: IIcons,
     title: string,
-}
-interface ISubMenu {
-    title: string;
     sub: TSidebarSub[];
 }
 
-const Data_SideMain: IMainMenu[] = [
-    {
-        key: "home",
-        icon: "houseGear",
-        title: "홈"
-    },
-    {
-        key: "product",
-        icon: "box2",
-        title: "상품"
-    },
-    {
-        key: "store",
-        icon: "store",
-        title: "상점"
-    },
-    {
-        key: "payment",
-        icon: "book",
-        title: "결제"
-    },
-    {
-        key: "sms",
-        icon: "sms",
-        title: "SMS"
-    },
-    {
-        key: "service",
-        icon: "info",
-        title: "고객센터"
+export const getMenuData = (context: IAppContext): IMenu[] => {
+    const { storeptions, user } = context;
+
+    const logined: boolean = !!user;
+    const haveStore: boolean = !isEmpty(storeptions);
+    // const payConfiged: boolean;
+    // const isExpired: boolean;
+    // const haveProduct: boolean;
+    const smsInited: boolean = !!user?.smsKey;
+
+    const unLogined = {
+        redirect: AuthPaths.login,
+        disabledTooltip: "로그인후 이용 해주세요."
     }
-]
 
-
-const Data_SubMain: ISubMenu[] = [
-    {
-        title: "home",
-        sub: [
-            {
-                icon: "home",
-                title: "홈",
-                path: Paths.main
-            },
-        ]
-    },
-    {
-        title: "product",
-        sub: [
-            {
-                icon: "menu",
-                title: "상품목록 1",
-                path: Paths.productset
-            },
-        ]
-    },
-    {
-        title: "store",
-        sub: [
-            {
-                icon: "menu",
-                title: "상점설정 1",
-                path: Paths.storeset
-            },
-        ]
-    },
-    {
-        title: "payment",
-        sub: [
-            {
-                icon: "menu",
-                title: "정산관리",
-                path: Paths.payFromJanda
-            },
-            {
-                icon: "menu",
-                title: "멤버쉽",
-                path: Paths.payToJanda
-            },
-        ]
-    },
-    {
-        title: "sms",
-        sub: [
-            {
-                icon: "info",
-                title: "시작하기",
-                path: SmsPaths.init
-            },
-            {
-                icon: "addCircle",
-                title: "템플릿 설정",
-                path: SmsPaths.template
-            },
-            {
-                icon: "email",
-                title: "발신자 관리",
-                path: SmsPaths.sender
-            },
-            {
-                icon: "historyWatch",
-                title: "발신 히스토리",
-                path: SmsPaths.history
-            },
-        ]
-    },
-    {
-        title: "service",
-        sub: [
-            {
-                icon: "menu",
-                title: "Service 설정 1",
-                path: "/"
-            },
-        ]
+    const noStore = {
+        redirect: Paths.storeset,
+        disabledTooltip: "상점을 하나이상 생성 해주세요."
     }
-]
+
+    const noSmsKey = {
+        redirect: Paths.sms,
+        disabledTooltip: "SMS를 먼저 시작해주세요."
+    }
+
+    const loginAndStore = logined ? noStore : unLogined;
+
+    const sharedSMS = logined ? noSmsKey : unLogined;
 
 
-type TUserInfo = {
-    name: string;
-    [key: string]: any
+    const MainMenuData: IMenu[] = [
+        {
+            icon: "houseGear",
+            title: "홈",
+            sub: [
+                {
+                    icon: "home",
+                    title: "홈",
+                    path: Paths.main,
+                    disabled: !logined || !haveStore,
+                    ...loginAndStore
+                },
+                {
+                    icon: "home",
+                    title: "상품현황",
+                    path: Paths.productBoard,
+                    disabled: !logined || !haveStore,
+                    ...loginAndStore
+                },
+            ]
+        },
+        {
+            icon: "box2",
+            title: "상품",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "상품목록 1",
+                    path: Paths.productset,
+                    disabled: !logined || !haveStore,
+                    ...loginAndStore
+                },
+                {
+                    icon: "menu",
+                    title: "상품그룹",
+                    path: Paths.productGroup,
+                    disabled: !logined || !haveStore,
+                    ...loginAndStore
+                },
+                {
+                    icon: "menu",
+                    title: "상품 수량조절",
+                    path: Paths.productCapacity,
+                    disabled: !logined || !haveStore,
+                    ...loginAndStore
+                }
+            ]
+        },
+        {
+            icon: "store",
+            title: "상점",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "상점설정",
+                    path: Paths.storeset,
+                    disabled: !logined,
+                    ...unLogined
+                },
+                {
+                    icon: "menu",
+                    title: "판매목록",
+                    path: Paths.saleList,
+                    disabled: !logined || !haveStore,
+                    ...loginAndStore
+                },
+            ]
+        },
+        {
+            icon: "book",
+            title: "결제",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "정산관리",
+                    path: Paths.payFromJanda,
+                    disabled: !logined,
+                    ...unLogined
+                },
+                {
+                    icon: "menu",
+                    title: "멤버쉽",
+                    path: Paths.payToJanda,
+                    disabled: !logined,
+                    ...unLogined
+                },
+            ]
+        },
+        {
+            icon: "sms",
+            title: "SMS",
+            sub: [
+                {
+                    icon: "info",
+                    title: "시작하기",
+                    path: SmsPaths.init,
+                    disabled: !logined,
+                    ...unLogined
+                },
+                {
+                    icon: "addCircle",
+                    title: "템플릿 설정",
+                    path: SmsPaths.template,
+                    disabled: !logined || !smsInited,
+                    ...sharedSMS
+                },
+                {
+                    icon: "email",
+                    title: "발신자 관리",
+                    path: SmsPaths.sender,
+                    disabled: !logined || !smsInited,
+                    ...sharedSMS
+                },
+                {
+                    icon: "historyWatch",
+                    title: "발신 히스토리",
+                    path: SmsPaths.history,
+                    disabled: !logined || !smsInited,
+                    ...sharedSMS
+                },
+            ]
+        },
+        {
+            icon: "info",
+            title: "고객센터",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "Service 설정 1",
+                    path: "/",
+                    disabled: !logined,
+                    ...unLogined
+                },
+            ]
+        },
+    ]
+
+    return MainMenuData;
 }
+
+
 export interface IProps {
-    onClose: () => void,
-    onMypage: () => void,
-    onLogin: (isLogout: boolean) => void
-    useInfo: TUserInfo;
     isOpen: boolean;
 }
 
-const Sidebar: React.FC<IProps> = ({ onLogin, onMypage, onClose, useInfo, isOpen }) => {
-    const [menuKey, setMenuKey] = useState<string>('sidebar_home');
-    const menuKeyUpdate = (key: string) => {
-        setMenuKey(key)
+const Sidebar: React.FC<IProps> = ({ isOpen }) => {
+    const context = useContext(AppContext);
+    const { user } = context;
+    const { pathname } = useLocation();
+    const menuData = getMenuData(context)
+    const [menuIndex, setMenuIndex] = useState((getUrlIndex(pathname, menuData)))
+
+    let history = useHistory();
+
+    const handleMainMenuClick = (index: number) => {
+        setMenuIndex(index);
     }
-    const history = useHistory();
 
-    const subMenuList = Data_SubMain.find(list => list.title === menuKey) || Data_SubMain[0];
-
-    const subMenuClick = (path: string) => {
+    const handleSubMenuClick = (path: string) => {
         history.push(path);
     }
 
-    useEffect(() => {
-        if (isOpen)
-            document.getElementById("root")?.classList.add("sideOpen")
-        else
-            document.getElementById("root")?.classList.remove("sideOpen")
-    }, [isOpen])
-
-    useEffect(() => {
-        const { path } = subMenuList.sub[0]
-        history.push(path)
-    }, [menuKey])
+    const { name, createdAt } = user || {};
 
     // 로그인 onclick, login, logout 추가 y
     return (
-        <div className={`Sidebar ${isOpen || 'Sidebar--close'}`}>
-            <div className="Sidebar__head">
-                <JDtypho mb="small" size="h5" weight={600}>
-                    {useInfo.name}<JDtypho component="span" size="small">님</JDtypho>
-                </JDtypho>
-                <JDtypho mb="small" size="tiny">
-                    최근 접속일 2020 09 03 13:58:00
-                </JDtypho>
-                <div className="Sidebar__memberNav">
-                    <a href="#" className="Sidebar__login off" onClick={() => { onLogin(false) }}>로그인</a>
-                    <a href="#" className="SideBar__logout" onClick={() => { onLogin(true) }}>로그아웃</a>
-                    <a href="#" className="SideBar__mypage" onClick={() => { onMypage() }}>마이페이지</a>
+        <div className={`sidebar ${isOpen || 'sidebar--close'} ${user || 'sidebar--unLogined'}`}>
+            <Flex oneone className="sidebar__head">
+                <div className="sidebar__logo">
+                    A
                 </div>
-                <div className="Sidebar__close" onClick={() => {
-                    onClose()
-                }}>
-                    <JDicon icon="close" />
-                </div>
-            </div>
-            <nav className="Sidebar__menu">
-                <SidebarMainMenu mainMenu={Data_SideMain} menuKey={menuKey} menuKeyUpdate={menuKeyUpdate} />
-                <SidebarSubMenu subMenu={subMenuList.sub} subMenuClick={(path) => {
-                    subMenuClick(path);
-                }} />
+                <JDalign className="sidebar__infozone" text={"center"}>
+                    <Bold flex={{ vEnd: true, center: true }} mb="superTiny">{name} <Tiny>님</Tiny></Bold>
+                    <JDtypho size="tiny">
+                        시작일 {dayjs(createdAt).format("YYYY MM DD hh:mm:ss")}
+                    </JDtypho>
+                </JDalign>
+            </Flex>
+            <nav className="sidebar__menu">
+                <ul className="mainMenu">
+                    {
+                        menuData.map((menu, i) =>
+                            <SidebarMainMenu selected={menuIndex === i} onMenuClick={handleMainMenuClick} key={`sidebarMain_${i}`} menu={menu} index={i} />)
+                    }
+                </ul>
+                <ul className="subMenu">
+                    {menuData[menuIndex]?.sub.map((menu, index) =>
+                        <SidebarSubMenu onMenuClick={handleSubMenuClick} key={`submenuList-${index}`} menu={menu} />
+                    )}
+                </ul>
             </nav>
         </div>
     )

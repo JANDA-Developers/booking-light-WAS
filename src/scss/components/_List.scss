@@ -1,0 +1,48 @@
+@mixin numbering($num) {
+	&--#{$num} {
+		.JDlist__li {
+			height: space($num);
+		}
+	}
+}
+
+.JDlist {
+    margin: -1px;
+    margin-bottom: -2px;
+	&--whiteSpace {
+		.JDlist__li {
+            display: flex;
+            align-items: center;
+			white-space: nowrap;
+		}
+	}
+
+	&--bordered {
+        border-radius:  $br1;
+        border: 1px solid $outborder-color;
+		.JDlist__li {
+			margin-bottom: 1px solid $grey-level1;
+		}
+	}
+
+	&--stripe {
+		.JDlist__li:nth-child(even) {
+			background-color: $grey-level1;
+		}
+	}
+
+	@for $i from 1 through 9 {
+		@include numbering($i);
+	}
+
+	&__li {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&__index {
+		display: block;
+		margin-right: $standard-superTiny-space;
+	}
+}

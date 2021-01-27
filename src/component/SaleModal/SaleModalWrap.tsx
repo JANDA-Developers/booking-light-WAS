@@ -8,6 +8,7 @@ interface IProp {
 }
 
 export const SaleModalWrap: React.FC<IProp> = ({ modalHook }) => {
+
     const context = useContext(SalesModalContext)
 
     return <SalesContextProvider value={context} >

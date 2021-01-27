@@ -4,32 +4,24 @@ import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { TElements } from '@janda-com/front/dist/types/interface';
 
 interface IProps {
-    version: string;
-    products: TElements
+    onMenuClick: () => void;
 }
 
-const Header: React.FC<IProps> = ({ version, products }) => {
+const Header: React.FC<IProps> = ({ children, onMenuClick }) => {
 
     return (
         <header className="header">
-            <div className="header__top">
-                <div className="header__version">
-                    {version}
+            <JDalign flex={{
+                vCenter: true,
+                between: true
+            }} className="header__items">
+                <div>
+                    <JDicon size="small" hover onClick={onMenuClick} color="white" icon="menu" />
                 </div>
-            </div>
-            <div className="header__bottom">
-                <JDalign flex={{
-                    vCenter: true,
-                    between: true
-                }} className="header__items">
-                    <div>
-                        <JDicon icon="menu" />
-                    </div>
-                    <div>
-                        {products}
-                    </div>
-                </JDalign>
-            </div>
+                <div>
+                    {children}
+                </div>
+            </JDalign>
         </header>
     )
 }

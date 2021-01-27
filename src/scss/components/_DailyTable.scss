@@ -1,0 +1,168 @@
+$border-color: $outborder-color;
+$cellBg: $grey-level0;
+$pt-head-sat-bg: $cellBg;
+$pt-head-sun-bg: $cellBg;
+$pt-colum-head-bg: $grey-level-1;
+$pt-day-input-bg: $pt-colum-head-bg;
+$pt-day-sat-bg: $pt-head-sat-bg;
+$pt-day-sun-bg: $pt-head-sun-bg;
+
+.JDDailyTable {
+	user-select: none;
+	position: relative;
+	
+	&__wrap {
+		-webkit-user-select: none;
+		outline: none;
+	}
+
+
+	&__head {
+		border-top: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
+
+		.JDDailyTable__headWrap {
+			display: flex;
+		}
+
+		.JDDailyTable__headList {
+			flex: 1;
+			padding: 10px 0;
+			text-align: center;
+			background: $pt-colum-head-bg;
+			border-right: 1px solid $border-color;
+
+			&:nth-child(1) {
+				border-left: 1px solid $border-color;
+			}
+
+			// &:nth-child(6) {
+			// 	background: $pt-head-sat-bg;
+			// }
+
+			// &:nth-child(7) {
+			// 	background: $pt-head-sun-bg;
+			// }
+
+			abbr {
+				text-decoration: none;
+			}
+		}
+	}
+
+	&__body {
+	}
+
+	&__week {
+		display: flex;
+		border-left: 1px solid $border-color;
+	}
+
+	&__day {
+		cursor: cell !important;
+		position: relative;
+		flex: 1;
+		outline: none;
+		background-color: $cellBg;
+		border-right: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
+
+		& > div {
+			outline: none;
+		}
+
+		&.saturday {
+			background: $pt-day-sat-bg;
+		}
+
+		&.sunday {
+			background: $pt-day-sun-bg;
+		}
+
+		> div {
+			padding: space(1) space(2);
+			align-items: center;
+			user-select: none;
+			&:focus {
+				outline: none;
+			}
+		}
+
+		.JDDailyTable__InputWRapper {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+
+		&--selected {
+			&:not([aria-disabled='true']) {
+				&:before {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: rgba(0, 0, 0, 0.1);
+				}
+			}
+
+			outline: none;
+			.JDDailyTable__InputWRapper {
+				opacity: 1;
+				pointer-events: all;
+			}
+		}
+
+		.JDinput-wrap {
+
+			.JDinput__inside-wrap {
+				height: 2rem;
+			}
+
+			input {
+				height: 2rem;
+				background: $pt-day-input-bg;
+			}
+		}
+	}
+
+	&__nav {
+		position: absolute;
+		z-index: 50;
+		right: 0;
+		top: 0;
+
+		button {
+			background: white;
+			padding: 0.3125rem;
+			cursor: pointer;
+			border: 1px solid $border-color;
+		}
+	}
+
+	.DayPicker-Caption {
+		display: flex;
+		position: relative;
+		font-size: 1.5625rem;
+
+		&__time {
+			padding-right: space(4);
+			text-align: right;
+		}
+
+		&__btnList {
+			display: flex;
+			top: 0;
+			left: 0;
+		}
+	}
+}
+
+@media screen and (min-width: 600px) {
+}
+
+@media screen and (min-width: 1024px) {
+}
+
+@media screen and (min-width: 1600px) {
+}

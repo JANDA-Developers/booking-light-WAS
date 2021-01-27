@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.1.11",
-    "@janda-com/front": "^3.4.15",
+    "@janda-com/front": "^4.0.3",
     "@janda-com/janda-table": "^1.0.2",
     "@janda-com/price-table": "^1.0.5",
     "@janda-com/sms": "^2.0.3",
@@ -26,6 +26,7 @@
     "react-router-dom": "^5.2.0",
     "typescript": "^4.0.3"
   },
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,7 +34,9 @@
     "eject": "react-scripts eject",
     "upload": "./upload.sh",
     "precodegen": "apollo schema:download --endpoint=https://dev-booking-lite.stayjanda.cloud/",
-    "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/* --queries=src/apollo/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat"
+    "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/gql/**/* --queries=src/apollo/**/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat",
+    "precodegen-local": "apollo schema:download --endpoint=http://localhost:5000/graphql",
+    "codegen-local": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/gql/**/* --queries=src/apollo/gql/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat"
   },
   "eslintConfig": {
     "extends": "react-app"

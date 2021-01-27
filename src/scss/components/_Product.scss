@@ -1,12 +1,23 @@
 
 
 .product {
-    color: #eerwer;
 
     &__photo {
         max-width: 250px;
         height: 150px;
+        position: relative;
+    
+        .iconUploader {
+            display:none;
+        }
+    
+        &:hover {
+            .iconUploader {
+                display:block;
+            }
+        }
     }
+    
 }
 
 

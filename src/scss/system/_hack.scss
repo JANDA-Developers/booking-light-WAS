@@ -1,0 +1,38 @@
+html, body, #root, #JDoutWrapper {
+    overflow-x: hidden;
+}
+html {
+    overflow-y: hidden!important;
+}
+
+.JDflex--vEnd {
+    align-items: flex-end;
+}
+
+.__react_component_tooltip {
+    bottom: unset!important;
+}
+
+
+//나중에 지우삼
+.JDmodal__body br {
+    display:none;
+}
+
+.JDbox {
+    border-radius: $br1;
+    border:  $input-border;
+}
+
+.rt-noData {
+    margin: 20px;
+}
+
+.photoFrame  {
+    position: relative;
+    overflow: visible;
+}
+
+.DayPicker--unDisplayNavbar ~ div  {
+    display: none;
+}

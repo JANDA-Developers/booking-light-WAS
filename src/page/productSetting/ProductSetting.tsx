@@ -1,23 +1,12 @@
 import React from 'react'
-import dayjs from 'dayjs'
-import { s4, useModal, JDcontainer, JDpageHeader, WindowSize, JDbutton, JDselect, JDdayPickerModal, useDayPicker, toast, JDcard, useSelect, Flex } from "@janda-com/front";
+import { s4, useModal, JDcontainer, JDpageHeader, WindowSize, JDselect, JDdayPickerModal, useDayPicker, JDcard, useSelect } from "@janda-com/front";
 import ProductModal from './components/ProductModal';
 import Product from './components/Product';
-import ArrowDate from '../../atom/ArrowDate';
-import { IProduct } from './interface';
 import { IProductWrapContext } from './ProductSettingWrap';
-import { createContext } from 'vm';
-
-type TheadInfo = {
-    title: string;
-    desc: string;
-}
-
-type TproductSort = {
-    label: string;
-    value: string;
-}
-
+import { TProductModalInfo } from "./components/ProductModal"
+import { DateChangeHeader } from '../../component/dateChangeHeader/DateChangeHeader';
+import DotButton from '../../component/dotButton/DotButton';
+import { productCreateVariables, productUpdateVariables, productDeleteVariables } from "../../type/api"
 
 interface IProps {
     context: IProductWrapContext;
@@ -28,45 +17,44 @@ const SELECTOP = [{
     value: ""
 }]
 
+const today = new Date();
 
 interface IProductSettingContext extends IProductWrapContext { }
 
 const ProductSetting: React.FC<IProps> = ({ context: wrapContext }) => {
-    const { createProduct, deleteProduct, filter, items, loading, page, pageInfo, setFilter, setPage, setSort, sort, updateProduct } = wrapContext;
-    const productModalHook = useModal();
-    const dateToday = new Date();
+    const {
+        productCreate,
+        productUpdate,
+        productDelete,
+        storeSelectHook,
+        items,
+    } = wrapContext;
+
+
+    const selectedStore = storeSelectHook.selectedOption?.value || "";
+    const productModalHook = useModal<TProductModalInfo>(false, {
+        mode: "create",
+    });
     const modalHook_add = useModal(false);
-    const modalHook_cal = useModal();
+    const calModalHook = useModal();
     const dayPickerHook = useDayPicker(new Date(), new Date());
-    const selectHook = useSelect(SELECTOP[0], SELECTOP);
 
     const handleAddProduct = () => {
         modalHook_add.openModal();
     };
 
-    const changeDay = (next: boolean | 'today') => {
-        const date = dayPickerHook.from || new Date();
 
-        if (next === 'today') {
-            dayPickerHook.setDate(dateToday);
-            return;
-        }
-
-        if (next) {
-            const newDate = dayjs(date).add(1, 'day').toDate();
-            dayPickerHook.setDate(newDate);
-            return;
-        }
-
-        if (dayjs(date).isBefore(dateToday, "d")) {
-            toast.warn('오늘 이전으로 설정할 수 없습니다');
-            return;
-        }
-
-        const newDate = dayjs(date).add(-1, 'day').toDate();
-        dayPickerHook.setDate(newDate);
+    const handleCreate = (info: productCreateVariables) => {
+        productCreate(info, productModalHook.closeModal)
     }
 
+    const handleUpdate = (info: productUpdateVariables) => {
+        productUpdate(info, productModalHook.closeModal)
+    }
+
+    const handleDelete = (info: productDeleteVariables) => {
+        productDelete(info, productModalHook.closeModal)
+    }
 
 
     const contextValue = { ...wrapContext };
@@ -75,46 +63,38 @@ const ProductSetting: React.FC<IProps> = ({ context: wrapContext }) => {
     return (
         <ProudctContext.Provider value={contextValue}>
             <JDcontainer size={WindowSize.full}>
-                <ProductModal onConfirm={() => {
-
-                }} modalHook={productModalHook} />
-                <JDdayPickerModal
-                    {...dayPickerHook}
-                    autoClose
-                    isRange={false}
-                    modalHook={modalHook_cal}
-                />
                 <div className="productSetting">
                     <JDpageHeader title={"상품설정"} desc={"판매 중인 상품의 상세 내용을 변경할 수 있습니다"} />
                     <div className="productSetting__content">
                         <JDcard mb mode="border">
-                            <Flex between vCenter>
-                                <section>
-                                    <JDbutton mr thema="positive" label={'날짜선택'} className="productSetting__calendar productSetting__btn1"
-                                        onClick={() => {
-                                            modalHook_cal.openModal();
-                                        }}
-                                    />
-                                    <JDbutton mode="border" thema="primary" label={'오늘'} className="productSetting__today productSetting__btn1"
-                                        onClick={() => { changeDay('today') }}
-                                    />
-                                </section>
-                                <ArrowDate onChangeDate={(plus) => {
-                                    changeDay(plus);
-                                }} date={dayPickerHook.from || new Date()} />
-                                <section>
-                                    <JDselect
-                                        autoSize
-                                        {...selectHook}
-                                    />
-                                </section>
-                            </Flex>
+                            <DateChangeHeader
+                                RightSide={
+                                    <section>
+                                        <JDselect
+                                            autoSize
+                                            {...storeSelectHook}
+                                        />
+                                    </section>
+                                }
+                                calModalHook={calModalHook}
+                                dayPickerHook={dayPickerHook} />
                         </JDcard>
+
+                        <DotButton mb="normal" onClick={() => {
+                            productModalHook.openModal({
+                                mode: "create",
+                            })
+                        }}>상품생성</DotButton>
                         {
                             items.map((product, index) => {
                                 return <Product
+                                    handleEdit={() => {
+                                        productModalHook.openModal({
+                                            mode: "update",
+                                            product
+                                        })
+                                    }}
                                     {...product}
-                                    _id={s4()}
                                     key={index + "pi"}
                                 />
                             })
@@ -122,6 +102,14 @@ const ProductSetting: React.FC<IProps> = ({ context: wrapContext }) => {
                     </div>
                 </div>
             </JDcontainer>
+            <ProductModal storeId={selectedStore} onCreate={handleCreate} onDelete={handleDelete} onUpdate={handleUpdate} modalHook={productModalHook} />
+            <JDdayPickerModal
+                {...dayPickerHook}
+                displayHeader={false}
+                autoClose
+                isRange={false}
+                modalHook={calModalHook}
+            />
         </ProudctContext.Provider>
     )
 }

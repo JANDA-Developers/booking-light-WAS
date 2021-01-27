@@ -1,0 +1,8 @@
+.JDscrollBox {
+    overflow-x: hidden;
+    @extend %JDscrollbar;
+    
+    &--small {
+        @extend %JDscrollbar--slender;
+    }
+}

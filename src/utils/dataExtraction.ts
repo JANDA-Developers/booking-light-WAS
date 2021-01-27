@@ -1,5 +1,7 @@
-import { DEFAULT_PAGE_INFO, isEmpty } from "@janda-com/front";
-import { IPageInfo } from "@janda-com/front/dist/types/interface";
+import {  isEmpty } from "@janda-com/front";
+import { FoffsetPagingInfo } from "../type/api";
+import { IPageInfo } from "../type/interface";
+import { DEFAULT_PAGE_INFO } from "../type/const";
 
 function extractDoc<T, K extends keyof T, C extends keyof T[K], D>(
     data: T | undefined,
@@ -22,13 +24,8 @@ function extractDoc<T, K extends keyof T, C extends keyof T[K], D>(
   
 interface TFalseResult<D> {
     items: D;
-    pageInfo: IPageInfo;
+    pageInfo: FoffsetPagingInfo;
 }
-
-interface TPageInfo<QueryName> {
-    pageInfo: IPageInfo;
-}
-
   // this is used for pagination
 function extractPageDoc<T, QueryName extends keyof T, DataKey extends keyof T[QueryName] ,  D>(
     data: T | undefined | null,
@@ -37,7 +34,7 @@ function extractPageDoc<T, QueryName extends keyof T, DataKey extends keyof T[Qu
     falsyData: D
   ): T[QueryName] | TFalseResult<D> {
 
-    const falseResult = {
+    const falseResult:TFalseResult<D> = {
         items: falsyData,
         pageInfo: DEFAULT_PAGE_INFO,
       }

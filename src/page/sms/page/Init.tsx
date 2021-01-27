@@ -20,7 +20,7 @@ export const Init: React.FC<IProp> = ({ Core, mode }) => {
 
 
     const { Info } = Core;
-    return <JDcontainer size={WindowSize.full}>
+    return <JDcontainer size={WindowSize.lg}>
         <Info lastBtnProp={mode === "start" ? {
             thema: "primary",
             size: "longLarge",

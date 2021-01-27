@@ -5,16 +5,7 @@ body,
     overflow-x: visible;
 }
 
-#root.sideOpen #sidePlaceHolder {
-    min-width: $sidebar-width;
-    height: 20px;
-}
-
 #contentWrapper {
-    width: 100%;
-}
-
-#sidePlaceHolder+div {
     width: 100%;
 }
 

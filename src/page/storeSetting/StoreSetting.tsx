@@ -1,5 +1,5 @@
 import React from 'react'
-import { useModal, useFilesManager, JDpageHeader, WindowSize, JDbutton, JDcontainer, JDcard, toast } from "@janda-com/front"
+import { useModal, useFilesManager, JDpageHeader, JDcard } from "@janda-com/front"
 import Store from './Store'
 import DotButton from '../../component/dotButton/DotButton'
 import { IStore } from './interface'
@@ -13,23 +13,22 @@ interface IProps {
 }
 
 const StoreSetting: React.FC<IProps> = ({ context, storeList }) => {
-    const { loading, storeCreate, storeDelete, storeUpdate } = context;
+    const { storeCreate, storeDelete, storeUpdate, loading } = context;
 
-    const storeModalHook = useModal<ModalInfo>();
-
-    const uploader = useFilesManager();
+    const storeModalHook = useModal<ModalInfo>(false, { mode: "create" });
 
     const handleCreate = (info: storeCreateVariables) => {
-        storeCreate(info)
-    }
-
-    const handleDelete = (info: storeDeleteVariables) => {
-        storeDelete(info)
+        storeCreate(info, storeModalHook.closeModal)
     }
 
     const handleUpdate = (info: storeUpdateVariables) => {
-        storeUpdate(info)
+        storeUpdate(info, storeModalHook.closeModal)
     }
+
+    const handleDelete = (info: storeDeleteVariables) => {
+        storeDelete(info, storeModalHook.closeModal)
+    }
+
 
     return (
         <div>
@@ -41,11 +40,26 @@ const StoreSetting: React.FC<IProps> = ({ context, storeList }) => {
                 <div className="storeSetting">
                     <section className="storeSetting__content">
                         <DotButton mb="normal" onClick={() => {
-                            storeModalHook.openModal()
-                        }} />
+                            storeModalHook.openModal({
+                                mode: "create",
+                            })
+                        }} >상점생성</DotButton>
                         {
                             storeList.map((store) => {
+                                console.log("store");
+                                console.log(store);
                                 return <Store
+                                    onDelete={() => {
+                                        handleDelete({
+                                            storeId: store._id
+                                        })
+                                    }}
+                                    onEdit={() => {
+                                        storeModalHook.openModal({
+                                            mode: "update",
+                                            store
+                                        })
+                                    }}
                                     key={store._id}
                                     store={store}
                                 />
@@ -53,7 +67,7 @@ const StoreSetting: React.FC<IProps> = ({ context, storeList }) => {
                         }
                     </section>
                 </div>
-                <StoreSettingModal onCreate={handleCreate} onDelete={handleDelete} onUpdate={handleUpdate} modalHook={storeModalHook} />
+                <StoreSettingModal key={"storeSettingModal" + storeModalHook.info?.store?._id} loading={loading.create || loading.update} onCreate={handleCreate} onDelete={handleDelete} onUpdate={handleUpdate} modalHook={storeModalHook} />
             </JDcard>
         </div>
     )

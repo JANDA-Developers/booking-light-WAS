@@ -1,6 +1,6 @@
 export const SERVER_URI =
   process.env.NODE_ENV === "development"
-    ? "https://dev.space.stayjanda.cloud/playground"
+    ? "https://dev-booking-lite.stayjanda.cloud/"
     : `${process.env.REACT_APP_API_SERVER_URI}`;
 
 export default (() => {

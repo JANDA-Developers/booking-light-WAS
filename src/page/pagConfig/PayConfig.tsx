@@ -93,7 +93,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                     }}>
                         <JDalign text="center">
                             <JDtypho>결제금액</JDtypho>
-                            <JDtypho mb="large" size="h3" color="point" >{autoComma(55000)}</JDtypho>
+                            <JDtypho mb="normal" size="h3" color="point" >{autoComma(55000)}</JDtypho>
                             <JDtypho>BookingLight - 잔다 55 플랜</JDtypho>
                             <JDtypho>잔다솔루션</JDtypho>
                         </JDalign>
@@ -215,7 +215,7 @@ export const PayConfig: React.FC<IProp> = ({ defaultCardInfo, onPayClick }) => {
                 <JDalign flex={{
                     end: true
                 }}>
-                    <JDbutton width="huge" padding="large" mr="small" onClick={() => {
+                    <JDbutton width="huge" padding="huge" mr="small" onClick={() => {
                         if (!allSelected) {
                             toast.warn("필수 약관에 모두 동의 해주세요.")
                             return

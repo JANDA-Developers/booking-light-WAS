@@ -1,8 +1,13 @@
 $header-bgcolor: $primary-color;
 $header-white-1: $grey-level0;
 
-
 .header {
+    position: sticky;
+    top: 0;
+    z-index: $z-index-6;
+    height: $header-height;
+    background: $header-bgcolor;
+    padding: space(2) space(4);
 
     .iconSearch {
         color: white !important;
@@ -12,30 +17,16 @@ $header-white-1: $grey-level0;
         color: $html-color !important;
     }
 
-    &__top {
-        position: relative;
-        height: $header-top-height;
-        color: $header-white-1;
-        background: $header-bgcolor;
-        border-bottom: 1px solid $grey-level0;
-    }
-
-    &__version {
-        position: absolute;
-        right: space(4);
-        bottom: space(2);
-    }
-
-    &__bottom {
-        position: relative;
-        height: $header-bottom-height;
-        background: $header-bgcolor;
-        padding: space(4);
-
-    }
-
     &__items {
         height: 100%;
+
+        .JDicon {
+            width: 1.3rem!important;
+            height: 1.3rem!important;
+        }
+        .JDnoti {
+            line-height: 0!important;
+        }
     }
 
 }

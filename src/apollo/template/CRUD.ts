@@ -1,0 +1,63 @@
+import { gql } from "@apollo/client";
+import { F_COLLECTION_DATA_INTERFACE, F_USERERROR } from "../shared";
+
+export const F_FOO = gql`
+  fragment Ffoo on Foo {
+    ...FcollectionDataInterface
+  }
+  ${F_COLLECTION_DATA_INTERFACE}
+`
+
+export const FOO_UPDATE = gql`
+    mutation fooUpdate(
+        $input: FooUpdateInput!
+        $id: ObjectId!
+    ) {
+    FooUpdate(
+        id:$id
+        input:$input
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+    }
+    }
+${F_USERERROR}
+`
+
+export const FOO_CREATE = gql`
+    mutation fooCreate(
+        $input: FooCreateInput!
+    ) {
+        FooCreate(
+            input:$input
+        ) {
+            ok
+            error {
+            ...FuserError
+            }
+        }
+    }
+${F_USERERROR}
+`
+
+export const FOO_DELETE = gql`
+    mutation fooDelete(
+        $input: FooDeleteInput!
+        $id: ObjectId!
+    ) {
+    FooDelete(
+        id:$id
+        input:$input
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+    }
+}
+${F_USERERROR}
+`
+
+

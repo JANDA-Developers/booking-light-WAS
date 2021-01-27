@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import StoreSetting from './StoreSetting'
-import { usePagination } from '@janda-com/front';
-import { useMutation, useQuery } from '@apollo/client';
-import { STORE_LIST } from '../../apollo/queries';
+import { useMutation } from '@apollo/client';
+import { ME, STORE_LIST } from '../../apollo/queries';
 import { storeCreate, storeCreateVariables, storeDelete, storeDeleteVariables, storeList, storeListVariables, storeUpdate, storeUpdateVariables, _StoreFilter, _StoreSort } from '../../type/api';
 import { STORE_CREATE, STORE_DELETE, STORE_UPDATE } from '../../apollo/mutations';
-import { queryResultMsg } from '../../utils/onCompletedMessage';
+import { completeMsg } from '../../utils/onCompletedMessage';
 import { getOperationName } from '@apollo/client/utilities';
-import { extractPageDoc } from '../../utils/dataExtraction';
-import { IStore } from "./interface";
-import { ISet } from '@janda-com/front/dist/types/interface';
+import { TfnMu } from '../../type/interface';
+import { IUseStoreList, useStoreList } from '../../hook/useStoreList';
 // const headInfo = {
 //     title: "상점설정",
 //     desc: "운영중인 상품을 생성하고 관리할 수 있습니다"
 // }
 
-// const storeList: Tstroe[] = [
+// const storeList: Tstore[] = [
 //     {
 //         _id: s4(),
 //         image: "/img/storeset/movie.jpg",
@@ -29,13 +27,10 @@ import { ISet } from '@janda-com/front/dist/types/interface';
 //     },
 // ]
 
-export interface IStoreWrapContext {
-    setPage: (page: number) => void;
-    setFilter: ISet<_StoreFilter | undefined>;
-    setSort: ISet<_StoreSort[] | undefined>;
-    storeUpdate: (variables: storeUpdateVariables) => void;
-    storeDelete: (variables: storeDeleteVariables) => void;
-    storeCreate: (variables: storeCreateVariables) => void;
+export interface IStoreWrapContext extends IUseStoreList {
+    storeUpdate: TfnMu<storeUpdateVariables>;
+    storeDelete: TfnMu<storeDeleteVariables>;
+    storeCreate: TfnMu<storeCreateVariables>;
     loading: {
         total: boolean;
         update: boolean;
@@ -45,75 +40,81 @@ export interface IStoreWrapContext {
 }
 
 const StoreSettingWrap = () => {
-    const { page, setPage } = usePagination(0);
-    const [filter, setFilter] = useState<_StoreFilter>();
-    const [sort, setSort] = useState<_StoreSort[]>();
+    const { getLoading, pageInfo, paginatorHook, setFilter, setSort, viewCount, setViewCount, stores } = useStoreList()
 
-    const { data, loading: get_loading } = useQuery<storeList, storeListVariables>(STORE_LIST, {
-        variables: {
-            pagingInput: {
-                pageItemCount: 20,
-                pageNumber: page
-            },
-            filter,
-            sort
-        }
-    })
+    const refetchQueries = [getOperationName(STORE_LIST) || "", getOperationName(ME) || ""];
 
-    const { items: stores, pageInfo } = extractPageDoc(data, "StoreList", "items", [] as IStore[]);
-
-    const [storeCreateMu, { loading: create_loading }] = useMutation<storeCreate, storeCreateVariables>(STORE_CREATE, {
+    const [storeCreateMu, { loading: createLoading }] = useMutation<storeCreate, storeCreateVariables>(STORE_CREATE, {
         onCompleted: ({ StoreCreate }) => {
-            queryResultMsg(StoreCreate, "스토어 생성 완료", "스토어 생성 실패");
+            completeMsg(StoreCreate, "스토어 생성 완료", "스토어 생성 실패");
         },
-        refetchQueries: [getOperationName(STORE_LIST) || ""],
+        refetchQueries,
     })
 
-    const [storeUpdateMu, { loading: update_loading }] = useMutation<storeUpdate, storeUpdateVariables>(STORE_UPDATE, {
+    const [storeUpdateMu, { loading: updateLoading }] = useMutation<storeUpdate, storeUpdateVariables>(STORE_UPDATE, {
         onCompleted: ({ StoreUpdate }) => {
-            queryResultMsg(StoreUpdate, "스토어 업데이트 완료", "스토어 업데이트 실패");
-        }
+            completeMsg(StoreUpdate, "스토어 업데이트 완료", "스토어 업데이트 실패");
+        },
+        refetchQueries,
     })
 
-    const [storeDeleteMu, { loading: delete_loading }] = useMutation<storeDelete, storeDeleteVariables>(STORE_DELETE, {
+    const [storeDeleteMu, { loading: deleteLoading }] = useMutation<storeDelete, storeDeleteVariables>(STORE_DELETE, {
         onCompleted: ({ StoreDelete }) => {
-            queryResultMsg(StoreDelete, "스토어 삭제완료", "스토어 삭제실패");
-        }
+            completeMsg(StoreDelete, "스토어 삭제완료", "스토어 삭제실패");
+        },
+        refetchQueries,
     })
 
-    const total_loading = update_loading || delete_loading || get_loading || create_loading;
+    const total_loading = updateLoading || deleteLoading || getLoading || createLoading;
 
-    const storeCreate = (variables: storeCreateVariables) => {
+    const storeCreate = (variables: storeCreateVariables, onSucess?: () => void) => {
         storeCreateMu({
             variables
+        }).then((data) => {
+            if (data.data?.StoreCreate.ok) {
+                onSucess?.()
+            }
         })
     }
 
-    const storeDelete = (variables: storeDeleteVariables) => {
-        storeDeleteMu({
+    const storeDelete = (variables: storeDeleteVariables, onSucess?: () => void) => {
+        return storeDeleteMu({
             variables
+        }).then((data) => {
+            if (data.data?.StoreDelete.ok) {
+                onSucess?.()
+            }
         })
     }
 
-    const storeUpdate = (variables: storeUpdateVariables) => {
+    const storeUpdate = (variables: storeUpdateVariables, onSucess?: () => void) => {
         storeUpdateMu({
             variables
+        }).then((data) => {
+            if (data.data?.StoreUpdate.ok) {
+                onSucess?.()
+            }
         })
     }
 
 
     const context: IStoreWrapContext = {
-        setPage,
-        setSort,
+        getLoading,
+        pageInfo,
+        paginatorHook,
         setFilter,
+        setSort,
+        setViewCount,
+        viewCount,
+        stores,
         storeUpdate,
         storeDelete,
         storeCreate,
         loading: {
             total: total_loading,
-            update: update_loading,
-            delete: delete_loading,
-            create: create_loading
+            update: updateLoading,
+            delete: deleteLoading,
+            create: createLoading
         }
     }
 

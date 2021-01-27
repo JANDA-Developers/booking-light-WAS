@@ -1,6 +1,7 @@
 import { JDpreloader } from "@janda-com/front";
-import React, { Suspense } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { Route, Switch } from 'react-router-dom';
+import AppContext from "./context";
 
 const LoginPage = React.lazy(() => import('./page/login/Login'));
 const SignUpPage = React.lazy(() => import('./page/signUp/SignUp'));
@@ -11,6 +12,11 @@ export enum AuthPaths {
 }
 
 const MainRouter = () => {
+    const { } = useContext(AppContext);
+
+    useEffect(() => {
+
+    }, [])
     return <Switch>
         <Suspense fallback={<JDpreloader page loading />}>
             <Route

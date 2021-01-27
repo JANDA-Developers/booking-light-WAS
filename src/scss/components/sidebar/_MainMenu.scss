@@ -1,0 +1,35 @@
+
+
+
+.mainMenu {
+    flex: 1;
+    background: $side-bg;
+    max-width: $main-menu-width;
+
+    &__list {
+        cursor: pointer;
+        display: block;
+        padding: space(1.5);
+        text-align: center;
+        border-radius: $br2;
+        transition: background 300ms;
+        color: white;
+        display: block;
+        margin: space(2) space(1) ;
+
+        &:hover {
+            background: $primary-color;
+            color: white;
+        }
+
+
+        &--active {
+            background: $primary-color;
+        }
+
+        .iconWrapper {
+            display: block;
+            margin: 0 auto space(1) auto;
+        }
+    }
+}

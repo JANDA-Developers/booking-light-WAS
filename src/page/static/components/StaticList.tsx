@@ -1,9 +1,7 @@
 import React from 'react';
 import { JDcolumn, JDtable } from '@janda-com/janda-table';
-import { DEFAULT_PAGINATION_SETTING, IUseDayPicker, IusePagination, IUseSelect, JDalign, JDbutton, JDcard, JDdoubleInputRange, JDpagination, JDselect, usePagination } from '@janda-com/front';
-import { InputText } from '@janda-com/front';
+import { DEFAULT_PAGINATION_SETTING, IUseDayPicker, IusePagination, IUseSelect, JDalign, JDcard, JDdoubleInputRange, JDpagination, JDselect } from '@janda-com/front';
 import JDsearchBar from '../../../atom/SearchBar';
-import DoubleInputRange from '@janda-com/front/dist/components/dayPicker/component/inputComponent/DoubleInputRange';
 
 type TData = {
     _id: string;
@@ -35,8 +33,6 @@ const DUMMY_DATA: TData[] = [
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
 ];
-
-
 
 
 const DUMMY_COLUMNS: JDcolumn<TData>[] = [

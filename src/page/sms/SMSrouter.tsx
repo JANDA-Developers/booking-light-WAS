@@ -1,6 +1,6 @@
 import React from 'react';
 import JDSMS from "@janda-com/sms"
-import { JDcontainer, JDpreloader, WindowSize } from '@janda-com/front';
+import { JDpreloader } from '@janda-com/front';
 import { Route, Switch } from 'react-router-dom';
 import SenderPage from './page/Sender';
 import HistoryPage from './page/History';
@@ -18,7 +18,7 @@ interface IProp {
   smsKey?: string;
 }
 
-export const SMSRouter: React.FC<IProp> = ({ smsKey = "asd" }) => {
+export const SMSRouter: React.FC<IProp> = ({ smsKey }) => {
 
   const SMSCore = new JDSMS({
     autoSendCases: [
@@ -49,18 +49,16 @@ export const SMSRouter: React.FC<IProp> = ({ smsKey = "asd" }) => {
 
 
 
-  if (!smsKey) {
-    return (
-      <div>
-        <JDcontainer size={WindowSize.lg}>
-          <InitPage
-            Core={SMSCore}
-            mode="start"
-          />
-        </JDcontainer>
-      </div>
-    );
-  }
+  // if (!smsKey) {
+  //   return (
+  //     <div>
+  //       <InitPage
+  //         Core={SMSCore}
+  //         mode="start"
+  //       />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>

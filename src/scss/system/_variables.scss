@@ -1,12 +1,13 @@
-$primary-color : #7ac3a6;
-$primary-color-dark : darken(#7ac3a6, 15);
-$primary-color-light : lighten(#7ac3a6, 20);
+$primary-color : #129a98;
+$primary-color-dark : darken(#129a98, 10);
+$primary-color-light : lighten(#129a98, 5);
 $point-color: #ff6760;
-$sidebar-width: 15.625rem;
+$background-color: $grey-level5 !default;
 
-$header-top-height: space(6);
-$header-bottom-height: space(12);
-$header-height: $header-top-height+$header-bottom-height
+$sidebar-width: 17.625rem;
+$main-menu-width: space(12);
+
+$header-height: 3.8rem;
 
 
 

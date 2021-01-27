@@ -16,13 +16,13 @@ type TResult = {
 
 const ErrorMsg = "이런 문제가 발생 했습니다."
   
-export const queryResultMsg = (
+export const completeMsg = (
     result: TResult,
     resultOK?: string,
     resultFale?: string | undefined,
     queryName?: string
-  ) => {
-    if (!result) return;
+  ):boolean => {
+    if (!result) return false;
     
     if (result.ok && resultOK) {
       toast.success(resultOK, {
@@ -41,6 +41,8 @@ export const queryResultMsg = (
         toast.warn(resultFale || ErrorMsg, {
             toastId: `${queryName}-error`
         });
-    } 
+    }
+    
+    return result.ok
   };
   

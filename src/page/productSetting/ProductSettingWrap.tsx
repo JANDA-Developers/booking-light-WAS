@@ -1,100 +1,111 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { usePagination } from "@janda-com/front";
-import { IPageInfo, ISet } from "@janda-com/front/dist/types/interface";
+import { IUseSelect, usePagination } from "@janda-com/front";
+import { IPageInfo, IselectedOption, ISet } from "@janda-com/front/dist/types/interface";
 import React, { useState } from "react";
 import { PRODUCT_DELETE, PRODUCT_UPDATE, PRODU_CTCREATE } from "../../apollo/mutations";
 import { PRODUCT_LIST } from "../../apollo/queries";
-import { productCreate, productCreateVariables, productDelete, productDeleteVariables, productList, productListVariables, productList_ProductList_items, productList_ProductList_pageInfo, productUpdate, productUpdateVariables, _ProductFilter, _ProductSort } from "../../type/api";
-import extractDoc, { extractPageDoc } from "../../utils/dataExtraction";
-import { IProduct } from "./interface";
+import { productCreate, productCreateVariables, productList_ProductList_items, productList_ProductList_pageInfo, productUpdate, productUpdateVariables, _ProductFilter, _ProductSort, productDeleteVariables, productDelete } from "../../type/api";
 import ProductSetting from "./ProductSetting";
+import { TfnMu } from "../../type/interface";
+import { IUseStoreSelect, useStoreSelect } from "../../hook/useStore";
+import { isEmpty } from "lodash";
+import { getOperationName } from "@apollo/client/utilities";
+import { useProductList } from "../../hook/useProductList";
+import { useProductps } from "../../hook/useProductps";
+
 
 export interface IProductWrapContext {
     page: number;
     setPage: (page: number) => void;
-    sort: _ProductSort[] | undefined;
-    setSort: ISet<_ProductSort[] | undefined>;
-    filter: _ProductFilter | undefined;
-    setFilter: ISet<_ProductFilter | undefined>;
-    createProduct: (variables: productCreateVariables) => void;
-    deleteProduct: (variables: productDeleteVariables) => void;
-    updateProduct: (variables: productUpdateVariables) => void;
+    sort: _ProductSort[];
+    setSort: ISet<_ProductSort[]>;
+    filter: _ProductFilter;
+    setFilter: ISet<_ProductFilter>;
+    productCreate: TfnMu<productCreateVariables>;
+    productDelete: TfnMu<productDeleteVariables>;
+    productUpdate: TfnMu<productUpdateVariables>;
     loading: {
         total: boolean;
         create: boolean;
         update: boolean;
         delete: boolean;
     };
+    storeSelectHook: IUseStoreSelect;
     items: productList_ProductList_items[];
     pageInfo: IPageInfo | productList_ProductList_pageInfo;
 }
 
 const ProductSettingWrap: React.FC = () => {
-    const { page, setPage } = usePagination(0);
-    const [filter, setFilter] = useState<_ProductFilter>();
-    const [sort, setSort] = useState<_ProductSort[]>();
+    const storeSelectHook = useStoreSelect();
+    if (isEmpty(storeSelectHook.storeptions)) throw Error("No store. you can't visit here");
 
-    const { data, loading: get_loading } = useQuery<productList, productListVariables>(PRODUCT_LIST, {
-        variables: {
-            pagingInput: {
-                pageItemCount: 20,
-                pageNumber: page
-            },
-            filter,
-            sort
+    const { items, loading: get_loading, pageInfo, paginatorHook, setFilter, setSort, setViewCount, viewCount, filter, sort } = useProductList({
+        initialFilter: {
+            _storeId_eq: storeSelectHook.selectedOption?.value || ""
         }
     })
 
-    const { items, pageInfo } = extractPageDoc(data, "ProductList", "items", [] as IProduct[]);
-
-    const [productCreateMu, { loading: create_loading }] = useMutation<productCreate, productCreateVariables>(PRODU_CTCREATE, {
-        onCompleted: () => { }
+    const [productCreateMu, { loading: createLoading }] = useMutation<productCreate, productCreateVariables>(PRODU_CTCREATE, {
+        onCompleted: () => { },
+        refetchQueries: [getOperationName(PRODUCT_LIST) || ""],
     });
 
-    const [productDeleteMu, { loading: delete_loading }] = useMutation<productDelete, productDeleteVariables>(PRODUCT_DELETE, {
-        onCompleted: () => { }
+    const [deleteProductMu, { loading: deleteLoading }] = useMutation<productDelete, productDeleteVariables>(PRODUCT_DELETE, {
+        onCompleted: () => { },
+        refetchQueries: [getOperationName(PRODUCT_LIST) || ""],
     });
 
-    const [productUpdateMu, { loading: update_loading }] = useMutation<productUpdate, productUpdateVariables>(PRODUCT_UPDATE, {
-        onCompleted: () => { }
+    const [productUpdateMu, { loading: updateLoading }] = useMutation<productUpdate, productUpdateVariables>(PRODUCT_UPDATE, {
+        onCompleted: () => { },
+        refetchQueries: [getOperationName(PRODUCT_LIST) || ""],
     });
 
 
-    const createProduct = (variables: productCreateVariables) => {
+    const productCreate: TfnMu<productCreateVariables> = (variables: productCreateVariables, onSuccess) => {
         productCreateMu({
             variables
+        }).then((data) => {
+            if (data.data?.ProductCreate.ok)
+                onSuccess?.()
         })
     }
 
-    const deleteProduct = (variables: productDeleteVariables) => {
-        productDeleteMu({
+    const productDelete: TfnMu<productDeleteVariables> = (variables: productDeleteVariables, onSuccess) => {
+        deleteProductMu({
             variables
+        }).then((data) => {
+            if (data.data?.ProductDelete.ok)
+                onSuccess?.()
         })
     }
 
-    const updateProduct = (variables: productUpdateVariables) => {
+    const productUpdate: TfnMu<productUpdateVariables> = (variables: productUpdateVariables, onSuccess) => {
         productUpdateMu({
             variables
+        }).then((data) => {
+            if (data.data?.ProductUpdate.ok)
+                onSuccess?.()
         })
     }
 
-    const total_loading = update_loading || create_loading || delete_loading || get_loading;
+    const total_loading = updateLoading || createLoading || deleteLoading || get_loading;
 
     const context: IProductWrapContext = {
-        page,
-        setPage,
+        page: paginatorHook.page,
+        setPage: paginatorHook.setPage,
         sort,
         setSort,
         filter,
+        storeSelectHook,
         setFilter,
-        createProduct,
-        deleteProduct,
-        updateProduct,
+        productCreate,
+        productDelete,
+        productUpdate,
         loading: {
             total: total_loading,
-            create: create_loading,
-            update: update_loading,
-            delete: delete_loading
+            create: createLoading,
+            update: updateLoading,
+            delete: deleteLoading
         },
         items,
         pageInfo

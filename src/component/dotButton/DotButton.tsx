@@ -5,14 +5,14 @@ import React, { HTMLAttributes } from 'react';
 
 interface IProp extends JDatomExtentionSet, HTMLAttributes<HTMLButtonElement> { }
 
-export const DotButton: React.FC<IProp> = ({ className, ...props }) => {
+export const DotButton: React.FC<IProp> = ({ className, children, ...props }) => {
     const classes = classNames('JDDotButton', className, {
         ...JDatomClasses(props)
     })
 
     return <button className={classes} {...props}>
         <JDicon color="grey2" mr="large" icon="plus" />
-        상점 생성하기
+        {children}
     </button >;
 };
 

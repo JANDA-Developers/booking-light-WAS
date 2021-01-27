@@ -1,4 +1,4 @@
-import { foucs, InputText, IUseModal, JDavatar, JDbutton, JDmodal, toast, useFilesManager } from '@janda-com/front';
+import { Flex, foucs, InputText, IUseModal, JDalign, JDavatar, JDbutton, JDmodal, toast, useFilesManager, Validater } from '@janda-com/front';
 import { TlocalFile } from '@janda-com/front/dist/hooks/hook';
 import React, { useState } from 'react';
 import { storeCreateVariables, storeDeleteVariables, storeUpdateVariables } from '../../../type/api';
@@ -12,11 +12,12 @@ export type ModalInfo = {
     store?: IStore
 }
 
-export interface ISubmitData extends Partial<IStore> {
+export interface IData extends Partial<IStore> {
     uploadImage?: TlocalFile
 }
 
 interface IProp {
+    loading?: boolean;
     modalHook: IUseModal<ModalInfo>
     onCreate: (info: storeCreateVariables) => void;
     onDelete: (info: storeDeleteVariables) => void;
@@ -24,46 +25,46 @@ interface IProp {
 }
 
 export const StoreSettingModal: React.FC<IProp> = ({ modalHook,
+    loading,
     onCreate,
     onUpdate,
-    onDelete: handleDelete,
+    onDelete,
 }) => {
+    if (modalHook.isOpen && !modalHook.info) throw Error("should provide modal info");
     if (!modalHook.info) throw Error("should provide modal info");
-    const mode = modalHook.info?.mode;
-    const originalStore = modalHook.info?.store;
+    const mode = modalHook.info.mode;
+    const originalStore = modalHook.info.store;
     const isCreate = mode === "create";
-    const default_info: ISubmitData = {}
-
-    const storeImgHook = useFilesManager();
-    const [submitData, setSubmitData] = useState<ISubmitData>(originalStore || default_info);
-    const { name, description, _id: id } = submitData;
-    const uploadImage = storeImgHook.localFiles[0];
-    const submitInfo: ISubmitData = { ...submitData, uploadImage };
-
-    function set<T extends keyof ISubmitData>(key: T, value: ISubmitData[T]) {
-        setSubmitData({ ...submitData, [key]: value });
+    const default_info: IData = {
+        name: "asdasd",
+        description: "asdasdas"
     }
 
-    const createValidate = () => {
-        if (!name) {
-            toast.warn("상품이름 값을 입력해주세요.");
-            foucs("productName");
-            return false;
-        }
-
-        if (!description) {
-            toast.warn("상점소개 값을 입력해주세요.");
-            foucs("productDesc");
-            return false;
-        }
-
-        return true;
-    }
-
+    const [data, setData] = useState<IData>(originalStore || default_info);
+    const { name, description, _id: id } = data;
     const idValid = !!id;
 
+    function set<T extends keyof IData>(key: T, value: IData[T]) {
+        setData({ ...data, [key]: value });
+    }
+
+    const { validate } = new Validater([{
+        value: !!name,
+        failMsg: "상품이름 값을 입력해주세요.",
+        id: "productName"
+    }, {
+        value: name?.length! > 3,
+        failMsg: "상품이름은 적어도 4자 이상 이여야 합니다.",
+        id: "productName"
+    }, {
+        value: !!description,
+        failMsg: "상점소개 값을 입력해주세요.",
+        id: "productDesc"
+    }])
+
+
     const handleCreate = () => {
-        if (!createValidate()) return;
+        if (!validate()) return;
 
         onCreate({
             name: name!,
@@ -72,7 +73,7 @@ export const StoreSettingModal: React.FC<IProp> = ({ modalHook,
     }
 
     const handleUpdate = () => {
-        if (!createValidate()) return;
+        if (!validate()) return;
         if (!idValid) throw Error("no id provided");
 
         onUpdate({
@@ -84,48 +85,40 @@ export const StoreSettingModal: React.FC<IProp> = ({ modalHook,
         })
     }
 
+    const handleDelete = () => {
+        if (!idValid) throw Error("no id provided");
+        onDelete({
+            storeId: id
+        })
+    }
 
 
-    return <JDmodal {...modalHook}
+    return <JDmodal loading={loading} className="storeSettingModal" {...modalHook}
         head={{
             title: "상점 생성하기"
         }}
         foot={
-            <div>
-                <JDbutton onClick={() => {
+            <div >
+                <JDbutton thema="grey4" mode="flat" padding="huge" onClick={() => {
                     isCreate ? handleCreate() : handleUpdate();
                 }}>
                     {isCreate ? "생성하기" : "수정하기"}
                 </JDbutton>
-                {isCreate || <JDbutton onClick={() => {
-                    if (!idValid) throw Error("no id provided");
-
-                    handleDelete({
-                        storeId: id
-                    })
-                }} thema="error">삭제하기</JDbutton>}
-            </div>}
-    >
-        <section >
-            <div >
-                <JDavatar size="huge" uploader={storeImgHook} mode="edit" />
             </div>
-        </section>
-        <section >
-            <InputText id="productName" value={name || ""} onChange={(value: any) => {
-                set("name", value);
-            }} label="상품이름" />
-        </section>
-        <section >
-            <InputText onChange={(value: any) => {
-                // set("location", value);
-            }} value={""} label="상점주소" />
-        </section>
-        <section >
-            <InputText id="productDesc" onChange={(value: any) => {
-                set("description", value);
-            }} value={description || ""} textarea label="상점소개" />
-        </section>
+        }
+    >
+        <InputText mb="normal" value={name || ""} onChange={(value: any) => {
+            set("name", value);
+        }} label="상품이름" />
+
+        <InputText mb="normal" onChange={(value: any) => {
+            // set("")
+        }} value={""} label="상점주소" />
+
+        <InputText mb="normal" onChange={(value: any) => {
+            set("description", value);
+        }} value={description || ""} textarea label="상점소개" />
+
     </JDmodal>
 };
 

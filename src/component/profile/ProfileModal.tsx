@@ -11,7 +11,8 @@ export type TuserInfo = {
 
 export type Tservice = {
     icon: IIcons,
-    title: string
+    title: string,
+    onClick: () => void;
 }
 
 interface IProps {
@@ -27,7 +28,7 @@ const ProfileModal: React.FC<IProps> = ({ userInfo, services, dropBoxHook }) => 
         <JDdropDown position="absolute" closeOnWindowClick  {...dropBoxHook} >
             <div className="profileModal">
                 <div className="profileModal__userInfo">
-                    <JDavatar img={image} size="large"  />
+                    <JDavatar img={image} size="large" />
                     <strong className="profileModal__username">
                         {name}
                     </strong>
@@ -37,16 +38,14 @@ const ProfileModal: React.FC<IProps> = ({ userInfo, services, dropBoxHook }) => 
                 </div>
                 <JDhorizen margin={3} />
                 <div className="profileModal__service">
-                    <ul>
-                        {
-                            services.map((service, i) => {
-                                return <JDtypho key={"profileLi" + i} mb flex color="grey3">
-                                    <JDicon mr size="small" icon={service.icon} />
-                                    <JDtypho size="small"> {service.title} </JDtypho>
-                                </JDtypho>
-                            })
-                        }
-                    </ul>
+                    {
+                        services.map((service, i) => {
+                            return <JDtypho hover onClick={service.onClick} key={"profileLi" + i} mb flex color="grey3">
+                                <JDicon mr size="small" icon={service.icon} />
+                                <JDtypho size="small"> {service.title} </JDtypho>
+                            </JDtypho>
+                        })
+                    }
                 </div>
             </div>
         </JDdropDown>

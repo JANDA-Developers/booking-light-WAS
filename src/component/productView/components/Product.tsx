@@ -6,7 +6,7 @@ interface IProp {
 }
 
 export const Product: React.FC<IProp> = ({ info }) => {
-
+    
     const { count, name, total } = info;
     return <JDalign mb flex className="product">
         <div className="product__deco"></div>
