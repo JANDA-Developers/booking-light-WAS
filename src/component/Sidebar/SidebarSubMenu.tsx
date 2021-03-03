@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Bold, JDicon, toast, JDtooltip, ReactTooltip } from '@janda-com/front';
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { Paths } from '../../MainRouter';
 import { AuthPaths } from '../../AuthRouter';
 import classNames from "classnames";
+import AppContext from '../../context';
 
 export type TSidebarSub = {
     icon: IIcons,
@@ -20,17 +21,21 @@ interface IProps {
     onMenuClick: (path: string) => void;
 }
 
+
 const SidebarSubMenu: React.FC<IProps> = ({ menu, onMenuClick }) => {
     const history = useHistory()
+    const { contextQueryLoading } = useContext(AppContext);
     const { pathname } = useLocation()
     const { disabled, icon, path, redirect, title, disabledTooltip } = menu;
 
-    let selected: boolean = pathname === path
+    let selected: boolean = pathname.includes(path);
 
-    //url 서치로 들어온 경로 방지
-    if (selected && disabled && redirect) {
-        toast(disabledTooltip)
-        history.push(redirect);
+
+    const conditionalRedirect = () => {
+        if (selected && disabled && redirect) {
+            toast(disabledTooltip)
+            history.push(redirect);
+        }
     }
 
     const classes = classNames('subMenu__list', undefined, {
@@ -45,7 +50,11 @@ const SidebarSubMenu: React.FC<IProps> = ({ menu, onMenuClick }) => {
 
     useEffect(() => {
         ReactTooltip.rebuild();
+        if (!contextQueryLoading) {
+            conditionalRedirect();
+        }
     })
+
 
     return (
         <li data-effect="solid" data-place="top" data-for="mainTooltip" data-tip={disabled ? disabledTooltip : undefined} onClick={handleClick} className={classes} >

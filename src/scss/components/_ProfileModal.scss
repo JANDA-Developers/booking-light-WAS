@@ -20,6 +20,9 @@
     }
 
     &__service {
+        margin-left: space(5);
+        margin-right: space(5);
+        white-space: nowrap;
         font-size: $typho-small;
     }
 

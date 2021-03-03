@@ -1,7 +1,7 @@
 import { ApolloQueryResult, QueryHookOptions } from "@apollo/client";
 import { IusePagination } from "@janda-com/front";
 import { ISet } from "@janda-com/front/dist/types/interface";
-import { FoffsetPagingInfo, productList_ProductList_items_salesPeriods } from "../type/api";
+import { FoffsetPagingInfo, productList_ProductList_items, } from "../type/api";
 export type TRefech<T> = (variables?: Partial<Record<string, any>> | undefined) => Promise<ApolloQueryResult<T>>
 export interface IPageInfo extends FoffsetPagingInfo { };
 export type TfnMu<Variable> = (variables: Variable, onSuccess?: () => void) => void
@@ -9,7 +9,7 @@ export enum ETagKeys {
     "GROUP" = "GROUP", // 분류용
     "DESC" = "DESC" // 설명
 }
-export interface ISalesPeriod extends productList_ProductList_items_salesPeriods { }
+export interface ISalesPeriod extends productList_ProductList_items { }
 
 
 export interface IListQueryInit<TSort, TFilter, TQuery = any, TQueryVariable = any> {
@@ -36,3 +36,4 @@ export interface IUseListQuery<TSort, TFilter, TData> {
 
 
 export type FnUseListQuery<TSort, TFilter, TData = any, TQuery = any, TQueryVariable = any> = (foo?: IListQueryInit<TSort, TFilter, TQuery, TQueryVariable>) => IUseListQuery<TSort, TFilter, TData>
+

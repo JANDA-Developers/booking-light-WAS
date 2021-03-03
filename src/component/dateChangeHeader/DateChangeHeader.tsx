@@ -56,12 +56,12 @@ export const DateChangeHeader: React.FC<IDateChangeHeaderProp> = ({ calModalHook
         onArrow={handleDateArraw}
         LeftSide={
             <section>
-                <JDbutton mr thema="positive" label={'날짜선택'} className="productSetting__calendar productSetting__btn1"
+                <JDbutton mr thema="positive" label={'날짜선택'} className="productListting__calendar productListting__btn1"
                     onClick={() => {
                         calModalHook.openModal();
                     }}
                 />
-                <JDbutton mode="border" thema="primary" label={'오늘'} className="productSetting__today productSetting__btn1"
+                <JDbutton mode="border" thema="primary" label={'오늘'} className="productListting__today productListting__btn1"
                     onClick={toToday}
                 />
             </section>

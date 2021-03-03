@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_COLLECTION_DATA_INTERFACE } from "./fragments";
+import { F_COLLECTION_DATA_INTERFACE } from "./shared";
 
 export const F_SETTLEMENT = gql`
 fragment Fsettlement on Settlement {

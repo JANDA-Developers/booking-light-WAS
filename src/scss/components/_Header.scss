@@ -17,6 +17,10 @@ $header-white-1: $grey-level0;
         color: $html-color !important;
     }
 
+    &__searchInput {
+        background-color: transparent!important;
+    }
+
     &__items {
         height: 100%;
 
@@ -29,8 +33,8 @@ $header-white-1: $grey-level0;
         }
     }
 
+    &__storeSelect {
+        min-width: 100px;
+    }
+
 }
-
-@media screen and (min-width:600px) {}
-
-@media screen and (min-width:1024px) {}

@@ -1,38 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './scss/App.scss';
+
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import MainRouter from './MainRouter';
 import AuthRouter from './AuthRouter';
-import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { JDpreloader, JDtooltip, ReactTooltip } from '@janda-com/front';
-import { useQuery } from '@apollo/client';
+import { ReactTooltip } from '@janda-com/front';
 import { Toast } from '@janda-com/front';
-import { ME } from './apollo/queries';
-import { me, me_Me as IMe, me_Me_stores as IStore } from './type/api';
-import AppContext, { APPcontextProvider, useAppContext } from "./context"
-import extractDoc from './utils/dataExtraction';
+import { APPcontextProvider, useAppContext } from "./context"
 import { Layout } from './component/layout/Layout';
-import { IselectedOption } from '@janda-com/front/dist/types/interface';
-import { generateContext } from './helper';
-import { TRefech } from './type/interface';
+import { useMe } from './hook/useUser';
+import { merge } from './utils/merge';
+import { me_Me } from './type/api';
+import { Page404 } from './page/exceptions/Page404';
 
 interface IAppProp {
-  me?: IMe
-  stores?: IStore[]
-  authRefetch?: TRefech<me>
+  me?: me_Me
+  contextQueryLoading: boolean;
 }
 
-const App: React.FC<IAppProp> = ({ me, stores, authRefetch }) => {
-  const context = useAppContext(generateContext(stores, me))
-
-  useEffect(() => {
-    context.updateContext(context)
-  }, [me])
-
+const App: React.FC<IAppProp> = ({ me, contextQueryLoading }) => {
+  const context = useAppContext(me)
 
   return (
-    <div className="App">
-      <APPcontextProvider value={context}>
+    <div key={context.selectedStore?._id} className="App">
+      <APPcontextProvider value={{
+        ...context,
+        contextQueryLoading
+      }}>
         <Router >
           <Layout>
             <Switch>
@@ -41,6 +35,7 @@ const App: React.FC<IAppProp> = ({ me, stores, authRefetch }) => {
                 path={"/"}
                 render={() => <MainRouter />}
               />
+              <Route render={() => <Page404 />} />
             </Switch>
           </Layout>
         </Router>
@@ -51,4 +46,12 @@ const App: React.FC<IAppProp> = ({ me, stores, authRefetch }) => {
   );
 }
 
-export default App;
+
+export const AppWrap = () => {
+  const { data: me, called, getLoading, networkStatus } = useMe({ skip: true, notifyOnNetworkStatusChange: true })
+  const contextQueryLoading = !called || getLoading || networkStatus < 7;
+
+  return <App contextQueryLoading={contextQueryLoading} key={(contextQueryLoading ? "appLoading" : "appReady") + me?._id} me={me} />
+}
+
+export default AppWrap;

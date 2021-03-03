@@ -9,3 +9,8 @@ export const ModalBtn: React.FC<IProp> = ({ ...props }) => {
     return <JDbutton thema="grey4" mode="flat" padding="huge" {...props} />;
 };
 
+// 모달 하단에 있는 버튼
+export const CardBtn: React.FC<IProp> = ({ ...props }) => {
+    return <JDbutton br="round" thema="grey4" mode="flat"  {...props} />;
+};
+

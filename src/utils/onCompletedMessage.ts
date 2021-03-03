@@ -1,5 +1,6 @@
 import React from "react";
 import { toast } from "@janda-com/front";
+import { FuserError } from "../type/api";
 
 type TError = {
     [key:string]:any;
@@ -14,7 +15,7 @@ type TResult = {
     error: TError | null;
 }
 
-const ErrorMsg = "이런 문제가 발생 했습니다."
+// const ErrorMsg = "이런 문제가 발생 했습니다."
   
 export const completeMsg = (
     result: TResult,
@@ -34,15 +35,31 @@ export const completeMsg = (
     if (result.error) {
         const {code, details, message} = result.error;
         console.error("On Completed Error Msg From BackEnd");
-        console.error(message);
-        console.error(code);
-        console.error(details);
+        console.error({code});
+        console.error({message});
+        console.error({details});
 
-        toast.warn(resultFale || ErrorMsg, {
-            toastId: `${queryName}-error`
-        });
+        if(resultFale)
+        if(typeof resultFale === "string")
+          toast.warn(resultFale, {
+              toastId: `${queryName}-error`
+          });
     }
     
     return result.ok
   };
   
+
+
+  type TerrorMsgOption = {
+    output?:{key:string,msg:string}[]
+    defaultMsg?: string;
+  }
+  export const errorMessage = (error:FuserError | null,{defaultMsg,output = []}:TerrorMsgOption = {}) => {
+    if(!error) return;
+    const {code,details,message} = error;
+    console.log({error});
+    const target = output.find(op => op.key === code);
+    if(!target) toast.warn(message);
+    toast.warn(defaultMsg || target?.msg);
+  }

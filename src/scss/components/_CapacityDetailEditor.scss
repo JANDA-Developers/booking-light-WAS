@@ -1,0 +1,10 @@
+.capacityDetailEditor {
+    .JDcard__body {
+        max-height: 400px;
+        overflow: auto;
+    }
+
+    &__detailBox {
+        padding: 0px!important;
+    }
+}

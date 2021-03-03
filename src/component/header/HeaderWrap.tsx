@@ -1,25 +1,15 @@
-import { useMutation } from '@apollo/client';
-import { getOperationName } from '@apollo/client/utilities';
-import { JDnoti, JDavatar, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold, toast, JDpreloader, onCompletedMessage } from '@janda-com/front';
+import { JDavatar, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold, toast, JDpreloader, onCompletedMessage, LocalManager } from '@janda-com/front';
 import { ISet } from '@janda-com/front/dist/types/interface';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SIGNOUT } from '../../apollo/mutations';
-import { ME } from '../../apollo/queries';
 import { AuthPaths } from '../../AuthRouter';
+import AppContext from '../../context';
+import { useSignOut } from '../../hook/useUser';
 import { Paths } from '../../MainRouter';
-import { signOut } from '../../type/api';
-import { completeMsg } from '../../utils/utils';
+import Noti from '../notification/Noti';
 import ProfileModal, { Tservice } from '../profile/ProfileModal';
 import Header from './Header';
-
-const DataMypageInfo = {
-    userInfo: {
-        image: "",
-        name: "이서진",
-        version: "JANDA Booking Light Version 이용 중"
-    },
-}
+import { version } from "../../../package.json"
 
 interface IProp {
     key?: string;
@@ -29,17 +19,20 @@ interface IProp {
 
 export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
     const uploader = useFilesManager();
+    const history = useHistory();
     const dropDownHook = useDropDown();
+    const { me } = useContext(AppContext);
+    const notiLength = me?.unReadSystemNoties.length;
     const [search, setSearch] = useState("");
-
-    const [signOutMu, { loading }] = useMutation<signOut>(SIGNOUT, {
+    const [signOut] = useSignOut({
         onCompleted: ({ SignOut }) => {
-            completeMsg(SignOut, "로그아웃", "로그아웃 실패")
-            window.location.reload()
+            if (SignOut.ok) {
+                history.push(AuthPaths.login)
+            }
         }
-    });
+    })
 
-    const service: Tservice[] = [
+    const services: Tservice[] = [
         {
             icon: "menu",
             title: "환경설정",
@@ -65,7 +58,7 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
             icon: "menu",
             title: "로그아웃",
             onClick: () => {
-                signOutMu()
+                signOut()
             }
         }
     ]
@@ -81,6 +74,7 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
         }}>
             <JDsearchInput
                 mr="large"
+                className="header__searchInput"
                 SearchComponent={(prop) => <div>
                     <JDiconSearchInput {...prop} />
                 </div>}
@@ -96,17 +90,14 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
                 searchValue={search}
             />
             <JDalign mr="large">
-                <JDnoti iconProp={{
-                    badge: "1",
-                    size: "small",
-                    color: "white",
-                    tooltip: "새로운 알림이 N개 있습니다.",
-                }} notiLines={[{
-                    date: new Date(),
-                    title: "샘플노티1",
-                    desc: "샘플노트DESC",
-                    key: "sample1"
-                }]} />
+                <Noti
+                    iconProp={{
+                        badge: notiLength ? `${notiLength}` : undefined,
+                        size: "small",
+                        color: "white",
+                        tooltip: notiLength ? `새로운 알림이 ${notiLength}개 있습니다.` : undefined,
+                    }}
+                    notiIds={me?.unReadSystemNoties} />
             </JDalign>
             <JDavatar hover size="small" onClick={(e) => {
                 e.stopPropagation();
@@ -116,8 +107,11 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
                 }
                 dropDownHook.open(undefined, cooldinate)
             }} uploader={uploader} />
-            <ProfileModal dropBoxHook={dropDownHook} userInfo={DataMypageInfo.userInfo} services={service} />
-            <JDpreloader loading={loading} />
+            <ProfileModal dropBoxHook={dropDownHook} userInfo={{
+                image: me?.profileImage?.uri || "",
+                name: me?.name || "",
+                version: version
+            }} services={services} />
         </JDalign>
     </Header>;
 };

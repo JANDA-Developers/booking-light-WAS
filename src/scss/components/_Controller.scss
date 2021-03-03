@@ -1,0 +1,18 @@
+
+.controller {
+    &__dropboxInput {
+        padding: space(1);
+        display: block!important;
+
+        .JDtagInput__tag {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .JDtagInput__input {
+            width: 100%;
+            padding-top: space(1);
+            padding-bottom: space(1);
+        }
+    }
+}

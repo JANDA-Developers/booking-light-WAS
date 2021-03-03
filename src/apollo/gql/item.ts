@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
-import { F_ITEM, F_PAGEINFO, F_USERERROR } from "./fragment/fragments";
+import { F_ITEM, F_ITEM_BOOKING, F_PAGEINFO, F_USERERROR } from "./fragment/fragments";
+import { F_SUMMARY_BOOKING } from "./fragment/summary";
 
 
 export const ITEM_BOOKING_UPDATE = gql`
@@ -51,12 +52,14 @@ export const ITEM_LIST = gql`
             ...FoffsetPagingInfo
         }
         items {
-            ...Fitem
+            ...on ItemBooking {
+                ...FitemBooking
+            }
         }
     }
 }
 ${F_PAGEINFO}
-${F_ITEM}
+${F_ITEM_BOOKING}
 `
 
 export const ITEMBOOKING_CREATE = gql`
@@ -93,4 +96,31 @@ export const ITEMBOOKING_UPDATE = gql`
     }
     }
 ${F_USERERROR}
+`
+
+export const ITEM_FIND_BY_ID = gql`
+    query itemFindById(
+        $itemId: ObjectId!
+    ) {
+        ItemFindById(
+            itemId: $itemId
+        ) {
+            ...Fitem
+        }
+    }
+${F_ITEM}
+`
+
+export const ITEM_SUMMARY_GET = gql`
+    query itemSummaryGet(
+        $code: String!
+    ) {
+        ItemSummaryGet(
+            code: $code
+        ) {
+            ...FsummaryBooking
+        }
+    }
+${F_USERERROR}
+${F_SUMMARY_BOOKING}
 `

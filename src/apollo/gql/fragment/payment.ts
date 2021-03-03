@@ -1,10 +1,8 @@
 import { gql } from "@apollo/client";
-import { F_COLLECTION_DATA_INTERFACE } from "./fragments";
+import { F_COLLECTION_DATA_INTERFACE } from "./shared";
 
 export const F_PAYMENTOPTION = gql`
     fragment Fpaymentoption on PaymentOption {
-        merchantId
-        merchantKey
         authDate
         isAuthorized
         commission {

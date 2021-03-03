@@ -1,45 +1,67 @@
 {
-  "name": "booking-light",
+  "name": "temp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.1.11",
+    "@apollo/client": "^3.3.7",
     "@janda-com/front": "^4.0.3",
-    "@janda-com/janda-table": "^1.0.2",
-    "@janda-com/price-table": "^1.0.5",
-    "@janda-com/sms": "^2.0.3",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/lodash": "^4.14.161",
-    "@types/react-router-dom": "^5.1.5",
-    "chart.js": "^2.9.3",
-    "color": "^3.1.2",
-    "core-js": "^3.6.5",
+    "@types/chart.js": "^2.9.30",
+    "@types/react-router-dom": "^5.1.7",
+    "apollo-upload-client": "^14.1.3",
+    "color": "^3.1.3",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "omit-deep-lodash": "^1.1.5",
     "randomcolor": "^0.6.2",
-    "react": "^16.13.1",
-    "react-chartjs-2": "^2.10.0",
+    "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.0.0",
+    "react-chartjs-2": "^2.11.1",
     "react-compound-timer": "^1.2.0",
     "react-day-picker": "^7.4.8",
-    "react-dom": "^16.13.1",
+    "react-dom": "^17.0.1",
+    "react-froala-wysiwyg": "^3.2.6-1",
     "react-router-dom": "^5.2.0",
-    "typescript": "^4.0.3"
+    "react-scripts": "4.0.1",
+    "react-table-6": "^6.11.0",
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4"
   },
-  
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/apollo-upload-client": "^14.1.0",
+    "@types/color": "^3.0.1",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^12.0.0",
+    "@types/randomcolor": "^0.5.5",
+    "@types/react": "^16.9.53",
+    "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-dom": "^16.9.8",
+    "cross-fetch": "^3.0.6",
+    "node-sass": "^4.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "upload": "./upload.sh",
-    "precodegen": "apollo schema:download --endpoint=https://dev-booking-lite.stayjanda.cloud/",
-    "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/gql/**/* --queries=src/apollo/**/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat",
-    "precodegen-local": "apollo schema:download --endpoint=http://localhost:5000/graphql",
-    "codegen-local": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/gql/**/* --queries=src/apollo/gql/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat"
+    "precodegen": "apollo schema:download --endpoint=http://localhost:5000/graphql && node src/gpt.js",
+    "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/gql/**/* --queries=src/apollo/gql/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hook": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/ban-ts-ignore": "off"
+    }
   },
   "browserslist": {
     "production": [
@@ -52,22 +74,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/chart.js": "^2.9.24",
-    "@types/color": "^3.0.1",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.12.62",
-    "@types/randomcolor": "^0.5.5",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.3.0",
-    "apollo": "^2.31.0",
-    "eslint-plugin-react": "^7.21.2",
-    "node-sass": "^4.14.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3",
-    "typescript": "^4.0.3"
   }
 }

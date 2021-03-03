@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { IDiv, JDatomExtentionSet, TElements } from '@janda-com/front/dist/types/interface';
-import { JDatomClasses, JDbutton, JDtypho } from '@janda-com/front';
-import { isEmpty } from 'lodash';
+import { isEmpty, JDatomClasses, JDbutton, JDtypho } from '@janda-com/front';
 
 type TItems = {
     _id: string;

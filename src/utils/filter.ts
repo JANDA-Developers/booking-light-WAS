@@ -1,4 +1,3 @@
-import { _ItemFilter } from "../type/api"
 
 export const isDateFilter = (filter:any):boolean => {
 

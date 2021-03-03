@@ -1,11 +1,13 @@
 import { gql } from "@apollo/client";
-import { F_COLLECTION_DATA_INTERFACE, F_ZONE_INFO } from "./fragments";
+import { F_COLLECTION_DATA_INTERFACE } from "./shared";
+import { F_ZONE_INFO } from "./zoneInfo";
 
 export const F_USER = gql`
-  fragment Fuser on User {
+  fragment Fuser on IUser {
     ...FcollectionDataInterface
     name
     email
+    unReadSystemNoties
     phoneNumber
     profileImage {
         uri

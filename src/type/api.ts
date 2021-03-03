@@ -54,6 +54,12 @@ export interface fileUploads_FileUploads_error {
 export interface fileUploads_FileUploads_data {
   __typename: "File";
   _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
   uri: string;
 }
 
@@ -101,18 +107,6 @@ export interface fileList_FileList_pageInfo {
   totalPageCount: number;
 }
 
-export interface fileList_FileList_items_tags {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-export interface fileList_FileList_items_owner {
-  __typename: "BusinessUser" | "SuperAdmin" | "Customer";
-  _id: any;
-  name: string;
-}
-
 export interface fileList_FileList_items {
   __typename: "File";
   _id: any;
@@ -123,8 +117,6 @@ export interface fileList_FileList_items {
   extension: string;
   fileType: string | null;
   uri: string;
-  tags: fileList_FileList_items_tags[];
-  owner: fileList_FileList_items_owner;
 }
 
 export interface fileList_FileList {
@@ -437,43 +429,83 @@ export interface itemList_ItemList_pageInfo {
   totalPageCount: number;
 }
 
-export interface itemList_ItemList_items_attrs {
+export interface itemList_ItemList_items_ItemService {
+  __typename: "ItemService";
+}
+
+export interface itemList_ItemList_items_ItemBooking_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemList_ItemList_items_ItemBooking_attrs {
   __typename: "Attribute";
-  name: string;
+  /**
+   * 기타 옵션값
+   */
+  tags: itemList_ItemList_items_ItemBooking_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
   displayType: DisplayType;
 }
 
-export interface itemList_ItemList_items_images {
+export interface itemList_ItemList_items_ItemBooking_images {
   __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
   uri: string;
 }
 
-export interface itemList_ItemList_items {
-  __typename: "ItemBooking" | "ItemService";
+export interface itemList_ItemList_items_ItemBooking {
+  __typename: "ItemBooking";
   _id: any;
   createdAt: any;
   updatedAt: any;
   type: ItemType;
   name: string;
+  thumbNail: string | null;
   /**
    * Product에게 상속하는 price값임 실제로 쓰이는건 product의 price
    */
   price: number;
+  code: string;
   currency: Currency;
+  productCount: number;
+  description: string;
+  /**
+   * HTML정보
+   */
+  descriptionDetail: string;
   /**
    * 커스텀 입력폼: 비지니스 유저가 
-   *         Item을 토대로한 상품을 만들어낼때. 
-   *         어떤 필드들을 입력할지를 나타냄 
-   *         이건 프론트엔드가 사용하는 입력폼임 
-   *         프론트엔드가 어떤 상품 그룹을 정의할떄
-   *         어떤 출력이 필요한지 고려해서 만드는 부분임.
+   * Item을 토대로한 상품을 만들어낼때. 
+   * 어떤 필드들을 입력할지를 나타냄 
+   * 이건 프론트엔드가 사용하는 입력폼임 
+   * 프론트엔드가 어떤 상품 그룹을 정의할떄
+   * 어떤 출력이 필요한지 고려해서 만드는 부분임.
    * 
-   *         * 모델을 나눌 수도 있겠지만 이필드를 통해서
-   *         핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
+   * * 모델을 나눌 수도 있겠지만 이필드를 통해서
+   * 핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
    */
-  attrs: itemList_ItemList_items_attrs[];
-  images: itemList_ItemList_items_images[] | null;
+  attrs: itemList_ItemList_items_ItemBooking_attrs[];
+  images: itemList_ItemList_items_ItemBooking_images[];
 }
+
+export type itemList_ItemList_items = itemList_ItemList_items_ItemService | itemList_ItemList_items_ItemBooking;
 
 export interface itemList_ItemList {
   __typename: "OffsetPagenatedIItemData";
@@ -565,6 +597,209 @@ export interface itembookingUpdateVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: itemFindById
+// ====================================================
+
+export interface itemFindById_ItemFindById_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemFindById_ItemFindById_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: itemFindById_ItemFindById_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface itemFindById_ItemFindById_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface itemFindById_ItemFindById {
+  __typename: "ItemBooking" | "ItemService";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ItemType;
+  name: string;
+  thumbNail: string | null;
+  /**
+   * Product에게 상속하는 price값임 실제로 쓰이는건 product의 price
+   */
+  price: number;
+  code: string;
+  currency: Currency;
+  productCount: number;
+  description: string;
+  /**
+   * HTML정보
+   */
+  descriptionDetail: string;
+  /**
+   * 커스텀 입력폼: 비지니스 유저가 
+   * Item을 토대로한 상품을 만들어낼때. 
+   * 어떤 필드들을 입력할지를 나타냄 
+   * 이건 프론트엔드가 사용하는 입력폼임 
+   * 프론트엔드가 어떤 상품 그룹을 정의할떄
+   * 어떤 출력이 필요한지 고려해서 만드는 부분임.
+   * 
+   * * 모델을 나눌 수도 있겠지만 이필드를 통해서
+   * 핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
+   */
+  attrs: itemFindById_ItemFindById_attrs[];
+  images: itemFindById_ItemFindById_images[];
+}
+
+export interface itemFindById {
+  ItemFindById: itemFindById_ItemFindById | null;
+}
+
+export interface itemFindByIdVariables {
+  itemId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: itemSummaryGet
+// ====================================================
+
+export interface itemSummaryGet_ItemSummaryGet__id {
+  __typename: "SummaryItemBookingId";
+  itemId: any;
+  productId: any;
+}
+
+export interface itemSummaryGet_ItemSummaryGet_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface itemSummaryGet_ItemSummaryGet_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemSummaryGet_ItemSummaryGet_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: itemSummaryGet_ItemSummaryGet_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface itemSummaryGet_ItemSummaryGet_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface itemSummaryGet_ItemSummaryGet_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface itemSummaryGet_ItemSummaryGet {
+  __typename: "SummaryItemBooking";
+  _id: itemSummaryGet_ItemSummaryGet__id;
+  /**
+   * 현재 item의 variant에 대한 사용수
+   */
+  usage: number;
+  /**
+   * 현재 Item의 variant에 대한 사용율. 1을 기준으로 계산
+   */
+  usageRatio: number | null;
+  usageDetails: itemSummaryGet_ItemSummaryGet_usageDetails[];
+  type: ItemType;
+  price: number;
+  currency: Currency;
+  /**
+   * Item에서 정의된 필드들
+   */
+  attrs: itemSummaryGet_ItemSummaryGet_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: itemSummaryGet_ItemSummaryGet_dateRangeForSale | null;
+  /**
+   * 사용 기간. (고정임)
+   */
+  dateRangeForUse: itemSummaryGet_ItemSummaryGet_dateRangeForUse | null;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+}
+
+export interface itemSummaryGet {
+  ItemSummaryGet: itemSummaryGet_ItemSummaryGet | null;
+}
+
+export interface itemSummaryGetVariables {
+  code: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: notificationHistory
 // ====================================================
 
@@ -590,6 +825,9 @@ export interface notificationHistory_NotificationHistory_pageInfo {
 
 export interface notificationHistory_NotificationHistory_items {
   __typename: "SmsHistoryItem" | "EmailHistoryItem";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
   method: NotificationMethod;
   sender: string;
   receivers: string[];
@@ -768,6 +1006,172 @@ export interface notificationTemplateListVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: smsSendSingle
+// ====================================================
+
+export interface smsSendSingle_SmsSendSingle_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface smsSendSingle_SmsSendSingle {
+  __typename: "SmsSingleMessageSendResponse";
+  ok: boolean;
+  error: smsSendSingle_SmsSendSingle_error | null;
+}
+
+export interface smsSendSingle {
+  SmsSendSingle: smsSendSingle_SmsSendSingle;
+}
+
+export interface smsSendSingleVariables {
+  input: SmsSendInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: smsSendWithTemplate
+// ====================================================
+
+export interface smsSendWithTemplate_SmsSendWithTemplate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface smsSendWithTemplate_SmsSendWithTemplate {
+  __typename: "SmsTemplateMessageSendResponse";
+  ok: boolean;
+  error: smsSendWithTemplate_SmsSendWithTemplate_error | null;
+}
+
+export interface smsSendWithTemplate {
+  SmsSendWithTemplate: smsSendWithTemplate_SmsSendWithTemplate;
+}
+
+export interface smsSendWithTemplateVariables {
+  input: SmsSendWithTemplateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: smsTemplateCreate
+// ====================================================
+
+export interface smsTemplateCreate_SmsTemplateCreate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface smsTemplateCreate_SmsTemplateCreate {
+  __typename: "SmsTemplateCreateResponse";
+  ok: boolean;
+  error: smsTemplateCreate_SmsTemplateCreate_error | null;
+}
+
+export interface smsTemplateCreate {
+  SmsTemplateCreate: smsTemplateCreate_SmsTemplateCreate;
+}
+
+export interface smsTemplateCreateVariables {
+  input: SmsTemplateCreateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: smsTemplateDelete
+// ====================================================
+
+export interface smsTemplateDelete_SmsTemplateDelete_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface smsTemplateDelete_SmsTemplateDelete {
+  __typename: "SmsTemplateDeleteResponse";
+  ok: boolean;
+  error: smsTemplateDelete_SmsTemplateDelete_error | null;
+}
+
+export interface smsTemplateDelete {
+  SmsTemplateDelete: smsTemplateDelete_SmsTemplateDelete;
+}
+
+export interface smsTemplateDeleteVariables {
+  templateId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: smsTemplateUpdate
+// ====================================================
+
+export interface smsTemplateUpdate_SmsTemplateUpdate_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface smsTemplateUpdate_SmsTemplateUpdate {
+  __typename: "SmsTemplateUpdateResponse";
+  ok: boolean;
+  error: smsTemplateUpdate_SmsTemplateUpdate_error | null;
+}
+
+export interface smsTemplateUpdate {
+  SmsTemplateUpdate: smsTemplateUpdate_SmsTemplateUpdate;
+}
+
+export interface smsTemplateUpdateVariables {
+  input: SmsTemplateUpdateInput;
+  templateId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: productBookingUpdate
 // ====================================================
 
@@ -892,10 +1296,68 @@ export interface productList_ProductList_pageInfo {
   totalPageCount: number;
 }
 
-export interface productList_ProductList_items_attrs {
-  __typename: "AttributeParam";
-  name: string;
+export interface productList_ProductList_items_attrs_tags {
+  __typename: "Tag";
+  key: string;
   value: string;
+}
+
+export interface productList_ProductList_items_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: productList_ProductList_items_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface productList_ProductList_items_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface productList_ProductList_items_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface productList_ProductList_items_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface productList_ProductList_items_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
 }
 
 export interface productList_ProductList_items {
@@ -905,10 +1367,35 @@ export interface productList_ProductList_items {
   updatedAt: any;
   type: ProductType;
   /**
-   * 아이템 attrs 와 쌍으로 돌아가는 부분
-   * 프론트엔드가 정의한 필드들을 입력 받는 부분임.
+   * item에서 설정한 필드값
    */
   attrs: productList_ProductList_items_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: productList_ProductList_items_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: productList_ProductList_items_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: productList_ProductList_items_capacityDetails[];
+  usageDetails: productList_ProductList_items_usageDetails[];
   code: string;
 }
 
@@ -919,9 +1406,6 @@ export interface productList_ProductList {
 }
 
 export interface productList {
-  /**
-   * BusinessUser 전용임..
-   */
   ProductList: productList_ProductList;
 }
 
@@ -940,10 +1424,140 @@ export interface productListVariables {
 // GraphQL query operation: productFindById
 // ====================================================
 
-export interface productFindById_ProductFindById_attrs {
-  __typename: "AttributeParam";
-  name: string;
+export interface productFindById_ProductFindById_attrs_tags {
+  __typename: "Tag";
+  key: string;
   value: string;
+}
+
+export interface productFindById_ProductFindById_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: productFindById_ProductFindById_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface productFindById_ProductFindById_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface productFindById_ProductFindById_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface productFindById_ProductFindById_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface productFindById_ProductFindById_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface productFindById_ProductFindById_item_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface productFindById_ProductFindById_item_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: productFindById_ProductFindById_item_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface productFindById_ProductFindById_item_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface productFindById_ProductFindById_item {
+  __typename: "ItemBooking" | "ItemService";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ItemType;
+  name: string;
+  thumbNail: string | null;
+  /**
+   * Product에게 상속하는 price값임 실제로 쓰이는건 product의 price
+   */
+  price: number;
+  code: string;
+  currency: Currency;
+  productCount: number;
+  description: string;
+  /**
+   * HTML정보
+   */
+  descriptionDetail: string;
+  /**
+   * 커스텀 입력폼: 비지니스 유저가 
+   * Item을 토대로한 상품을 만들어낼때. 
+   * 어떤 필드들을 입력할지를 나타냄 
+   * 이건 프론트엔드가 사용하는 입력폼임 
+   * 프론트엔드가 어떤 상품 그룹을 정의할떄
+   * 어떤 출력이 필요한지 고려해서 만드는 부분임.
+   * 
+   * * 모델을 나눌 수도 있겠지만 이필드를 통해서
+   * 핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
+   */
+  attrs: productFindById_ProductFindById_item_attrs[];
+  images: productFindById_ProductFindById_item_images[];
 }
 
 export interface productFindById_ProductFindById {
@@ -953,11 +1567,37 @@ export interface productFindById_ProductFindById {
   updatedAt: any;
   type: ProductType;
   /**
-   * 아이템 attrs 와 쌍으로 돌아가는 부분
-   * 프론트엔드가 정의한 필드들을 입력 받는 부분임.
+   * item에서 설정한 필드값
    */
   attrs: productFindById_ProductFindById_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: productFindById_ProductFindById_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: productFindById_ProductFindById_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: productFindById_ProductFindById_capacityDetails[];
+  usageDetails: productFindById_ProductFindById_usageDetails[];
   code: string;
+  item: productFindById_ProductFindById_item;
 }
 
 export interface productFindById {
@@ -2060,11 +2700,12 @@ export interface storeCustomerProfile_StoreCustomerProfile {
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: storeCustomerProfile_StoreCustomerProfile_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: storeCustomerProfile_StoreCustomerProfile_zoneinfo;
@@ -2219,8 +2860,6 @@ export interface storeList_StoreList_items_optionPayment_commission {
 
 export interface storeList_StoreList_items_optionPayment {
   __typename: "PaymentOption";
-  merchantId: string | null;
-  merchantKey: string | null;
   authDate: any | null;
   isAuthorized: boolean | null;
   commission: storeList_StoreList_items_optionPayment_commission;
@@ -2235,20 +2874,47 @@ export interface storeList_StoreList_items_zoneinfo {
   alpha2Code: string;
 }
 
-export interface storeList_StoreList_items {
-  __typename: "Store";
+export interface storeList_StoreList_items_buypages {
+  __typename: "BuyPage";
+  configure: any | null;
   _id: any;
   createdAt: any;
   updatedAt: any;
+}
+
+export interface storeList_StoreList_items_image {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface storeList_StoreList_items {
+  __typename: "Store";
+  /**
+   * 타입을 가지고 어떤 클라이언트 출력 화면이 가질지 결정됨.
+   */
+  type: StoreType;
   name: string;
   description: string;
   /**
    * Public한 접근을 위한 코드임.
    */
   code: string;
+  itemCount: number;
   location: storeList_StoreList_items_location;
   optionPayment: storeList_StoreList_items_optionPayment;
   zoneinfo: storeList_StoreList_items_zoneinfo | null;
+  buypages: storeList_StoreList_items_buypages[];
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  image: storeList_StoreList_items_image | null;
 }
 
 export interface storeList_StoreList {
@@ -2295,8 +2961,6 @@ export interface storeFindByCode_StoreFindByCode_optionPayment_commission {
 
 export interface storeFindByCode_StoreFindByCode_optionPayment {
   __typename: "PaymentOption";
-  merchantId: string | null;
-  merchantKey: string | null;
   authDate: any | null;
   isAuthorized: boolean | null;
   commission: storeFindByCode_StoreFindByCode_optionPayment_commission;
@@ -2311,20 +2975,107 @@ export interface storeFindByCode_StoreFindByCode_zoneinfo {
   alpha2Code: string;
 }
 
-export interface storeFindByCode_StoreFindByCode {
-  __typename: "Store";
+export interface storeFindByCode_StoreFindByCode_buypages {
+  __typename: "BuyPage";
+  configure: any | null;
   _id: any;
   createdAt: any;
   updatedAt: any;
+}
+
+export interface storeFindByCode_StoreFindByCode_items_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_items_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: storeFindByCode_StoreFindByCode_items_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface storeFindByCode_StoreFindByCode_items_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface storeFindByCode_StoreFindByCode_items {
+  __typename: "ItemBooking" | "ItemService";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ItemType;
+  name: string;
+  thumbNail: string | null;
+  /**
+   * Product에게 상속하는 price값임 실제로 쓰이는건 product의 price
+   */
+  price: number;
+  code: string;
+  currency: Currency;
+  productCount: number;
+  description: string;
+  /**
+   * HTML정보
+   */
+  descriptionDetail: string;
+  /**
+   * 커스텀 입력폼: 비지니스 유저가 
+   * Item을 토대로한 상품을 만들어낼때. 
+   * 어떤 필드들을 입력할지를 나타냄 
+   * 이건 프론트엔드가 사용하는 입력폼임 
+   * 프론트엔드가 어떤 상품 그룹을 정의할떄
+   * 어떤 출력이 필요한지 고려해서 만드는 부분임.
+   * 
+   * * 모델을 나눌 수도 있겠지만 이필드를 통해서
+   * 핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
+   */
+  attrs: storeFindByCode_StoreFindByCode_items_attrs[];
+  images: storeFindByCode_StoreFindByCode_items_images[];
+}
+
+export interface storeFindByCode_StoreFindByCode {
+  __typename: "Store";
+  /**
+   * 타입을 가지고 어떤 클라이언트 출력 화면이 가질지 결정됨.
+   */
+  type: StoreType;
   name: string;
   description: string;
   /**
    * Public한 접근을 위한 코드임.
    */
   code: string;
+  itemCount: number;
   location: storeFindByCode_StoreFindByCode_location;
   optionPayment: storeFindByCode_StoreFindByCode_optionPayment;
   zoneinfo: storeFindByCode_StoreFindByCode_zoneinfo | null;
+  buypages: storeFindByCode_StoreFindByCode_buypages[];
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  items: storeFindByCode_StoreFindByCode_items[] | null;
 }
 
 export interface storeFindByCode {
@@ -2363,8 +3114,6 @@ export interface storeFindById_StoreFindById_optionPayment_commission {
 
 export interface storeFindById_StoreFindById_optionPayment {
   __typename: "PaymentOption";
-  merchantId: string | null;
-  merchantKey: string | null;
   authDate: any | null;
   isAuthorized: boolean | null;
   commission: storeFindById_StoreFindById_optionPayment_commission;
@@ -2379,20 +3128,34 @@ export interface storeFindById_StoreFindById_zoneinfo {
   alpha2Code: string;
 }
 
-export interface storeFindById_StoreFindById {
-  __typename: "Store";
+export interface storeFindById_StoreFindById_buypages {
+  __typename: "BuyPage";
+  configure: any | null;
   _id: any;
   createdAt: any;
   updatedAt: any;
+}
+
+export interface storeFindById_StoreFindById {
+  __typename: "Store";
+  /**
+   * 타입을 가지고 어떤 클라이언트 출력 화면이 가질지 결정됨.
+   */
+  type: StoreType;
   name: string;
   description: string;
   /**
    * Public한 접근을 위한 코드임.
    */
   code: string;
+  itemCount: number;
   location: storeFindById_StoreFindById_location;
   optionPayment: storeFindById_StoreFindById_optionPayment;
   zoneinfo: storeFindById_StoreFindById_zoneinfo | null;
+  buypages: storeFindById_StoreFindById_buypages[];
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
 }
 
 export interface storeFindById {
@@ -2469,6 +3232,130 @@ export interface purchaseBundleRefundVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: systemNotiList
+// ====================================================
+
+export interface systemNotiList_SystemNotiList_pageInfo {
+  __typename: "OffsetPagingInfo";
+  /**
+   * 선택한 페이지 번호
+   */
+  pageIndex: number;
+  /**
+   * 페이지당 기준 데이터 수
+   */
+  pageItemCount: number;
+  /**
+   * 현재 페이지에서 출력한 데이터 수
+   */
+  currentItemCount: number;
+  /**
+   * 전체 페이지 수
+   */
+  totalPageCount: number;
+}
+
+export interface systemNotiList_SystemNotiList_items {
+  __typename: "SystemNoti";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: SystemNotiType;
+  /**
+   * html
+   */
+  content: string;
+  isRead: boolean;
+}
+
+export interface systemNotiList_SystemNotiList {
+  __typename: "OffsetPagenatedSystemNotiData";
+  pageInfo: systemNotiList_SystemNotiList_pageInfo;
+  items: systemNotiList_SystemNotiList_items[];
+}
+
+export interface systemNotiList {
+  SystemNotiList: systemNotiList_SystemNotiList;
+}
+
+export interface systemNotiListVariables {
+  sort?: _SystemNotiSort[] | null;
+  filter?: _SystemNotiFilter | null;
+  pagingInput: OffsetPagingInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: systemNotiRead
+// ====================================================
+
+export interface systemNotiRead_SystemNotiRead_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface systemNotiRead_SystemNotiRead {
+  __typename: "SystemNotiReadResponse";
+  ok: boolean;
+  error: systemNotiRead_SystemNotiRead_error | null;
+}
+
+export interface systemNotiRead {
+  SystemNotiRead: systemNotiRead_SystemNotiRead;
+}
+
+export interface systemNotiReadVariables {
+  ids: string[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: systemNotiHide
+// ====================================================
+
+export interface systemNotiHide_SystemNotiHide_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface systemNotiHide_SystemNotiHide {
+  __typename: "SystemNotiHideResponse";
+  ok: boolean;
+  error: systemNotiHide_SystemNotiHide_error | null;
+}
+
+export interface systemNotiHide {
+  SystemNotiHide: systemNotiHide_SystemNotiHide;
+}
+
+export interface systemNotiHideVariables {
+  ids: string[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: businessUserResetPassword
 // ====================================================
 
@@ -2534,11 +3421,12 @@ export interface customerResetPassword_CustomerResetPassword_data {
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: customerResetPassword_CustomerResetPassword_data_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: customerResetPassword_CustomerResetPassword_data_zoneinfo;
@@ -2597,11 +3485,12 @@ export interface businessUserFindEmail_BusinessUserFindEmail_data {
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: businessUserFindEmail_BusinessUserFindEmail_data_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: businessUserFindEmail_BusinessUserFindEmail_data_zoneinfo;
@@ -2866,23 +3755,45 @@ export interface me_Me_zoneinfo {
   alpha2Code: string;
 }
 
+export interface me_Me_stores_items {
+  __typename: "ItemBooking" | "ItemService";
+  _id: any;
+  name: string;
+}
+
+export interface me_Me_stores {
+  __typename: "Store";
+  _id: any;
+  name: string;
+  /**
+   * Public한 접근을 위한 코드임.
+   */
+  code: string;
+  items: me_Me_stores_items[] | null;
+}
+
 export interface me_Me {
   __typename: "BusinessUser";
   _id: any;
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: me_Me_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: me_Me_zoneinfo;
+  stores: me_Me_stores[];
 }
 
 export interface me {
+  /**
+   * 비지니스 유저용
+   */
   Me: me_Me | null;
 }
 
@@ -2914,22 +3825,50 @@ export interface profile_Profile {
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: profile_Profile_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: profile_Profile_zoneinfo;
 }
 
 export interface profile {
+  /**
+   * 세션에 계정이 여러개 저장될 수 있으므로 이 함수가 필요하다.
+   */
   Profile: profile_Profile;
 }
 
 export interface profileVariables {
   role: UserRole;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: userDuplicateCheck
+// ====================================================
+
+export interface userDuplicateCheck_UserDuplicateCheck {
+  __typename: "DuplicateCheckResponse";
+  duplicated: boolean;
+}
+
+export interface userDuplicateCheck {
+  UserDuplicateCheck: userDuplicateCheck_UserDuplicateCheck;
+}
+
+export interface userDuplicateCheckVariables {
+  role: UserRole;
+  target: string;
+  value: string;
 }
 
 /* tslint:disable */
@@ -3003,11 +3942,12 @@ export interface storeSignUp_StoreSignUp_data {
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: storeSignUp_StoreSignUp_data_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: storeSignUp_StoreSignUp_data_zoneinfo;
@@ -3136,163 +4076,6 @@ export interface verificationCompleteVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: Ffile
-// ====================================================
-
-export interface Ffile_tags {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-export interface Ffile_owner {
-  __typename: "BusinessUser" | "SuperAdmin" | "Customer";
-  _id: any;
-  name: string;
-}
-
-export interface Ffile {
-  __typename: "File";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  extension: string;
-  fileType: string | null;
-  uri: string;
-  tags: Ffile_tags[];
-  owner: Ffile_owner;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FcollectionDataInterface
-// ====================================================
-
-export interface FcollectionDataInterface {
-  __typename: "File" | "NotificationTrigger" | "Verification" | "ServicePricing" | "ServiceUsage" | "Store" | "PurchaseBundle" | "Settlement" | "ServicePlan" | "Invoice" | "ServicePlanTemplate" | "BillingMethod" | "Billing" | "TemplateSms" | "TemplateEmail" | "BusinessUser" | "SuperAdmin" | "SmsHistoryItem" | "EmailHistoryItem" | "TransactionPayment" | "TransactionRefund" | "Customer" | "SettlementMallPlain" | "SettlementMall" | "ItemBooking" | "ProductBooking" | "Booking" | "ItemService";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FoffsetPagingInfo
-// ====================================================
-
-export interface FoffsetPagingInfo {
-  __typename: "OffsetPagingInfo";
-  /**
-   * 선택한 페이지 번호
-   */
-  pageIndex: number;
-  /**
-   * 페이지당 기준 데이터 수
-   */
-  pageItemCount: number;
-  /**
-   * 현재 페이지에서 출력한 데이터 수
-   */
-  currentItemCount: number;
-  /**
-   * 전체 페이지 수
-   */
-  totalPageCount: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FuserError
-// ====================================================
-
-export interface FuserError {
-  __typename: "UserError";
-  code: string | null;
-  message: string;
-  /**
-   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
-   */
-  details: string[] | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: Flocation
-// ====================================================
-
-export interface Flocation {
-  __typename: "Location";
-  address: string;
-  addressDetail: string | null;
-  lat: number | null;
-  lng: number | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: Ftag
-// ====================================================
-
-export interface Ftag {
-  __typename: "Tag";
-  key: string;
-  value: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: Fverification
-// ====================================================
-
-export interface Fverification {
-  __typename: "Verification";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
-  payload: string;
-  target: VerificationTarget;
-  isVerified: boolean;
-  /**
-   * 어떤 액션을 위해 인증을 하는 것인지 표시	 - ex) UserVerifyPhone, UserVerifyEmail, UserFindPassword, UserFindEmail, UserUpdateInfo
-   */
-  event: VerificationEvent;
-  storeId: any | null;
-  expiresAt: any;
-  isExpire: boolean;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: Finvoice
 // ====================================================
 
@@ -3386,14 +4169,40 @@ export interface FservicePlan {
 // GraphQL fragment: Fitem
 // ====================================================
 
+export interface Fitem_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
 export interface Fitem_attrs {
   __typename: "Attribute";
-  name: string;
+  /**
+   * 기타 옵션값
+   */
+  tags: Fitem_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
   displayType: DisplayType;
 }
 
 export interface Fitem_images {
   __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
   uri: string;
 }
 
@@ -3404,24 +4213,113 @@ export interface Fitem {
   updatedAt: any;
   type: ItemType;
   name: string;
+  thumbNail: string | null;
   /**
    * Product에게 상속하는 price값임 실제로 쓰이는건 product의 price
    */
   price: number;
+  code: string;
   currency: Currency;
+  productCount: number;
+  description: string;
+  /**
+   * HTML정보
+   */
+  descriptionDetail: string;
   /**
    * 커스텀 입력폼: 비지니스 유저가 
-   *         Item을 토대로한 상품을 만들어낼때. 
-   *         어떤 필드들을 입력할지를 나타냄 
-   *         이건 프론트엔드가 사용하는 입력폼임 
-   *         프론트엔드가 어떤 상품 그룹을 정의할떄
-   *         어떤 출력이 필요한지 고려해서 만드는 부분임.
+   * Item을 토대로한 상품을 만들어낼때. 
+   * 어떤 필드들을 입력할지를 나타냄 
+   * 이건 프론트엔드가 사용하는 입력폼임 
+   * 프론트엔드가 어떤 상품 그룹을 정의할떄
+   * 어떤 출력이 필요한지 고려해서 만드는 부분임.
    * 
-   *         * 모델을 나눌 수도 있겠지만 이필드를 통해서
-   *         핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
+   * * 모델을 나눌 수도 있겠지만 이필드를 통해서
+   * 핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
    */
   attrs: Fitem_attrs[];
-  images: Fitem_images[] | null;
+  images: Fitem_images[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FitemBooking
+// ====================================================
+
+export interface FitemBooking_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface FitemBooking_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: FitemBooking_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface FitemBooking_images {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface FitemBooking {
+  __typename: "ItemBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ItemType;
+  name: string;
+  thumbNail: string | null;
+  /**
+   * Product에게 상속하는 price값임 실제로 쓰이는건 product의 price
+   */
+  price: number;
+  code: string;
+  currency: Currency;
+  productCount: number;
+  description: string;
+  /**
+   * HTML정보
+   */
+  descriptionDetail: string;
+  /**
+   * 커스텀 입력폼: 비지니스 유저가 
+   * Item을 토대로한 상품을 만들어낼때. 
+   * 어떤 필드들을 입력할지를 나타냄 
+   * 이건 프론트엔드가 사용하는 입력폼임 
+   * 프론트엔드가 어떤 상품 그룹을 정의할떄
+   * 어떤 출력이 필요한지 고려해서 만드는 부분임.
+   * 
+   * * 모델을 나눌 수도 있겠지만 이필드를 통해서
+   * 핵심적인 로직이 변하지 않는이상 모델을 나누는건 회피해야함
+   */
+  attrs: FitemBooking_attrs[];
+  images: FitemBooking_images[];
 }
 
 /* tslint:disable */
@@ -3457,6 +4355,9 @@ export interface FnotificationManager {
 
 export interface FnotificationHistoryItem {
   __typename: "SmsHistoryItem" | "EmailHistoryItem";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
   method: NotificationMethod;
   sender: string;
   receivers: string[];
@@ -3559,8 +4460,6 @@ export interface Fpaymentoption_commission {
 
 export interface Fpaymentoption {
   __typename: "PaymentOption";
-  merchantId: string | null;
-  merchantKey: string | null;
   authDate: any | null;
   isAuthorized: boolean | null;
   commission: Fpaymentoption_commission;
@@ -3623,13 +4522,116 @@ export interface FnicepayBillpayResult {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: Fcapacity
+// ====================================================
+
+export interface Fcapacity {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FcapacitySummary
+// ====================================================
+
+export interface FcapacitySummary {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Fproduct
 // ====================================================
 
-export interface Fproduct_attrs {
-  __typename: "AttributeParam";
-  name: string;
+export interface Fproduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
   value: string;
+}
+
+export interface Fproduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: Fproduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface Fproduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface Fproduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface Fproduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface Fproduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
 }
 
 export interface Fproduct {
@@ -3639,10 +4641,35 @@ export interface Fproduct {
   updatedAt: any;
   type: ProductType;
   /**
-   * 아이템 attrs 와 쌍으로 돌아가는 부분
-   * 프론트엔드가 정의한 필드들을 입력 받는 부분임.
+   * item에서 설정한 필드값
    */
   attrs: Fproduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: Fproduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: Fproduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: Fproduct_capacityDetails[];
+  usageDetails: Fproduct_usageDetails[];
   code: string;
 }
 
@@ -3870,6 +4897,200 @@ export interface FsettlementMallPlain {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: FcollectionDataInterface
+// ====================================================
+
+export interface FcollectionDataInterface {
+  __typename: "File" | "Verification" | "NotificationTrigger" | "SystemNoti" | "ServicePricing" | "ServiceUsage" | "BuyPage" | "Store" | "PurchaseBundle" | "Settlement" | "ServicePlan" | "Invoice" | "ServicePlanTemplate" | "BillingMethod" | "ProductAutomatorBooking" | "Billing" | "TemplateSms" | "TemplateEmail" | "BusinessUser" | "SuperAdmin" | "SmsHistoryItem" | "EmailHistoryItem" | "TransactionPayment" | "TransactionRefund" | "Customer" | "SettlementMallPlain" | "SettlementMall" | "ItemBooking" | "ProductBooking" | "Booking" | "ItemService";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FoffsetPagingInfo
+// ====================================================
+
+export interface FoffsetPagingInfo {
+  __typename: "OffsetPagingInfo";
+  /**
+   * 선택한 페이지 번호
+   */
+  pageIndex: number;
+  /**
+   * 페이지당 기준 데이터 수
+   */
+  pageItemCount: number;
+  /**
+   * 현재 페이지에서 출력한 데이터 수
+   */
+  currentItemCount: number;
+  /**
+   * 전체 페이지 수
+   */
+  totalPageCount: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FuserError
+// ====================================================
+
+export interface FuserError {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Flocation
+// ====================================================
+
+export interface Flocation {
+  __typename: "Location";
+  address: string;
+  addressDetail: string | null;
+  lat: number | null;
+  lng: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Ftag
+// ====================================================
+
+export interface Ftag {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Fverification
+// ====================================================
+
+export interface Fverification {
+  __typename: "Verification";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  payload: string;
+  target: VerificationTarget;
+  isVerified: boolean;
+  /**
+   * 어떤 액션을 위해 인증을 하는 것인지 표시	 - ex) UserVerifyPhone, UserVerifyEmail, UserFindPassword, UserFindEmail, UserUpdateInfo
+   */
+  event: VerificationEvent;
+  storeId: any | null;
+  expiresAt: any;
+  isExpire: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Ffile
+// ====================================================
+
+export interface Ffile {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Fattribute
+// ====================================================
+
+export interface Fattribute_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface Fattribute {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: Fattribute_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FbuyPage
+// ====================================================
+
+export interface FbuyPage {
+  __typename: "BuyPage";
+  configure: any | null;
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Fstore
 // ====================================================
 
@@ -3889,8 +5110,6 @@ export interface Fstore_optionPayment_commission {
 
 export interface Fstore_optionPayment {
   __typename: "PaymentOption";
-  merchantId: string | null;
-  merchantKey: string | null;
   authDate: any | null;
   isAuthorized: boolean | null;
   commission: Fstore_optionPayment_commission;
@@ -3905,20 +5124,177 @@ export interface Fstore_zoneinfo {
   alpha2Code: string;
 }
 
-export interface Fstore {
-  __typename: "Store";
+export interface Fstore_buypages {
+  __typename: "BuyPage";
+  configure: any | null;
   _id: any;
   createdAt: any;
   updatedAt: any;
+}
+
+export interface Fstore {
+  __typename: "Store";
+  /**
+   * 타입을 가지고 어떤 클라이언트 출력 화면이 가질지 결정됨.
+   */
+  type: StoreType;
   name: string;
   description: string;
   /**
    * Public한 접근을 위한 코드임.
    */
   code: string;
+  itemCount: number;
   location: Fstore_location;
   optionPayment: Fstore_optionPayment;
   zoneinfo: Fstore_zoneinfo | null;
+  buypages: Fstore_buypages[];
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Frange
+// ====================================================
+
+export interface Frange {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FsummaryBooking
+// ====================================================
+
+export interface FsummaryBooking__id {
+  __typename: "SummaryItemBookingId";
+  itemId: any;
+  productId: any;
+}
+
+export interface FsummaryBooking_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface FsummaryBooking_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface FsummaryBooking_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: FsummaryBooking_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface FsummaryBooking_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface FsummaryBooking_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface FsummaryBooking {
+  __typename: "SummaryItemBooking";
+  _id: FsummaryBooking__id;
+  /**
+   * 현재 item의 variant에 대한 사용수
+   */
+  usage: number;
+  /**
+   * 현재 Item의 variant에 대한 사용율. 1을 기준으로 계산
+   */
+  usageRatio: number | null;
+  usageDetails: FsummaryBooking_usageDetails[];
+  type: ItemType;
+  price: number;
+  currency: Currency;
+  /**
+   * Item에서 정의된 필드들
+   */
+  attrs: FsummaryBooking_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: FsummaryBooking_dateRangeForSale | null;
+  /**
+   * 사용 기간. (고정임)
+   */
+  dateRangeForUse: FsummaryBooking_dateRangeForUse | null;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FsystemNoti
+// ====================================================
+
+export interface FsystemNoti {
+  __typename: "SystemNoti";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: SystemNotiType;
+  /**
+   * html
+   */
+  content: string;
+  isRead: boolean;
 }
 
 /* tslint:disable */
@@ -3949,11 +5325,12 @@ export interface Fuser {
   createdAt: any;
   updatedAt: any;
   name: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  unReadSystemNoties: any[];
+  phoneNumber: string;
   profileImage: Fuser_profileImage | null;
-  isVerifiedPhoneNumber: boolean;
-  isVerifiedEmail: boolean;
+  isVerifiedPhoneNumber: boolean | null;
+  isVerifiedEmail: boolean | null;
   role: UserRole;
   company: string | null;
   zoneinfo: Fuser_zoneinfo;
@@ -4032,6 +5409,7 @@ export enum DisplayType {
   NUMBER_SELECTOR = "NUMBER_SELECTOR",
   RADIO_BOX = "RADIO_BOX",
   TEXT_INPUT = "TEXT_INPUT",
+  TIME_PICKER = "TIME_PICKER",
 }
 
 export enum InvoiceStatus {
@@ -4083,6 +5461,7 @@ export enum ServiceUsageType {
   NOTIFICATION_SMS = "NOTIFICATION_SMS",
   NOTIFICATION_TEMPLATE = "NOTIFICATION_TEMPLATE",
   PRODUCT = "PRODUCT",
+  PRODUCT_AUTOMATOR = "PRODUCT_AUTOMATOR",
   PURCHASE = "PURCHASE",
   SETTLEMENT = "SETTLEMENT",
   SETTLEMENT_MALL = "SETTLEMENT_MALL",
@@ -4096,6 +5475,29 @@ export enum Status {
   CANCELED = "CANCELED",
   COMPLETED = "COMPLETED",
   PENDING = "PENDING",
+}
+
+export enum StoreType {
+  ACCOMMODATION = "ACCOMMODATION",
+  CAFE = "CAFE",
+  ELSE = "ELSE",
+  LEISURE = "LEISURE",
+  PUP = "PUP",
+  RENTAL = "RENTAL",
+  RESTAURANT = "RESTAURANT",
+  SHOPPING = "SHOPPING",
+  SHOW = "SHOW",
+}
+
+/**
+ * 시스템 노티피케이션 타입
+ */
+export enum SystemNotiType {
+  booking = "booking",
+  cancel = "cancel",
+  payment = "payment",
+  system = "system",
+  user = "user",
 }
 
 export enum TransactionStatus {
@@ -4116,6 +5518,7 @@ export enum TrxUpdatedType {
  * 유저 역할!
  */
 export enum UserRole {
+  ADMIN = "ADMIN",
   BUSINESS_USER = "BUSINESS_USER",
   STORE_USER = "STORE_USER",
   SUPERADMIN = "SUPERADMIN",
@@ -4147,234 +5550,261 @@ export enum VerificationTarget {
  * Auto generated sort type
  */
 export enum _FileSort {
-  _id_asc = "_id_asc",
-  _id_desc = "_id_desc",
-  createdAt_asc = "createdAt_asc",
-  createdAt_desc = "createdAt_desc",
-  description_asc = "description_asc",
-  description_desc = "description_desc",
-  fileType_asc = "fileType_asc",
-  fileType_desc = "fileType_desc",
-  name_asc = "name_asc",
-  name_desc = "name_desc",
-  updatedAt_asc = "updatedAt_asc",
-  updatedAt_desc = "updatedAt_desc",
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
+  description__asc = "description__asc",
+  description__desc = "description__desc",
+  fileType__asc = "fileType__asc",
+  fileType__desc = "fileType__desc",
+  name__asc = "name__asc",
+  name__desc = "name__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _IItemSort {
-  _imageIds_asc = "_imageIds_asc",
-  _imageIds_desc = "_imageIds_desc",
-  _ownerId_asc = "_ownerId_asc",
-  _ownerId_desc = "_ownerId_desc",
-  _storeId_asc = "_storeId_asc",
-  _storeId_desc = "_storeId_desc",
-  currency_asc = "currency_asc",
-  currency_desc = "currency_desc",
-  name_asc = "name_asc",
-  name_desc = "name_desc",
-  price_asc = "price_asc",
-  price_desc = "price_desc",
+  _ownerId__asc = "_ownerId__asc",
+  _ownerId__desc = "_ownerId__desc",
+  _storeId__asc = "_storeId__asc",
+  _storeId__desc = "_storeId__desc",
+  currency__asc = "currency__asc",
+  currency__desc = "currency__desc",
+  name__asc = "name__asc",
+  name__desc = "name__desc",
+  price__asc = "price__asc",
+  price__desc = "price__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _IPurchaseSort {
-  _id_asc = "_id_asc",
-  _id_desc = "_id_desc",
-  count_asc = "count_asc",
-  count_desc = "count_desc",
-  createdAt_asc = "createdAt_asc",
-  createdAt_desc = "createdAt_desc",
-  currency_asc = "currency_asc",
-  currency_desc = "currency_desc",
-  isFullRefunded_asc = "isFullRefunded_asc",
-  isFullRefunded_desc = "isFullRefunded_desc",
-  isPaymentCompleted_asc = "isPaymentCompleted_asc",
-  isPaymentCompleted_desc = "isPaymentCompleted_desc",
-  isRefundedPartial_asc = "isRefundedPartial_asc",
-  isRefundedPartial_desc = "isRefundedPartial_desc",
-  message_asc = "message_asc",
-  message_desc = "message_desc",
-  paymentExpiresAt_asc = "paymentExpiresAt_asc",
-  paymentExpiresAt_desc = "paymentExpiresAt_desc",
-  paymentStatus_asc = "paymentStatus_asc",
-  paymentStatus_desc = "paymentStatus_desc",
-  paymethod_asc = "paymethod_asc",
-  paymethod_desc = "paymethod_desc",
-  pricePaymentCompleted_asc = "pricePaymentCompleted_asc",
-  pricePaymentCompleted_desc = "pricePaymentCompleted_desc",
-  pricePaymentPending_asc = "pricePaymentPending_asc",
-  pricePaymentPending_desc = "pricePaymentPending_desc",
-  priceRefundCompleted_asc = "priceRefundCompleted_asc",
-  priceRefundCompleted_desc = "priceRefundCompleted_desc",
-  priceRefundPending_asc = "priceRefundPending_asc",
-  priceRefundPending_desc = "priceRefundPending_desc",
-  refundStatus_asc = "refundStatus_asc",
-  refundStatus_desc = "refundStatus_desc",
-  status_asc = "status_asc",
-  status_desc = "status_desc",
-  type_asc = "type_asc",
-  type_desc = "type_desc",
-  updatedAt_asc = "updatedAt_asc",
-  updatedAt_desc = "updatedAt_desc",
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
+  count__asc = "count__asc",
+  count__desc = "count__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
+  currency__asc = "currency__asc",
+  currency__desc = "currency__desc",
+  isFullRefunded__asc = "isFullRefunded__asc",
+  isFullRefunded__desc = "isFullRefunded__desc",
+  isPaymentCompleted__asc = "isPaymentCompleted__asc",
+  isPaymentCompleted__desc = "isPaymentCompleted__desc",
+  isRefundedPartial__asc = "isRefundedPartial__asc",
+  isRefundedPartial__desc = "isRefundedPartial__desc",
+  message__asc = "message__asc",
+  message__desc = "message__desc",
+  paymentExpiresAt__asc = "paymentExpiresAt__asc",
+  paymentExpiresAt__desc = "paymentExpiresAt__desc",
+  paymentStatus__asc = "paymentStatus__asc",
+  paymentStatus__desc = "paymentStatus__desc",
+  paymethod__asc = "paymethod__asc",
+  paymethod__desc = "paymethod__desc",
+  pricePaymentCompleted__asc = "pricePaymentCompleted__asc",
+  pricePaymentCompleted__desc = "pricePaymentCompleted__desc",
+  pricePaymentPending__asc = "pricePaymentPending__asc",
+  pricePaymentPending__desc = "pricePaymentPending__desc",
+  priceRefundCompleted__asc = "priceRefundCompleted__asc",
+  priceRefundCompleted__desc = "priceRefundCompleted__desc",
+  priceRefundPending__asc = "priceRefundPending__asc",
+  priceRefundPending__desc = "priceRefundPending__desc",
+  refundStatus__asc = "refundStatus__asc",
+  refundStatus__desc = "refundStatus__desc",
+  status__asc = "status__asc",
+  status__desc = "status__desc",
+  type__asc = "type__asc",
+  type__desc = "type__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _ITemplateSort {
-  _id_asc = "_id_asc",
-  _id_desc = "_id_desc",
-  createdAt_asc = "createdAt_asc",
-  createdAt_desc = "createdAt_desc",
-  updatedAt_asc = "updatedAt_asc",
-  updatedAt_desc = "updatedAt_desc",
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _InvoiceSort {
-  _businessUserId_asc = "_businessUserId_asc",
-  _businessUserId_desc = "_businessUserId_desc",
-  billingAt_asc = "billingAt_asc",
-  billingAt_desc = "billingAt_desc",
-  description_asc = "description_asc",
-  description_desc = "description_desc",
-  month_asc = "month_asc",
-  month_desc = "month_desc",
-  name_asc = "name_asc",
-  name_desc = "name_desc",
-  serviceProviderName_asc = "serviceProviderName_asc",
-  serviceProviderName_desc = "serviceProviderName_desc",
-  status_asc = "status_asc",
-  status_desc = "status_desc",
-  unpaidReason_asc = "unpaidReason_asc",
-  unpaidReason_desc = "unpaidReason_desc",
-  year_asc = "year_asc",
-  year_desc = "year_desc",
-  yyyymm_asc = "yyyymm_asc",
-  yyyymm_desc = "yyyymm_desc",
+  _businessUserId__asc = "_businessUserId__asc",
+  _businessUserId__desc = "_businessUserId__desc",
+  billingAt__asc = "billingAt__asc",
+  billingAt__desc = "billingAt__desc",
+  description__asc = "description__asc",
+  description__desc = "description__desc",
+  month__asc = "month__asc",
+  month__desc = "month__desc",
+  name__asc = "name__asc",
+  name__desc = "name__desc",
+  serviceProviderName__asc = "serviceProviderName__asc",
+  serviceProviderName__desc = "serviceProviderName__desc",
+  status__asc = "status__asc",
+  status__desc = "status__desc",
+  unpaidReason__asc = "unpaidReason__asc",
+  unpaidReason__desc = "unpaidReason__desc",
+  year__asc = "year__asc",
+  year__desc = "year__desc",
+  yyyymm__asc = "yyyymm__asc",
+  yyyymm__desc = "yyyymm__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _NotificationHistoryItemSort {
-  method_asc = "method_asc",
-  method_desc = "method_desc",
-  sender_asc = "sender_asc",
-  sender_desc = "sender_desc",
-  successCount_asc = "successCount_asc",
-  successCount_desc = "successCount_desc",
+  method__asc = "method__asc",
+  method__desc = "method__desc",
+  sender__asc = "sender__asc",
+  sender__desc = "sender__desc",
+  successCount__asc = "successCount__asc",
+  successCount__desc = "successCount__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _ProductSort {
-  _id_asc = "_id_asc",
-  _id_desc = "_id_desc",
-  _itemId_asc = "_itemId_asc",
-  _itemId_desc = "_itemId_desc",
-  _ownerId_asc = "_ownerId_asc",
-  _ownerId_desc = "_ownerId_desc",
-  createdAt_asc = "createdAt_asc",
-  createdAt_desc = "createdAt_desc",
-  type_asc = "type_asc",
-  type_desc = "type_desc",
-  updatedAt_asc = "updatedAt_asc",
-  updatedAt_desc = "updatedAt_desc",
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
+  _itemId__asc = "_itemId__asc",
+  _itemId__desc = "_itemId__desc",
+  _ownerId__asc = "_ownerId__asc",
+  _ownerId__desc = "_ownerId__desc",
+  capacityPick__asc = "capacityPick__asc",
+  capacityPick__desc = "capacityPick__desc",
+  capacity__asc = "capacity__asc",
+  capacity__desc = "capacity__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
+  currency__asc = "currency__asc",
+  currency__desc = "currency__desc",
+  disabled__asc = "disabled__asc",
+  disabled__desc = "disabled__desc",
+  price__asc = "price__asc",
+  price__desc = "price__desc",
+  type__asc = "type__asc",
+  type__desc = "type__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _PurchaseBundleSort {
-  _customerId_asc = "_customerId_asc",
-  _customerId_desc = "_customerId_desc",
-  _id_asc = "_id_asc",
-  _id_desc = "_id_desc",
-  _purchaseIds_asc = "_purchaseIds_asc",
-  _purchaseIds_desc = "_purchaseIds_desc",
-  createdAt_asc = "createdAt_asc",
-  createdAt_desc = "createdAt_desc",
-  currency_asc = "currency_asc",
-  currency_desc = "currency_desc",
-  isFullRefunded_asc = "isFullRefunded_asc",
-  isFullRefunded_desc = "isFullRefunded_desc",
-  isRefundedPartial_asc = "isRefundedPartial_asc",
-  isRefundedPartial_desc = "isRefundedPartial_desc",
-  message_asc = "message_asc",
-  message_desc = "message_desc",
-  paymentAt_asc = "paymentAt_asc",
-  paymentAt_desc = "paymentAt_desc",
-  paymentExpiresAt_asc = "paymentExpiresAt_asc",
-  paymentExpiresAt_desc = "paymentExpiresAt_desc",
-  paymentStatus_asc = "paymentStatus_asc",
-  paymentStatus_desc = "paymentStatus_desc",
-  paymethod_asc = "paymethod_asc",
-  paymethod_desc = "paymethod_desc",
-  pricePaymentCompleted_asc = "pricePaymentCompleted_asc",
-  pricePaymentCompleted_desc = "pricePaymentCompleted_desc",
-  pricePaymentPending_asc = "pricePaymentPending_asc",
-  pricePaymentPending_desc = "pricePaymentPending_desc",
-  priceRefundCompleted_asc = "priceRefundCompleted_asc",
-  priceRefundCompleted_desc = "priceRefundCompleted_desc",
-  priceRefundPending_asc = "priceRefundPending_asc",
-  priceRefundPending_desc = "priceRefundPending_desc",
-  refundStatus_asc = "refundStatus_asc",
-  refundStatus_desc = "refundStatus_desc",
-  updatedAt_asc = "updatedAt_asc",
-  updatedAt_desc = "updatedAt_desc",
+  _customerId__asc = "_customerId__asc",
+  _customerId__desc = "_customerId__desc",
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
+  _purchaseIds__asc = "_purchaseIds__asc",
+  _purchaseIds__desc = "_purchaseIds__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
+  currency__asc = "currency__asc",
+  currency__desc = "currency__desc",
+  isFullRefunded__asc = "isFullRefunded__asc",
+  isFullRefunded__desc = "isFullRefunded__desc",
+  isRefundedPartial__asc = "isRefundedPartial__asc",
+  isRefundedPartial__desc = "isRefundedPartial__desc",
+  message__asc = "message__asc",
+  message__desc = "message__desc",
+  paymentAt__asc = "paymentAt__asc",
+  paymentAt__desc = "paymentAt__desc",
+  paymentExpiresAt__asc = "paymentExpiresAt__asc",
+  paymentExpiresAt__desc = "paymentExpiresAt__desc",
+  paymentStatus__asc = "paymentStatus__asc",
+  paymentStatus__desc = "paymentStatus__desc",
+  paymethod__asc = "paymethod__asc",
+  paymethod__desc = "paymethod__desc",
+  pricePaymentCompleted__asc = "pricePaymentCompleted__asc",
+  pricePaymentCompleted__desc = "pricePaymentCompleted__desc",
+  pricePaymentPending__asc = "pricePaymentPending__asc",
+  pricePaymentPending__desc = "pricePaymentPending__desc",
+  priceRefundCompleted__asc = "priceRefundCompleted__asc",
+  priceRefundCompleted__desc = "priceRefundCompleted__desc",
+  priceRefundPending__asc = "priceRefundPending__asc",
+  priceRefundPending__desc = "priceRefundPending__desc",
+  refundStatus__asc = "refundStatus__asc",
+  refundStatus__desc = "refundStatus__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _SettlementSort {
-  amount_asc = "amount_asc",
-  amount_desc = "amount_desc",
-  canceledAt_asc = "canceledAt_asc",
-  canceledAt_desc = "canceledAt_desc",
-  description_asc = "description_asc",
-  description_desc = "description_desc",
-  message_asc = "message_asc",
-  message_desc = "message_desc",
-  name_asc = "name_asc",
-  name_desc = "name_desc",
-  sequence_asc = "sequence_asc",
-  sequence_desc = "sequence_desc",
-  settlementDate_asc = "settlementDate_asc",
-  settlementDate_desc = "settlementDate_desc",
-  status_asc = "status_asc",
-  status_desc = "status_desc",
-  submallId_asc = "submallId_asc",
-  submallId_desc = "submallId_desc",
+  amount__asc = "amount__asc",
+  amount__desc = "amount__desc",
+  canceledAt__asc = "canceledAt__asc",
+  canceledAt__desc = "canceledAt__desc",
+  description__asc = "description__asc",
+  description__desc = "description__desc",
+  message__asc = "message__asc",
+  message__desc = "message__desc",
+  name__asc = "name__asc",
+  name__desc = "name__desc",
+  sequence__asc = "sequence__asc",
+  sequence__desc = "sequence__desc",
+  settlementDate__asc = "settlementDate__asc",
+  settlementDate__desc = "settlementDate__desc",
+  status__asc = "status__asc",
+  status__desc = "status__desc",
+  submallId__asc = "submallId__asc",
+  submallId__desc = "submallId__desc",
 }
 
 /**
  * Auto generated sort type
  */
 export enum _StoreSort {
-  description_asc = "description_asc",
-  description_desc = "description_desc",
-  name_asc = "name_asc",
-  name_desc = "name_desc",
+  description__asc = "description__asc",
+  description__desc = "description__desc",
+  name__asc = "name__asc",
+  name__desc = "name__desc",
 }
 
+/**
+ * Auto generated sort type
+ */
+export enum _SystemNotiSort {
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
+  type__asc = "type__asc",
+  type__desc = "type__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
+}
+
+/**
+ * 예약시 받을 추가필드
+ */
 export interface AttributeInput {
-  name: string;
+  tags?: TagInput[] | null;
+  value?: string | null;
+  placeHolder?: string | null;
+  default?: string | null;
+  require?: boolean | null;
+  options?: string[] | null;
+  label?: string | null;
+  key: string;
   displayType: DisplayType;
-}
-
-export interface AttributeParamInput {
-  name: string;
-  value: string;
 }
 
 export interface BillingMethodRegistInput {
@@ -4394,7 +5824,7 @@ export interface BookingInput {
 }
 
 export interface CapacityInput {
-  name: string;
+  key: string;
   count: number;
   label: string;
   price: number;
@@ -4406,7 +5836,19 @@ export interface DateRangeInput {
 }
 
 /**
- * File upload to s3
+ * 임베딩용 인풋
+ */
+export interface FileCreateInput {
+  name?: string | null;
+  description?: string | null;
+  extension?: string | null;
+  fileType?: string | null;
+  uri: string;
+  owner?: string | null;
+}
+
+/**
+ * 날파일 올릴때 사용 File upload to s3 이후에는 FileCreateInput 으로 임베딩
  */
 export interface FileInput {
   upload: any;
@@ -4416,21 +5858,23 @@ export interface FileInput {
 export interface ItemBookingCreateInput {
   name: string;
   description?: string | null;
+  descriptionDetail?: string | null;
   attrs: AttributeInput[];
-  imageIds?: any[] | null;
+  images?: FileCreateInput[] | null;
   currency?: Currency | null;
   price: number;
+  tags: TagInput[];
 }
 
 export interface ItemBookingUpdateInput {
   name?: string | null;
   description?: string | null;
-  attrsAdd?: AttributeInput[] | null;
-  attrsRemove?: string[] | null;
-  imageIdsAdd?: any[] | null;
-  imageIdsRemove?: any[] | null;
+  descriptionDetail?: string | null;
+  attrs?: AttributeInput[] | null;
   currency?: Currency | null;
   price?: number | null;
+  images?: FileCreateInput[] | null;
+  tags?: TagInput[] | null;
 }
 
 export interface LocationInput {
@@ -4440,13 +5884,19 @@ export interface LocationInput {
   lng?: number | null;
 }
 
+export interface NotificationTriggerCreateInput {
+  sender: string;
+  event: NotificationTriggerEvent;
+  isEnabled: boolean;
+  tags: TagInput[];
+}
+
 export interface OffsetPagingInput {
   pageIndex: number;
   pageItemCount: number;
 }
 
 export interface ProductBookingCreateInput {
-  attrParams: AttributeParamInput[];
   disabled?: boolean | null;
   dateRangeForSale?: DateRangeInput | null;
   dateRangeForUse?: DateRangeInput | null;
@@ -4465,10 +5915,8 @@ export interface ProductBookingUpdateInput {
   price?: number | null;
   currency?: Currency | null;
   capacityPick?: number | null;
-  capacityDetailsAdd?: CapacityInput[] | null;
-  capacityDetailsRemove?: string[] | null;
-  attrParamsAdd?: AttributeParamInput[] | null;
-  attrParamsRemove?: string[] | null;
+  capacityDetails?: CapacityInput[] | null;
+  attrs?: AttributeInput[] | null;
 }
 
 export interface ProfileUpdateForBusinessUserInput {
@@ -4483,6 +5931,19 @@ export interface PurchaseBundleCreateInput {
   paymethod: Paymethod;
   priceOrigin: number;
   currency?: Currency | null;
+}
+
+/**
+ * 수신자번호 + 치환문자열 객체 INPUT
+ */
+export interface ReceiverWithReplacementSetsInput {
+  receivers: string[];
+  replacementSets: ReplacementSetInput[];
+}
+
+export interface ReplacementSetInput {
+  key: string;
+  value: string;
 }
 
 export interface ServiceOfferResourceCreateInput {
@@ -4545,7 +6006,40 @@ export interface SignUpInput {
   location: LocationInput;
 }
 
+export interface SmsSendInput {
+  sender: string;
+  title?: string | null;
+  content: string;
+  receivers: string[];
+  tempalteId?: any | null;
+  replacements?: ReplacementSetInput | null;
+}
+
+export interface SmsSendWithTemplateInput {
+  templateId?: any | null;
+  content?: string | null;
+  sender: string;
+  replacements: ReceiverWithReplacementSetsInput[];
+}
+
+export interface SmsTemplateCreateInput {
+  name: string;
+  content: string;
+  description?: string | null;
+  triggers?: NotificationTriggerCreateInput[] | null;
+}
+
+export interface SmsTemplateUpdateInput {
+  content?: string | null;
+  name?: string | null;
+  description?: string | null;
+  triggersAdd?: NotificationTriggerCreateInput[] | null;
+  triggersRemove?: any[] | null;
+}
+
 export interface StoreCreateInput {
+  image?: FileCreateInput | null;
+  type: StoreType;
   name: string;
   description?: string | null;
   location?: LocationInput | null;
@@ -4574,7 +6068,9 @@ export interface StoreSignUpInput {
 }
 
 export interface StoreUpdateInput {
+  image?: FileCreateInput | null;
   name?: string | null;
+  type?: StoreType | null;
   description?: string | null;
   location?: LocationInput | null;
   zoneinfo?: ZoneinfoInput | null;
@@ -4586,7 +6082,7 @@ export interface TagInput {
 }
 
 export interface UsageInput {
-  name: string;
+  key: string;
   label: string;
   count: number;
   price: number;
@@ -4615,437 +6111,544 @@ export interface ZoneinfoInput {
 export interface _FileFilter {
   AND?: _FileFilter[] | null;
   OR?: _FileFilter[] | null;
-  name_eq?: string | null;
-  name_not_eq?: string | null;
-  name_contains?: string | null;
-  name_not_contains?: string | null;
-  name_in?: string[] | null;
-  name_not_in?: string[] | null;
-  description_eq?: string | null;
-  description_not_eq?: string | null;
-  description_contains?: string | null;
-  description_not_contains?: string | null;
-  fileType_eq?: string | null;
-  fileType_not_eq?: string | null;
-  fileType_in?: string[] | null;
-  fileType_not_in?: string[] | null;
-  _id_eq?: any | null;
-  _id_not_eq?: any | null;
-  _id_in?: any[] | null;
-  _id_not_in?: any[] | null;
-  updatedAt_eq?: any | null;
-  updatedAt_not_eq?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  createdAt_eq?: any | null;
-  createdAt_not_eq?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
+  name__eq?: string | null;
+  name__not_eq?: string | null;
+  name__contains?: string | null;
+  name__not_contains?: string | null;
+  name__in?: string[] | null;
+  name__not_in?: string[] | null;
+  description__eq?: string | null;
+  description__not_eq?: string | null;
+  description__contains?: string | null;
+  description__not_contains?: string | null;
+  fileType__eq?: string | null;
+  fileType__not_eq?: string | null;
+  fileType__in?: string[] | null;
+  fileType__not_in?: string[] | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
 }
 
 export interface _IItemFilter {
   AND?: _IItemFilter[] | null;
   OR?: _IItemFilter[] | null;
-  name_eq?: string | null;
-  name_not_eq?: string | null;
-  name_contains?: string | null;
-  name_not_contains?: string | null;
-  name_in?: string[] | null;
-  name_not_in?: string[] | null;
-  price_eq?: number | null;
-  price_not_eq?: number | null;
-  price_gte?: number | null;
-  price_gt?: number | null;
-  price_lte?: number | null;
-  price_lt?: number | null;
-  currency_eq?: Currency | null;
-  currency_not_eq?: Currency | null;
-  currency_in?: Currency[] | null;
-  currency_not_in?: Currency[] | null;
-  _ownerId_eq?: any | null;
-  _ownerId_not_eq?: any | null;
-  _ownerId_in?: any[] | null;
-  _ownerId_not_in?: any[] | null;
-  _storeId_eq?: any | null;
-  _storeId_not_eq?: any | null;
-  _storeId_in?: any[] | null;
-  _storeId_not_in?: any[] | null;
-  _imageIds_eq?: any | null;
-  _imageIds_not_eq?: any | null;
-  _imageIds_in?: any[] | null;
-  _imageIds_not_in?: any[] | null;
+  name__eq?: string | null;
+  name__not_eq?: string | null;
+  name__contains?: string | null;
+  name__not_contains?: string | null;
+  name__in?: string[] | null;
+  name__not_in?: string[] | null;
+  code__eq?: string | null;
+  code__not_eq?: string | null;
+  price__eq?: number | null;
+  price__not_eq?: number | null;
+  price__gte?: number | null;
+  price__gt?: number | null;
+  price__lte?: number | null;
+  price__lt?: number | null;
+  currency__eq?: Currency | null;
+  currency__not_eq?: Currency | null;
+  currency__in?: Currency[] | null;
+  currency__not_in?: Currency[] | null;
+  _ownerId__eq?: any | null;
+  _ownerId__not_eq?: any | null;
+  _ownerId__in?: any[] | null;
+  _ownerId__not_in?: any[] | null;
+  _storeId__eq?: any | null;
+  _storeId__not_eq?: any | null;
+  _storeId__in?: any[] | null;
+  _storeId__not_in?: any[] | null;
 }
 
 export interface _IPurchaseFilter {
   AND?: _IPurchaseFilter[] | null;
   OR?: _IPurchaseFilter[] | null;
-  status_eq?: Status | null;
-  status_not_eq?: Status | null;
-  status_in?: Status[] | null;
-  status_not_in?: Status[] | null;
-  isPaymentCompleted_eq?: boolean | null;
-  isPaymentCompleted_not_eq?: boolean | null;
-  isPaymentCompleted_in?: boolean[] | null;
-  isPaymentCompleted_not_in?: boolean[] | null;
-  count_eq?: number | null;
-  count_not_eq?: number | null;
-  count_in?: number[] | null;
-  count_not_in?: number[] | null;
-  count_gte?: number | null;
-  count_gt?: number | null;
-  count_lte?: number | null;
-  count_lt?: number | null;
-  type_eq?: ItemType | null;
-  type_not_eq?: ItemType | null;
-  type_in?: ItemType[] | null;
-  type_not_in?: ItemType[] | null;
-  _id_eq?: any | null;
-  _id_not_eq?: any | null;
-  _id_in?: any[] | null;
-  _id_not_in?: any[] | null;
-  updatedAt_eq?: any | null;
-  updatedAt_not_eq?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  createdAt_eq?: any | null;
-  createdAt_not_eq?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
-  paymentStatus_eq?: Status | null;
-  paymentStatus_not_eq?: Status | null;
-  paymentStatus_in?: Status[] | null;
-  paymentStatus_not_in?: Status[] | null;
-  refundStatus_eq?: Status | null;
-  refundStatus_not_eq?: Status | null;
-  refundStatus_in?: Status[] | null;
-  refundStatus_not_in?: Status[] | null;
-  paymethod_eq?: Paymethod | null;
-  paymethod_not_eq?: Paymethod | null;
-  paymethod_in?: Paymethod[] | null;
-  paymethod_not_in?: Paymethod[] | null;
-  paymentExpiresAt_eq?: any | null;
-  paymentExpiresAt_not_eq?: any | null;
-  paymentExpiresAt_in?: any[] | null;
-  paymentExpiresAt_not_in?: any[] | null;
-  paymentExpiresAt_gte?: any | null;
-  paymentExpiresAt_gt?: any | null;
-  paymentExpiresAt_lte?: any | null;
-  paymentExpiresAt_lt?: any | null;
-  currency_eq?: Currency | null;
-  currency_not_eq?: Currency | null;
-  currency_in?: Currency[] | null;
-  currency_not_in?: Currency[] | null;
-  pricePaymentPending_eq?: number | null;
-  pricePaymentPending_not_eq?: number | null;
-  pricePaymentPending_gte?: number | null;
-  pricePaymentPending_gt?: number | null;
-  pricePaymentPending_lte?: number | null;
-  pricePaymentPending_lt?: number | null;
-  pricePaymentCompleted_eq?: number | null;
-  pricePaymentCompleted_not_eq?: number | null;
-  pricePaymentCompleted_gte?: number | null;
-  pricePaymentCompleted_gt?: number | null;
-  pricePaymentCompleted_lte?: number | null;
-  pricePaymentCompleted_lt?: number | null;
-  priceRefundPending_eq?: number | null;
-  priceRefundPending_not_eq?: number | null;
-  priceRefundPending_gte?: number | null;
-  priceRefundPending_gt?: number | null;
-  priceRefundPending_lte?: number | null;
-  priceRefundPending_lt?: number | null;
-  priceRefundCompleted_eq?: number | null;
-  priceRefundCompleted_not_eq?: number | null;
-  priceRefundCompleted_gte?: number | null;
-  priceRefundCompleted_gt?: number | null;
-  priceRefundCompleted_lte?: number | null;
-  priceRefundCompleted_lt?: number | null;
-  isFullRefunded_eq?: boolean | null;
-  isFullRefunded_not_eq?: boolean | null;
-  isFullRefunded_in?: boolean[] | null;
-  isFullRefunded_not_in?: boolean[] | null;
-  isRefundedPartial_eq?: boolean | null;
-  isRefundedPartial_not_eq?: boolean | null;
-  isRefundedPartial_in?: boolean[] | null;
-  isRefundedPartial_not_in?: boolean[] | null;
-  message_eq?: string | null;
-  message_not_eq?: string | null;
-  message_contains?: string | null;
-  message_not_contains?: string | null;
+  status__eq?: Status | null;
+  status__not_eq?: Status | null;
+  status__in?: Status[] | null;
+  status__not_in?: Status[] | null;
+  isPaymentCompleted__eq?: boolean | null;
+  isPaymentCompleted__not_eq?: boolean | null;
+  isPaymentCompleted__in?: boolean[] | null;
+  isPaymentCompleted__not_in?: boolean[] | null;
+  count__eq?: number | null;
+  count__not_eq?: number | null;
+  count__in?: number[] | null;
+  count__not_in?: number[] | null;
+  count__gte?: number | null;
+  count__gt?: number | null;
+  count__lte?: number | null;
+  count__lt?: number | null;
+  type__eq?: ItemType | null;
+  type__not_eq?: ItemType | null;
+  type__in?: ItemType[] | null;
+  type__not_in?: ItemType[] | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
+  paymentStatus__eq?: Status | null;
+  paymentStatus__not_eq?: Status | null;
+  paymentStatus__in?: Status[] | null;
+  paymentStatus__not_in?: Status[] | null;
+  refundStatus__eq?: Status | null;
+  refundStatus__not_eq?: Status | null;
+  refundStatus__in?: Status[] | null;
+  refundStatus__not_in?: Status[] | null;
+  paymethod__eq?: Paymethod | null;
+  paymethod__not_eq?: Paymethod | null;
+  paymethod__in?: Paymethod[] | null;
+  paymethod__not_in?: Paymethod[] | null;
+  paymentExpiresAt__eq?: any | null;
+  paymentExpiresAt__not_eq?: any | null;
+  paymentExpiresAt__in?: any[] | null;
+  paymentExpiresAt__not_in?: any[] | null;
+  paymentExpiresAt__gte?: any | null;
+  paymentExpiresAt__gt?: any | null;
+  paymentExpiresAt__lte?: any | null;
+  paymentExpiresAt__lt?: any | null;
+  currency__eq?: Currency | null;
+  currency__not_eq?: Currency | null;
+  currency__in?: Currency[] | null;
+  currency__not_in?: Currency[] | null;
+  pricePaymentPending__eq?: number | null;
+  pricePaymentPending__not_eq?: number | null;
+  pricePaymentPending__gte?: number | null;
+  pricePaymentPending__gt?: number | null;
+  pricePaymentPending__lte?: number | null;
+  pricePaymentPending__lt?: number | null;
+  pricePaymentCompleted__eq?: number | null;
+  pricePaymentCompleted__not_eq?: number | null;
+  pricePaymentCompleted__gte?: number | null;
+  pricePaymentCompleted__gt?: number | null;
+  pricePaymentCompleted__lte?: number | null;
+  pricePaymentCompleted__lt?: number | null;
+  priceRefundPending__eq?: number | null;
+  priceRefundPending__not_eq?: number | null;
+  priceRefundPending__gte?: number | null;
+  priceRefundPending__gt?: number | null;
+  priceRefundPending__lte?: number | null;
+  priceRefundPending__lt?: number | null;
+  priceRefundCompleted__eq?: number | null;
+  priceRefundCompleted__not_eq?: number | null;
+  priceRefundCompleted__gte?: number | null;
+  priceRefundCompleted__gt?: number | null;
+  priceRefundCompleted__lte?: number | null;
+  priceRefundCompleted__lt?: number | null;
+  isFullRefunded__eq?: boolean | null;
+  isFullRefunded__not_eq?: boolean | null;
+  isFullRefunded__in?: boolean[] | null;
+  isFullRefunded__not_in?: boolean[] | null;
+  isRefundedPartial__eq?: boolean | null;
+  isRefundedPartial__not_eq?: boolean | null;
+  isRefundedPartial__in?: boolean[] | null;
+  isRefundedPartial__not_in?: boolean[] | null;
+  message__eq?: string | null;
+  message__not_eq?: string | null;
+  message__contains?: string | null;
+  message__not_contains?: string | null;
 }
 
 export interface _ITemplateFilter {
   AND?: _ITemplateFilter[] | null;
   OR?: _ITemplateFilter[] | null;
-  _id_eq?: any | null;
-  _id_not_eq?: any | null;
-  _id_in?: any[] | null;
-  _id_not_in?: any[] | null;
-  updatedAt_eq?: any | null;
-  updatedAt_not_eq?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  createdAt_eq?: any | null;
-  createdAt_not_eq?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
 }
 
 export interface _InvoiceFilter {
   AND?: _InvoiceFilter[] | null;
   OR?: _InvoiceFilter[] | null;
-  year_eq?: number | null;
-  year_not_eq?: number | null;
-  year_gte?: number | null;
-  year_gt?: number | null;
-  year_lte?: number | null;
-  year_lt?: number | null;
-  month_eq?: number | null;
-  month_not_eq?: number | null;
-  month_gte?: number | null;
-  month_gt?: number | null;
-  month_lte?: number | null;
-  month_lt?: number | null;
-  yyyymm_eq?: number | null;
-  yyyymm_not_eq?: number | null;
-  yyyymm_gte?: number | null;
-  yyyymm_gt?: number | null;
-  yyyymm_lte?: number | null;
-  yyyymm_lt?: number | null;
-  status_eq?: InvoiceStatus | null;
-  status_not_eq?: InvoiceStatus | null;
-  status_in?: InvoiceStatus[] | null;
-  status_not_in?: InvoiceStatus[] | null;
-  unpaidReason_eq?: string | null;
-  unpaidReason_not_eq?: string | null;
-  unpaidReason_contains?: string | null;
-  unpaidReason_not_contains?: string | null;
-  _businessUserId_eq?: any | null;
-  _businessUserId_not_eq?: any | null;
-  _businessUserId_in?: any[] | null;
-  _businessUserId_not_in?: any[] | null;
-  serviceProviderName_eq?: string | null;
-  serviceProviderName_not_eq?: string | null;
-  serviceProviderName_contains?: string | null;
-  serviceProviderName_not_contains?: string | null;
-  billingAt_eq?: any | null;
-  billingAt_not_eq?: any | null;
-  billingAt_gte?: any | null;
-  billingAt_lte?: any | null;
-  billingAt_gt?: any | null;
-  billingAt_lt?: any | null;
-  name_eq?: string | null;
-  name_not_eq?: string | null;
-  name_contains?: string | null;
-  name_not_contains?: string | null;
-  name_in?: string[] | null;
-  name_not_in?: string[] | null;
-  description_eq?: string | null;
-  description_not_eq?: string | null;
-  description_contains?: string | null;
-  description_not_contains?: string | null;
-  description_in?: string[] | null;
-  description_not_in?: string[] | null;
+  year__eq?: number | null;
+  year__not_eq?: number | null;
+  year__gte?: number | null;
+  year__gt?: number | null;
+  year__lte?: number | null;
+  year__lt?: number | null;
+  month__eq?: number | null;
+  month__not_eq?: number | null;
+  month__gte?: number | null;
+  month__gt?: number | null;
+  month__lte?: number | null;
+  month__lt?: number | null;
+  yyyymm__eq?: number | null;
+  yyyymm__not_eq?: number | null;
+  yyyymm__gte?: number | null;
+  yyyymm__gt?: number | null;
+  yyyymm__lte?: number | null;
+  yyyymm__lt?: number | null;
+  status__eq?: InvoiceStatus | null;
+  status__not_eq?: InvoiceStatus | null;
+  status__in?: InvoiceStatus[] | null;
+  status__not_in?: InvoiceStatus[] | null;
+  unpaidReason__eq?: string | null;
+  unpaidReason__not_eq?: string | null;
+  unpaidReason__contains?: string | null;
+  unpaidReason__not_contains?: string | null;
+  _businessUserId__eq?: any | null;
+  _businessUserId__not_eq?: any | null;
+  _businessUserId__in?: any[] | null;
+  _businessUserId__not_in?: any[] | null;
+  serviceProviderName__eq?: string | null;
+  serviceProviderName__not_eq?: string | null;
+  serviceProviderName__contains?: string | null;
+  serviceProviderName__not_contains?: string | null;
+  billingAt__eq?: any | null;
+  billingAt__not_eq?: any | null;
+  billingAt__gte?: any | null;
+  billingAt__lte?: any | null;
+  billingAt__gt?: any | null;
+  billingAt__lt?: any | null;
+  name__eq?: string | null;
+  name__not_eq?: string | null;
+  name__contains?: string | null;
+  name__not_contains?: string | null;
+  name__in?: string[] | null;
+  name__not_in?: string[] | null;
+  description__eq?: string | null;
+  description__not_eq?: string | null;
+  description__contains?: string | null;
+  description__not_contains?: string | null;
+  description__in?: string[] | null;
+  description__not_in?: string[] | null;
 }
 
 export interface _NotificationHistoryItemFilter {
   AND?: _NotificationHistoryItemFilter[] | null;
   OR?: _NotificationHistoryItemFilter[] | null;
-  method_eq?: NotificationMethod | null;
-  method_not_eq?: NotificationMethod | null;
-  method_in?: NotificationMethod[] | null;
-  method_not_in?: NotificationMethod[] | null;
-  sender_eq?: string | null;
-  sender_not_eq?: string | null;
-  sender_in?: string[] | null;
-  sender_not_in?: string[] | null;
-  sender_contains?: string | null;
-  sender_not_contains?: string | null;
+  method__eq?: NotificationMethod | null;
+  method__not_eq?: NotificationMethod | null;
+  method__in?: NotificationMethod[] | null;
+  method__not_in?: NotificationMethod[] | null;
+  sender__eq?: string | null;
+  sender__not_eq?: string | null;
+  sender__in?: string[] | null;
+  sender__not_in?: string[] | null;
+  sender__contains?: string | null;
+  sender__not_contains?: string | null;
 }
 
 export interface _ProductFilter {
   AND?: _ProductFilter[] | null;
   OR?: _ProductFilter[] | null;
-  type_eq?: ProductType | null;
-  type_not_eq?: ProductType | null;
-  type_in?: ProductType[] | null;
-  type_not_in?: ProductType[] | null;
-  _itemId_eq?: any | null;
-  _itemId_not_eq?: any | null;
-  _itemId_in?: any[] | null;
-  _itemId_not_in?: any[] | null;
-  _ownerId_eq?: any | null;
-  _ownerId_not_eq?: any | null;
-  _ownerId_in?: any[] | null;
-  _ownerId_not_in?: any[] | null;
-  _id_eq?: any | null;
-  _id_not_eq?: any | null;
-  _id_in?: any[] | null;
-  _id_not_in?: any[] | null;
-  updatedAt_eq?: any | null;
-  updatedAt_not_eq?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  createdAt_eq?: any | null;
-  createdAt_not_eq?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
+  type__eq?: ProductType | null;
+  type__not_eq?: ProductType | null;
+  type__in?: ProductType[] | null;
+  type__not_in?: ProductType[] | null;
+  code__eq?: string | null;
+  code__not_eq?: string | null;
+  itemCode__eq?: string | null;
+  itemCode__not_eq?: string | null;
+  itemName__eq?: string | null;
+  itemName__not_eq?: string | null;
+  _storeId__eq?: any | null;
+  _storeId__not_eq?: any | null;
+  _itemId__eq?: any | null;
+  _itemId__not_eq?: any | null;
+  _itemId__in?: any[] | null;
+  _itemId__not_in?: any[] | null;
+  _ownerId__eq?: any | null;
+  _ownerId__not_eq?: any | null;
+  _ownerId__in?: any[] | null;
+  _ownerId__not_in?: any[] | null;
+  from__eq?: any | null;
+  from__not_eq?: any | null;
+  from__gte?: any | null;
+  from__gt?: any | null;
+  from__lte?: any | null;
+  from__lt?: any | null;
+  to__eq?: any | null;
+  to__not_eq?: any | null;
+  to__gte?: any | null;
+  to__gt?: any | null;
+  to__lte?: any | null;
+  to__lt?: any | null;
+  disabled__eq?: boolean | null;
+  disabled__not_eq?: boolean | null;
+  dateRangeForSale_from__eq?: any | null;
+  dateRangeForSale_from__not_eq?: any | null;
+  dateRangeForSale_from__gte?: any | null;
+  dateRangeForSale_from__gt?: any | null;
+  dateRangeForSale_from__lte?: any | null;
+  dateRangeForSale_from__lt?: any | null;
+  dateRangeForSale_to__eq?: any | null;
+  dateRangeForSale_to__not_eq?: any | null;
+  dateRangeForSale_to__gte?: any | null;
+  dateRangeForSale_to__gt?: any | null;
+  dateRangeForSale_to__lte?: any | null;
+  dateRangeForSale_to__lt?: any | null;
+  dateRangeForUse_from__eq?: any | null;
+  dateRangeForUse_from__not_eq?: any | null;
+  dateRangeForUse_from__gte?: any | null;
+  dateRangeForUse_from__gt?: any | null;
+  dateRangeForUse_from__lte?: any | null;
+  dateRangeForUse_from__lt?: any | null;
+  dateRangeForUse_to__eq?: any | null;
+  dateRangeForUse_to__not_eq?: any | null;
+  dateRangeForUse_to__gte?: any | null;
+  dateRangeForUse_to__gt?: any | null;
+  dateRangeForUse_to__lte?: any | null;
+  dateRangeForUse_to__lt?: any | null;
+  currency__eq?: Currency | null;
+  currency__not_eq?: Currency | null;
+  currency__in?: Currency[] | null;
+  currency__not_in?: Currency[] | null;
+  price__eq?: number | null;
+  price__not_eq?: number | null;
+  price__gte?: number | null;
+  price__gt?: number | null;
+  price__lte?: number | null;
+  price__lt?: number | null;
+  capacity__eq?: number | null;
+  capacity__not_eq?: number | null;
+  capacity__gte?: number | null;
+  capacity__gt?: number | null;
+  capacity__lte?: number | null;
+  capacity__lt?: number | null;
+  capacityPick__eq?: number | null;
+  capacityPick__not_eq?: number | null;
+  capacityPick__gte?: number | null;
+  capacityPick__gt?: number | null;
+  capacityPick__lte?: number | null;
+  capacityPick__lt?: number | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
 }
 
 export interface _PurchaseBundleFilter {
   AND?: _PurchaseBundleFilter[] | null;
   OR?: _PurchaseBundleFilter[] | null;
-  paymentAt_eq?: any | null;
-  paymentAt_not_eq?: any | null;
-  paymentAt_gte?: any | null;
-  paymentAt_gt?: any | null;
-  paymentAt_lte?: any | null;
-  paymentAt_lt?: any | null;
-  _customerId_eq?: any | null;
-  _customerId_not_eq?: any | null;
-  _customerId_in?: any[] | null;
-  _customerId_not_in?: any[] | null;
-  _purchaseIds_eq?: any[] | null;
-  _purchaseIds_not_eq?: any[] | null;
-  _purchaseIds_in?: any[] | null;
-  _purchaseIds_not_in?: any[] | null;
-  _id_eq?: any | null;
-  _id_not_eq?: any | null;
-  _id_in?: any[] | null;
-  _id_not_in?: any[] | null;
-  updatedAt_eq?: any | null;
-  updatedAt_not_eq?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  createdAt_eq?: any | null;
-  createdAt_not_eq?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
-  paymentStatus_eq?: Status | null;
-  paymentStatus_not_eq?: Status | null;
-  paymentStatus_in?: Status[] | null;
-  paymentStatus_not_in?: Status[] | null;
-  refundStatus_eq?: Status | null;
-  refundStatus_not_eq?: Status | null;
-  refundStatus_in?: Status[] | null;
-  refundStatus_not_in?: Status[] | null;
-  paymethod_eq?: Paymethod | null;
-  paymethod_not_eq?: Paymethod | null;
-  paymethod_in?: Paymethod[] | null;
-  paymethod_not_in?: Paymethod[] | null;
-  paymentExpiresAt_eq?: any | null;
-  paymentExpiresAt_not_eq?: any | null;
-  paymentExpiresAt_in?: any[] | null;
-  paymentExpiresAt_not_in?: any[] | null;
-  paymentExpiresAt_gte?: any | null;
-  paymentExpiresAt_gt?: any | null;
-  paymentExpiresAt_lte?: any | null;
-  paymentExpiresAt_lt?: any | null;
-  currency_eq?: Currency | null;
-  currency_not_eq?: Currency | null;
-  currency_in?: Currency[] | null;
-  currency_not_in?: Currency[] | null;
-  pricePaymentPending_eq?: number | null;
-  pricePaymentPending_not_eq?: number | null;
-  pricePaymentPending_gte?: number | null;
-  pricePaymentPending_gt?: number | null;
-  pricePaymentPending_lte?: number | null;
-  pricePaymentPending_lt?: number | null;
-  pricePaymentCompleted_eq?: number | null;
-  pricePaymentCompleted_not_eq?: number | null;
-  pricePaymentCompleted_gte?: number | null;
-  pricePaymentCompleted_gt?: number | null;
-  pricePaymentCompleted_lte?: number | null;
-  pricePaymentCompleted_lt?: number | null;
-  priceRefundPending_eq?: number | null;
-  priceRefundPending_not_eq?: number | null;
-  priceRefundPending_gte?: number | null;
-  priceRefundPending_gt?: number | null;
-  priceRefundPending_lte?: number | null;
-  priceRefundPending_lt?: number | null;
-  priceRefundCompleted_eq?: number | null;
-  priceRefundCompleted_not_eq?: number | null;
-  priceRefundCompleted_gte?: number | null;
-  priceRefundCompleted_gt?: number | null;
-  priceRefundCompleted_lte?: number | null;
-  priceRefundCompleted_lt?: number | null;
-  isFullRefunded_eq?: boolean | null;
-  isFullRefunded_not_eq?: boolean | null;
-  isFullRefunded_in?: boolean[] | null;
-  isFullRefunded_not_in?: boolean[] | null;
-  isRefundedPartial_eq?: boolean | null;
-  isRefundedPartial_not_eq?: boolean | null;
-  isRefundedPartial_in?: boolean[] | null;
-  isRefundedPartial_not_in?: boolean[] | null;
-  message_eq?: string | null;
-  message_not_eq?: string | null;
-  message_contains?: string | null;
-  message_not_contains?: string | null;
+  paymentAt__eq?: any | null;
+  paymentAt__not_eq?: any | null;
+  paymentAt__gte?: any | null;
+  paymentAt__gt?: any | null;
+  paymentAt__lte?: any | null;
+  paymentAt__lt?: any | null;
+  _customerId__eq?: any | null;
+  _customerId__not_eq?: any | null;
+  _customerId__in?: any[] | null;
+  _customerId__not_in?: any[] | null;
+  _purchaseIds__eq?: any[] | null;
+  _purchaseIds__not_eq?: any[] | null;
+  _purchaseIds__in?: any[] | null;
+  _purchaseIds__not_in?: any[] | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
+  paymentStatus__eq?: Status | null;
+  paymentStatus__not_eq?: Status | null;
+  paymentStatus__in?: Status[] | null;
+  paymentStatus__not_in?: Status[] | null;
+  refundStatus__eq?: Status | null;
+  refundStatus__not_eq?: Status | null;
+  refundStatus__in?: Status[] | null;
+  refundStatus__not_in?: Status[] | null;
+  paymethod__eq?: Paymethod | null;
+  paymethod__not_eq?: Paymethod | null;
+  paymethod__in?: Paymethod[] | null;
+  paymethod__not_in?: Paymethod[] | null;
+  paymentExpiresAt__eq?: any | null;
+  paymentExpiresAt__not_eq?: any | null;
+  paymentExpiresAt__in?: any[] | null;
+  paymentExpiresAt__not_in?: any[] | null;
+  paymentExpiresAt__gte?: any | null;
+  paymentExpiresAt__gt?: any | null;
+  paymentExpiresAt__lte?: any | null;
+  paymentExpiresAt__lt?: any | null;
+  currency__eq?: Currency | null;
+  currency__not_eq?: Currency | null;
+  currency__in?: Currency[] | null;
+  currency__not_in?: Currency[] | null;
+  pricePaymentPending__eq?: number | null;
+  pricePaymentPending__not_eq?: number | null;
+  pricePaymentPending__gte?: number | null;
+  pricePaymentPending__gt?: number | null;
+  pricePaymentPending__lte?: number | null;
+  pricePaymentPending__lt?: number | null;
+  pricePaymentCompleted__eq?: number | null;
+  pricePaymentCompleted__not_eq?: number | null;
+  pricePaymentCompleted__gte?: number | null;
+  pricePaymentCompleted__gt?: number | null;
+  pricePaymentCompleted__lte?: number | null;
+  pricePaymentCompleted__lt?: number | null;
+  priceRefundPending__eq?: number | null;
+  priceRefundPending__not_eq?: number | null;
+  priceRefundPending__gte?: number | null;
+  priceRefundPending__gt?: number | null;
+  priceRefundPending__lte?: number | null;
+  priceRefundPending__lt?: number | null;
+  priceRefundCompleted__eq?: number | null;
+  priceRefundCompleted__not_eq?: number | null;
+  priceRefundCompleted__gte?: number | null;
+  priceRefundCompleted__gt?: number | null;
+  priceRefundCompleted__lte?: number | null;
+  priceRefundCompleted__lt?: number | null;
+  isFullRefunded__eq?: boolean | null;
+  isFullRefunded__not_eq?: boolean | null;
+  isFullRefunded__in?: boolean[] | null;
+  isFullRefunded__not_in?: boolean[] | null;
+  isRefundedPartial__eq?: boolean | null;
+  isRefundedPartial__not_eq?: boolean | null;
+  isRefundedPartial__in?: boolean[] | null;
+  isRefundedPartial__not_in?: boolean[] | null;
+  message__eq?: string | null;
+  message__not_eq?: string | null;
+  message__contains?: string | null;
+  message__not_contains?: string | null;
 }
 
 export interface _SettlementFilter {
   AND?: _SettlementFilter[] | null;
   OR?: _SettlementFilter[] | null;
-  amount_eq?: number | null;
-  amount_not_eq?: number | null;
-  amount_gte?: number | null;
-  amount_lte?: number | null;
-  amount_gt?: number | null;
-  amount_lt?: number | null;
-  message_eq?: string | null;
-  message_not_eq?: string | null;
-  message_in?: string[] | null;
-  message_not_in?: string[] | null;
-  message_contains?: string | null;
-  message_not_contains?: string | null;
-  settlementDate_eq?: any | null;
-  settlementDate_not_eq?: any | null;
-  settlementDate_gte?: any | null;
-  settlementDate_lte?: any | null;
-  settlementDate_gt?: any | null;
-  settlementDate_lt?: any | null;
-  submallId_eq?: string | null;
-  submallId_not_eq?: string | null;
-  submallId_in?: string[] | null;
-  submallId_not_in?: string[] | null;
-  sequence_eq?: string | null;
-  sequence_not_eq?: string | null;
-  sequence_in?: string[] | null;
-  sequence_not_in?: string[] | null;
-  canceledAt_eq?: any | null;
-  canceledAt_not_eq?: any | null;
-  status_eq?: Status | null;
-  status_not_eq?: Status | null;
-  status_in?: Status[] | null;
-  status_not_in?: Status[] | null;
-  name_eq?: string | null;
-  name_not_eq?: string | null;
-  name_contains?: string | null;
-  name_not_contains?: string | null;
-  name_in?: string[] | null;
-  name_not_in?: string[] | null;
-  description_eq?: string | null;
-  description_not_eq?: string | null;
-  description_contains?: string | null;
-  description_not_contains?: string | null;
-  description_in?: string[] | null;
-  description_not_in?: string[] | null;
+  amount__eq?: number | null;
+  amount__not_eq?: number | null;
+  amount__gte?: number | null;
+  amount__lte?: number | null;
+  amount__gt?: number | null;
+  amount__lt?: number | null;
+  message__eq?: string | null;
+  message__not_eq?: string | null;
+  message__in?: string[] | null;
+  message__not_in?: string[] | null;
+  message__contains?: string | null;
+  message__not_contains?: string | null;
+  settlementDate__eq?: any | null;
+  settlementDate__not_eq?: any | null;
+  settlementDate__gte?: any | null;
+  settlementDate__lte?: any | null;
+  settlementDate__gt?: any | null;
+  settlementDate__lt?: any | null;
+  submallId__eq?: string | null;
+  submallId__not_eq?: string | null;
+  submallId__in?: string[] | null;
+  submallId__not_in?: string[] | null;
+  sequence__eq?: string | null;
+  sequence__not_eq?: string | null;
+  sequence__in?: string[] | null;
+  sequence__not_in?: string[] | null;
+  canceledAt__eq?: any | null;
+  canceledAt__not_eq?: any | null;
+  status__eq?: Status | null;
+  status__not_eq?: Status | null;
+  status__in?: Status[] | null;
+  status__not_in?: Status[] | null;
+  name__eq?: string | null;
+  name__not_eq?: string | null;
+  name__contains?: string | null;
+  name__not_contains?: string | null;
+  name__in?: string[] | null;
+  name__not_in?: string[] | null;
+  description__eq?: string | null;
+  description__not_eq?: string | null;
+  description__contains?: string | null;
+  description__not_contains?: string | null;
+  description__in?: string[] | null;
+  description__not_in?: string[] | null;
 }
 
 export interface _StoreFilter {
   AND?: _StoreFilter[] | null;
   OR?: _StoreFilter[] | null;
-  name_eq?: string | null;
-  name_not_eq?: string | null;
-  name_contains?: string | null;
-  name_not_contains?: string | null;
-  name_in?: string[] | null;
-  name_not_in?: string[] | null;
-  description_eq?: string | null;
-  description_not_eq?: string | null;
-  description_contains?: string | null;
-  description_not_contains?: string | null;
-  description_in?: string[] | null;
-  description_not_in?: string[] | null;
+  name__eq?: string | null;
+  name__not_eq?: string | null;
+  name__contains?: string | null;
+  name__not_contains?: string | null;
+  name__in?: string[] | null;
+  name__not_in?: string[] | null;
+  description__eq?: string | null;
+  description__not_eq?: string | null;
+  description__contains?: string | null;
+  description__not_contains?: string | null;
+  description__in?: string[] | null;
+  description__not_in?: string[] | null;
+}
+
+export interface _SystemNotiFilter {
+  AND?: _SystemNotiFilter[] | null;
+  OR?: _SystemNotiFilter[] | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
 }
 
 //==============================================================

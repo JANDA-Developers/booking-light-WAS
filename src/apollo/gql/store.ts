@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import {  F_PAGEINFO, F_STORE, F_USER, F_USERERROR } from "./fragment/fragments";
+import {  F_FILE, F_ITEM, F_PAGEINFO, F_STORE, F_USER, F_USERERROR } from "./fragment/fragments";
 import { F_PURCHASE_BUNDLE } from "./fragment/purchase";
 
 export const STORE_USER_PROFILE = gql`
@@ -10,7 +10,6 @@ export const STORE_USER_PROFILE = gql`
   }
   ${F_USER}
 `
-
 
 export const STORE_UPDATE = gql`
     mutation storeUpdate(
@@ -78,9 +77,14 @@ export const STORE_LIST = gql`
         }
         items {
             ...Fstore
+            image {
+                ...Ffile
+            }
         }
     }
 }
+${F_FILE}
+${F_STORE}
 ${F_PAGEINFO}
 `
 
@@ -92,10 +96,15 @@ export const STORE_FIND_BY_CODE = gql`
         code: $code 
     ) {
         ...Fstore
+        items {
+            ...Fitem
+        }
     }
 }
+${F_ITEM}
 ${F_STORE}
 `
+
 
 export const STORE_FIND_BY_ID = gql`
     query storeFindById(

@@ -1,5 +1,4 @@
-import { JDatomExtentionSet } from '@janda-com/front/dist/types/interface';
-import { IDiv, IUl } from '@janda-com/sms/dist/types/interface';
+import { IUl, JDatomExtentionSet } from '@janda-com/front/dist/types/interface';
 import classNames from "classnames";
 import React from 'react';
 

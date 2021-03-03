@@ -1,8 +1,7 @@
 import { getRefetch } from "@janda-com/front";
 import { SETTLEMENT_MALL_CREATE, SETTLEMENT_MALL_FIND_BY_HASHID, SETTLEMENT_PLAIN_TRANSFER, SETTLEMENT_REFRESH, SETTLEMENT_TRANSFER, SETTLEMENT_TRANSFER_PLAIN_CANCEL, SETTLEMENT_TRANSFTER_LIST } from "../apollo/gql/settlement";
 import { _SettlementSort, _SettlementFilter,  settlementTransferList_SettlementTransferList_items, settlementMallFindByHashId, settlementMallFindByHashIdVariables, settlementMallFindByHashId_SettlementMallFindByHashId, settlementMallCreate, settlementMallCreateVariables, settlementTransferListVariables, settlementRefresh, settlementRefreshVariables, settlementTransfer, settlementTransferVariables, settlementPlainTransferCancel, settlementPlainTransferCancelVariables, settlementTransferCancel, settlementPlainTransfer, settlementPlainTransferVariables, settlementTransferCancelVariables } from "../type/api";
-import { generateListQueryHook, generateMutationHook } from "../utils/hookGen";
-import { generateFindQuery } from "../utils/query";
+import { generateFindQuery, generateListQueryHook, generateMutationHook } from "../utils/query";
 
 export const useSettlementMallFindById = generateFindQuery<settlementMallFindByHashId,settlementMallFindByHashIdVariables,settlementMallFindByHashId_SettlementMallFindByHashId>("hashId",SETTLEMENT_MALL_FIND_BY_HASHID);
 export const useSettlementTransferList = generateListQueryHook<_SettlementFilter,_SettlementSort,settlementTransferList_SettlementTransferList_items,settlementTransferListVariables,settlementTransferList_SettlementTransferList_items>(SETTLEMENT_TRANSFTER_LIST);

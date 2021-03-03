@@ -28,3 +28,9 @@ html {
         font-size: 0.75rem; //이것이 모든 타이포에 영향을줌
     }
 }
+
+.layout  {
+    &__contents {
+        overflow: hidden;
+    }
+}

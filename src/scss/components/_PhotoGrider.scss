@@ -1,0 +1,56 @@
+.photoGrider {
+
+    &__cell {
+        position: relative;
+        width: space(20);
+        height: space(20);
+        max-width: space(20);
+        max-height: space(20);
+        margin: space(1);
+        border: $dottedBtn-border;
+    }
+
+    &__addCard {
+        .iconWrapper  {
+            margin: 0px!important;
+        }
+    }
+
+
+    &__img {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__ul {
+        display: flex;
+    }
+
+    &__icons {
+        top: space(.5);
+        right: space(.5);
+        position: absolute;
+        color: $grey-level1;
+
+    }
+
+    &__icon {
+        margin: space(0.5);
+        
+        &:hover {
+            cursor: pointer;
+            color: $grey-level3;   
+           }
+    }
+
+    &__photoGrab {
+        border: 1px solid $grey-level1;
+        border-radius: $br2;
+        width: space(2);
+        height: space(2);
+        position: absolute;
+        top:space(1);
+        left: space(1);
+    }
+
+}

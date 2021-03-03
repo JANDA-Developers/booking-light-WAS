@@ -1,9 +1,13 @@
+@import "~@janda-com/front/src/scss/style_config.scss";
 @import "./system/variables";
-@import "~@janda-com/front/src/scss/all.scss";
-@import "~@janda-com/janda-table/src/scss/Table.scss";
+@import "~@janda-com/front/src/scss/system.scss";
+@import "~@janda-com/front/src/scss/components.scss";
 @import "./components/Components";
 @import "./atom/Atom.scss";
 @import "./page/Page";
 @import "./system/system";
 @import "./system/hack";
 
+.JDtextColor--positive {
+    color: $positive-color;
+}

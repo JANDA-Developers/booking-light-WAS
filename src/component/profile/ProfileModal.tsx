@@ -41,7 +41,7 @@ const ProfileModal: React.FC<IProps> = ({ userInfo, services, dropBoxHook }) => 
                     {
                         services.map((service, i) => {
                             return <JDtypho hover onClick={service.onClick} key={"profileLi" + i} mb flex color="grey3">
-                                <JDicon mr size="small" icon={service.icon} />
+                                <JDicon mr="huge" size="small" icon={service.icon} />
                                 <JDtypho size="small"> {service.title} </JDtypho>
                             </JDtypho>
                         })

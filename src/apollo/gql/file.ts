@@ -1,25 +1,7 @@
 import { gql } from "@apollo/client"
-import { F_COLLECTION_DATA_INTERFACE, F_PAGEINFO, F_TAG, F_USERERROR } from "./fragment/fragments";
+import {F_FILE, F_PAGEINFO,  F_USERERROR } from "./fragment/fragments";
 
-export const F_FILE = gql`
-    fragment Ffile on File {
-        ...FcollectionDataInterface
-        name
-        description
-        extension
-        fileType
-        uri
-        tags {
-           ...Ftag
-        }
-        owner {
-           _id
-           name
-        }
-    }
-    ${F_COLLECTION_DATA_INTERFACE}
-    ${F_TAG}
-`
+
 
 export const FILE_UPLOADS = gql`
   mutation fileUploads(
@@ -33,11 +15,11 @@ export const FILE_UPLOADS = gql`
         ...FuserError
       }
       data {
-        _id
-        uri
+        ...Ffile
       }
     }
   }
+  ${F_FILE}
   ${F_USERERROR}
 `;
 

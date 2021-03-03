@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import {  F_USER, F_USERERROR, F_VERIFICATION } from "./fragment/fragments";
+import {  F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragment/fragments";
 
 export const BUSINESS_USER_RESET_PASSWORD = gql`
   mutation businessUserResetPassword($newPassword: String!) {
@@ -12,7 +12,6 @@ export const BUSINESS_USER_RESET_PASSWORD = gql`
   }
   ${F_USERERROR}
 `;
-
 
 export const CUSTOMER_USER_RESET_PASSWORD = gql`
   mutation customerResetPassword($newPassword: String!) {
@@ -131,6 +130,15 @@ export const ME = gql`
   query me {
     Me {
       ...Fuser
+      stores {
+        _id
+        name
+        code
+        items {
+          _id
+          name
+        }
+      }
     }
   }
   ${F_USER}
@@ -144,6 +152,24 @@ export const PROFILE = gql`
   }
   ${F_USER}
 `
+
+
+export const USER_DUPLICATE_CHECK = gql`
+  query userDuplicateCheck(
+    $role: UserRole!
+    $target: String!
+    $value: String!
+  ) {
+    UserDuplicateCheck(
+      role: $role
+      target: $target
+      value:$value
+      ) {
+        duplicated
+    }
+  }
+`
+
 
 export const PROFILE_UPDATE_FOR_BUSINESS_USER = gql`
   mutation profileUpdateForBusinessUser($input: ProfileUpdateForBusinessUserInput!) {

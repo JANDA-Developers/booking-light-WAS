@@ -1,13 +1,21 @@
+
+:root {
+    --primary-color: #129a98;
+    --primary-color-light: #637796;
+    --primary-color-dark: #162743;
+    --primary-color-on: #fff;
+  }
+
 $primary-color : #129a98;
 $primary-color-dark : darken(#129a98, 10);
 $primary-color-light : lighten(#129a98, 5);
 $point-color: #ff6760;
-$background-color: $grey-level5 !default;
 
 $sidebar-width: 17.625rem;
 $main-menu-width: space(12);
 
 $header-height: 3.8rem;
 
+$dottedBtn-border: 2px dotted $grey-level2;
 
 

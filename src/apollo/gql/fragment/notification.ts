@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client"
-import { F_COLLECTION_DATA_INTERFACE } from "./fragments"
+import { F_COLLECTION_DATA_INTERFACE } from "./shared"
 
 export const F_NOTIFICATION_MANAGER = gql`
 fragment FnotificationManager on NotificationManager {
@@ -11,6 +11,7 @@ fragment FnotificationManager on NotificationManager {
 
 export const F_NOTIFICATION_HISTORY_ITEM = gql`
 fragment FnotificationHistoryItem on NotificationHistoryItem {
+    ...FcollectionDataInterface
     method
     sender
     receivers
@@ -22,6 +23,7 @@ fragment FnotificationHistoryItem on NotificationHistoryItem {
     pointRemains
     pointConsumed
 }
+${F_COLLECTION_DATA_INTERFACE}
 `
 
 export const F_NOTIFICATION_SENDER = gql`

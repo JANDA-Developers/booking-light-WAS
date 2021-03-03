@@ -1,7 +1,8 @@
 import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
-import { FoffsetPagingInfo, OffsetPagingInput, VerificationEvent, VerificationTarget } from "./api";
-import { ICreateSubmitInput } from "../component/itemModal/ItemCreateModal";
+import { DisplayType, FoffsetPagingInfo, ItemType, OffsetPagingInput, StoreType, UserRole, VerificationEvent, VerificationTarget } from "./api";
 import dayjs from "dayjs";
+import { selectOpCreater } from "@janda-com/front";
+import { enumToOption } from "../utils/enumToOption";
 
 const { version } = require("../../package.json");
 export const JDVERSION = version
@@ -96,26 +97,246 @@ export const GET_EVERY = {
     }
 }
 
-export const DEFAULT_ITEM_CREATE: ICreateSubmitInput = process.env.NODE_ENV === "development" ? {
-    amount: 1000,
-    count: 1,
-    email: "colton950901@mgmail.com",
-    fromTm: dayjs(new Date()).valueOf(),
-    toTm: dayjs(new Date()).add(1, "d").valueOf(),
-    message: "테스트",
-    name: "김민재",
-    phoneNumber: "01052374492",
-    productId: "",
-} : {
-        amount: 0,
-        count: 0,
-        email: "",
-        fromTm: "",
-        message: "",
-        name: "",
-        phoneNumber: "",
-        productId: "",
-        toTm: ""
-    }
+// export const DEFAULT_ITEM_CREATE: ICreateSubmitInput = process.env.NODE_ENV === "development" ? {
+//     amount: 1000,
+//     count: 1,
+//     email: "colton950901@mgmail.com",
+//     fromTm: dayjs(new Date()).valueOf(),
+//     toTm: dayjs(new Date()).add(1, "d").valueOf(),
+//     message: "테스트",
+//     name: "김민재",
+//     phoneNumber: "01052374492",
+//     productId: "",
+// } : {
+//         amount: 0,
+//         count: 0,
+//         email: "",
+//         fromTm: "",
+//         message: "",
+//         name: "",
+//         phoneNumber: "",
+//         productId: "",
+//         toTm: ""
+//     }
 
 export default ""
+
+
+
+
+
+export const INPUT_OPS: IselectedOption<DisplayType>[] = [
+    {
+        label: "텍스트인풋",
+        value: DisplayType.TEXT_INPUT,
+    },
+    {
+        label: "드랍다운박스",
+        value: DisplayType.DROPDOWN,
+    },
+    {
+        label: "체크박스",
+        value: DisplayType.CHECK_BOX,
+    },
+    {
+        label: "숫자박스",
+        value: DisplayType.NUMBER_SELECTOR,
+    },
+    {
+        label: "날짜범위선택",
+        value: DisplayType.DATE_RANGE_PICKER,
+    },
+    {
+        label: "타임픽커",
+        value: DisplayType.TIME_PICKER,
+    },
+    {
+        label: "데이트픽커",
+        value: DisplayType.DATE_PICKER,
+    },
+];
+
+
+
+export const ITEM_TYPE_OPS: IselectedOption<ItemType>[] = [
+    {
+        label: "예약",
+        value: ItemType.BOOKING,
+    },
+    {
+        label: "이벤트",
+        value: ItemType.EVENT,
+    },
+    {
+        label: "공간대여",
+        value: ItemType.PLACE,
+    },
+    {
+        label: "서비스",
+        value: ItemType.SERVICE,
+    },
+];
+export const STORE_TYPE_OPS: IselectedOption<StoreType>[] = [
+    {
+        label: "숙박",
+        value: StoreType.ACCOMMODATION,
+    },
+    {
+        label: "카페",
+        value: StoreType.CAFE,
+    },
+    {
+        label: "기타",
+        value: StoreType.ELSE,
+    },
+    {
+        label: "레저",
+        value: StoreType.LEISURE,
+    },
+    {
+        label: "펍",
+        value: StoreType.PUP,
+    },
+    {
+        label: "대여",
+        value: StoreType.RENTAL,
+    },
+    {
+        label: "식당",
+        value: StoreType.RESTAURANT,
+    },
+    {
+        label: "일반판매",
+        value: StoreType.SHOPPING,
+    },
+    {
+        label: "공연",
+        value: StoreType.SHOW,
+    },
+];
+
+export const COUNT = selectOpCreater({
+    count: 500,
+    start: 0,
+    labelAdd: "개"
+});
+
+
+
+export const HOURS_SELECT_OP: IselectedOption<number>[] = [
+    {
+        label: "00시",
+        value: 0,
+    },
+    {
+        label: "01시",
+        value: 1,
+    },
+    {
+        label: "02시",
+        value: 2,
+    },
+    {
+        label: "03시",
+        value: 3,
+    },
+    {
+        label: "04시",
+        value: 4,
+    },
+    {
+        label: "05시",
+        value: 6,
+    },
+    {
+        label: "07시",
+        value: 7,
+    },
+    {
+        label: "08시",
+        value: 8,
+    },
+    {
+        label: "09시",
+        value: 9,
+    },
+    {
+        label: "10시",
+        value: 10,
+    },
+    {
+        label: "11시",
+        value: 11,
+    },
+    {
+        label: "12시",
+        value: 12,
+    },
+    {
+        label: "13시",
+        value: 13,
+    },
+    {
+        label: "14시",
+        value: 14,
+    },
+    {
+        label: "15시",
+        value: 15,
+    },
+    {
+        label: "16시",
+        value: 16,
+    },
+    {
+        label: "17시",
+        value: 17,
+    },
+    {
+        label: "18시",
+        value: 18,
+    },
+    {
+        label: "19시",
+        value: 19,
+    },
+    {
+        label: "20시",
+        value: 20,
+    },
+    {
+        label: "21시",
+        value: 21,
+    },
+    {
+        label: "22시",
+        value: 22,
+    },
+    {
+        label: "23시",
+        value: 23,
+    },
+    {
+        label: "24시",
+        value: 24,
+    },
+];
+
+export let MINUTES_SELECT_OP: IselectedOption<number>[] = Array(60)
+    .fill(null)
+    .map((_, i) => ({
+        label: `${i}분`,
+        value: i,
+    }));
+
+
+export const today = dayjs().startOf("day").valueOf();
+export const tomorrow = dayjs().add(1, "day").startOf("day").valueOf();
+export const lastMonthFirstDate = dayjs().add(-1, "month").set("day", 1).toDate();
+export const lastMonthLastDate = dayjs().add(-1, "month").endOf("month").toDate();
+export const thisMonthLastDate = dayjs().endOf("month").toDate();
+export const thisMonthFirstDate = dayjs().startOf("month").toDate();
+export const oneYearBefore = dayjs().add(-1, "y").toDate();
+export const sixMonthBefore = dayjs().add(-6, "month").toDate();
+
+

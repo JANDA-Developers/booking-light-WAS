@@ -2,7 +2,6 @@ import { ApolloClient, from } from "@apollo/client";
 import dotenv from "dotenv";
 import uri from "./uri";
 import cache from "./cache";
-// @ts-ignore
 import { createUploadLink } from "apollo-upload-client";
 import { toast } from "@janda-com/front";
 import { onError } from "@apollo/client/link/error";
@@ -17,9 +16,11 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       );
     });
-    toast.warn("알수 없는 문제가 발생했습니다. 문의 부탁드립니다.");
+    const msg = graphQLErrors[0].message
+    const errorMsg = process.env.NODE_ENV === "development" ? msg : "알수 없는 문제가 발생했습니다. 문의 부탁드립니다."
+    toast.warn(errorMsg);
   } else if (networkError) {
-    toast.warn("서버가 응답하지 않습니다.");
+    toast.warn("서버가 응답하지 않습니다.", { toastId: "ServerIsNotRespond" });
   }
 });
 
@@ -34,7 +35,7 @@ dotenv.config({
 });
 
 const client = new ApolloClient({
-  link: from([fileUploadLink, errorLink]),
+  link: from([errorLink, fileUploadLink as any]),
   uri,
   cache,
   headers,

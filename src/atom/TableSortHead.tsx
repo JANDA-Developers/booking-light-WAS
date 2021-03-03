@@ -1,6 +1,6 @@
 import { Flex } from '@janda-com/front';
 import { JDicon } from '@janda-com/front';
-import { IDiv } from '@janda-com/sms/dist/types/interface';
+import { IDiv } from '@janda-com/front/dist/types/interface';
 import React from 'react';
 
 

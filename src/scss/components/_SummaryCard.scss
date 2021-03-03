@@ -1,0 +1,30 @@
+.summaryCard {
+
+     &__list {
+         font-size: $typho-small;
+     }
+
+
+     &__cell {
+         max-width: 33.3%;
+         width: 33.3%;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         text-align: center;
+     }
+
+     &__li {
+         flex: 1 1;
+         height: 100%;
+     }
+
+     .JDlist__li {
+         display: flex;
+         align-items: center;
+     }
+}
+
+
+.JDlist--stripe .JDlist__li:nth-child(even) {
+    background-color: $grey-level0;
+}

@@ -39,8 +39,8 @@ export const JDlist: React.FC<IProps> = ({
     contents,
     minList = 10,
     linePoint,
-    id,
     size,
+    id,
     ...props
 }) => {
     const classes = classNames('JDlist', className, {

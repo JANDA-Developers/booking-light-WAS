@@ -36,3 +36,33 @@ html {
 .DayPicker--unDisplayNavbar ~ div  {
     display: none;
 }
+
+.timepicker__input  {
+    &:first-child {
+        margin-right: space(1);
+    }
+}
+
+.counter__inner  {
+    border-radius: $br1;
+}
+
+.JDhorizen {
+    
+    width: auto!important;
+}
+
+.JDflex--around {
+    justify-content: space-around;
+}
+
+.disabledBadge {
+    margin: auto;
+}
+
+.JDtagInput {
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

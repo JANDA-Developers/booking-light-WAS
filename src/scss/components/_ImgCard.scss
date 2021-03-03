@@ -1,0 +1,16 @@
+.imgCard {
+    border: 1px solid $grey-level1;
+    border-radius: $br1;
+    background-color: white;
+
+    &__photo {
+        height: 100px;
+    }
+
+    &__body {
+        padding:  space(1);
+    }
+    &__head {
+        padding-bottom: space(1);
+    }
+}

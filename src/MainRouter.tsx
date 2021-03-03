@@ -1,123 +1,50 @@
-import { } from "@janda-com/front";
 import React, { Suspense } from "react";
 import { Route, Switch } from 'react-router-dom';
-import SMSRouter from "./page/sms/SMSrouter";
-const ProductSettingWrap = React.lazy(() => import("./page/productSetting/ProductSettingWrap"));
-const StoreSettingWrap = React.lazy(() => import("./page/storeSetting/StoreSettingWrap"));
-const DailyPricePage = React.lazy(() => import('./page/price/DailyPriceWrap'));
-const PayConfigPage = React.lazy(() => import('./page/pagConfig/PayConfigWrap'));
-const StaticPage = React.lazy(() => import('./page/static/Static'));
-const DashboardPage = React.lazy(() => import('./page/dashboard/dashboard/DashboardWrap'));
-const ProductBoardPage = React.lazy(() => import('./page/dashboard/productBoard/ProductBoard'));
-const SalesListPage = React.lazy(() => import('./page/sale/SalesListWrap'));
-const ProductGroupPage = React.lazy(() => import('./page/productGroupSetting/ProductGorupSettingWrap'));
-const ProductBoardPageWrap = React.lazy(() => import('./page/sale/SalesListWrap'));
-const ProductCapcityPage = React.lazy(() => import('./page/productCapacity/ProductCapacityWrap'));
+import { Page404 } from "./page/exceptions/Page404";
+const Dashboard = React.lazy(() => import('./page/dashboard/Dashboard'));
+const StoreSet = React.lazy(() => import('./page/store/StoreList'));
+const ItemList = React.lazy(() => import('./page/item/ItemList'));
+const ItemDetail = React.lazy(() => import('./page/item/ItemDetail'));
+const ProductList = React.lazy(() => import('./page/product/ProductList'));
+const ProductDetail = React.lazy(() => import('./page/product/ProductDetail'));
+const BuyPageSet = React.lazy(() => import('./page/buypageSet/BuyPageSetDetail'));
+const BuyPageList = React.lazy(() => import('./page/buypageSet/BuyPageList'));
 
 export enum Paths {
   sms = '/sms',
+  itemDetail = '/itemList/detail',
+  itemList = '/itemList',
   price = '/price-set',
+  buypageList = '/buypageList',
+  buypageSet = '/buypageSet',
   saleList = '/sale-list',
   storeUserList = '/store-user-list',
   payToJanda = '/pay-to-janda',
   payFromJanda = '/pay-from-janda',
+  productDetail = '/productList/productDetail',
   productBoard = '/product-board',
-  productset = '/productset',
-  productGroup = '/productGroup',
-  productCapacity = '/productCapacity',
-  storeset = '/storeset',
+  productList = '/productList',
+  productGroup = '/product-group',
+  productCapacity = '/product-capacity',
+  storeSet = '/store-set',
   main = '/',
 }
 
 
 const MainRouter = () => {
-  return <Switch>
-    <Suspense fallback={<div >loading...</div>}>
-      <Route
-        path={Paths.sms}
-        render={() => {
-          return <SMSRouter />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.price}
-        render={() => {
-          return <DailyPricePage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.saleList}
-        render={() => {
-          return <SalesListPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.storeUserList}
-        render={() => {
-          return <PayConfigPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.payToJanda}
-        render={() => {
-          return <StaticPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.payFromJanda}
-        render={() => {
-          return <PayConfigPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.main}
-        render={() => {
-          return <DashboardPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.productset}
-        render={() => {
-          return <ProductSettingWrap />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.storeset}
-        render={() => {
-          return <StoreSettingWrap />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.productBoard}
-        render={() => {
-          return <ProductBoardPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.productGroup}
-        render={() => {
-          return <ProductGroupPage />;
-        }}
-      />
-      <Route
-        exact={true}
-        path={Paths.productCapacity}
-        render={() => {
-          return <ProductCapcityPage />;
-        }}
-      />
-    </Suspense>
-  </Switch>
+  return <Suspense fallback={<div ></div>}>
+    <Switch>
+      <Route path={Paths.buypageList} render={() => <BuyPageList />} />
+      <Route path={Paths.buypageSet} render={() => <BuyPageSet />} />
+      <Route path={Paths.storeSet} render={() => <StoreSet />} />
+      <Route exact path={Paths.itemDetail + "/:itemId?"} render={() => <ItemDetail />} />
+      <Route path={Paths.itemList} render={() => <ItemList />} />
+      <Route exact path={Paths.productList + "/:itemId?"} render={() => <ProductList />} />
+      <Route path={Paths.productDetail + "/:productId?/:itemId?"} render={() => <ProductDetail />} />
+      <Route exact path={Paths.main} render={() => <Dashboard />} />
+      <Route render={() => <Page404 />} />
+    </Switch>
+  </Suspense>
 }
 
 export default MainRouter;

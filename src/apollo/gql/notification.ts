@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_PAGEINFO, F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE  } from "./fragment/fragments";
+import { F_PAGEINFO, F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE, F_USERERROR, F_NOTIFICATION_HISTORY_ITEM  } from "./fragment/fragments";
 
 export const NOTIFICATION_HISTORY = gql`
     query notificationHistory(
@@ -20,6 +20,7 @@ export const NOTIFICATION_HISTORY = gql`
         }
     }
 }
+${F_NOTIFICATION_HISTORY_ITEM}
 ${F_PAGEINFO}
 `
 
@@ -44,7 +45,7 @@ ${F_NOTIFICATION_SENDER}
 `
 
 
-export const NOTIFICATIONMANAGE_FIND_BY_ID = gql`
+export const NOTIFICATION_MANAGER_FIND_BY_ID = gql`
     query notificationmanagerFindById(
         $notificationManagerId: ObjectId!
     ) {
@@ -79,4 +80,88 @@ export const NOTIFICATION_TEMPLATE_LIST = gql`
 ${F_PAGEINFO}
 ${F_NOTIFICATION_TEMPLATE}
 `
+
+export const SMS_SEND_SINGLE = gql`
+    mutation smsSendSingle(
+        $input: SmsSendInput!
+    ) {
+        SmsSendSingle(
+            input:$input
+        ) {
+            ok
+            error {
+                ...FuserError
+            }
+        }
+    }
+${F_USERERROR}
+`
+
+export const SMS_SEND_WITH_TEMPLATE = gql`
+    mutation smsSendWithTemplate(
+        $input: SmsSendWithTemplateInput!
+    ) {
+        SmsSendWithTemplate(
+            input:$input
+        ) {
+            ok
+            error {
+                ...FuserError
+            }
+        }
+    }
+${F_USERERROR}
+`
+
+export const SMS_TEMPLATE_CREATE = gql`
+    mutation smsTemplateCreate(
+        $input: SmsTemplateCreateInput!
+    ) {
+        SmsTemplateCreate(
+            input:$input
+        ) {
+            ok
+            error {
+                ...FuserError
+            }
+        }
+    }
+${F_USERERROR}
+`
+
+export const SMS_TEMPLATE_DELETE = gql`
+    mutation smsTemplateDelete(
+        $templateId: ObjectId!
+    ) {
+        SmsTemplateDelete(
+            templateId:$templateId
+        ) {
+            ok
+            error {
+                ...FuserError
+            }
+        }
+    }
+${F_USERERROR}
+`
+
+export const SMS_TEMPLATE_UPDATE = gql`
+    mutation smsTemplateUpdate(
+        $input: SmsTemplateUpdateInput!
+        $templateId: ObjectId!
+    ) {
+        SmsTemplateUpdate(
+            input:$input
+            templateId: $templateId
+        ) {
+            ok
+            error {
+                ...FuserError
+            }
+        }
+    }
+${F_USERERROR}
+`
+
+
 

@@ -1,0 +1,15 @@
+.formCreater {
+    &__inputCell {
+        display: flex;
+        position: relative;
+    }
+
+    &__grab {
+        border: 1px solid $grey-level1;
+        width: space(2);
+        height: space(2);
+        border-radius: 50%;
+        margin-left: space(2);
+        margin-top: space(4);
+    }
+}

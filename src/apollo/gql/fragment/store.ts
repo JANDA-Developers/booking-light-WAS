@@ -1,12 +1,26 @@
 import { gql } from "@apollo/client";
-import { F_COLLECTION_DATA_INTERFACE, F_LOCATION, F_PAYMENTOPTION, F_ZONE_INFO } from "./fragments";
+import { F_PAYMENTOPTION } from "./payment";
+import { F_COLLECTION_DATA_INTERFACE, F_LOCATION } from "./shared";
+import { F_ZONE_INFO } from "./zoneInfo";
+
+
+export const F_BUYPAGE = gql`
+fragment FbuyPage on BuyPage {
+    configure
+    _id
+    createdAt
+    updatedAt
+}
+${F_COLLECTION_DATA_INTERFACE}
+`
 
 export const F_STORE = gql`
 fragment Fstore on Store {
-    ...FcollectionDataInterface
+    type
     name
     description
     code
+    itemCount
     location {
         ...Flocation
     }
@@ -16,9 +30,15 @@ fragment Fstore on Store {
     zoneinfo {
         ...FzoneInfo
     }
+    buypages {
+        ...FbuyPage
+    }
+    ...FcollectionDataInterface
 }
+${F_BUYPAGE}
 ${F_COLLECTION_DATA_INTERFACE}
 ${F_PAYMENTOPTION}
 ${F_LOCATION}
 ${F_ZONE_INFO}
 `
+

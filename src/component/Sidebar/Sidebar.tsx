@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import SidebarMainMenu from './SidebarMainMenu'
 import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { Bold, Flex, JDalign, JDtypho, Tiny } from '@janda-com/front';
+import { Bold, Flex, isEmpty, JDalign, JDtypho, Tiny } from '@janda-com/front';
 import { Paths } from '../../MainRouter';
 import { useHistory, useLocation } from 'react-router-dom';
-import { SmsPaths } from '../../page/sms/SMSrouter';
 import { getUrlIndex } from "./helper";
 import AppContext, { IAppContext } from '../../context';
 import dayjs from "dayjs";
 import { AuthPaths } from '../../AuthRouter';
-import { isEmpty } from 'lodash';
 
 export interface IMenu {
     icon: IIcons,
@@ -19,14 +17,15 @@ export interface IMenu {
 }
 
 export const getMenuData = (context: IAppContext): IMenu[] => {
-    const { storeptions, user } = context;
+    const { storeOptions, me, isLogined, selectedStore } = context;
 
-    const logined: boolean = !!user;
-    const haveStore: boolean = !isEmpty(storeptions);
+    const haveStore: boolean = !isEmpty(storeOptions);
     // const payConfiged: boolean;
     // const isExpired: boolean;
     // const haveProduct: boolean;
-    const smsInited: boolean = !!user?.smsKey;
+    // const smsInited: boolean = !!me?.smsKey;
+
+    const haveItem = (selectedStore?.items?.length || 0) > 0;
 
     const unLogined = {
         redirect: AuthPaths.login,
@@ -34,8 +33,13 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
     }
 
     const noStore = {
-        redirect: Paths.storeset,
+        redirect: Paths.storeSet,
         disabledTooltip: "상점을 하나이상 생성 해주세요."
+    }
+
+    const noItem = {
+        redirect: Paths.itemList,
+        disabledTooltip: "상품군을 하나이상 생성 해주세요."
     }
 
     const noSmsKey = {
@@ -43,9 +47,10 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
         disabledTooltip: "SMS를 먼저 시작해주세요."
     }
 
-    const loginAndStore = logined ? noStore : unLogined;
+    const loginAndStore = isLogined ? noStore : unLogined;
+    const loginAndStoreAndItem = haveStore ? noItem : loginAndStore
 
-    const sharedSMS = logined ? noSmsKey : unLogined;
+    const sharedSMS = isLogined ? noSmsKey : unLogined;
 
 
     const MainMenuData: IMenu[] = [
@@ -57,14 +62,14 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     icon: "home",
                     title: "홈",
                     path: Paths.main,
-                    disabled: !logined || !haveStore,
+                    disabled: !isLogined || !haveStore,
                     ...loginAndStore
                 },
                 {
                     icon: "home",
                     title: "상품현황",
                     path: Paths.productBoard,
-                    disabled: !logined || !haveStore,
+                    disabled: !isLogined || !haveStore,
                     ...loginAndStore
                 },
             ]
@@ -75,24 +80,17 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
             sub: [
                 {
                     icon: "menu",
-                    title: "상품목록 1",
-                    path: Paths.productset,
-                    disabled: !logined || !haveStore,
+                    title: "품목 설정",
+                    path: Paths.itemList,
+                    disabled: !isLogined || !haveStore,
                     ...loginAndStore
                 },
                 {
                     icon: "menu",
-                    title: "상품그룹",
-                    path: Paths.productGroup,
-                    disabled: !logined || !haveStore,
-                    ...loginAndStore
-                },
-                {
-                    icon: "menu",
-                    title: "상품 수량조절",
-                    path: Paths.productCapacity,
-                    disabled: !logined || !haveStore,
-                    ...loginAndStore
+                    title: "상품 설정",
+                    path: Paths.productList,
+                    disabled: !isLogined || !haveStore || !haveItem,
+                    ...loginAndStoreAndItem
                 }
             ]
         },
@@ -103,16 +101,36 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                 {
                     icon: "menu",
                     title: "상점설정",
-                    path: Paths.storeset,
-                    disabled: !logined,
+                    path: Paths.storeSet,
+                    disabled: !isLogined,
                     ...unLogined
                 },
                 {
                     icon: "menu",
                     title: "판매목록",
                     path: Paths.saleList,
-                    disabled: !logined || !haveStore,
+                    disabled: !isLogined || !haveStore,
                     ...loginAndStore
+                },
+            ]
+        },
+        {
+            icon: "book",
+            title: "예약",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "구매페이지 관리",
+                    path: Paths.buypageSet,
+                    disabled: !isLogined,
+                    ...unLogined
+                },
+                {
+                    icon: "menu",
+                    title: "구매목록",
+                    path: Paths.payToJanda,
+                    disabled: !isLogined,
+                    ...unLogined
                 },
             ]
         },
@@ -124,52 +142,52 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     icon: "menu",
                     title: "정산관리",
                     path: Paths.payFromJanda,
-                    disabled: !logined,
+                    disabled: !isLogined,
                     ...unLogined
                 },
                 {
                     icon: "menu",
                     title: "멤버쉽",
                     path: Paths.payToJanda,
-                    disabled: !logined,
+                    disabled: !isLogined,
                     ...unLogined
                 },
             ]
         },
-        {
-            icon: "sms",
-            title: "SMS",
-            sub: [
-                {
-                    icon: "info",
-                    title: "시작하기",
-                    path: SmsPaths.init,
-                    disabled: !logined,
-                    ...unLogined
-                },
-                {
-                    icon: "addCircle",
-                    title: "템플릿 설정",
-                    path: SmsPaths.template,
-                    disabled: !logined || !smsInited,
-                    ...sharedSMS
-                },
-                {
-                    icon: "email",
-                    title: "발신자 관리",
-                    path: SmsPaths.sender,
-                    disabled: !logined || !smsInited,
-                    ...sharedSMS
-                },
-                {
-                    icon: "historyWatch",
-                    title: "발신 히스토리",
-                    path: SmsPaths.history,
-                    disabled: !logined || !smsInited,
-                    ...sharedSMS
-                },
-            ]
-        },
+        // {
+        //     icon: "sms",
+        //     title: "SMS",
+        //     sub: [
+        //         {
+        //             icon: "info",
+        //             title: "시작하기",
+        //             path: SmsPaths.init,
+        //             disabled: !logined,
+        //             ...unLogined
+        //         },
+        //         {
+        //             icon: "addCircle",
+        //             title: "템플릿 설정",
+        //             path: SmsPaths.template,
+        //             disabled: !logined || !smsInited,
+        //             ...sharedSMS
+        //         },
+        //         {
+        //             icon: "email",
+        //             title: "발신자 관리",
+        //             path: SmsPaths.sender,
+        //             disabled: !logined || !smsInited,
+        //             ...sharedSMS
+        //         },
+        //         {
+        //             icon: "historyWatch",
+        //             title: "발신 히스토리",
+        //             path: SmsPaths.history,
+        //             disabled: !logined || !smsInited,
+        //             ...sharedSMS
+        //         },
+        //     ]
+        // },
         {
             icon: "info",
             title: "고객센터",
@@ -178,7 +196,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     icon: "menu",
                     title: "Service 설정 1",
                     path: "/",
-                    disabled: !logined,
+                    disabled: !isLogined,
                     ...unLogined
                 },
             ]
@@ -195,8 +213,10 @@ export interface IProps {
 
 const Sidebar: React.FC<IProps> = ({ isOpen }) => {
     const context = useContext(AppContext);
-    const { user } = context;
-    const { pathname } = useLocation();
+    const { me } = context;
+    const { pathname, key } = useLocation();
+    console.log({ pathname });
+    console.log({ key });
     const menuData = getMenuData(context)
     const [menuIndex, setMenuIndex] = useState((getUrlIndex(pathname, menuData)))
 
@@ -210,11 +230,11 @@ const Sidebar: React.FC<IProps> = ({ isOpen }) => {
         history.push(path);
     }
 
-    const { name, createdAt } = user || {};
+    const { name, createdAt } = me || {};
 
     // 로그인 onclick, login, logout 추가 y
     return (
-        <div className={`sidebar ${isOpen || 'sidebar--close'} ${user || 'sidebar--unLogined'}`}>
+        <div className={`sidebar ${isOpen || 'sidebar--close'} ${me || 'sidebar--unLogined'}`}>
             <Flex oneone className="sidebar__head">
                 <div className="sidebar__logo">
                     A

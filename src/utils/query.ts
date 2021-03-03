@@ -1,10 +1,24 @@
-import { DocumentNode, MutationHookOptions, QueryHookOptions, useMutation } from "@apollo/client";
+import { DocumentNode, MutationHookOptions, operationName, QueryHookOptions, useMutation } from "@apollo/client";
 import { ListInitOptions, useListQuery } from "../hook/useListQuery";
 import { useEffect } from "react";
 import {useLazyQuery} from "@apollo/client";
-import { capitalizeFirstLetter } from "@janda-com/front/dist/utils/autoFormat";
 import { DEFAULT_PAGE_INFO } from "@janda-com/front";
 import { FoffsetPagingInfo } from "../type/api";
+
+export const getQueryName = (QUERY:DocumentNode) => {
+    const operation = QUERY.definitions[0];
+
+    // @ts-ignore
+    const operationName = operation && operation.name.value;
+
+    return capitalize(operationName);
+}
+
+export const capitalize = (s:string) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+
 
 interface genrateOption<Q,V> extends QueryHookOptions<Q,V> {
     queryName?: string;
@@ -12,21 +26,19 @@ interface genrateOption<Q,V> extends QueryHookOptions<Q,V> {
     overrideVariables?: Partial<V>
 };
 
-const dataCheck = (data:any,operationName:string, checkProperty: string[] = ["data","page"]) => {
+const dataCheck = (data:any,operationName:string, checkProperty?: string[]) => {
     try {
     if(data?.hasOwnProperty(operationName) === false) {
         throw Error(`result data object dose not have property ${operationName} look this above object ↑ `)
     }
 
-    checkProperty.forEach(p => {
+    checkProperty && checkProperty.forEach(p => {
         if(data?.[operationName].hasOwnProperty(p) === false) {
             console.error(p);
             throw Error(`result data object dose not have property ${p} look this above object ↑ `)
         }
     })
     } catch (e){
-        console.log(operationName);
-        console.log(operationName);
     console.error("==========FATAL ERROR==========");
     console.error(e);
     }
@@ -39,7 +51,7 @@ export const generateListQueryHook = <F,S,Q,V,R>(
 ) => {
     const listQueryHook = (
         {
-            initialPageIndex = 1,
+            initialPageIndex = 0,
             initialSort = [],
             initialFilter = {} as F,
             initialViewCount = 20,
@@ -62,24 +74,27 @@ export const generateListQueryHook = <F,S,Q,V,R>(
                 ...variables,
                 ...overrideVariables
             },
+
             ...ops
         })
 
+
         const operationName = defaultOptions?.queryName || getQueryName(QUERY);
 
-        dataCheck(data,operationName)
+        dataCheck(data,operationName,["items","pageInfo"])
         // @ts-ignore
-        const items: R[] = data?.[operationName]?.data || []
-        const pageInfo: FoffsetPagingInfo = (data as any)?.[operationName]?.page || DEFAULT_PAGE_INFO
+        const items: R[] = data?.[operationName]?.items || []
+        const pageInfo: FoffsetPagingInfo = (data as any)?.[operationName]?.pageInfo || DEFAULT_PAGE_INFO
 
 
         useEffect(()=>{
+            if(options?.skip) return;
             getData()
         },[
             params.filter,
             params.sort,
-            params.viewCount,
-            params.page
+            params.paginatorHook.pageCount,
+            params.paginatorHook.page
         ])
 
         return { pageInfo,  getLoading, items, ...params,...queryElse }
@@ -95,28 +110,25 @@ export const generateQueryHook = <Q, R, V = undefined>(
 
     const queryHook  = (defaultOptions?: QueryHookOptions<Q,V>) => {
         const [getData, { data:_data,error, loading:getLoading,...context }] = useLazyQuery<Q,V>(QUERY, {
-            nextFetchPolicy: "network-only",
+            nextFetchPolicy: "cache-first",
             ...initOptions,
             ...defaultOptions,
         })
 
         
         const operationName = initOptions?.queryName || getQueryName(QUERY);
-        dataCheck(_data, operationName,["data"])
+        dataCheck(_data, operationName)
 
         type Result = R extends Array<any> ? R : R | undefined 
         // @ts-ignore
-        const data: Result = _data?.[operationName]?.data || undefined;
-
-        console.log(_data);
-        console.log(_data);
+        const data: Result = _data?.[operationName] || undefined;
 
         useEffect(()=>{
             if(!skipInit)
                 getData();
         },[])
-        
-        return {  getData, getLoading, data,...context }
+
+        return { getData, getLoading, data,...context }
     }
     return queryHook
 }
@@ -126,11 +138,12 @@ export const generateQueryHook = <Q, R, V = undefined>(
 
 export const generateMutationHook = <M,V>(MUTATION:DocumentNode,defaultOptions?: MutationHookOptions<M,V>) => {
     const mutationHook = (options?: MutationHookOptions<M,V>) => {
-        const muHook = useMutation<M, V>(MUTATION, {
+        const muhook = useMutation<M, V>(MUTATION, {
             ...defaultOptions,
             ...options
         });
-        return muHook
+
+        return muhook
     }
     return mutationHook
 }
@@ -151,10 +164,10 @@ export const generateFindQuery = <Q,V,ResultFragment>(findBy: keyof V, QUERY:Doc
         const operationName = getQueryName(QUERY);
 
         // @ts-ignore
-        const item:ResultFragment | undefined = data?.[operationName]?.data || undefined;
+        const item:ResultFragment | undefined = data?.[operationName] || undefined;
         // @ts-ignore
         const errorFromServer:string = data?.[operationName]?.error;
-        dataCheck(data,operationName,["data"])
+        dataCheck(data,operationName)
    
         useEffect(()=>{
             if(key)
@@ -169,12 +182,3 @@ export const generateFindQuery = <Q,V,ResultFragment>(findBy: keyof V, QUERY:Doc
     return findQueryHook
 }
 
-
-export const getQueryName = (QUERY:DocumentNode) => {
-    const operation = QUERY.definitions[0];
-
-    // @ts-ignore
-    const operationName = operation && operation.name.value;
-
-    return capitalizeFirstLetter(operationName);
-}
