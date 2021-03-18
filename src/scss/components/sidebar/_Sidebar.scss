@@ -7,6 +7,7 @@ $side-bg: #333333;
 .sidebar {
     position: sticky;
     top:0;
+    min-width: 17.625rem;
     z-index: $z-index-7;
     max-width: $sidebar-width;
     height: 100vh;
@@ -17,7 +18,7 @@ $side-bg: #333333;
     }
 
     &--close {
-
+        min-width: $main-menu-width;
         max-width: $main-menu-width;
 
         .subMenu {

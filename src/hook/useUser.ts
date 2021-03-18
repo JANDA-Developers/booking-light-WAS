@@ -1,9 +1,10 @@
 import { MutationHookOptions, useMutation } from "@apollo/client";
 import { getRefetch, toast } from "@janda-com/front";
 import { useEffect, useState } from "react";
-import { BUSINESS_USER_FIND_EMAIL, BUSINESS_USER_RESET_PASSWORD, CUSTOMER_USER_FIND_EMAIL, CUSTOMER_USER_RESET_PASSWORD, ME,  PROFILE,  PROFILE_UPDATE_FOR_BUSINESS_USER, SIGN_IN, SIGN_OUT, SIGN_UP, STORE_SIGINUP, STORE_SIGNIN_ANONYMOUSE_COMPLETE, STORE_SIGNIN_ANONYMOUSE_START, USER_DUPLICATE_CHECK } from "../apollo/gql/user";
+import { BUSINESS_USER_FIND_EMAIL, BUSINESS_USER_RESET_PASSWORD, CUSTOMER_USER_FIND_EMAIL, CUSTOMER_USER_RESET_PASSWORD, ME,  MY_NOTIFICATION_MANAGER,  PROFILE,  PROFILE_UPDATE_FOR_BUSINESS_USER, SIGN_IN, SIGN_OUT, SIGN_UP, STORE_SIGINUP, STORE_SIGNIN_ANONYMOUSE_COMPLETE, STORE_SIGNIN_ANONYMOUSE_START, USER_DUPLICATE_CHECK } from "../apollo/gql/user";
 import {  me, me_Me,  profileUpdateForBusinessUser, profileUpdateForBusinessUserVariables,
-      signInVariables,  signIn, signUp, signUpVariables, storeSignInAnonymousComplete, storeSignInAnonymousCompleteVariables, storeSignInAnonymousStart, storeSignInAnonymousStartVariables, storeSignUp, storeSignUpVariables, _IItemFilter, _IItemSort, _InvoiceFilter, _InvoiceSort, businessUserFindEmail, businessUserFindEmail_BusinessUserFindEmail, customerFindEmail, customerFindEmail_CustomerFindEmail, businessUserResetPassword, businessUserResetPasswordVariables, customerResetPassword_CustomerResetPassword, customerResetPassword, customerResetPasswordVariables, signOut, userDuplicateCheck, userDuplicateCheckVariables, userDuplicateCheck_UserDuplicateCheck, UserRole, Fuser, profileVariables} from "../type/api";
+      signInVariables,  signIn, signUp, signUpVariables, storeSignInAnonymousComplete, storeSignInAnonymousCompleteVariables, storeSignInAnonymousStart, storeSignInAnonymousStartVariables, storeSignUp, storeSignUpVariables, _IItemFilter, _IItemSort, _InvoiceFilter, _InvoiceSort, businessUserFindEmail, businessUserFindEmail_BusinessUserFindEmail, customerFindEmail, customerFindEmail_CustomerFindEmail, businessUserResetPassword, businessUserResetPasswordVariables, customerResetPassword_CustomerResetPassword, customerResetPassword, customerResetPasswordVariables, signOut, userDuplicateCheck, userDuplicateCheckVariables, userDuplicateCheck_UserDuplicateCheck, UserRole, Fuser, profileVariables, VerificationTarget, verificationComplete_VerificationComplete_data, myNotificationManager, myNotificationManager_MyNotificationManager} from "../type/api";
+import { completeMsg, errorMessage } from "../utils/onCompletedMessage";
 import {  generateMutationHook, generateQueryHook } from "../utils/query";
 
 export const useStoreSignInAnonymousStart = generateMutationHook<storeSignInAnonymousStart, storeSignInAnonymousStartVariables>(STORE_SIGNIN_ANONYMOUSE_START);
@@ -25,6 +26,8 @@ export const useCustomerEmailFind = generateMutationHook<customerFindEmail,custo
 export const useBusiResetPassword = generateMutationHook<businessUserResetPassword,businessUserResetPasswordVariables>(BUSINESS_USER_RESET_PASSWORD);
 export const useCustomerResetPassword = generateMutationHook<customerResetPassword,customerResetPasswordVariables>(CUSTOMER_USER_RESET_PASSWORD);
 
+export const useMyNotificationManager = generateQueryHook<myNotificationManager, myNotificationManager_MyNotificationManager>(MY_NOTIFICATION_MANAGER)
+
 export const useDuplicateCheck = () => {
       const [message,setMessage] = useState({
             success: "",
@@ -44,7 +47,7 @@ export const useDuplicateCheck = () => {
       const checkEmailDuplicate = (email:string,role:UserRole,) => {
             setMessage({
                   fail: `${email}은 이미 생성된 이메일 입니다.`,
-                  success: `${email}를 사용할 수 있습니다. 입니다.`
+                  success: `이메일 ${email}은 사용 가능합니다.`
             })
             
             duplicateCheck({
@@ -57,4 +60,59 @@ export const useDuplicateCheck = () => {
       }
 
       return {duplicateChecked, setDuplicateCheck, checkEmailDuplicate}
+}
+
+
+export type TUseAnnonymouseVerifi  = ReturnType<typeof useAnnonymouseVerifi>
+export const useAnnonymouseVerifi= ( target: VerificationTarget) => {
+    const [code, setCode] = useState("");
+    const [verifiData, setVerifiData] = useState<verificationComplete_VerificationComplete_data>()
+
+    const [verifiAnony, {loading:startLoading}] = useStoreSignInAnonymousStart({onCompleted:
+        ({StoreSignInAnonymousStart})=>{
+            if(completeMsg(StoreSignInAnonymousStart, "인증코드 발송"))
+                setVerifiData(StoreSignInAnonymousStart.data!)
+    }});
+    const [verifiAnonyComplete,{loading:completeLoading}] = useStoreSignInAnonymousComplete({
+        onCompleted: ({StoreSignInAnonymousComplete}) => {
+            if(completeMsg(StoreSignInAnonymousComplete, "인증완료", "인증번호를 다시 확인 해주세요")) {
+                setVerifiData(StoreSignInAnonymousComplete.data!)
+            } 
+        }
+    });
+
+    
+    const verifiStart = async (payload:string) => {
+        return await verifiAnony({
+            variables: {
+                input: {
+                    target,
+                    payload
+                }
+            }
+        }).then(result => {
+            return {...result?.data?.StoreSignInAnonymousStart};
+        })
+    }
+
+    const verifiComplete = async () => {
+        if(!verifiData) return;
+        return await verifiAnonyComplete({
+            variables: {
+                input: {
+                    code,
+                    payload: verifiData.payload,
+                    target: verifiData.target,
+                    verificationId: verifiData._id
+                }
+            }
+        }).then(result => {
+            return {...result?.data?.StoreSignInAnonymousComplete};
+        })
+    }
+
+    const totalLoading = startLoading || completeLoading;
+
+    return { code, setCode, verifiStart, verifiComplete, verifiAnony, verifiAnonyComplete, verifiData, totalLoading, setVerifiData,target};
+
 }

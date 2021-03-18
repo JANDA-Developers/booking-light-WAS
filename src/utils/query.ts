@@ -5,6 +5,18 @@ import {useLazyQuery} from "@apollo/client";
 import { DEFAULT_PAGE_INFO } from "@janda-com/front";
 import { FoffsetPagingInfo } from "../type/api";
 
+
+export const pageLoadingEffect = (loading:boolean) => {
+    const MuPageLoading = document.getElementById("MuPageLoading");
+    if(MuPageLoading) {
+        if(loading) {
+                MuPageLoading.classList.add("muPageLoading--visible");
+        } else {
+            MuPageLoading?.classList.remove("muPageLoading--visible");
+        }
+    }
+}
+
 export const getQueryName = (QUERY:DocumentNode) => {
     const operation = QUERY.definitions[0];
 
@@ -29,6 +41,7 @@ interface genrateOption<Q,V> extends QueryHookOptions<Q,V> {
 const dataCheck = (data:any,operationName:string, checkProperty?: string[]) => {
     try {
     if(data?.hasOwnProperty(operationName) === false) {
+        console.log({data});
         throw Error(`result data object dose not have property ${operationName} look this above object ↑ `)
     }
 
@@ -67,7 +80,7 @@ export const generateListQueryHook = <F,S,Q,V,R>(
         })
         
         const [getData, { data, loading: getLoading,...queryElse }] = useLazyQuery<Q,V>(QUERY,{
-            fetchPolicy: "cache-first",
+            fetchPolicy: "cache-and-network",
             // @ts-ignore
             variables: {
                 ...integratedVariable,
@@ -78,13 +91,15 @@ export const generateListQueryHook = <F,S,Q,V,R>(
             ...ops
         })
 
-
         const operationName = defaultOptions?.queryName || getQueryName(QUERY);
 
         dataCheck(data,operationName,["items","pageInfo"])
         // @ts-ignore
         const items: R[] = data?.[operationName]?.items || []
         const pageInfo: FoffsetPagingInfo = (data as any)?.[operationName]?.pageInfo || DEFAULT_PAGE_INFO
+
+        
+        pageLoadingEffect(getLoading);
 
 
         useEffect(()=>{
@@ -97,7 +112,16 @@ export const generateListQueryHook = <F,S,Q,V,R>(
             params.paginatorHook.page
         ])
 
-        return { pageInfo,  getLoading, items, ...params,...queryElse }
+        useEffect(()=>{
+            params.paginatorHook.setPage(0)
+        },[
+            params.paginatorHook.pageCount,
+            params.filter
+        ])
+
+        console.log({data});
+
+        return {getData, pageInfo,  getLoading, items, ...params,...queryElse }
     }
 
     return listQueryHook
@@ -123,10 +147,15 @@ export const generateQueryHook = <Q, R, V = undefined>(
         // @ts-ignore
         const data: Result = _data?.[operationName] || undefined;
 
+        pageLoadingEffect(getLoading);
+
         useEffect(()=>{
             if(!skipInit)
                 getData();
         },[])
+
+        console.log({_data})
+        console.log({data})
 
         return { getData, getLoading, data,...context }
     }
@@ -139,9 +168,13 @@ export const generateQueryHook = <Q, R, V = undefined>(
 export const generateMutationHook = <M,V>(MUTATION:DocumentNode,defaultOptions?: MutationHookOptions<M,V>) => {
     const mutationHook = (options?: MutationHookOptions<M,V>) => {
         const muhook = useMutation<M, V>(MUTATION, {
+            awaitRefetchQueries: true,
             ...defaultOptions,
             ...options
         });
+
+        pageLoadingEffect(muhook[1].loading)
+        
 
         return muhook
     }
@@ -174,6 +207,9 @@ export const generateFindQuery = <Q,V,ResultFragment>(findBy: keyof V, QUERY:Doc
             getData()
         },[key])
 
+        
+        pageLoadingEffect(loading);
+
         const error = apolloError || errorFromServer 
 
         return {item, loading, error}
@@ -181,4 +217,5 @@ export const generateFindQuery = <Q,V,ResultFragment>(findBy: keyof V, QUERY:Doc
 
     return findQueryHook
 }
+
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import "../../shared/pages/reservation/lib/niceGlobal";
+import "../nice/niceGlobal"
 export interface INiceElementProp {
   PayMethod: "CARD" | "BANK" | "VBANK" | "CELLPHONE";
   GoodsName: string;

@@ -10,7 +10,7 @@ export const storage = new LocalManager<"lastStore">({
 export default storage
 
 
-export type TStoreKeys = "itemTempBoard" | "lastLoginType" | "qnaWrite" | "announceWrite" | "lastProd" | "signUpRole" | "questionWrite" | "newsWrite" | "write" | "bracket" | "saveid" | "saveSession?" | "saveId?" | "portfolioWrite" | "jwt" | "lastLogin";
+export type TStoreKeys = "storeId" | "itemTempBoard" | "lastLoginType" | "qnaWrite" | "announceWrite" | "lastProd" | "signUpRole" | "questionWrite" | "newsWrite" | "write" | "bracket" | "saveid" | "saveSession?" | "saveId?" | "portfolioWrite" | "jwt" | "lastLogin";
 
 export let Storage: LocalManager<TStoreKeys> | null = null;
 
@@ -34,7 +34,6 @@ export class LocalItemStorage<Item extends Partial<IBaseItem>> {
     getItems() {
         return Storage?.getLocalObj<Item[]>(this.key, []) || [];
     }
-
 
     deleteExpireItem() {
         const bracket = this.getItems();
@@ -68,6 +67,12 @@ export class LocalItemStorage<Item extends Partial<IBaseItem>> {
         const targetIndex = items.findIndex(prod => prod._id === _id);
         items.splice(targetIndex, 1);
         this.saveItems(items);
+    }
+
+    addItems(items: Item[]) {
+        items.forEach((item) => {
+            this.addItem({...item})
+        })
     }
 
     addItem(_item: Item) {

@@ -1,0 +1,18 @@
+.muPageLoading {
+    position: fixed;
+    z-index: $z-index-9;
+    backdrop-filter: blur(2px) grayscale(.7);
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    display: none;
+
+    &--visible {
+        display: block;
+        opacity: 1;
+    }
+
+}
+

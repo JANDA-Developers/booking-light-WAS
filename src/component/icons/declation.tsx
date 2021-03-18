@@ -77,6 +77,7 @@ export type IIcons =
   | 'letter'
   | 'pay'
   | 'bell2'
+  | 'newWindow'
   | 'photo'
   | 'checkList'
   | 'arrowLong';
@@ -105,6 +106,9 @@ const commonStyle: React.CSSProperties = {
 export const IConOrigin: TConOrigin = {
   PATH: prop => (
     <BasicIcon path="" {...prop} />
+  ),
+  newWindow: prop => (
+    <BasicIcon {...prop} path={"M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"} />
   ),
   checkCircle: prop => (
     <BasicIcon {...prop} path={"M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.393 7.5l-5.643 5.784-2.644-2.506-1.856 1.858 4.5 4.364 7.5-7.643-1.857-1.857z"} />

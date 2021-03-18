@@ -12,7 +12,6 @@ export const Layout: React.FC<IProp> = ({ children }) => {
     const [isOpen, setIsOpen] = useState(true);
     const history = useHistory();
 
-
     return <Flex className="layout" oneone >
         <Sidebar isOpen={isOpen} />
         <div className="layout__contents">

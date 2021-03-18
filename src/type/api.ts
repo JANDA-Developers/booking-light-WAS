@@ -177,6 +177,32 @@ export interface fileDeletesVariables {
 // GraphQL query operation: invoiceFindOne
 // ====================================================
 
+export interface invoiceFindOne_InvoiceFindOne_serviceUsageDetails {
+  __typename: "ServiceUsageDetails";
+  type: ServiceUsageType;
+  action: Action;
+  isBillingTarget: boolean;
+  count: number;
+  amount: number;
+  servicePricingHashId: string;
+}
+
+export interface invoiceFindOne_InvoiceFindOne_summaryTotal {
+  __typename: "ServiceUsageDetailSummary";
+  /**
+   * 요금제를 적용한 후 가격
+   */
+  amount: number;
+  /**
+   * 요금제를 적용하기 전 가격을 말함.
+   */
+  amountOrigin: number;
+  /**
+   * 몇개의 항목에 대해서 과금된건지
+   */
+  count: number;
+}
+
 export interface invoiceFindOne_InvoiceFindOne {
   __typename: "Invoice";
   year: number;
@@ -192,6 +218,11 @@ export interface invoiceFindOne_InvoiceFindOne {
   billingAt: any | null;
   expectedBillingDayOfMonth: number;
   isBilled: boolean;
+  serviceUsageDetails: invoiceFindOne_InvoiceFindOne_serviceUsageDetails[];
+  /**
+   * 사용량 최종 요약
+   */
+  summaryTotal: invoiceFindOne_InvoiceFindOne_summaryTotal;
 }
 
 export interface invoiceFindOne {
@@ -231,6 +262,32 @@ export interface invoiceList_InvoiceList_pageInfo {
   totalPageCount: number;
 }
 
+export interface invoiceList_InvoiceList_items_serviceUsageDetails {
+  __typename: "ServiceUsageDetails";
+  type: ServiceUsageType;
+  action: Action;
+  isBillingTarget: boolean;
+  count: number;
+  amount: number;
+  servicePricingHashId: string;
+}
+
+export interface invoiceList_InvoiceList_items_summaryTotal {
+  __typename: "ServiceUsageDetailSummary";
+  /**
+   * 요금제를 적용한 후 가격
+   */
+  amount: number;
+  /**
+   * 요금제를 적용하기 전 가격을 말함.
+   */
+  amountOrigin: number;
+  /**
+   * 몇개의 항목에 대해서 과금된건지
+   */
+  count: number;
+}
+
 export interface invoiceList_InvoiceList_items {
   __typename: "Invoice";
   year: number;
@@ -246,6 +303,11 @@ export interface invoiceList_InvoiceList_items {
   billingAt: any | null;
   expectedBillingDayOfMonth: number;
   isBilled: boolean;
+  serviceUsageDetails: invoiceList_InvoiceList_items_serviceUsageDetails[];
+  /**
+   * 사용량 최종 요약
+   */
+  summaryTotal: invoiceList_InvoiceList_items_summaryTotal;
 }
 
 export interface invoiceList_InvoiceList {
@@ -484,6 +546,7 @@ export interface itemList_ItemList_items_ItemBooking {
   price: number;
   code: string;
   currency: Currency;
+  keywards: string[];
   productCount: number;
   description: string;
   /**
@@ -637,6 +700,110 @@ export interface itemFindById_ItemFindById_images {
   uri: string;
 }
 
+export interface itemFindById_ItemFindById_products_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface itemFindById_ItemFindById_products_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: itemFindById_ItemFindById_products_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface itemFindById_ItemFindById_products_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface itemFindById_ItemFindById_products_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface itemFindById_ItemFindById_products_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface itemFindById_ItemFindById_products_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface itemFindById_ItemFindById_products {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: itemFindById_ItemFindById_products_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: itemFindById_ItemFindById_products_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: itemFindById_ItemFindById_products_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: itemFindById_ItemFindById_products_capacityDetails[];
+  usageDetails: itemFindById_ItemFindById_products_usageDetails[];
+  code: string;
+}
+
 export interface itemFindById_ItemFindById {
   __typename: "ItemBooking" | "ItemService";
   _id: any;
@@ -651,6 +818,7 @@ export interface itemFindById_ItemFindById {
   price: number;
   code: string;
   currency: Currency;
+  keywards: string[];
   productCount: number;
   description: string;
   /**
@@ -670,6 +838,7 @@ export interface itemFindById_ItemFindById {
    */
   attrs: itemFindById_ItemFindById_attrs[];
   images: itemFindById_ItemFindById_images[];
+  products: itemFindById_ItemFindById_products[];
 }
 
 export interface itemFindById {
@@ -884,12 +1053,27 @@ export interface notificationSenderAdd_NotificationSenderAdd_error {
   details: string[] | null;
 }
 
+export interface notificationSenderAdd_NotificationSenderAdd_data_files {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
 export interface notificationSenderAdd_NotificationSenderAdd_data {
   __typename: "NotificationSender";
   type: NotificationMethod;
+  label: string | null;
   sender: string;
   isVerified: boolean;
+  files: notificationSenderAdd_NotificationSenderAdd_data_files[];
   isRegisteredToAligo: boolean;
+  createdAt: any;
 }
 
 export interface notificationSenderAdd_NotificationSenderAdd {
@@ -908,6 +1092,7 @@ export interface notificationSenderAdd {
 
 export interface notificationSenderAddVariables {
   target: VerificationTarget;
+  label: string;
 }
 
 /* tslint:disable */
@@ -918,6 +1103,29 @@ export interface notificationSenderAddVariables {
 // ====================================================
 // GraphQL query operation: notificationmanagerFindById
 // ====================================================
+
+export interface notificationmanagerFindById_NotificationManagerFindById_senders_files {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface notificationmanagerFindById_NotificationManagerFindById_senders {
+  __typename: "NotificationSender";
+  type: NotificationMethod;
+  label: string | null;
+  sender: string;
+  isVerified: boolean;
+  files: notificationmanagerFindById_NotificationManagerFindById_senders_files[];
+  isRegisteredToAligo: boolean;
+  createdAt: any;
+}
 
 export interface notificationmanagerFindById_NotificationManagerFindById {
   __typename: "NotificationManager";
@@ -930,6 +1138,7 @@ export interface notificationmanagerFindById_NotificationManagerFindById {
    * Email, SMS 뭘로 보내든 포인트 차감
    */
   pointRemains: number;
+  senders: notificationmanagerFindById_NotificationManagerFindById_senders[];
 }
 
 export interface notificationmanagerFindById {
@@ -969,6 +1178,21 @@ export interface notificationTemplateList_NotificationTemplateList_pageInfo {
   totalPageCount: number;
 }
 
+export interface notificationTemplateList_NotificationTemplateList_items_trigger_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface notificationTemplateList_NotificationTemplateList_items_trigger {
+  __typename: "NotificationTrigger";
+  sender: string;
+  event: NotificationTriggerEvent;
+  storeIds: any[];
+  isEnabled: boolean;
+  tags: notificationTemplateList_NotificationTemplateList_items_trigger_tags[];
+}
+
 export interface notificationTemplateList_NotificationTemplateList_items {
   __typename: "TemplateSms" | "TemplateEmail";
   _id: any;
@@ -979,6 +1203,7 @@ export interface notificationTemplateList_NotificationTemplateList_items {
   content: string;
   notificationMethod: NotificationMethod;
   replacers: string[];
+  trigger: notificationTemplateList_NotificationTemplateList_items_trigger[];
 }
 
 export interface notificationTemplateList_NotificationTemplateList {
@@ -1381,6 +1606,7 @@ export interface productList_ProductList_items {
   dateRangeForUse: productList_ProductList_items_dateRangeForUse | null;
   itemCode: string;
   itemName: string;
+  _itemId: any;
   currency: Currency;
   price: number;
   /**
@@ -1539,6 +1765,7 @@ export interface productFindById_ProductFindById_item {
   price: number;
   code: string;
   currency: Currency;
+  keywards: string[];
   productCount: number;
   description: string;
   /**
@@ -1581,6 +1808,7 @@ export interface productFindById_ProductFindById {
   dateRangeForUse: productFindById_ProductFindById_dateRangeForUse | null;
   itemCode: string;
   itemName: string;
+  _itemId: any;
   currency: Currency;
   price: number;
   /**
@@ -1637,6 +1865,110 @@ export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_pageInf
   totalPageCount: number;
 }
 
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_capacityDetails[];
+  usageDetails: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct_usageDetails[];
+  code: string;
+}
+
 export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items {
   __typename: "Booking";
   _id: any;
@@ -1662,6 +1994,13 @@ export interface purchaseListForBusinessUser_PurchaseListForBusinessUser_items {
   count: number;
   type: ItemType;
   paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: purchaseListForBusinessUser_PurchaseListForBusinessUser_items_purchasedProduct;
 }
 
 export interface purchaseListForBusinessUser_PurchaseListForBusinessUser {
@@ -1712,6 +2051,110 @@ export interface purchaseListForCustomer_PurchaseListForCustomer_pageInfo {
   totalPageCount: number;
 }
 
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_capacityDetails[];
+  usageDetails: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct_usageDetails[];
+  code: string;
+}
+
 export interface purchaseListForCustomer_PurchaseListForCustomer_items {
   __typename: "Booking";
   _id: any;
@@ -1737,6 +2180,13 @@ export interface purchaseListForCustomer_PurchaseListForCustomer_items {
   count: number;
   type: ItemType;
   paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: purchaseListForCustomer_PurchaseListForCustomer_items_purchasedProduct;
 }
 
 export interface purchaseListForCustomer_PurchaseListForCustomer {
@@ -1777,10 +2227,16 @@ export interface purchaseBundleCreate_PurchaseBundleCreate_error {
   details: string[] | null;
 }
 
+export interface purchaseBundleCreate_PurchaseBundleCreate_data {
+  __typename: "PurchaseBundle";
+  _id: any;
+}
+
 export interface purchaseBundleCreate_PurchaseBundleCreate {
   __typename: "PurchaseBundleCreateResponse";
   ok: boolean;
   error: purchaseBundleCreate_PurchaseBundleCreate_error | null;
+  data: purchaseBundleCreate_PurchaseBundleCreate_data | null;
 }
 
 export interface purchaseBundleCreate {
@@ -1834,10 +2290,10 @@ export interface purchaseBundleCancelVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: purchasebundlelistforcustomer
+// GraphQL query operation: purchaseBundleListForCustomer
 // ====================================================
 
-export interface purchasebundlelistforcustomer_PurchaseBundleListForCustomer_pageInfo {
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_pageInfo {
   __typename: "OffsetPagingInfo";
   /**
    * 선택한 페이지 번호
@@ -1857,11 +2313,12 @@ export interface purchasebundlelistforcustomer_PurchaseBundleListForCustomer_pag
   totalPageCount: number;
 }
 
-export interface purchasebundlelistforcustomer_PurchaseBundleListForCustomer_items {
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items {
   __typename: "PurchaseBundle";
   _id: any;
   createdAt: any;
   updatedAt: any;
+  status: Status;
   paymentStatus: Status;
   refundStatus: Status | null;
   paymethod: Paymethod;
@@ -1873,29 +2330,33 @@ export interface purchasebundlelistforcustomer_PurchaseBundleListForCustomer_ite
   priceRefundCompleted: number;
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
+  code: string;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
   fullRefundCompletedAt: any | null;
+  purchaserMessage: string | null;
   paymentAt: any | null;
+  purchaserName: string;
+  purchaserContact: string;
   useNicepay: boolean | null;
   paymentTimeExpired: boolean;
 }
 
-export interface purchasebundlelistforcustomer_PurchaseBundleListForCustomer {
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer {
   __typename: "OffsetPagenatedPurchaseBundleData";
-  pageInfo: purchasebundlelistforcustomer_PurchaseBundleListForCustomer_pageInfo;
-  items: purchasebundlelistforcustomer_PurchaseBundleListForCustomer_items[];
+  pageInfo: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_pageInfo;
+  items: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items[];
 }
 
-export interface purchasebundlelistforcustomer {
+export interface purchaseBundleListForCustomer {
   /**
    * Customer 전용
    */
-  PurchaseBundleListForCustomer: purchasebundlelistforcustomer_PurchaseBundleListForCustomer;
+  PurchaseBundleListForCustomer: purchaseBundleListForCustomer_PurchaseBundleListForCustomer;
 }
 
-export interface purchasebundlelistforcustomerVariables {
+export interface purchaseBundleListForCustomerVariables {
   sort?: _PurchaseBundleSort[] | null;
   filter?: _PurchaseBundleFilter | null;
   pagingInput: OffsetPagingInput;
@@ -1907,10 +2368,10 @@ export interface purchasebundlelistforcustomerVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: purchasebundlelistforBusinessUser
+// GraphQL query operation: purchaseBundleListForBusinessUser
 // ====================================================
 
-export interface purchasebundlelistforBusinessUser_PurchaseBundleListForBusinessUser_pageInfo {
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_pageInfo {
   __typename: "OffsetPagingInfo";
   /**
    * 선택한 페이지 번호
@@ -1930,11 +2391,13 @@ export interface purchasebundlelistforBusinessUser_PurchaseBundleListForBusiness
   totalPageCount: number;
 }
 
-export interface purchasebundlelistforBusinessUser_PurchaseBundleListForBusinessUser_items {
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items {
   __typename: "PurchaseBundle";
+  code: string;
   _id: any;
   createdAt: any;
   updatedAt: any;
+  status: Status;
   paymentStatus: Status;
   refundStatus: Status | null;
   paymethod: Paymethod;
@@ -1950,25 +2413,28 @@ export interface purchasebundlelistforBusinessUser_PurchaseBundleListForBusiness
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
   fullRefundCompletedAt: any | null;
+  purchaserMessage: string | null;
   paymentAt: any | null;
+  purchaserName: string;
+  purchaserContact: string;
   useNicepay: boolean | null;
   paymentTimeExpired: boolean;
 }
 
-export interface purchasebundlelistforBusinessUser_PurchaseBundleListForBusinessUser {
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser {
   __typename: "OffsetPagenatedPurchaseBundleData";
-  pageInfo: purchasebundlelistforBusinessUser_PurchaseBundleListForBusinessUser_pageInfo;
-  items: purchasebundlelistforBusinessUser_PurchaseBundleListForBusinessUser_items[];
+  pageInfo: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_pageInfo;
+  items: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items[];
 }
 
-export interface purchasebundlelistforBusinessUser {
+export interface purchaseBundleListForBusinessUser {
   /**
    * BusinessUser 전용. 현재 사용 불가능.. PurchaseBundleListForBusinessUser 대신에 PurchaseList 함수 사용 요망
    */
-  PurchaseBundleListForBusinessUser: purchasebundlelistforBusinessUser_PurchaseBundleListForBusinessUser;
+  PurchaseBundleListForBusinessUser: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser;
 }
 
-export interface purchasebundlelistforBusinessUserVariables {
+export interface purchaseBundleListForBusinessUserVariables {
   sort?: _PurchaseBundleSort[] | null;
   filter?: _PurchaseBundleFilter | null;
   pagingInput: OffsetPagingInput;
@@ -1982,6 +2448,110 @@ export interface purchasebundlelistforBusinessUserVariables {
 // ====================================================
 // GraphQL query operation: purchaseFindById
 // ====================================================
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: purchaseFindById_PurchaseFindById_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface purchaseFindById_PurchaseFindById_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: purchaseFindById_PurchaseFindById_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: purchaseFindById_PurchaseFindById_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: purchaseFindById_PurchaseFindById_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: purchaseFindById_PurchaseFindById_purchasedProduct_capacityDetails[];
+  usageDetails: purchaseFindById_PurchaseFindById_purchasedProduct_usageDetails[];
+  code: string;
+}
 
 export interface purchaseFindById_PurchaseFindById {
   __typename: "Booking";
@@ -2008,6 +2578,13 @@ export interface purchaseFindById_PurchaseFindById {
   count: number;
   type: ItemType;
   paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: purchaseFindById_PurchaseFindById_purchasedProduct;
 }
 
 export interface purchaseFindById {
@@ -2016,6 +2593,192 @@ export interface purchaseFindById {
 
 export interface purchaseFindByIdVariables {
   purchaseId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: purchaseBundleFindById
+// ====================================================
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_capacityDetails[];
+  usageDetails: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct_usageDetails[];
+  code: string;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases {
+  __typename: "Booking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  paymentStatus: Status;
+  refundStatus: Status | null;
+  paymethod: Paymethod;
+  paymentExpiresAt: any | null;
+  currency: Currency | null;
+  pricePaymentPending: number;
+  pricePaymentCompleted: number;
+  priceRefundPending: number;
+  priceRefundCompleted: number;
+  isFullRefunded: boolean | null;
+  isRefundedPartial: boolean | null;
+  message: string | null;
+  status: Status;
+  isPaymentCompleted: boolean | null;
+  /**
+   * Booking의 경우 Count에 입력하는게 아니라 countDetails에 입력해야함. (Booking.count = countDetails.count의 합)
+   */
+  count: number;
+  type: ItemType;
+  paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct;
+}
+
+export interface purchaseBundleFindById_PurchaseBundleFindById {
+  __typename: "PurchaseBundle";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  status: Status;
+  paymentStatus: Status;
+  refundStatus: Status | null;
+  paymethod: Paymethod;
+  paymentExpiresAt: any | null;
+  currency: Currency | null;
+  pricePaymentPending: number;
+  pricePaymentCompleted: number;
+  priceRefundPending: number;
+  priceRefundCompleted: number;
+  isFullRefunded: boolean | null;
+  isRefundedPartial: boolean | null;
+  code: string;
+  message: string | null;
+  isPaymentCompleted: boolean | null;
+  fullRefundPendingAt: any | null;
+  fullRefundCompletedAt: any | null;
+  purchaserMessage: string | null;
+  paymentAt: any | null;
+  purchaserName: string;
+  purchaserContact: string;
+  useNicepay: boolean | null;
+  paymentTimeExpired: boolean;
+  purchases: purchaseBundleFindById_PurchaseBundleFindById_purchases[];
+}
+
+export interface purchaseBundleFindById {
+  PurchaseBundleFindById: purchaseBundleFindById_PurchaseBundleFindById | null;
+}
+
+export interface purchaseBundleFindByIdVariables {
+  bundleId: any;
 }
 
 /* tslint:disable */
@@ -2874,12 +3637,10 @@ export interface storeList_StoreList_items_zoneinfo {
   alpha2Code: string;
 }
 
-export interface storeList_StoreList_items_buypages {
+export interface storeList_StoreList_items_buypage {
   __typename: "BuyPage";
   configure: any | null;
   _id: any;
-  createdAt: any;
-  updatedAt: any;
 }
 
 export interface storeList_StoreList_items_image {
@@ -2910,7 +3671,7 @@ export interface storeList_StoreList_items {
   location: storeList_StoreList_items_location;
   optionPayment: storeList_StoreList_items_optionPayment;
   zoneinfo: storeList_StoreList_items_zoneinfo | null;
-  buypages: storeList_StoreList_items_buypages[];
+  buypage: storeList_StoreList_items_buypage;
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -2975,12 +3736,10 @@ export interface storeFindByCode_StoreFindByCode_zoneinfo {
   alpha2Code: string;
 }
 
-export interface storeFindByCode_StoreFindByCode_buypages {
+export interface storeFindByCode_StoreFindByCode_buypage {
   __typename: "BuyPage";
   configure: any | null;
   _id: any;
-  createdAt: any;
-  updatedAt: any;
 }
 
 export interface storeFindByCode_StoreFindByCode_items_attrs_tags {
@@ -3034,6 +3793,7 @@ export interface storeFindByCode_StoreFindByCode_items {
   price: number;
   code: string;
   currency: Currency;
+  keywards: string[];
   productCount: number;
   description: string;
   /**
@@ -3071,7 +3831,7 @@ export interface storeFindByCode_StoreFindByCode {
   location: storeFindByCode_StoreFindByCode_location;
   optionPayment: storeFindByCode_StoreFindByCode_optionPayment;
   zoneinfo: storeFindByCode_StoreFindByCode_zoneinfo | null;
-  buypages: storeFindByCode_StoreFindByCode_buypages[];
+  buypage: storeFindByCode_StoreFindByCode_buypage;
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -3128,12 +3888,10 @@ export interface storeFindById_StoreFindById_zoneinfo {
   alpha2Code: string;
 }
 
-export interface storeFindById_StoreFindById_buypages {
+export interface storeFindById_StoreFindById_buypage {
   __typename: "BuyPage";
   configure: any | null;
   _id: any;
-  createdAt: any;
-  updatedAt: any;
 }
 
 export interface storeFindById_StoreFindById {
@@ -3152,7 +3910,7 @@ export interface storeFindById_StoreFindById {
   location: storeFindById_StoreFindById_location;
   optionPayment: storeFindById_StoreFindById_optionPayment;
   zoneinfo: storeFindById_StoreFindById_zoneinfo | null;
-  buypages: storeFindById_StoreFindById_buypages[];
+  buypage: storeFindById_StoreFindById_buypage;
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -3190,6 +3948,7 @@ export interface purchaseBundleRefund_PurchaseBundleRefund_data {
   _id: any;
   createdAt: any;
   updatedAt: any;
+  status: Status;
   paymentStatus: Status;
   refundStatus: Status | null;
   paymethod: Paymethod;
@@ -3201,11 +3960,15 @@ export interface purchaseBundleRefund_PurchaseBundleRefund_data {
   priceRefundCompleted: number;
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
+  code: string;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
   fullRefundCompletedAt: any | null;
+  purchaserMessage: string | null;
   paymentAt: any | null;
+  purchaserName: string;
+  purchaserContact: string;
   useNicepay: boolean | null;
   paymentTimeExpired: boolean;
 }
@@ -3755,6 +4518,42 @@ export interface me_Me_zoneinfo {
   alpha2Code: string;
 }
 
+export interface me_Me_stores_location {
+  __typename: "Location";
+  address: string;
+  addressDetail: string | null;
+  lat: number | null;
+  lng: number | null;
+}
+
+export interface me_Me_stores_optionPayment_commission {
+  __typename: "CommissionTable";
+  forCard: number;
+  forBankTransfer: number;
+}
+
+export interface me_Me_stores_optionPayment {
+  __typename: "PaymentOption";
+  authDate: any | null;
+  isAuthorized: boolean | null;
+  commission: me_Me_stores_optionPayment_commission;
+  enabledPaymethods: Paymethod[];
+}
+
+export interface me_Me_stores_zoneinfo {
+  __typename: "Zoneinfo";
+  timezone: string;
+  offset: number;
+  callingCode: string;
+  alpha2Code: string;
+}
+
+export interface me_Me_stores_buypage {
+  __typename: "BuyPage";
+  configure: any | null;
+  _id: any;
+}
+
 export interface me_Me_stores_items {
   __typename: "ItemBooking" | "ItemService";
   _id: any;
@@ -3763,12 +4562,24 @@ export interface me_Me_stores_items {
 
 export interface me_Me_stores {
   __typename: "Store";
-  _id: any;
+  /**
+   * 타입을 가지고 어떤 클라이언트 출력 화면이 가질지 결정됨.
+   */
+  type: StoreType;
   name: string;
+  description: string;
   /**
    * Public한 접근을 위한 코드임.
    */
   code: string;
+  itemCount: number;
+  location: me_Me_stores_location;
+  optionPayment: me_Me_stores_optionPayment;
+  zoneinfo: me_Me_stores_zoneinfo | null;
+  buypage: me_Me_stores_buypage;
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
   items: me_Me_stores_items[] | null;
 }
 
@@ -3795,6 +4606,59 @@ export interface me {
    * 비지니스 유저용
    */
   Me: me_Me | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: myNotificationManager
+// ====================================================
+
+export interface myNotificationManager_MyNotificationManager_senders_files {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface myNotificationManager_MyNotificationManager_senders {
+  __typename: "NotificationSender";
+  type: NotificationMethod;
+  label: string | null;
+  sender: string;
+  isVerified: boolean;
+  files: myNotificationManager_MyNotificationManager_senders_files[];
+  isRegisteredToAligo: boolean;
+  createdAt: any;
+}
+
+export interface myNotificationManager_MyNotificationManager {
+  __typename: "NotificationManager";
+  /**
+   * 건당 비용. 단위는 KRW
+   */
+  emailPricing: number;
+  currency: Currency;
+  /**
+   * Email, SMS 뭘로 보내든 포인트 차감
+   */
+  pointRemains: number;
+  senders: myNotificationManager_MyNotificationManager_senders[];
+}
+
+export interface myNotificationManager {
+  /**
+   * 비지니스 유저용
+   */
+  MyNotificationManager: myNotificationManager_MyNotificationManager | null;
 }
 
 /* tslint:disable */
@@ -4076,8 +4940,53 @@ export interface verificationCompleteVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: FserviceUsageDetails
+// ====================================================
+
+export interface FserviceUsageDetails {
+  __typename: "ServiceUsageDetails";
+  type: ServiceUsageType;
+  action: Action;
+  isBillingTarget: boolean;
+  count: number;
+  amount: number;
+  servicePricingHashId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Finvoice
 // ====================================================
+
+export interface Finvoice_serviceUsageDetails {
+  __typename: "ServiceUsageDetails";
+  type: ServiceUsageType;
+  action: Action;
+  isBillingTarget: boolean;
+  count: number;
+  amount: number;
+  servicePricingHashId: string;
+}
+
+export interface Finvoice_summaryTotal {
+  __typename: "ServiceUsageDetailSummary";
+  /**
+   * 요금제를 적용한 후 가격
+   */
+  amount: number;
+  /**
+   * 요금제를 적용하기 전 가격을 말함.
+   */
+  amountOrigin: number;
+  /**
+   * 몇개의 항목에 대해서 과금된건지
+   */
+  count: number;
+}
 
 export interface Finvoice {
   __typename: "Invoice";
@@ -4094,24 +5003,11 @@ export interface Finvoice {
   billingAt: any | null;
   expectedBillingDayOfMonth: number;
   isBilled: boolean;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FserviceUsageDetails
-// ====================================================
-
-export interface FserviceUsageDetails {
-  __typename: "ServiceUsageDetails";
-  action: Action;
-  isBillingTarget: boolean;
-  count: number;
-  amount: number;
-  servicePricingHashId: string;
+  serviceUsageDetails: Finvoice_serviceUsageDetails[];
+  /**
+   * 사용량 최종 요약
+   */
+  summaryTotal: Finvoice_summaryTotal;
 }
 
 /* tslint:disable */
@@ -4220,6 +5116,7 @@ export interface Fitem {
   price: number;
   code: string;
   currency: Currency;
+  keywards: string[];
   productCount: number;
   description: string;
   /**
@@ -4301,6 +5198,7 @@ export interface FitemBooking {
   price: number;
   code: string;
   currency: Currency;
+  keywards: string[];
   productCount: number;
   description: string;
   /**
@@ -4328,8 +5226,63 @@ export interface FitemBooking {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: FnotificationSender
+// ====================================================
+
+export interface FnotificationSender_files {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface FnotificationSender {
+  __typename: "NotificationSender";
+  type: NotificationMethod;
+  label: string | null;
+  sender: string;
+  isVerified: boolean;
+  files: FnotificationSender_files[];
+  isRegisteredToAligo: boolean;
+  createdAt: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: FnotificationManager
 // ====================================================
+
+export interface FnotificationManager_senders_files {
+  __typename: "File";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  extension: string;
+  fileType: string | null;
+  uri: string;
+}
+
+export interface FnotificationManager_senders {
+  __typename: "NotificationSender";
+  type: NotificationMethod;
+  label: string | null;
+  sender: string;
+  isVerified: boolean;
+  files: FnotificationManager_senders_files[];
+  isRegisteredToAligo: boolean;
+  createdAt: any;
+}
 
 export interface FnotificationManager {
   __typename: "NotificationManager";
@@ -4342,6 +5295,7 @@ export interface FnotificationManager {
    * Email, SMS 뭘로 보내든 포인트 차감
    */
   pointRemains: number;
+  senders: FnotificationManager_senders[];
 }
 
 /* tslint:disable */
@@ -4385,23 +5339,6 @@ export interface FnotificationHistoryItem {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: FnotificationSender
-// ====================================================
-
-export interface FnotificationSender {
-  __typename: "NotificationSender";
-  type: NotificationMethod;
-  sender: string;
-  isVerified: boolean;
-  isRegisteredToAligo: boolean;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: FnotificationTrigger
 // ====================================================
 
@@ -4413,11 +5350,9 @@ export interface FnotificationTrigger_tags {
 
 export interface FnotificationTrigger {
   __typename: "NotificationTrigger";
-  _id: any;
-  createdAt: any;
-  updatedAt: any;
   sender: string;
   event: NotificationTriggerEvent;
+  storeIds: any[];
   isEnabled: boolean;
   tags: FnotificationTrigger_tags[];
 }
@@ -4655,6 +5590,7 @@ export interface Fproduct {
   dateRangeForUse: Fproduct_dateRangeForUse | null;
   itemCode: string;
   itemName: string;
+  _itemId: any;
   currency: Currency;
   price: number;
   /**
@@ -4682,6 +5618,110 @@ export interface Fproduct {
 // GraphQL fragment: Fpurchase
 // ====================================================
 
+export interface Fpurchase_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface Fpurchase_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: Fpurchase_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface Fpurchase_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface Fpurchase_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface Fpurchase_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface Fpurchase_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface Fpurchase_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: Fpurchase_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: Fpurchase_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: Fpurchase_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: Fpurchase_purchasedProduct_capacityDetails[];
+  usageDetails: Fpurchase_purchasedProduct_usageDetails[];
+  code: string;
+}
+
 export interface Fpurchase {
   __typename: "Booking";
   _id: any;
@@ -4707,6 +5747,13 @@ export interface Fpurchase {
   count: number;
   type: ItemType;
   paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: Fpurchase_purchasedProduct;
 }
 
 /* tslint:disable */
@@ -4723,6 +5770,7 @@ export interface Fpurchasebundle {
   _id: any;
   createdAt: any;
   updatedAt: any;
+  status: Status;
   paymentStatus: Status;
   refundStatus: Status | null;
   paymethod: Paymethod;
@@ -4734,11 +5782,15 @@ export interface Fpurchasebundle {
   priceRefundCompleted: number;
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
+  code: string;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
   fullRefundCompletedAt: any | null;
+  purchaserMessage: string | null;
   paymentAt: any | null;
+  purchaserName: string;
+  purchaserContact: string;
   useNicepay: boolean | null;
   paymentTimeExpired: boolean;
 }
@@ -4901,7 +5953,7 @@ export interface FsettlementMallPlain {
 // ====================================================
 
 export interface FcollectionDataInterface {
-  __typename: "File" | "Verification" | "NotificationTrigger" | "SystemNoti" | "ServicePricing" | "ServiceUsage" | "BuyPage" | "Store" | "PurchaseBundle" | "Settlement" | "ServicePlan" | "Invoice" | "ServicePlanTemplate" | "BillingMethod" | "ProductAutomatorBooking" | "Billing" | "TemplateSms" | "TemplateEmail" | "BusinessUser" | "SuperAdmin" | "SmsHistoryItem" | "EmailHistoryItem" | "TransactionPayment" | "TransactionRefund" | "Customer" | "SettlementMallPlain" | "SettlementMall" | "ItemBooking" | "ProductBooking" | "Booking" | "ItemService";
+  __typename: "File" | "Verification" | "ServicePricing" | "ServiceUsage" | "BuyPage" | "Store" | "PurchaseBundle" | "Settlement" | "ServicePlan" | "Invoice" | "ServicePlanTemplate" | "BillingMethod" | "ProductAutomatorBooking" | "SystemNoti" | "Billing" | "TemplateSms" | "TemplateEmail" | "BusinessUser" | "SuperAdmin" | "SmsHistoryItem" | "EmailHistoryItem" | "TransactionPayment" | "TransactionRefund" | "Customer" | "SettlementMallPlain" | "SettlementMall" | "ItemBooking" | "ProductBooking" | "Booking" | "ItemService";
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -5081,8 +6133,6 @@ export interface FbuyPage {
   __typename: "BuyPage";
   configure: any | null;
   _id: any;
-  createdAt: any;
-  updatedAt: any;
 }
 
 /* tslint:disable */
@@ -5124,12 +6174,10 @@ export interface Fstore_zoneinfo {
   alpha2Code: string;
 }
 
-export interface Fstore_buypages {
+export interface Fstore_buypage {
   __typename: "BuyPage";
   configure: any | null;
   _id: any;
-  createdAt: any;
-  updatedAt: any;
 }
 
 export interface Fstore {
@@ -5148,7 +6196,7 @@ export interface Fstore {
   location: Fstore_location;
   optionPayment: Fstore_optionPayment;
   zoneinfo: Fstore_zoneinfo | null;
-  buypages: Fstore_buypages[];
+  buypage: Fstore_buypage;
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -5420,6 +6468,7 @@ export enum InvoiceStatus {
 
 export enum ItemType {
   BOOKING = "BOOKING",
+  DELIVERY = "DELIVERY",
   EVENT = "EVENT",
   PLACE = "PLACE",
   SERVICE = "SERVICE",
@@ -5528,6 +6577,7 @@ export enum UserRole {
  * 인증 타겟 Enum
  */
 export enum VerificationEvent {
+  FindPurchaseBundle = "FindPurchaseBundle",
   NotificationSenderAdd = "NotificationSenderAdd",
   SignInWithEmail = "SignInWithEmail",
   SignInWithPhone = "SignInWithPhone",
@@ -5568,16 +6618,22 @@ export enum _FileSort {
  * Auto generated sort type
  */
 export enum _IItemSort {
+  _id__asc = "_id__asc",
+  _id__desc = "_id__desc",
   _ownerId__asc = "_ownerId__asc",
   _ownerId__desc = "_ownerId__desc",
   _storeId__asc = "_storeId__asc",
   _storeId__desc = "_storeId__desc",
+  createdAt__asc = "createdAt__asc",
+  createdAt__desc = "createdAt__desc",
   currency__asc = "currency__asc",
   currency__desc = "currency__desc",
   name__asc = "name__asc",
   name__desc = "name__desc",
   price__asc = "price__asc",
   price__desc = "price__desc",
+  updatedAt__asc = "updatedAt__asc",
+  updatedAt__desc = "updatedAt__desc",
 }
 
 /**
@@ -5666,6 +6722,8 @@ export enum _InvoiceSort {
  * Auto generated sort type
  */
 export enum _NotificationHistoryItemSort {
+  errorCount__asc = "errorCount__asc",
+  errorCount__desc = "errorCount__desc",
   method__asc = "method__asc",
   method__desc = "method__desc",
   sender__asc = "sender__asc",
@@ -5712,6 +6770,10 @@ export enum _PurchaseBundleSort {
   _id__desc = "_id__desc",
   _purchaseIds__asc = "_purchaseIds__asc",
   _purchaseIds__desc = "_purchaseIds__desc",
+  _sellerId__asc = "_sellerId__asc",
+  _sellerId__desc = "_sellerId__desc",
+  _storeId__asc = "_storeId__asc",
+  _storeId__desc = "_storeId__desc",
   createdAt__asc = "createdAt__asc",
   createdAt__desc = "createdAt__desc",
   currency__asc = "currency__asc",
@@ -5821,6 +6883,11 @@ export interface BookingInput {
   productId: any;
   countDetails?: UsageInput[] | null;
   priceOrigin?: number | null;
+  attrs?: AttributeInput[] | null;
+}
+
+export interface BuypageInput {
+  configure?: any | null;
 }
 
 export interface CapacityInput {
@@ -5864,6 +6931,7 @@ export interface ItemBookingCreateInput {
   currency?: Currency | null;
   price: number;
   tags: TagInput[];
+  keywards?: string[] | null;
 }
 
 export interface ItemBookingUpdateInput {
@@ -5875,6 +6943,7 @@ export interface ItemBookingUpdateInput {
   price?: number | null;
   images?: FileCreateInput[] | null;
   tags?: TagInput[] | null;
+  keywards?: string[] | null;
 }
 
 export interface LocationInput {
@@ -5884,11 +6953,12 @@ export interface LocationInput {
   lng?: number | null;
 }
 
-export interface NotificationTriggerCreateInput {
+export interface NotificationTriggerInput {
   sender: string;
   event: NotificationTriggerEvent;
   isEnabled: boolean;
   tags: TagInput[];
+  storeIds: any[];
 }
 
 export interface OffsetPagingInput {
@@ -5928,9 +6998,12 @@ export interface ProfileUpdateForBusinessUserInput {
 
 export interface PurchaseBundleCreateInput {
   bookingInputs: BookingInput[];
+  purchaserName: string;
+  purchaseContact: string;
   paymethod: Paymethod;
   priceOrigin: number;
   currency?: Currency | null;
+  purchaserMessage?: string | null;
 }
 
 /**
@@ -6026,15 +7099,14 @@ export interface SmsTemplateCreateInput {
   name: string;
   content: string;
   description?: string | null;
-  triggers?: NotificationTriggerCreateInput[] | null;
+  triggers?: NotificationTriggerInput[] | null;
 }
 
 export interface SmsTemplateUpdateInput {
   content?: string | null;
   name?: string | null;
   description?: string | null;
-  triggersAdd?: NotificationTriggerCreateInput[] | null;
-  triggersRemove?: any[] | null;
+  triggers?: NotificationTriggerInput[] | null;
 }
 
 export interface StoreCreateInput {
@@ -6074,6 +7146,7 @@ export interface StoreUpdateInput {
   description?: string | null;
   location?: LocationInput | null;
   zoneinfo?: ZoneinfoInput | null;
+  buypage?: BuypageInput | null;
 }
 
 export interface TagInput {
@@ -6083,8 +7156,8 @@ export interface TagInput {
 
 export interface UsageInput {
   key: string;
-  label: string;
   count: number;
+  label: string;
   price: number;
 }
 
@@ -6164,6 +7237,12 @@ export interface _IItemFilter {
   currency__not_eq?: Currency | null;
   currency__in?: Currency[] | null;
   currency__not_in?: Currency[] | null;
+  keywards__eq?: string | null;
+  keywards__not_eq?: string | null;
+  keywards__in?: string[] | null;
+  description__eq?: string | null;
+  description__not_eq?: string | null;
+  description__contains?: string | null;
   _ownerId__eq?: any | null;
   _ownerId__not_eq?: any | null;
   _ownerId__in?: any[] | null;
@@ -6172,6 +7251,22 @@ export interface _IItemFilter {
   _storeId__not_eq?: any | null;
   _storeId__in?: any[] | null;
   _storeId__not_in?: any[] | null;
+  _id__eq?: any | null;
+  _id__not_eq?: any | null;
+  _id__in?: any[] | null;
+  _id__not_in?: any[] | null;
+  updatedAt__eq?: any | null;
+  updatedAt__not_eq?: any | null;
+  updatedAt__gte?: any | null;
+  updatedAt__lte?: any | null;
+  updatedAt__lt?: any | null;
+  updatedAt__gt?: any | null;
+  createdAt__eq?: any | null;
+  createdAt__not_eq?: any | null;
+  createdAt__gte?: any | null;
+  createdAt__lte?: any | null;
+  createdAt__lt?: any | null;
+  createdAt__gt?: any | null;
 }
 
 export interface _IPurchaseFilter {
@@ -6193,10 +7288,42 @@ export interface _IPurchaseFilter {
   count__gt?: number | null;
   count__lte?: number | null;
   count__lt?: number | null;
+  purchasedProduct_type__eq?: ProductType | null;
+  purchasedProduct_type__not_eq?: ProductType | null;
+  purchasedProduct_type__in?: ProductType[] | null;
+  purchasedProduct_type__not_in?: ProductType[] | null;
+  purchasedProduct_code__eq?: string | null;
+  purchasedProduct_code__not_eq?: string | null;
+  purchasedProduct_itemCode__eq?: string | null;
+  purchasedProduct_itemCode__not_eq?: string | null;
+  purchasedProduct_itemName__eq?: string | null;
+  purchasedProduct_itemName__not_eq?: string | null;
+  purchasedProduct_itemName__contains?: string | null;
+  purchasedProduct__storeId__eq?: any | null;
+  purchasedProduct__storeId__not_eq?: any | null;
+  purchasedProduct__itemId__eq?: any | null;
+  purchasedProduct__itemId__not_eq?: any | null;
+  purchasedProduct__itemId__in?: any[] | null;
+  purchasedProduct__itemId__not_in?: any[] | null;
+  purchasedProduct__ownerId__eq?: any | null;
+  purchasedProduct__ownerId__not_eq?: any | null;
+  purchasedProduct__ownerId__in?: any[] | null;
+  purchasedProduct__ownerId__not_in?: any[] | null;
+  purchaserName__eq?: string | null;
+  purchaserName__not_eq?: string | null;
+  purchaserName__in?: string[] | null;
+  purchaserName__contains?: string | null;
+  purchaserContact__eq?: string | null;
+  purchaserContact__not_eq?: string | null;
+  purchaserContact__in?: string[] | null;
+  purchaserContact__contains?: string | null;
   type__eq?: ItemType | null;
   type__not_eq?: ItemType | null;
   type__in?: ItemType[] | null;
   type__not_in?: ItemType[] | null;
+  itemName__eq?: string | null;
+  itemName__not_eq?: string | null;
+  itemName__contains?: string | null;
   _id__eq?: any | null;
   _id__not_eq?: any | null;
   _id__in?: any[] | null;
@@ -6366,6 +7493,15 @@ export interface _NotificationHistoryItemFilter {
   sender__not_in?: string[] | null;
   sender__contains?: string | null;
   sender__not_contains?: string | null;
+  receivers__eq?: string | null;
+  receivers__not_eq?: string | null;
+  receivers__in?: string[] | null;
+  title__eq?: string | null;
+  title__not_eq?: string | null;
+  title__contains?: string | null;
+  content__eq?: string | null;
+  content__not_eq?: string | null;
+  content__contains?: string | null;
 }
 
 export interface _ProductFilter {
@@ -6381,6 +7517,7 @@ export interface _ProductFilter {
   itemCode__not_eq?: string | null;
   itemName__eq?: string | null;
   itemName__not_eq?: string | null;
+  itemName__contains?: string | null;
   _storeId__eq?: any | null;
   _storeId__not_eq?: any | null;
   _itemId__eq?: any | null;
@@ -6472,12 +7609,38 @@ export interface _ProductFilter {
 export interface _PurchaseBundleFilter {
   AND?: _PurchaseBundleFilter[] | null;
   OR?: _PurchaseBundleFilter[] | null;
+  code__eq?: string | null;
+  code__not_eq?: string | null;
   paymentAt__eq?: any | null;
   paymentAt__not_eq?: any | null;
   paymentAt__gte?: any | null;
   paymentAt__gt?: any | null;
   paymentAt__lte?: any | null;
   paymentAt__lt?: any | null;
+  purchaserName__eq?: string | null;
+  purchaserName__not_eq?: string | null;
+  purchaserName__in?: string[] | null;
+  purchaserName__contains?: string | null;
+  purchaserContact__eq?: string | null;
+  purchaserContact__not_eq?: string | null;
+  purchaserContact__in?: string[] | null;
+  purchaserContact__contains?: string | null;
+  purchaserMessage__eq?: string | null;
+  purchaserMessage__not_eq?: string | null;
+  purchaserMessage__in?: string[] | null;
+  purchaserMessage__contains?: string | null;
+  sellerMemo__eq?: string | null;
+  sellerMemo__not_eq?: string | null;
+  sellerMemo__in?: string[] | null;
+  sellerMemo__contains?: string | null;
+  _storeId__eq?: any | null;
+  _storeId__not_eq?: any | null;
+  _storeId__in?: any[] | null;
+  _storeId__not_in?: any[] | null;
+  _sellerId__eq?: any | null;
+  _sellerId__not_eq?: any | null;
+  _sellerId__in?: any[] | null;
+  _sellerId__not_in?: any[] | null;
   _customerId__eq?: any | null;
   _customerId__not_eq?: any | null;
   _customerId__in?: any[] | null;
@@ -6486,6 +7649,10 @@ export interface _PurchaseBundleFilter {
   _purchaseIds__not_eq?: any[] | null;
   _purchaseIds__in?: any[] | null;
   _purchaseIds__not_in?: any[] | null;
+  _purchaseItemIds__eq?: any[] | null;
+  _purchaseItemIds__not_eq?: any[] | null;
+  _purchaseItemIds__in?: any[] | null;
+  _purchaseItemIds__not_in?: any[] | null;
   _id__eq?: any | null;
   _id__not_eq?: any | null;
   _id__in?: any[] | null;

@@ -20,12 +20,12 @@ export const NotificationSummaryCard: React.FC<IProp> = () => {
         history.push(Paths.itemList)
     }
 
-    const handleTitelClick = (itemId: string) => () => {
-        history.push(Paths.productDetail + "/" + itemId)
+    // const handleTitelClick = (itemId: string) => () => {
+    //     history.push(Paths.productDetail + "/" + itemId)
 
-    }
+    // }
 
-    const Nodes = items.map(item => ([<span className="summaryCard__cell" onClick={handleTitelClick(item._id)}>{item.title}</span>, <span className="summaryCard__cell">{yyyymmdd(item.createdAt)}</span>, <span className="summaryCard__cell">{autoComma(item.method)}</span>]));
+    const Nodes = items.map(item => ([<span className="summaryCard__cell" >{item.title}</span>, <span className="summaryCard__cell">{yyyymmdd(item.createdAt)}</span>, <span className="summaryCard__cell">{autoComma(item.method)}</span>]));
 
     return <SummaryCard mb className="summaryCard" head={<Flex between ><span>상품 현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
 

@@ -44,14 +44,17 @@ export const FormCreater: React.FC<IProp> = ({ attributes, setAttributes }) => {
 
     return <JDcard className="formCreater" flex={{ oneone: true }} mode="border">
         <Flex grow>
-            <JDcard head="미리보기" mode="border" mr>
-                <Draager<Fattribute> onOrder={handleDrop} handle ulClassName={"formCreater__draggWrap"} idKey="key" items={attributes} ItemRender={(attribute, index, { dragHandleProps }) =>
+            <JDcard head={<Flex between vCenter><span>미리보기</span> <div>
+                </div></Flex>} mode="border" mr>
+                <Draager<Fattribute> onOrder={handleDrop} handle ulClassName={"formCreater__draggWrap"} idKey="key" items={attributes} 
+                ItemRender={(attribute, index, { dragHandleProps }) =>
                     <Flex className="formCreater__inputCell" mb vCenter>
                         <AttributeInput onEdit={() => {
                             modalHook.openModal({ key: attribute.key })
                         }} onDelete={handleDelete(attribute)} attribute={attribute} />
                         <Grab className="formCreater__grab" {...dragHandleProps} />
-                    </Flex>} />
+                    </Flex>} 
+                />
             </JDcard>
             <Controller key={"create" + attributes.length} onSubmit={handleAttributeCreate} />
         </Flex>

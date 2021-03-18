@@ -7,6 +7,6 @@ import { generateFindQuery, generateListQueryHook, generateMutationHook } from "
 export const useStoreFindByCode = generateFindQuery<storeFindByCode,storeFindByCodeVariables,storeFindByCode_StoreFindByCode>("code",STORE_FIND_BY_CODE);
 export const useStoreFindById = generateFindQuery<storeFindById,storeFindByIdVariables,storeFindById_StoreFindById>("storeId",STORE_FIND_BY_ID);
 export const useStoreList = generateListQueryHook<_StoreFilter,_StoreSort,storeList,storeListVariables,storeList_StoreList_items>(STORE_LIST);
-export const useStoreCreate = generateMutationHook<storeCreate,storeCreateVariables>(STORE_CREATE, {...getRefetch(STORE_LIST,STORE_LIST, ME)});
+export const useStoreCreate = generateMutationHook<storeCreate,storeCreateVariables>(STORE_CREATE, {...getRefetch(STORE_LIST, ME)});
 export const useStoreDelete = generateMutationHook<storeDelete,storeDeleteVariables>(STORE_DELETE, {...getRefetch(STORE_LIST,ME)});
 export const useStoreUpdate = generateMutationHook<storeUpdate, storeUpdateVariables>(STORE_UPDATE, {...getRefetch(STORE_LIST)});

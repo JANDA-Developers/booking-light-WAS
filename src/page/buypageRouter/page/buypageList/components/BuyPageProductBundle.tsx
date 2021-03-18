@@ -1,30 +1,32 @@
-import { autoComma, Flex, JDcard } from '@janda-com/front';
+import { autoComma, JDtypho } from '@janda-com/front';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { ImgCard } from '../../../../../atom/ImgCard';
+import { IImgCardProps, ImgCard } from '../../../../../atom/ImgCard';
 import { CardBtn } from '../../../../../component/btns/ModalBtn';
-import { Paths } from '../../../../../MainRouter';
+import { Ratio } from '../../../../../type/const';
 import { IBuypageProductData } from '../helper/productMap';
 
-interface IProp {
+interface IProp extends Partial<IImgCardProps> {
     bundle: IBuypageProductData;
     onImgView: () => void;
+    onDetail: () => void;
 }
 
-export const BuyPageProductBundle: React.FC<IProp> = ({ bundle, onImgView: handleImgView }) => {
-    const history = useHistory();
-    const { thumbNail, name, lowPrice, _id, } = bundle;
-    const handleToDetail = () => {
-        history.push(Paths.productDetail + "/" + _id);
-    }
+export const BuyPageProductBundle: React.FC<IProp> = ({ onDetail: handleDetail, bundle, onImgView: handleImgView, ...props }) => {
+    const { thumbNail, name, lowPrice, _id } = bundle;
 
     return <ImgCard
+        mb
         onImgClick={handleImgView}
         img={thumbNail || ""}
-        foot={<CardBtn onClick={handleToDetail}>자세히보기</CardBtn>}
-        head={<Flex between>{name} <div>~{autoComma(lowPrice)}</div></Flex>
-        }>
-            {}
+        foot={<CardBtn size="long" onClick={handleDetail}>자세히보기</CardBtn>}
+        head={<JDtypho weight={600} flex={{ between: true }} size="large" >{name} <div>~{autoComma(lowPrice)} KRW</div></JDtypho>
+        }
+        photoProp={{
+            ratio: Ratio['16:9']
+        }}
+        {...props}
+    >
+        {bundle.description}
     </ ImgCard>;
 
 };

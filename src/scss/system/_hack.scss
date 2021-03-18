@@ -1,4 +1,4 @@
-html, body, #root, #JDoutWrapper {
+html, body, #body, #JDoutWrapper {
     overflow-x: hidden;
 }
 html {
@@ -13,11 +13,10 @@ html {
     bottom: unset!important;
 }
 
-
-//나중에 지우삼
-.JDmodal__body br {
-    display:none;
+.JDtextColor--positive {
+    color: $positive-color;
 }
+
 
 .JDbox {
     border-radius: $br1;
@@ -50,6 +49,8 @@ html {
 .JDhorizen {
     
     width: auto!important;
+    margin-left:  0px!important;
+    margin-right: 0px!important;
 }
 
 .JDflex--around {
@@ -66,3 +67,50 @@ html {
         flex-wrap: wrap;
     }
 }
+
+#mainTooltip {
+    display: none;
+}
+
+#body .counter__btn {
+    background-color: transparent;
+}
+
+html .container--vps {
+    padding-bottom: space(12);
+}
+
+.JDlist {
+    margin-bottom: 0px;
+}
+
+#body .countSelecter {
+padding: 0.8rem;
+background-color: #d9d9d9;
+display: flex;
+justify-content: space-around; }
+@media only screen and (max-width: 550px) and (min-width: 0px) {
+#body .countSelecter {
+padding: 0 !important; } }
+#body .counter {
+display: inline-block; }
+#body .counter__btn,
+#body .counter .counter__count {
+border-radius: 0px;
+margin: 0px !important;
+font-weight: 600; }
+#body .counter__count {
+background-color: #d9d9d9; }
+#body .counter__btn {
+background-color: white;
+color: #989898 !important;
+border: none; }
+#body .counter__btn:disabled {
+background-color: #eee; }
+#body .counter .react-select__control {
+border: none;
+border-radius: 0px !important;
+border-left: 1px solid #bebebe;
+border-right: 1px solid #bebebe; }
+#body .counter__inner {
+border: 1px solid #bebebe; }

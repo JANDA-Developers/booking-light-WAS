@@ -1,7 +1,7 @@
 import { IUseModal, JDalign, JDbutton, JDlabel, JDmodal, JDmodalConfigProps, JDtypho, toast } from '@janda-com/front';
 import React from 'react';
 import dayjs from "dayjs"
-import { autoComma, copytoClipboard } from '@janda-com/front/dist/utils/utils';
+import { autoComma, copytoClipboard } from '@janda-com/front';
 import { InputText } from '@janda-com/front';
 
 export interface IProp extends JDmodalConfigProps {

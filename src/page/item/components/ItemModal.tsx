@@ -6,13 +6,10 @@ import { FormCreater } from '../../../component/formCreater/FormCreater';
 import AppContext from '../../../context';
 import { useAttributes } from '../../../hook/useAttributes';
 import { useCopy } from '../../../hook/useCopy';
-import { useFileUploads } from '../../../hook/useFIle';
-import { useItemCreate, useItemDelete, useItemFindById, useItemUpdate } from '../../../hook/useItem';
-import { useProductFindById } from '../../../hook/useProduct';
-import { useMultiUpload, useSingleUpload } from '../../../hook/useUpload';
-import { Fattribute, ItemBookingCreateInput, ItemBookingUpdateInput } from '../../../type/api';
+import { useItemCreate, useItemFindById, useItemUpdate } from '../../../hook/useItem';
+import { useMultiUpload } from '../../../hook/useUpload';
+import { ItemBookingCreateInput, ItemBookingUpdateInput } from '../../../type/api';
 import { ITEM_TYPE_OPS } from '../../../type/const';
-import { IProductModalInfo } from '../../product/component/ProductModal';
 
 export interface IItemModalInfo {
     itemId: string;

@@ -1,48 +1,56 @@
-import { Bold, Col, Grid, JDcard, JDcontainer, JDhorizen, JDpageHeader, JDselect, JDswitch, JDtypho, WindowSize } from '@janda-com/front';
-import React, { useContext } from 'react';
+import { Bold, Col, copytoClipboard, Flex, Grid, JDcard, JDcontainer, JDhorizen, JDlabel, JDpageHeader, JDselect, JDswitch, JDtypho, toast, WindowSize } from '@janda-com/front';
+import { ISet } from '@janda-com/front/dist/types/interface';
+import React, { useContext, useState } from 'react';
 import { JDicon } from '../../component/icons/Icons';
 import AppContext from '../../context';
-import { BuyPageRouterWrap as BuyPageRouter } from '../buypageRouter/BuyPageRouter';
+import { useCopy } from '../../hook/useCopy';
+import { BuyPageType } from '../../type/enum';
+import { mergeDeepOnlyExsistProperty } from '../../utils/merge';
+import { buyPageLinkCreater, BuyPagePaths, BuyPageRouterWrap as BuyPageRouter } from '../buypageRouter/BuyPageRouter';
+import { DefaultBuypageConfig, BuypageConfiger, IbuypageConfig } from './compoents/BuypageConfiger';
 
-interface IProp { }
+
+
+
+interface IProp {
+}
 
 export const BuyPageSetDetail: React.FC<IProp> = () => {
     const { selectedStore } = useContext(AppContext);
+    const [config, setConfig] = useCopy<IbuypageConfig>(
+        mergeDeepOnlyExsistProperty(DefaultBuypageConfig, selectedStore?.buypage?.configure || {})
+    )
 
-    return <div>
+
+    const getLink = () => buyPageLinkCreater({
+        storeCode: selectedStore?.code
+    })
+
+    const handleView = () => {
+        window.open(getLink(), "_blank");
+    }
+
+    const handleCopyLink = () => {
+        copytoClipboard(getLink())
+        toast("클립보드에 복사 되었습니다.")
+    }
+
+    return <div className="buy">
         <JDpageHeader title="예약페이지 생성하기" desc="원하는 형태의 예약페이지 생성하기" />
-        <JDcontainer size={WindowSize.full}>
+        <JDcontainer verticalPadding size={WindowSize.full}>
             <Grid>
-                {/* 미리보기 */}
                 <Col full={9} lg={12}>
-                    <JDcard head="미리보기">
-                        <BuyPageRouter storeCode={selectedStore?.code} />
-                    </JDcard>
+                    <Flex between vCenter><JDlabel>미리보기</JDlabel>
+                        <Flex vCenter>
+                            <JDicon mr mb hover onClick={handleCopyLink} icon="copy" />
+                            <JDicon mb hover onClick={handleView} icon="newWindow" />
+                        </Flex>
+                    </Flex>
+                    <BuyPageRouter propConfigure={config} storeCode={selectedStore?.code} />
                 </Col>
                 <Col full={3} lg={12}>
-                    <JDcard head="페이지 설정하기">
-                        <Bold size="small">기본</Bold>
-                        <JDhorizen margin={1} />
-                        <JDselect mb label="페이지 타입" />
-                        <Bold size="small">필터</Bold>
-                        <JDhorizen margin={1} />
-                        <div>
-                            <JDswitch mb label="시간필터 출력" />
-                        </div>
-                        <div>
-                            <JDswitch mb label="검색필터 출력" />
-                        </div>
-                        <div>
-                            <JDselect mb label="분단위 조절" />
-                        </div>
-                        <Bold size="small">기타</Bold>
-                        <JDhorizen margin={1} />
-                        <div>
-                            <JDswitch mb label="장바구니 표시" />
-                        </div>
-                        {/* <JDselect onChange={ } /> */}
-                        {/* //기타 옵션들 들어갈 자리  */}
-                    </JDcard>
+                    <JDlabel> 편집</JDlabel>
+                    <BuypageConfiger setConfig={setConfig} config={config} />
                 </Col>
             </Grid>
         </JDcontainer>

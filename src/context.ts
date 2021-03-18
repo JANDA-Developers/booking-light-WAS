@@ -1,6 +1,7 @@
 import { IselectedOption } from "@janda-com/front/dist/types/interface";
 import React, { useEffect, useState } from "react";
-import { me_Me, me_Me as MyProfile, me_Me_stores } from "./type/api";
+import { invoiceFindOne_InvoiceFindOne, me_Me, me_Me as MyProfile, me_Me_stores } from "./type/api";
+import { UsageTypeMap } from "./utils/invoiceMapper";
 import { storage } from "./utils/storage";
 
 
@@ -18,6 +19,8 @@ export interface IAppContext {
   storeOptions: IselectedOption[];
   me?: me_Me | undefined;
   isLogined?: boolean;
+  thisMonthInvoice?: invoiceFindOne_InvoiceFindOne,
+  usageMap?: UsageTypeMap
 }
 
 export const DEFAULT_APP_CONTEXT: IAppContext = {
@@ -66,7 +69,7 @@ export const useAppContext = (me?: me_Me) => {
     } 
   },[defaultContext.me])
 
-  const isLogined = !!me;
+  const isLogined =  !!me;
 
   return {
     ...context,

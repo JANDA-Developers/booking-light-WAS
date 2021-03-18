@@ -1,15 +1,16 @@
-import { autoComma, Bold, Flex, IJDalignProp } from '@janda-com/front';
+import { autoComma, Bold, Flex, IJDalignProp, JDtypho, Thin } from '@janda-com/front';
+import { TElements } from '@janda-com/front/dist/types/interface';
 import React from 'react';
 
 interface IProp extends IJDalignProp {
-    label: string;
-    value?: string;
+    label: TElements;
+    value?: TElements;
 }
 
-export const Info: React.FC<IProp> = ({ label, value, ...props }) => {
+export const Info: React.FC<IProp> = ({ children, label, value, ...props }) => {
     return <Flex vCenter {...props}>
-        <Bold mr="small">{label}</Bold>
-        {value}
+        <JDtypho color="grey2" mr="small">{label}</JDtypho>
+        {value || children}
     </Flex>;
 };
 

@@ -1,12 +1,13 @@
 import { useDayPicker, useTimePicker } from "@janda-com/front";
 import dayjs from "dayjs";
+import { today, todayDate, tommorrowDate, tomorrow } from "../type/const";
 
 export type TUseDateTimePicker = ReturnType<typeof useDateTimepicker>;
 export interface IUseDatePickerProps {
     defaultStart: Date,
     defaultEnd: Date,
 }
-export const useDateTimepicker = ({defaultEnd,defaultStart}:IUseDatePickerProps = {defaultEnd: dayjs().add(1,"day").toDate(), defaultStart: new Date()}) => {
+export const useDateTimepicker = ({defaultEnd,defaultStart}:IUseDatePickerProps = {defaultEnd: tommorrowDate, defaultStart: todayDate}) => {
     const startDateHook = useDayPicker(defaultStart, defaultStart);
     const endDateHook = useDayPicker(defaultEnd, defaultEnd);
     const startTimerHook = useTimePicker({

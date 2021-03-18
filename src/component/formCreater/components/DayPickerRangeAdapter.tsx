@@ -31,8 +31,14 @@ export const DayPickerRangeAdater: React.FC<IProp> = ({ value, onChange, label, 
     }, [from, to])
 
 
+    console.log({ dayPickerHook });
+
     return <div>
         <JDlabel require={require} txt={label} />
-        <JDdoubleInputRange fromLabel={label} dayPickerHook={dayPickerHook} />
+        <div>
+            <JDdayPicker {...dayPickerHook} mode="input" inputComponent={(prop) => {
+                return <JDdoubleInputRange {...prop} dayPickerHook={dayPickerHook} />
+            }} />
+        </div>
     </div>
 };

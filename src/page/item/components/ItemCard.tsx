@@ -3,7 +3,9 @@ import { IJDcardProps } from '@janda-com/front/dist/components/cards/Card';
 import React from 'react';
 import { Info } from '../../../atom/Info';
 import { Vertical } from '../../../atom/Vertical';
+import PhotoFrame from '../../../component/photoFrame/PhotoFram';
 import { Fitem, itemFindById_ItemFindById, itemList_ItemList_items_ItemBooking } from '../../../type/api';
+import { Ratio } from '../../../type/const';
 import { yyyymmddHHmm, yyyymmddHHmmLabel } from '../../../utils/dateFormat';
 
 interface IProp extends IJDcardProps {
@@ -32,7 +34,7 @@ export const ItemCard: React.FC<IProp> = ({
         <div>
             <Flex>
                 <div>
-                    {item.thumbNail && <JDphotoFrame className="itemCard__thumb" src={item.thumbNail} />}
+                    {item.thumbNail && <PhotoFrame ratio={Ratio['16:9']} isBgImg className="itemCard__thumb" src={item.thumbNail} />}
                 </div>
                 <Vertical margin={3} />
                 <div>

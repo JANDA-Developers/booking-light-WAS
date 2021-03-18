@@ -11,8 +11,6 @@ export const Page404: React.FC<IProp> = () => {
     const history = useHistory();
 
     return <Centerlize  >
-        <JDexceptionPage Button={<JDbutton onClick={
-            () => history.push(Paths.main)
-        }>홈으로</JDbutton>} type="404" />
+        <JDexceptionPage buttonProp={{ label: "홈으로", onClick: () => history.push(Paths.main) }} type="404" />
     </Centerlize>;
 };

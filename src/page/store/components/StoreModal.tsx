@@ -14,22 +14,29 @@ export interface IStoreModalInfo {
 
 interface IProp {
     modalHook: IUseModal<IStoreModalInfo>;
+    onCreate?: () => void;
+    onUpdate?: () => void;
 }
 
-export const StoreModal: React.FC<IProp> = ({ modalHook }) => {
+export const StoreModal: React.FC<IProp> = ({ modalHook, onCreate, onUpdate }) => {
     const store = modalHook.info?.store;
     const storeId = store?._id;
     const isCreate = !store;
     const [storeUpdate] = useStoreUpdate({
         onCompleted: ({ StoreUpdate }) => {
-            if (completeMsg(StoreUpdate, "스토어 업데이트 완료", "업데이트 실패"))
+            if (completeMsg(StoreUpdate, "스토어 업데이트 완료", "업데이트 실패")) {
+                onUpdate?.();
                 modalHook.closeModal()
+            }
         }
     });
     const [storeCreate] = useStoreCreate({
         onCompleted: ({ StoreCreate }) => {
-            if (completeMsg(StoreCreate, "스토어 생성완료", "생성실패"))
+            if (completeMsg(StoreCreate, "스토어 생성완료", "생성실패")) {
+                console.log("callback");
+                onCreate?.();
                 modalHook.closeModal()
+            }
         }
     });
     const [deleteStore] = useStoreDelete({
@@ -99,6 +106,7 @@ export const StoreModal: React.FC<IProp> = ({ modalHook }) => {
 
 
     return <JDmodal
+        minWidth={"300px"}
         foot={
             <Flex>
                 <ModalBtn thema="primary" mr hide={!isCreate} onClick={handleCreate}>생성하기</ModalBtn>

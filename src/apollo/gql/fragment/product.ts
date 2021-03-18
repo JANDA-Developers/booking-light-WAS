@@ -43,6 +43,7 @@ fragment Fproduct on Product {
         }
         itemCode
         itemName
+        _itemId
         currency
         price
         capacity

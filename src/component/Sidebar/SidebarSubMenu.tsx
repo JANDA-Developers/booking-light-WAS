@@ -10,6 +10,7 @@ import AppContext from '../../context';
 export type TSidebarSub = {
     icon: IIcons,
     title: string,
+    exact?: boolean,
     path: string,
     disabled: boolean,
     redirect?: Paths | AuthPaths,
@@ -26,14 +27,13 @@ const SidebarSubMenu: React.FC<IProps> = ({ menu, onMenuClick }) => {
     const history = useHistory()
     const { contextQueryLoading } = useContext(AppContext);
     const { pathname } = useLocation()
-    const { disabled, icon, path, redirect, title, disabledTooltip } = menu;
+    const { disabled, icon, path, redirect, title, exact, disabledTooltip } = menu;
 
-    let selected: boolean = pathname.includes(path);
-
+    let selected: boolean = exact ? pathname === path : pathname.includes(path);
 
     const conditionalRedirect = () => {
         if (selected && disabled && redirect) {
-            toast(disabledTooltip)
+            toast(disabledTooltip, { toastId: "SideBardisabledTooltip" })
             history.push(redirect);
         }
     }
@@ -53,7 +53,7 @@ const SidebarSubMenu: React.FC<IProps> = ({ menu, onMenuClick }) => {
         if (!contextQueryLoading) {
             conditionalRedirect();
         }
-    })
+    }, [location.href])
 
 
     return (

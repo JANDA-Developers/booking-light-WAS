@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-export const useTagInput = () => {
-    const [tags, setTags] = useState<string[]>([]); 
+export const useTagInput = (defaultTags:string[] = []) => {
+    const [tags, setTags] = useState<string[]>(defaultTags); 
     return {tags,setTags}
 }

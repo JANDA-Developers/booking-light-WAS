@@ -1,3 +1,3 @@
 export enum BuyPageType {
-    BASE = "BASE"
+    RESERVATION_NORMAL = "RESERVATION_NORMAL",
 }

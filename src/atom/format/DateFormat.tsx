@@ -19,31 +19,30 @@ export const DateWithTimeRange: React.FC<IProp> = ({ from, to, accent }) => {
     const toDate = dayjs(_to).format("MM월DD일");
     const toTime = dayjs(_to).format("HH시mm분");
 
-
     const timeVeiw = accent === "time";
 
     return <Flex vCenter >
         <div>
+            <JDtypho size="superTiny">
+                {dayjs(_from).format("YY년")}
+            </JDtypho>
+            <Small>
+                {timeVeiw ? fromDate : fromTime}
+            </Small>
             <Small>
                 {timeVeiw ? fromTime : fromDate}
             </Small>
-            <Tiny>
-                {timeVeiw ? fromDate : fromTime}
-                <JDtypho size="superTiny">
-                    {dayjs(_from).format("YY년")}
-                </JDtypho>
-            </Tiny>
         </div>
         ~ <div>
+            <JDtypho size="superTiny">
+                {dayjs(_from).format("YY년")}
+            </JDtypho>
+            <Small>
+                {timeVeiw ? toDate : toTime}
+            </Small>
             <Small>
                 {timeVeiw ? toTime : toDate}
             </Small>
-            <Tiny>
-                {timeVeiw ? toDate : toTime}
-                <JDtypho size="superTiny">
-                    {dayjs(_to).format("YY년")}
-                </JDtypho>
-            </Tiny>
         </div>
     </Flex>;
 };

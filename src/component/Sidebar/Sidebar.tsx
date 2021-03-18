@@ -4,11 +4,12 @@ import SidebarSubMenu, { TSidebarSub } from './SidebarSubMenu'
 import { IIcons } from '@janda-com/front/dist/components/icons/declation';
 import { Bold, Flex, isEmpty, JDalign, JDtypho, Tiny } from '@janda-com/front';
 import { Paths } from '../../MainRouter';
-import { useHistory, useLocation } from 'react-router-dom';
+import { RouteComponentProps, useHistory, useLocation, withRouter } from 'react-router-dom';
 import { getUrlIndex } from "./helper";
 import AppContext, { IAppContext } from '../../context';
 import dayjs from "dayjs";
 import { AuthPaths } from '../../AuthRouter';
+import { SmsPaths } from '../../page/smsRouter/SmsRouter';
 
 export interface IMenu {
     icon: IIcons,
@@ -20,10 +21,6 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
     const { storeOptions, me, isLogined, selectedStore } = context;
 
     const haveStore: boolean = !isEmpty(storeOptions);
-    // const payConfiged: boolean;
-    // const isExpired: boolean;
-    // const haveProduct: boolean;
-    // const smsInited: boolean = !!me?.smsKey;
 
     const haveItem = (selectedStore?.items?.length || 0) > 0;
 
@@ -54,6 +51,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
 
 
     const MainMenuData: IMenu[] = [
+
         {
             icon: "houseGear",
             title: "홈",
@@ -61,17 +59,31 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                 {
                     icon: "home",
                     title: "홈",
+                    exact: true,
                     path: Paths.main,
                     disabled: !isLogined || !haveStore,
                     ...loginAndStore
                 },
                 {
-                    icon: "home",
-                    title: "상품현황",
-                    path: Paths.productBoard,
+                    icon: "barGraph",
+                    title: "사용현황",
+                    path: Paths.graph,
                     disabled: !isLogined || !haveStore,
                     ...loginAndStore
                 },
+            ]
+        },
+        {
+            icon: "store",
+            title: "상점",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "상점설정",
+                    path: Paths.storeSet,
+                    disabled: !isLogined,
+                    ...unLogined
+                }
             ]
         },
         {
@@ -87,31 +99,11 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                 },
                 {
                     icon: "menu",
-                    title: "상품 설정",
+                    title: "판매 설정",
                     path: Paths.productList,
                     disabled: !isLogined || !haveStore || !haveItem,
                     ...loginAndStoreAndItem
                 }
-            ]
-        },
-        {
-            icon: "store",
-            title: "상점",
-            sub: [
-                {
-                    icon: "menu",
-                    title: "상점설정",
-                    path: Paths.storeSet,
-                    disabled: !isLogined,
-                    ...unLogined
-                },
-                {
-                    icon: "menu",
-                    title: "판매목록",
-                    path: Paths.saleList,
-                    disabled: !isLogined || !haveStore,
-                    ...loginAndStore
-                },
             ]
         },
         {
@@ -120,7 +112,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
             sub: [
                 {
                     icon: "menu",
-                    title: "구매페이지 관리",
+                    title: "판매페이지 관리",
                     path: Paths.buypageSet,
                     disabled: !isLogined,
                     ...unLogined
@@ -128,7 +120,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                 {
                     icon: "menu",
                     title: "구매목록",
-                    path: Paths.payToJanda,
+                    path: Paths.purchaseList,
                     disabled: !isLogined,
                     ...unLogined
                 },
@@ -154,40 +146,52 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                 },
             ]
         },
-        // {
-        //     icon: "sms",
-        //     title: "SMS",
-        //     sub: [
-        //         {
-        //             icon: "info",
-        //             title: "시작하기",
-        //             path: SmsPaths.init,
-        //             disabled: !logined,
-        //             ...unLogined
-        //         },
-        //         {
-        //             icon: "addCircle",
-        //             title: "템플릿 설정",
-        //             path: SmsPaths.template,
-        //             disabled: !logined || !smsInited,
-        //             ...sharedSMS
-        //         },
-        //         {
-        //             icon: "email",
-        //             title: "발신자 관리",
-        //             path: SmsPaths.sender,
-        //             disabled: !logined || !smsInited,
-        //             ...sharedSMS
-        //         },
-        //         {
-        //             icon: "historyWatch",
-        //             title: "발신 히스토리",
-        //             path: SmsPaths.history,
-        //             disabled: !logined || !smsInited,
-        //             ...sharedSMS
-        //         },
-        //     ]
-        // },
+        {
+            icon: "sms",
+            title: "SMS",
+            sub: [
+                {
+                    icon: "info",
+                    title: "시작하기",
+                    path: SmsPaths.index,
+                    disabled: !isLogined,
+                    exact: true,
+                    ...unLogined
+                },
+                {
+                    icon: "addCircle",
+                    title: "템플릿 설정",
+                    path: SmsPaths.templates,
+                    disabled: !isLogined,
+                    exact: true,
+                    ...sharedSMS
+                },
+                {
+                    icon: "email",
+                    title: "발신자 관리",
+                    path: SmsPaths.senederRegist,
+                    disabled: !isLogined,
+                    exact: true,
+                    ...sharedSMS
+                },
+                {
+                    icon: "historyWatch",
+                    title: "발신 히스토리",
+                    path: SmsPaths.history,
+                    disabled: !isLogined,
+                    exact: true,
+                    ...sharedSMS
+                },
+                {
+                    icon: "info",
+                    title: "SMS 서비스",
+                    path: SmsPaths.info,
+                    disabled: !isLogined,
+                    exact: true,
+                    ...sharedSMS
+                },
+            ]
+        },
         {
             icon: "info",
             title: "고객센터",
@@ -207,18 +211,17 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
 }
 
 
-export interface IProps {
+export interface IProps extends RouteComponentProps {
     isOpen: boolean;
 }
 
-const Sidebar: React.FC<IProps> = ({ isOpen }) => {
+const Sidebar: React.FC<IProps> = ({ isOpen, location }) => {
     const context = useContext(AppContext);
-    const { me } = context;
+    const { me, contextQueryLoading } = context;
     const { pathname, key } = useLocation();
-    console.log({ pathname });
-    console.log({ key });
     const menuData = getMenuData(context)
-    const [menuIndex, setMenuIndex] = useState((getUrlIndex(pathname, menuData)))
+    const defaultIndex = getUrlIndex(pathname, menuData);
+    const [menuIndex, setMenuIndex] = useState(defaultIndex)
 
     let history = useHistory();
 
@@ -231,6 +234,14 @@ const Sidebar: React.FC<IProps> = ({ isOpen }) => {
     }
 
     const { name, createdAt } = me || {};
+
+
+    const { isLogined } = useContext(AppContext);
+
+    useEffect(() => {
+        setMenuIndex(defaultIndex)
+    }, [location])
+
 
     // 로그인 onclick, login, logout 추가 y
     return (
@@ -253,14 +264,14 @@ const Sidebar: React.FC<IProps> = ({ isOpen }) => {
                             <SidebarMainMenu selected={menuIndex === i} onMenuClick={handleMainMenuClick} key={`sidebarMain_${i}`} menu={menu} index={i} />)
                     }
                 </ul>
-                <ul className="subMenu">
+                {contextQueryLoading ? undefined : <ul className="subMenu">
                     {menuData[menuIndex]?.sub.map((menu, index) =>
                         <SidebarSubMenu onMenuClick={handleSubMenuClick} key={`submenuList-${index}`} menu={menu} />
                     )}
-                </ul>
+                </ul>}
             </nav>
         </div>
     )
 }
 
-export default Sidebar
+export default withRouter(Sidebar)

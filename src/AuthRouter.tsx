@@ -12,11 +12,8 @@ export enum AuthPaths {
 }
 
 const MainRouter = () => {
-    const { } = useContext(AppContext);
 
-    useEffect(() => {
 
-    }, [])
     return <Switch>
         <Suspense fallback={<JDpreloader page loading />}>
             <Route

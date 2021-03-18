@@ -9,7 +9,8 @@ export interface ListInitOptions<F, S> {
     initialPageIndex: number,
     initialViewCount: number
     initialFilter: F,
-    initialSort: S[]
+    initialSort: S[],
+    fixingFilter?: F
 }
 
 export interface IListHook<F, S> extends IUseQueryFilter<F>, IUseQuerySort<S> {
@@ -17,8 +18,8 @@ export interface IListHook<F, S> extends IUseQueryFilter<F>, IUseQuerySort<S> {
     page: number
 }
 
-export function useListQuery<F, S>({ initialFilter, initialPageIndex, initialSort, initialViewCount }: ListInitOptions<F, S>) {
-    const { filter, ...useFilters } = useQueryFilter<F>(initialFilter || {} as F);
+export function useListQuery<F, S>({ initialFilter, initialPageIndex, initialSort, initialViewCount, fixingFilter }: ListInitOptions<F, S>) {
+    const { filter, setFilter:_setFilter,...useFilters } = useQueryFilter<F>(initialFilter || {} as F);
     const { sort, ...useSort } = useQuerySort<S>(initialSort);
     const paginatorHook = usePagination(initialPageIndex,initialViewCount);
     const {page,pageCount} = paginatorHook;
@@ -28,11 +29,17 @@ export function useListQuery<F, S>({ initialFilter, initialPageIndex, initialSor
         pageItemCount: pageCount
     }
 
+    const filterFn:any = (filter: F) => {
+        _setFilter({ ...filter, ...fixingFilter })
+    }
+
+    const setFilter:ISet<F> = filterFn
+
     const integratedVariable = {
         pagingInput,
         filter,
         sort,
     }
 
-    return { filter, page,  integratedVariable, sort, paginatorHook, ...useFilters, ...useSort }
+    return { filter, page,  integratedVariable, sort, paginatorHook, setFilter, ...useFilters, ...useSort }
 }

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import {  F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragment/fragments";
+import {  F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE, F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragment/fragments";
 
 export const BUSINESS_USER_RESET_PASSWORD = gql`
   mutation businessUserResetPassword($newPassword: String!) {
@@ -131,9 +131,7 @@ export const ME = gql`
     Me {
       ...Fuser
       stores {
-        _id
-        name
-        code
+        ...Fstore
         items {
           _id
           name
@@ -141,7 +139,21 @@ export const ME = gql`
       }
     }
   }
+  ${F_STORE}
   ${F_USER}
+`
+
+export const MY_NOTIFICATION_MANAGER = gql`
+  query myNotificationManager {
+    MyNotificationManager {
+      ...FnotificationManager
+      senders {
+        ...FnotificationSender
+      }
+    }
+  }
+  ${F_NOTIFICATION_SENDER}
+  ${F_NOTIFICATION_MANAGER}
 `
 
 export const PROFILE = gql`

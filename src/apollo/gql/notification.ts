@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_PAGEINFO, F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE, F_USERERROR, F_NOTIFICATION_HISTORY_ITEM  } from "./fragment/fragments";
+import { F_PAGEINFO, F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE, F_USERERROR, F_NOTIFICATION_HISTORY_ITEM, F_NOTIFICATION_TRIGGER  } from "./fragment/fragments";
 
 export const NOTIFICATION_HISTORY = gql`
     query notificationHistory(
@@ -28,9 +28,11 @@ ${F_PAGEINFO}
 export const NOTIFICATION_SENDER_ADD = gql`
     mutation notificationSenderAdd(
       $target: VerificationTarget!
+      $label: String!
     ) {
       NotificationSenderAdd(
-        target:$target
+        target:$target,
+        label: $label
     ) {
         ok
         error {
@@ -41,6 +43,7 @@ export const NOTIFICATION_SENDER_ADD = gql`
         }
     }
   }
+${F_USERERROR}
 ${F_NOTIFICATION_SENDER}
 `
 
@@ -74,9 +77,13 @@ export const NOTIFICATION_TEMPLATE_LIST = gql`
         }
         items {
             ...FnotificationTemplate
+            trigger {
+                ...FnotificationTrigger
+            }
         }
     }
 }
+${F_NOTIFICATION_TRIGGER}
 ${F_PAGEINFO}
 ${F_NOTIFICATION_TEMPLATE}
 `

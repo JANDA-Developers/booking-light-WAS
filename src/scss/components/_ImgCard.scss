@@ -1,16 +1,27 @@
 .imgCard {
     border: 1px solid $grey-level1;
-    border-radius: $br1;
+    border-radius: $br2;
+    overflow: hidden;
     background-color: white;
+    @include shadow($card-shadow);
 
     &__photo {
-        height: 100px;
     }
 
     &__body {
-        padding:  space(1);
+        padding-top: space(1);
+        padding-bottom: space(1);
+    }
+
+    &__contents {
+        padding:  space(2);
+    }
+    .imgCard__contents {
+        flex: 1.5;
     }
     &__head {
         padding-bottom: space(1);
+        border-bottom: 1px solid $grey-level1;
+        margin-bottom: space(1);
     }
 }

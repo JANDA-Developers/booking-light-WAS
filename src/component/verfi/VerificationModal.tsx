@@ -1,21 +1,24 @@
-import { TimePerMs, InputText, IUseModal, JDbutton, JDmodal, JDmodalConfigProps, toast, JDtypho } from "@janda-com/front";
+import { TimePerMs, InputText, IUseModal, JDbutton, JDmodal, JDmodalConfigProps, toast, JDtypho, Mb } from "@janda-com/front";
 import React, { useEffect, useState } from "react";
 import JDTimer from "../../atom/Timer";
 import Timer from "react-compound-timer";
 import { TuseVerification } from "../../hook/useVerification";
 import { VerificationTarget } from "../../type/api";
+import { ModalBtn } from "../btns/ModalBtn";
 
 let RE_SEND_COUNT = 10;
 
 export interface IVerfiModalInfo {
-  payload: string;
+  payload?: string;
   target?: VerificationTarget;
 }
 
 interface IProps extends JDmodalConfigProps, TuseVerification {
   modalHook: IUseModal<IVerfiModalInfo>;
   payload?: string;
-  target: VerificationTarget;
+  target?: VerificationTarget;
+  verifiStart: any;
+  verifiComplete: any;
 }
 
 const VerificationModal: React.FC<IProps> = ({
@@ -26,9 +29,10 @@ const VerificationModal: React.FC<IProps> = ({
   verifiComplete,
   code,
   setCode,
-  target
+  target = modalHook.info?.target
 }) => {
   const _target = modalHook.info?.target || target;
+  console.log({ _target });
   const isPhone = _target === VerificationTarget.PHONE;
   const [isTimeOver, setTimeOver] = useState(false);
 
@@ -50,7 +54,7 @@ const VerificationModal: React.FC<IProps> = ({
     if (isTimeOver)
       toast.warn("시간이 초과하였습니다. 다시 인증요청을 해주세요.");
 
-    await verifiComplete().then((data) => {
+    await verifiComplete().then((data: any) => {
       if (data?.ok) {
         modalHook.closeModal();
       }
@@ -70,16 +74,15 @@ const VerificationModal: React.FC<IProps> = ({
       }}
       foot={
         <div>
-          <JDbutton
+          <ModalBtn
+            mr
             id="verfiCompleteBtn"
-            mode="flat"
             thema={"primary"}
             label={"인증완료"}
             onClick={handleComplete}
           />
-          <JDbutton
+          <ModalBtn
             mode="flat"
-            thema="grey2"
             disabled={RE_SEND_COUNT === 0}
             label={"인증번호 재발송"}
             onClick={handleResend}
@@ -110,6 +113,7 @@ const VerificationModal: React.FC<IProps> = ({
           );
         }}
       </JDTimer>
+      <Mb />
       <InputText
         placeholder={"******"}
         id="verifiKeyInput"

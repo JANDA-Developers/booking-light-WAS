@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { F_PRODUCT } from "./product";
 import { F_COLLECTION_DATA_INTERFACE } from "./shared";
 
 export const F_PURCHASE = gql`
@@ -21,13 +22,21 @@ fragment Fpurchase on IPurchase  {
   count
   type
   paymentTimeExpired
+  itemName
+  purchaserName
+  purchaserContact
+  purchasedProduct {
+    ...Fproduct
+  }
 }
+${F_PRODUCT}
 ${F_COLLECTION_DATA_INTERFACE}
 `
 
 export const F_PURCHASE_BUNDLE = gql`
   fragment Fpurchasebundle on PurchaseBundle {
     ...FcollectionDataInterface
+    status
     paymentStatus
     refundStatus
     paymethod
@@ -39,11 +48,15 @@ export const F_PURCHASE_BUNDLE = gql`
     priceRefundCompleted
     isFullRefunded
     isRefundedPartial
+    code
     message
     isPaymentCompleted
     fullRefundPendingAt
     fullRefundCompletedAt
+    purchaserMessage
     paymentAt
+    purchaserName
+    purchaserContact
     useNicepay
     paymentTimeExpired
   }

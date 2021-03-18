@@ -5,6 +5,9 @@ import cache from "./cache";
 import { createUploadLink } from "apollo-upload-client";
 import { toast } from "@janda-com/front";
 import { onError } from "@apollo/client/link/error";
+import { Storage } from "../utils/storage";
+import { setContext } from '@apollo/client/link/context';
+
 
 const headers = {
 };
@@ -24,9 +27,21 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const storeId = localStorage.getItem("storeId") || "";
+  // return the headers to the context so httpLink can read them
+
+  return {
+    headers: {
+      ...headers,
+      storeId,
+    }
+  }
+});
+
 const fileUploadLink = createUploadLink({
   uri,
-  headers,
   credentials: "include",
 });
 
@@ -35,10 +50,9 @@ dotenv.config({
 });
 
 const client = new ApolloClient({
-  link: from([errorLink, fileUploadLink as any]),
+  link: from([authLink, errorLink, fileUploadLink as any]),
   uri,
   cache,
-  headers,
   credentials: "include",
 });
 

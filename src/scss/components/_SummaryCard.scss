@@ -1,7 +1,15 @@
 .summaryCard {
 
      &__list {
-         font-size: $typho-small;
+         font-size: $typho-tiny;
+         overflow: auto;
+         &::-webkit-scrollbar {
+            transition: 0.3s;
+            background-color: transparent;
+            width: 4px;
+            height: 4px;
+          }
+         @extend %JDscrollbar--slender;
      }
 
 
@@ -11,6 +19,7 @@
          overflow: hidden;
          text-overflow: ellipsis;
          text-align: center;
+         min-width: 25%;
      }
 
      &__li {

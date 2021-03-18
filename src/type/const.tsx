@@ -1,8 +1,10 @@
 import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
-import { DisplayType, FoffsetPagingInfo, ItemType, OffsetPagingInput, StoreType, UserRole, VerificationEvent, VerificationTarget } from "./api";
+import { DisplayType, FoffsetPagingInfo, ItemType, NotificationMethod, NotificationTriggerEvent, OffsetPagingInput, Paymethod, StoreType, UserRole, VerificationEvent, VerificationTarget } from "./api";
 import dayjs from "dayjs";
-import { selectOpCreater } from "@janda-com/front";
+import { NotiType, selectOpCreater } from "@janda-com/front";
 import { enumToOption } from "../utils/enumToOption";
+import { BuyPageType } from "./enum";
+import { storeTypeKr } from "../utils/enumConverter";
 
 const { version } = require("../../package.json");
 export const JDVERSION = version
@@ -125,6 +127,29 @@ export default ""
 
 
 
+
+export const EVENT_OPS: IselectedOption<NotificationTriggerEvent>[] = [
+    {
+        label: "구매취소시",
+        value: NotificationTriggerEvent.PURCHASE_BUNDLE_CANCEL,
+    },
+    {
+        label: "구매 완료시",
+        value: NotificationTriggerEvent.PURCHASE_BUNDLE_CREATE_COMPLETE,
+    },
+    {
+        label: "환불시",
+        value: NotificationTriggerEvent.PURCHASE_BUNDLE_REFUND,
+    },
+    {
+        label: "구매 시작시",
+        value: NotificationTriggerEvent.PURCHASE_BUNDLE_CREATE_PENDING,
+    },
+];
+
+
+
+
 export const INPUT_OPS: IselectedOption<DisplayType>[] = [
     {
         label: "텍스트인풋",
@@ -142,10 +167,10 @@ export const INPUT_OPS: IselectedOption<DisplayType>[] = [
         label: "숫자박스",
         value: DisplayType.NUMBER_SELECTOR,
     },
-    {
-        label: "날짜범위선택",
-        value: DisplayType.DATE_RANGE_PICKER,
-    },
+    // {
+    //     label: "날짜범위선택",
+    //     value: DisplayType.DATE_RANGE_PICKER,
+    // },
     {
         label: "타임픽커",
         value: DisplayType.TIME_PICKER,
@@ -157,8 +182,18 @@ export const INPUT_OPS: IselectedOption<DisplayType>[] = [
 ];
 
 
+export const BUYPAGE_TYPE_OPS: IselectedOption<BuyPageType>[] = [
+    {
+        label: "일반예약",
+        value: BuyPageType.RESERVATION_NORMAL,
+    }
+];
 
 export const ITEM_TYPE_OPS: IselectedOption<ItemType>[] = [
+    {
+        label: "배달서비스",
+        value: ItemType.DELIVERY,
+    },
     {
         label: "예약",
         value: ItemType.BOOKING,
@@ -176,47 +211,45 @@ export const ITEM_TYPE_OPS: IselectedOption<ItemType>[] = [
         value: ItemType.SERVICE,
     },
 ];
-export const STORE_TYPE_OPS: IselectedOption<StoreType>[] = [
+
+export const NOTI_METHOD_OPS: IselectedOption<NotificationMethod>[] = [
     {
-        label: "숙박",
-        value: StoreType.ACCOMMODATION,
+        label: "문자",
+        value: NotificationMethod.SMS,
     },
     {
-        label: "카페",
-        value: StoreType.CAFE,
-    },
-    {
-        label: "기타",
-        value: StoreType.ELSE,
-    },
-    {
-        label: "레저",
-        value: StoreType.LEISURE,
-    },
-    {
-        label: "펍",
-        value: StoreType.PUP,
-    },
-    {
-        label: "대여",
-        value: StoreType.RENTAL,
-    },
-    {
-        label: "식당",
-        value: StoreType.RESTAURANT,
-    },
-    {
-        label: "일반판매",
-        value: StoreType.SHOPPING,
-    },
-    {
-        label: "공연",
-        value: StoreType.SHOW,
+        label: "이메일",
+        value: NotificationMethod.EMAIL,
     },
 ];
 
+export const PAY_METHOD_OPS: IselectedOption<Paymethod>[] = [
+    {
+        label: "무통장입금",
+        value: Paymethod.BANK_TRANSFER,
+    },
+    {
+        label: "카드결제",
+        value: Paymethod.CARD,
+    },
+    {
+        label: "현장결제",
+        value: Paymethod.CASH,
+    },
+];
+
+const enumToOps = (enumm: any, fn: (foo: any) => string) => {
+    return Object.keys(enumm)
+        .map(key => ({
+            label: fn(enumm[key]),
+            value: enumm[key]
+        }));
+}
+
+export const STORE_TYPE_OPS: IselectedOption<StoreType>[] = enumToOps(StoreType, storeTypeKr);
+
 export const COUNT = selectOpCreater({
-    count: 500,
+    count: 99,
     start: 0,
     labelAdd: "개"
 });
@@ -330,6 +363,8 @@ export let MINUTES_SELECT_OP: IselectedOption<number>[] = Array(60)
     }));
 
 
+export const tommorrowDate = dayjs().add(1, "day").startOf("day").toDate();
+export const todayDate = dayjs().startOf("day").toDate();
 export const today = dayjs().startOf("day").valueOf();
 export const tomorrow = dayjs().add(1, "day").startOf("day").valueOf();
 export const lastMonthFirstDate = dayjs().add(-1, "month").set("day", 1).toDate();
@@ -338,5 +373,18 @@ export const thisMonthLastDate = dayjs().endOf("month").toDate();
 export const thisMonthFirstDate = dayjs().startOf("month").toDate();
 export const oneYearBefore = dayjs().add(-1, "y").toDate();
 export const sixMonthBefore = dayjs().add(-6, "month").toDate();
+export const todayyyyymmNumber = parseInt(dayjs().format("yyyymm"));
 
 
+export enum Ratio {
+    "16:9" = 1.77777,
+    "4:3" = 0.75
+}
+
+
+export const DEFAULT_SENDER = "08015212"
+
+export const DefaultSenderOP: IselectedOption = {
+    label: "기본발신자",
+    value: DEFAULT_SENDER
+}

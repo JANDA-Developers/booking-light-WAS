@@ -7,6 +7,7 @@ import { ProductSummaryCard } from './components/ProductSummaryCard';
 import { SettlementSummaryCard } from './components/SettlementSummaryCard';
 import { NotificationSummaryCard } from './components/NotificationSummaryCard';
 import { StoreSummaryCard } from './components/StoreSummaryCard';
+import { HistorySummaryCard } from '../smsRouter/components/HistorySummaryCard';
 
 interface IProp { }
 
@@ -23,7 +24,7 @@ export const Dashboard: React.FC<IProp> = () => {
         <ProductStatusSummaryCard />
         <BookingSummaryCard />
         <SettlementSummaryCard />
-        <NotificationSummaryCard />
+        <HistorySummaryCard />
     </JDcontainer>;
 };
 

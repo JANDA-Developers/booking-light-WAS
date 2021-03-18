@@ -4,11 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { AuthPaths } from '../../AuthRouter';
 import { CheckBtn } from '../../component/checkBtn/CheckBtn';
 import { JDicon } from '../../component/icons/Icons';
+import Noti from '../../component/notification/Noti';
 import PasswordChecker from '../../component/passwordChecker/PasswordCheck';
 import VerificationModal from '../../component/verfi/VerificationModal';
 import { useDuplicateCheck, useSignUp } from '../../hook/useUser';
 import { useVerification } from '../../hook/useVerification';
-import { UserRole, VerificationEvent, VerificationTarget } from '../../type/api';
+import { SystemNotiType, UserRole, VerificationEvent, VerificationTarget } from '../../type/api';
 import { completeMsg } from '../../utils/utils';
 import PrivacyPolicy from './Policy';
 
@@ -58,6 +59,10 @@ const SignUpUI: React.FC<IProps> = ({
             failMsg: '이메일 중복체크를 해주세요.',
             id: 'EmailInput'
         }, {
+            value: verificationHook.verifiData?.isVerified,
+            failMsg: '핸드폰 인증을 진행 해주세요.',
+            id: 'PhoneNumberInput'
+        }, {
             value: agreePolicyHook.checked,
             failMsg: '개인정보 동의 부탁드립니다.',
             id: "AgreePolicy",
@@ -105,6 +110,8 @@ const SignUpUI: React.FC<IProps> = ({
         if (validate([1]))
             phoneVerifiModal.openModal()
     }
+
+
 
 
     const verifiedPhone = verificationHook.verifiData?.isVerified;

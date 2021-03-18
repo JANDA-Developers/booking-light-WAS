@@ -11,6 +11,7 @@ fragment Fitem on IItem {
     code
     currency
     thumbNail
+    keywards
     productCount
     description
     descriptionDetail

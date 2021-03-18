@@ -1,0 +1,31 @@
+
+.ce-block__content,
+.ce-toolbar__content {
+    max-width: unset;
+}
+
+.ce-toolbar__content {
+    width: 100%;
+}
+
+.codex-editor {
+    border: 1px solid $outborder-color !important;
+    padding: 12px 15px;
+    border-radius: 3px;
+}
+
+.fr-view > div {
+    background-color: transparent!important;
+}
+
+.fr-toolbar {
+    top: 0
+}
+
+.fr-view > p {
+    &:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+}

@@ -10,14 +10,15 @@ import { TimePickerAdapter } from './TimePickerAdapter';
 interface IProp {
     attribute: Fattribute
     onChange?: (value: any) => void;
-    onEdit: () => void;
-    onDelete: () => void;
+    onEdit?: () => void;
+    onDelete?: () => void;
 }
 
 export const AttributeInput: React.FC<IProp> = ({ attribute, onChange, onEdit: handleEdit, onDelete: handleDelete }) => {
     const { displayType, default: defaultValue, key, options, placeHolder, require, label = "", value } = attribute;
 
-    const labelTxt = <Flex mr="small" style={{ display: "inline-block" }}> {label || ""}  <Mr mr="small" /> <JDicon onClick={handleEdit} mr="small" hover icon="pen" /><JDicon onClick={handleDelete} hover icon="close" /></Flex>
+    const EditTool = <div><JDicon hide={!handleEdit} onClick={handleEdit} mr="small" hover icon="pen" /><JDicon hide={!handleDelete} onClick={handleDelete} hover icon="close" /></div>
+    const labelTxt = <Flex mr="small" style={{ display: "inline-block" }}>{label || ""} <Mr mr="small" /> {handleEdit ? EditTool : undefined}</Flex>
 
 
     const selectOptions: IselectedOption[] = options?.map(op => ({
@@ -26,6 +27,7 @@ export const AttributeInput: React.FC<IProp> = ({ attribute, onChange, onEdit: h
     })) || []
 
     const shared = {
+        id: key + "input",
         className: "attributeInput"
     }
 
@@ -38,7 +40,7 @@ export const AttributeInput: React.FC<IProp> = ({ attribute, onChange, onEdit: h
     if (displayType === DisplayType.CHECK_BOX) return <div {...shared}>
         <JDlabel {...labelShare} />
         <div>
-            <JDcheckBox onChange={onChange} defaultChecked={!!defaultValue} />
+            <JDcheckBox onChange={onChange} checked={!!value} defaultChecked={!!defaultValue} />
         </div>
     </div>
     if (displayType === DisplayType.DROPDOWN) return <div {...shared}>
@@ -51,7 +53,10 @@ export const AttributeInput: React.FC<IProp> = ({ attribute, onChange, onEdit: h
     </div>
     if (displayType === DisplayType.TIME_PICKER) return <div {...shared}><TimePickerAdapter require={!!require} txt={label || ""} value={value || ""} onChnage={onChange} /></div>
     if (displayType === DisplayType.DATE_RANGE_PICKER) return <DayPickerRangeAdater value={value || "|"} onChange={onChange} label={label || ""} />
-    if (displayType === DisplayType.DATE_PICKER) return <DayPickerAdater onChange={onChange} value={value || undefined} />
+    if (displayType === DisplayType.DATE_PICKER) return <div {...shared}>
+        <JDlabel {...labelShare} />
+        <DayPickerAdater onChange={onChange} value={value || undefined} />
+    </div>
     if (displayType === DisplayType.NUMBER_SELECTOR) return <div {...shared}>
         <JDlabel {...labelShare} />
         <JDcounter onCount={(flag) => {

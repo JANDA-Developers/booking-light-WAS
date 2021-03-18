@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_ITEM, F_ITEM_BOOKING, F_PAGEINFO, F_USERERROR } from "./fragment/fragments";
+import { F_ITEM, F_ITEM_BOOKING, F_PAGEINFO, F_PRODUCT, F_USERERROR } from "./fragment/fragments";
 import { F_SUMMARY_BOOKING } from "./fragment/summary";
 
 
@@ -99,6 +99,7 @@ ${F_USERERROR}
 `
 
 export const ITEM_FIND_BY_ID = gql`
+
     query itemFindById(
         $itemId: ObjectId!
     ) {
@@ -106,8 +107,12 @@ export const ITEM_FIND_BY_ID = gql`
             itemId: $itemId
         ) {
             ...Fitem
+            products {
+                ...Fproduct
+            }
         }
     }
+${F_PRODUCT}
 ${F_ITEM}
 `
 

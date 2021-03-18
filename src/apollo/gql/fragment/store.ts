@@ -8,10 +8,7 @@ export const F_BUYPAGE = gql`
 fragment FbuyPage on BuyPage {
     configure
     _id
-    createdAt
-    updatedAt
 }
-${F_COLLECTION_DATA_INTERFACE}
 `
 
 export const F_STORE = gql`
@@ -30,7 +27,7 @@ fragment Fstore on Store {
     zoneinfo {
         ...FzoneInfo
     }
-    buypages {
+    buypage {
         ...FbuyPage
     }
     ...FcollectionDataInterface

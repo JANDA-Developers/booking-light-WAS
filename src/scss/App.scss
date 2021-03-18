@@ -7,7 +7,20 @@
 @import "./page/Page";
 @import "./system/system";
 @import "./system/hack";
+@import "~slick-carousel/slick/slick.css";
 
-.JDtextColor--positive {
-    color: $positive-color;
+.JDcard__head {
+    font-weight: 600;
+}
+
+.JDglobalFocus {
+    outline: 1px auto;
+}
+
+.smsTemplates__smsCard {
+    min-width: 31%;
+    .JDcard__body {
+    height: space(10);
+    overflow: auto;
+    }
 }

@@ -105,6 +105,8 @@ export const JDEditor: React.FC<IEditorProps> = ({
                 imageUploadToS3: s3Key,
                 placeholderText: 'Edit Your Content Here!',
                 charCounterCount: false,
+                // @ts-ignore
+                height: 250,
                 imageUpload: true,
                 imageDefaultAlign: 'left',
                 imageDefaultDisplay: 'inline-block',

@@ -1,5 +1,17 @@
 import { gql } from "@apollo/client";
 
+
+export const F_SERVICE_DETAIL = gql`
+    fragment FserviceUsageDetails on ServiceUsageDetails  {
+        type
+        action
+        isBillingTarget
+        count
+        amount
+        servicePricingHashId
+    }
+`
+
 export const F_INVOCIE = gql`
 fragment Finvoice on Invoice {
     year
@@ -12,18 +24,18 @@ fragment Finvoice on Invoice {
     billingAt
     expectedBillingDayOfMonth
     isBilled
+    serviceUsageDetails {
+        ...FserviceUsageDetails 
+    }
+    summaryTotal {
+        amount
+        amountOrigin
+        count
+    }
 }
+${F_SERVICE_DETAIL}
 `
 
-export const F_SERVICE_DETAIL = gql`
-    fragment FserviceUsageDetails on ServiceUsageDetails  {
-        action
-        isBillingTarget
-        count
-        amount
-        servicePricingHashId
-    }
-`
 
 export const F_SERVICE_PLAN = gql`
 fragment FservicePlan on ServicePlan {

@@ -20,7 +20,8 @@ export const ItemList: React.FC<IProp> = () => {
     const itemListHook = useItemList({
         initialFilter: {
             _storeId__eq: selectedStoreId
-        }
+        },
+        initialSort: [_IItemSort.createdAt__desc]
     })
     const { items, getLoading } = itemListHook;
     const { push } = useHistory();
@@ -40,10 +41,8 @@ export const ItemList: React.FC<IProp> = () => {
     }
 
     const toProductCreate = (itemId: string = "") => {
-        push(Paths.productDetail + "/create/" + itemId)
+        push(Paths.productDetail + "/" + itemId)
     }
-
-
 
     const handleEdit = (item?: itemList_ItemList_items_ItemBooking) => () => {
         toDetailItem(item?._id)
@@ -64,10 +63,10 @@ export const ItemList: React.FC<IProp> = () => {
     return <div>
         <JDpreloader loading={getLoading} floating />
         <JDpageHeader title="상품 생성하기" desc="당신의 상품을 등록하세요." />
-        <JDcontainer>
-            <JDloadingCard mb loading={getLoading} />
+        <JDcontainer verticalPadding>
             <JDsearchBar<_IItemFilter, _IItemSort> searchOps={[{ label: "이름", value: "name__eq" }]} {...itemListHook} />
             <Mb />
+            <DotButton mb onClick={() => { toDetailItem() }}>생성하기</DotButton>
             <SkipUpdate skip={getLoading} >
                 {items.map(item =>
                     <ItemCard
@@ -85,13 +84,12 @@ export const ItemList: React.FC<IProp> = () => {
                                 }} label={"상품보기"} />
                                 <CardBtn blink={item.productCount === 0} onClick={() => {
                                     toProductCreate(item._id)
-                                }} label={"상품생성"} />
+                                }} label={"판매설정"} />
                             </>
                         }
                     />
                 )}
             </SkipUpdate>
-            <DotButton onClick={() => { toDetailItem() }}>생성하기</DotButton>
         </JDcontainer>
         {/* <ItemModal key={itemModalHook.info?.itemId || "ItemCreate"} modalHook={itemModalHook} /> */}
     </div>;

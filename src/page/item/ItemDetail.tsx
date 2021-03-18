@@ -13,7 +13,7 @@ import { useItemCreate, useItemDelete, useItemFindById, useItemUpdate } from '..
 import { useTagInput } from '../../hook/useTagInput';
 import { useMultiUpload } from '../../hook/useUpload';
 import { Paths } from '../../MainRouter';
-import { ItemBookingCreateInput, ItemBookingUpdateInput } from '../../type/api';
+import { ItemBookingCreateInput, ItemBookingUpdateInput, itemFindById_ItemFindById } from '../../type/api';
 import { ITEM_TYPE_OPS } from '../../type/const';
 import { omits } from '../../utils/omits';
 import { promptConfirm } from '../../utils/prompt';
@@ -23,15 +23,14 @@ import { ItemCard } from './components/ItemCard';
 
 type IDetailRouteProp = { itemId?: string }
 interface IProp {
+    itemId?: string;
+    defaultItem?: itemFindById_ItemFindById
 }
 
-export const ItemDetial: React.FC<IProp> = () => {
+export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
     const history = useHistory();
-    const { params: { itemId } } = useRouteMatch<IDetailRouteProp>();
     const { selectedStore } = useContext(AppContext)
     const isCreateMode = !itemId;
-    const attributesHook = useAttributes();
-    const { item: defaultItem } = useItemFindById(itemId)
     const [itemUpdate] = useItemUpdate({
         awaitRefetchQueries: true,
         onCompleted: ({ ItemBookingUpdate }) => {
@@ -58,12 +57,13 @@ export const ItemDetial: React.FC<IProp> = () => {
     });
     const [item, setItem] = useCopy(defaultItem);
     const priceHook = useInput(0);
-    const uploads = useMultiUpload(item?.images)
-    const nameHook = useInput("")
+    const uploads = useMultiUpload(defaultItem?.images)
+    const attributesHook = useAttributes(defaultItem?.attrs);
+    const nameHook = useInput<string>(defaultItem?.name || "")
     const defaultTypeOp = opFind(defaultItem?.type, ITEM_TYPE_OPS)
     const itemTypeHook = useSelect(defaultTypeOp, ITEM_TYPE_OPS)
     const descriptionHook = useInput(defaultItem?.description as string)
-    const tagHook = useTagInput()
+    const tagHook = useTagInput(defaultItem?.keywards)
     const [detail, setDetail] = useState(defaultItem?.descriptionDetail)
 
     const nextData: ItemBookingCreateInput & ItemBookingUpdateInput = {
@@ -73,7 +73,8 @@ export const ItemDetial: React.FC<IProp> = () => {
         price: priceHook.value,
         images: uploads.createInput,
         description: descriptionHook.value,
-        descriptionDetail: detail
+        descriptionDetail: detail,
+        keywards: tagHook.tags
     }
 
 
@@ -111,14 +112,6 @@ export const ItemDetial: React.FC<IProp> = () => {
         })
     }
 
-    useEffect(() => {
-        if (!defaultItem) return;
-        nameHook.onChange(defaultItem.name)
-        priceHook.onChange(defaultItem.price)
-        uploads.setFiles(cloneDeep(defaultItem.images))
-        itemTypeHook.onChange(defaultTypeOp || ITEM_TYPE_OPS[0])
-        attributesHook.setAttributes(cloneDeep(defaultItem.attrs))
-    }, [defaultItem?._id])
 
 
     return <div >
@@ -139,7 +132,7 @@ export const ItemDetial: React.FC<IProp> = () => {
                 <PhotoGrider onChange={uploads.setFiles} files={uploads.files || []} />
             </JDcard>
             <JDcard mb="large" head="기타정보">
-                <InputText mb label="간략히" textarea />
+                <InputText {...descriptionHook} mb label="간략히" textarea />
                 <JDlabel txt="자세히" />
                 <JDEditor setModel={setDetail as any} model={detail} />
             </JDcard>
@@ -155,5 +148,12 @@ export const ItemDetial: React.FC<IProp> = () => {
     </div>;
 };
 
+export const ItemDetailWrap = () => {
+    const { params: { itemId } } = useRouteMatch<IDetailRouteProp>();
+    const { item: defaultItem } = useItemFindById(itemId)
 
-export default ItemDetial;
+    return <ItemDetial itemId={itemId} key={defaultItem?._id} defaultItem={defaultItem} />
+}
+
+
+export default ItemDetailWrap;

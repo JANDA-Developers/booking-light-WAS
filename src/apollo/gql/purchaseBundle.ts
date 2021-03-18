@@ -12,6 +12,9 @@ export const PURCHASE_BUNDLE_CREATE = gql`
             error {
             ...FuserError
             }
+            data {
+                _id
+            }
         }
     }
 ${F_USERERROR}
@@ -36,7 +39,7 @@ ${F_USERERROR}
 `
 
 export const PURCHASE_BUNDLE_LIST_FORCUSTOMER = gql`
-    query purchasebundlelistforcustomer(
+    query purchaseBundleListForCustomer(
         $sort: [_PurchaseBundleSort!]
         $filter: _PurchaseBundleFilter
         $pagingInput: OffsetPagingInput!
@@ -58,9 +61,8 @@ ${F_PAGEINFO}
 ${F_PURCHASE_BUNDLE}
 `
 
-
 export const PURCHASE_BUNDLE_LIST_FOR_BUSINESSUSER = gql`
-    query purchasebundlelistforBusinessUser(
+    query purchaseBundleListForBusinessUser(
         $sort: [_PurchaseBundleSort!]
         $filter: _PurchaseBundleFilter
         $pagingInput: OffsetPagingInput!
@@ -74,6 +76,7 @@ export const PURCHASE_BUNDLE_LIST_FOR_BUSINESSUSER = gql`
             ...FoffsetPagingInfo
         }
         items {
+            code
             ...Fpurchasebundle
         }
     }
@@ -90,10 +93,26 @@ export const PURCHASE_FIND_BY_ID = gql`
         purchaseId: $purchaseId 
     ) {
         ...Fpurchase
-      
     }
 }
 ${F_PURCHASE}
+`
+
+export const PURCHASE_BUNDLE_FIND_BY_ID = gql`
+    query purchaseBundleFindById(
+        $bundleId: ObjectId!
+    ) {
+    PurchaseBundleFindById(
+        bundleId: $bundleId 
+    ) {
+        ...Fpurchasebundle
+        purchases {
+            ...Fpurchase
+        }
+    }
+}
+${F_PURCHASE}
+${F_PURCHASE_BUNDLE}
 `
 
 
