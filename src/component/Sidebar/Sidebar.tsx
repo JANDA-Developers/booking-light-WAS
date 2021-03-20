@@ -10,6 +10,7 @@ import AppContext, { IAppContext } from '../../context';
 import dayjs from "dayjs";
 import { AuthPaths } from '../../AuthRouter';
 import { SmsPaths } from '../../page/smsRouter/SmsRouter';
+import { Logo } from '../logo/Logo';
 
 export interface IMenu {
     icon: IIcons,
@@ -51,7 +52,6 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
 
 
     const MainMenuData: IMenu[] = [
-
         {
             icon: "houseGear",
             title: "홈",
@@ -61,14 +61,27 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "홈",
                     exact: true,
                     path: Paths.main,
+                    keywards: ["메인페이지", "홈"],
+                    description: "메인페이지는 최근에 일어난일을 요약해서 보여줍니다.",
                     disabled: !isLogined || !haveStore,
                     ...loginAndStore
                 },
                 {
                     icon: "barGraph",
-                    title: "사용현황",
+                    title: "서비스 사용현황",
                     path: Paths.graph,
                     disabled: !isLogined || !haveStore,
+                    keywards: ["서비스 사용량", "이용량"],
+                    description: "서비스를 얼마나 사용했는지 확인합니다.",
+                    ...loginAndStore
+                },
+                {
+                    icon: "historyWatch",
+                    title: "스케쥴",
+                    path: Paths.calendar,
+                    disabled: !isLogined || !haveStore,
+                    keywards: ["시간표", "달력", "스케쥴"],
+                    description: "상품들의 현황을 한눈에 파악할 수 있는 스케쥴표를 제공합니다.",
                     ...loginAndStore
                 },
             ]
@@ -82,6 +95,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "상점설정",
                     path: Paths.storeSet,
                     disabled: !isLogined,
+                    keywards: ["초기설정", "상점설정"],
+                    description: "초기상점에 대한 설정을 할 수 있는 페이지 입니다.",
                     ...unLogined
                 }
             ]
@@ -95,6 +110,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "품목 설정",
                     path: Paths.itemList,
                     disabled: !isLogined || !haveStore,
+                    keywards: ["품목", "상품", "아이템"],
+                    description: "상품을 등록할 수 있는 페이지",
                     ...loginAndStore
                 },
                 {
@@ -102,6 +119,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "판매 설정",
                     path: Paths.productList,
                     disabled: !isLogined || !haveStore || !haveItem,
+                    keywards: ["판매설정", "수량설정", "가격설정"],
+                    description: "판매/수량/가격 등을 설정할 수 있는페이지",
                     ...loginAndStoreAndItem
                 }
             ]
@@ -115,6 +134,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "판매페이지 관리",
                     path: Paths.buypageSet,
                     disabled: !isLogined,
+                    keywards: ["고객페이지", "예약페이지", "구매페이지"],
+                    description: "고객들이 실제 구매를 할 수 있는 페이지",
                     ...unLogined
                 },
                 {
@@ -122,6 +143,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "구매목록",
                     path: Paths.purchaseList,
                     disabled: !isLogined,
+                    keywards: ["구매목록", "구매취소", "구매확인"],
+                    description: "구매내역을 확인할 수 있는 페이지 입니다.",
                     ...unLogined
                 },
             ]
@@ -135,6 +158,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "정산관리",
                     path: Paths.payFromJanda,
                     disabled: !isLogined,
+                    keywards: ["정산", "입금받기"],
+                    description: "고객님들의 매출을 지급해 드립니다.",
                     ...unLogined
                 },
                 {
@@ -142,6 +167,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "멤버쉽",
                     path: Paths.payToJanda,
                     disabled: !isLogined,
+                    keywards: ["멤버쉽", "이용요금"],
+                    description: "서비스 이용요금 멤버쉽 사용",
                     ...unLogined
                 },
             ]
@@ -156,6 +183,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     path: SmsPaths.index,
                     disabled: !isLogined,
                     exact: true,
+                    keywards: ["SMS", "템플릿", "대쉬보드"],
+                    description: "SMS 및 템플릿 대쉬보드",
                     ...unLogined
                 },
                 {
@@ -164,6 +193,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     path: SmsPaths.templates,
                     disabled: !isLogined,
                     exact: true,
+                    keywards: ["SMS", "템플릿"],
+                    description: "발신템플릿 정의 SMS 편리하게 이용하기",
                     ...sharedSMS
                 },
                 {
@@ -172,6 +203,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     path: SmsPaths.senederRegist,
                     disabled: !isLogined,
                     exact: true,
+                    keywards: ["SMS", "발신자"],
+                    description: "SMS 발신자관리",
                     ...sharedSMS
                 },
                 {
@@ -179,6 +212,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "발신 히스토리",
                     path: SmsPaths.history,
                     disabled: !isLogined,
+                    keywards: ["SMS", "히스토리"],
+                    description: "알림 서비스 발신 내역",
                     exact: true,
                     ...sharedSMS
                 },
@@ -188,6 +223,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     path: SmsPaths.info,
                     disabled: !isLogined,
                     exact: true,
+                    keywards: ["SMS", "이메일", "자동발신"],
+                    description: "고객에게 발신하는 알림서비스 자동 서비스",
                     ...sharedSMS
                 },
             ]
@@ -201,6 +238,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "Service 설정 1",
                     path: "/",
                     disabled: !isLogined,
+                    keywards: ["문의글", "사용법", "메뉴얼"],
+                    description: "문의글 남기기",
                     ...unLogined
                 },
             ]
@@ -248,7 +287,7 @@ const Sidebar: React.FC<IProps> = ({ isOpen, location }) => {
         <div className={`sidebar ${isOpen || 'sidebar--close'} ${me || 'sidebar--unLogined'}`}>
             <Flex oneone className="sidebar__head">
                 <div className="sidebar__logo">
-                    A
+                    <Logo />
                 </div>
                 <JDalign className="sidebar__infozone" text={"center"}>
                     <Bold flex={{ vEnd: true, center: true }} mb="superTiny">{name} <Tiny>님</Tiny></Bold>

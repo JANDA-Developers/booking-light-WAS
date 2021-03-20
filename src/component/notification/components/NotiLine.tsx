@@ -1,5 +1,5 @@
 import React from 'react';
-import { JDalign, JDtypho, } from "@janda-com/front"
+import { JDalign, JDbadge, JDtypho, } from "@janda-com/front"
 import { JDicon } from '../../icons/Icons';
 import dayjs from 'dayjs';
 import { TElements } from '@janda-com/front/dist/types/interface';
@@ -31,9 +31,12 @@ export const NotiLine: React.FC<INotiLineProp> = ({ content, createdAt, type }) 
         }}
       >
         <JDicon mr="normal" tooltip={content} size="large" icon="bell" />
-        <JDtypho mr="normal" size="small" weight={600}>
-          {content}
-        </JDtypho>
+        <div>
+          <JDbadge size="small" mb="tiny" thema="new">{type}</JDbadge>
+          <JDtypho mr="normal" size="small" weight={600}>
+            {content}
+          </JDtypho>
+        </div>
       </JDalign>
       <JDtypho size="tiny">{dateText}</JDtypho>
     </JDalign>

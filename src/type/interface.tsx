@@ -37,3 +37,8 @@ export interface IUseListQuery<TSort, TFilter, TData> {
 
 export type FnUseListQuery<TSort, TFilter, TData = any, TQuery = any, TQueryVariable = any> = (foo?: IListQueryInit<TSort, TFilter, TQuery, TQueryVariable>) => IUseListQuery<TSort, TFilter, TData>
 
+
+export interface IDateRange {
+    from: any | null;
+    to: any | null;
+}

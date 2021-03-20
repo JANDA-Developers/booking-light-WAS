@@ -16,7 +16,7 @@ export const BuyPageSucess: React.FC<IProp> = () => {
     const { item } = usePurchaseBundleFindById(bundleId);
 
     if (!item) return null;
-    return <JDcontainer className="buyPageSetDetail__container">
+    return <JDcontainer verticalPadding className="buyPageSetDetail__container">
         <BackStepBar mb label={"예약페이지로"} go={BuyPagePaths.index} />
         <Bold size="h6">구매가 완료 되었습니다.</Bold>
         <PurchaseBundleViewer bundle={item} />

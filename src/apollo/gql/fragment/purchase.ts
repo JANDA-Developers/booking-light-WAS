@@ -2,6 +2,42 @@ import { gql } from "@apollo/client";
 import { F_PRODUCT } from "./product";
 import { F_COLLECTION_DATA_INTERFACE } from "./shared";
 
+export const F_BOOKING = gql`
+fragment Fbooking on Booking  {
+  ...FcollectionDataInterface
+  paymentStatus
+  refundStatus
+  paymethod
+  paymentExpiresAt
+  currency
+  pricePaymentPending
+  pricePaymentCompleted
+  priceRefundPending
+  priceRefundCompleted
+  isFullRefunded
+  isRefundedPartial
+  message
+  status
+  isPaymentCompleted
+  count
+  type
+  paymentTimeExpired
+  itemName
+  purchaserName
+  purchaserContact 
+  purchasedProduct {
+    ...Fproduct
+  }
+  countDetails {
+      key
+      count
+      label
+      price
+    }
+  }
+${F_PRODUCT}
+${F_COLLECTION_DATA_INTERFACE}
+`
 export const F_PURCHASE = gql`
 fragment Fpurchase on IPurchase  {
   ...FcollectionDataInterface
@@ -49,6 +85,7 @@ export const F_PURCHASE_BUNDLE = gql`
     isFullRefunded
     isRefundedPartial
     code
+    sellerMemo
     message
     isPaymentCompleted
     fullRefundPendingAt

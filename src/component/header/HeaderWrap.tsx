@@ -1,4 +1,4 @@
-import { JDavatar, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold, toast, JDpreloader, onCompletedMessage, LocalManager } from '@janda-com/front';
+import { JDavatar, useDropDown, useFilesManager, JDalign, JDiconSearchInput, JDsearchInput, Bold, toast, JDpreloader, onCompletedMessage, LocalManager, ISearchViewData } from '@janda-com/front';
 import { ISet } from '@janda-com/front/dist/types/interface';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -10,6 +10,8 @@ import Noti from '../notification/Noti';
 import ProfileModal, { Tservice } from '../profile/ProfileModal';
 import Header from './Header';
 import { version } from "../../../package.json"
+import { usePurchaseBusinessBundleList } from '../../hook/usePurchase';
+import { getMenuData } from '../sidebar/Sidebar';
 
 interface IProp {
     key?: string;
@@ -21,7 +23,8 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
     const uploader = useFilesManager();
     const history = useHistory();
     const dropDownHook = useDropDown();
-    const { me } = useContext(AppContext);
+    const context = useContext(AppContext);
+    const { me } = context
     const notiLength = me?.unReadSystemNoties.length;
     const [search, setSearch] = useState("");
     const [signOut] = useSignOut({
@@ -31,6 +34,17 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
             }
         }
     })
+
+    const menuData = getMenuData(context);
+    const dataList: ISearchViewData[] = menuData.map(menu =>
+        menu.sub.map((sub): ISearchViewData =>
+        ({
+            id: sub.path,
+            title: sub.title,
+            describe: sub.description + " " + sub?.keywards.map(keyward => "#" + keyward).join(" "),
+            tag: "Menu"
+        }))).flat()
+
 
     const services: Tservice[] = [
         {
@@ -58,11 +72,11 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
             icon: "menu",
             title: "로그아웃",
             onClick: () => {
-                signOut()
+                signOut();
+                dropDownHook.close();
             }
         }
     ]
-
 
     return <Header onMenuClick={() => {
         setSide(!sideOpen)
@@ -85,8 +99,8 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
                     setSearch(v);
                 }}
                 enterBehavior="scroll"
-                head={'DummyData'}
-                dataList={[]}
+                head={'통합검색'}
+                dataList={dataList}
                 searchValue={search}
             />
             <JDalign mr="large">

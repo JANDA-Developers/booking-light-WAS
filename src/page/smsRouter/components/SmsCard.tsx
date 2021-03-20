@@ -23,7 +23,6 @@ export const SmsCard: React.FC<IProp> = ({ template, onDelete: handleDelete, onE
         badges.push({ label: "자동발신", mode: "folded", thema: "primary" })
     }
 
-
     return <JDcard badges={badges} {...props} foot={<div>
         <CardBtn size="small" mr onClick={handleEdit} thema="primary">수정하기</CardBtn>
         <CardBtn size="small" onClick={handleDelete} thema="error">삭제하기</CardBtn>

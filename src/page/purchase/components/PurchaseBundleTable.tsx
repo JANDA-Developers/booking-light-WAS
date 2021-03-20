@@ -4,9 +4,10 @@ import { purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_ite
 import { yyyymmddHHmm } from '../../../utils/dateFormat';
 import { JDicon } from '../../../component/icons/Icons';
 import { Taccent } from '../../../atom/format/DateFormat';
-import { payMethodKr } from '../../../utils/enumConverter';
-import { autoHypen } from '@janda-com/front';
+import { payMethodKr, purchaseBundleProductsDescribe } from '../../../utils/enumConverter';
+import { autoHypen, Small } from '@janda-com/front';
 import { Clip } from '../../../atom/clip/Clip';
+import { PurchaseBundleViewer } from '../../../component/purchaseBunldeViewer/PurhcaseBundleViewer';
 
 export type TBundleRow = Partial<purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items | purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items>;
 
@@ -29,6 +30,13 @@ export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDe
             accessor: 'createdAt',
             Cell: ({ original: { createdAt } }) => {
                 return <div>{yyyymmddHHmm(createdAt)}</div>;
+            },
+        },
+        {
+            Header: () => <div>상품</div>,
+            accessor: 'code',
+            Cell: ({ original }) => {
+                return <Small style={{ whiteSpace: "pre-line" }}>{purchaseBundleProductsDescribe(original as any)} </Small>
             },
         },
         {

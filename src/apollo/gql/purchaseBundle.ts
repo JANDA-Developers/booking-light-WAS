@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_COLLECTION_DATA_INTERFACE, F_PAGEINFO, F_PURCHASE, F_PURCHASE_BUNDLE, F_USERERROR } from "./fragment/fragments";
+import { F_BOOKING, F_COLLECTION_DATA_INTERFACE, F_PAGEINFO, F_PURCHASE, F_PURCHASE_BUNDLE, F_USERERROR } from "./fragment/fragments";
 
 export const PURCHASE_BUNDLE_CREATE = gql`
     mutation purchaseBundleCreate(
@@ -54,9 +54,15 @@ export const PURCHASE_BUNDLE_LIST_FORCUSTOMER = gql`
         }
         items  {
             ...Fpurchasebundle
+            purchases {
+                ...on Booking {
+                    ...Fbooking
+                }
+            }
         }
     }
 }
+${F_BOOKING}
 ${F_PAGEINFO}
 ${F_PURCHASE_BUNDLE}
 `
@@ -78,9 +84,15 @@ export const PURCHASE_BUNDLE_LIST_FOR_BUSINESSUSER = gql`
         items {
             code
             ...Fpurchasebundle
+            purchases {
+                ...on Booking {
+                    ...Fbooking
+                }
+            }
         }
     }
 }
+${F_BOOKING}
 ${F_PAGEINFO}
 ${F_PURCHASE_BUNDLE}
 `
@@ -93,6 +105,7 @@ export const PURCHASE_FIND_BY_ID = gql`
         purchaseId: $purchaseId 
     ) {
         ...Fpurchase
+
     }
 }
 ${F_PURCHASE}
@@ -107,11 +120,13 @@ export const PURCHASE_BUNDLE_FIND_BY_ID = gql`
     ) {
         ...Fpurchasebundle
         purchases {
-            ...Fpurchase
-        }
+                ...on Booking {
+                    ...Fbooking
+                }
+            }
     }
 }
-${F_PURCHASE}
+${F_BOOKING}
 ${F_PURCHASE_BUNDLE}
 `
 

@@ -7,6 +7,7 @@ import { ISmsHistoryModalInfo, SmsHistoryDetailModal } from '../components/Histo
 import JDsearchBar from '../../../atom/SearchBar';
 import { notificationHistory_NotificationHistory_items } from '../../../type/api';
 import Pagination from '../../../component/pagination/Pagination';
+import { F_PAGEINFO } from '../../../apollo/gql/fragment/shared';
 
 interface IProps { }
 
@@ -15,7 +16,7 @@ type IDetailRouteProp = { itemId?: string }
 export const SmsHistoryList: React.FC<IProps> = () => {
     const history = useHistory()
     const notificationHistoryHook = useNotificationHistory()
-    const { items: notificationHistories, paginatorHook, setFilter, filter } = notificationHistoryHook;
+    const { items: notificationHistories, paginatorHook, setFilter, filter, pageInfo } = notificationHistoryHook;
     const modalHook = useModal<ISmsHistoryModalInfo>()
 
     return <div>
@@ -37,7 +38,7 @@ export const SmsHistoryList: React.FC<IProps> = () => {
                     })
                 }} histories={notificationHistories} />
             </JDcard>
-            <Pagination {...paginatorHook} />
+            <Pagination {...paginatorHook} totalPageCount={pageInfo.totalPageCount} />
         </JDcontainer>
         <SmsHistoryDetailModal modalHook={modalHook} />
     </div>;

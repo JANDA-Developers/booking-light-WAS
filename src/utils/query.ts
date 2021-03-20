@@ -165,7 +165,11 @@ export const generateQueryHook = <Q, R, V = undefined>(
 
 // refetchQueries: [getOperationName(BOOKING_LIST) || ""],
 
-export const generateMutationHook = <M,V>(MUTATION:DocumentNode,defaultOptions?: MutationHookOptions<M,V>) => {
+interface GenerateMutationHookMu<M,V> extends MutationHookOptions<M,V> {
+    skipLoadingEffect?: boolean;
+}
+
+export const generateMutationHook = <M,V>(MUTATION:DocumentNode,{ skipLoadingEffect, ...defaultOptions}: GenerateMutationHookMu<M,V> = {}) => {
     const mutationHook = (options?: MutationHookOptions<M,V>) => {
         const muhook = useMutation<M, V>(MUTATION, {
             awaitRefetchQueries: true,
@@ -173,6 +177,7 @@ export const generateMutationHook = <M,V>(MUTATION:DocumentNode,defaultOptions?:
             ...options
         });
 
+        if(!skipLoadingEffect)
         pageLoadingEffect(muhook[1].loading)
         
 

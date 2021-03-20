@@ -50,7 +50,7 @@ export const ProductDetail: React.FC<IProp> = ({ item }) => {
                         }} handleDelete={({ _id }) => { handleDelete(_id) }} products={paging.slice} />
                         <Mb />
                         <Flex center>
-                            <JDpagination mb  {...DEFAULT_PAGINATION_SETTING} pageCount={paging.paging.totalPageSize} setPage={paging.setPage} marginPagesDisplayed={0} />
+                            <JDpagination mb  {...DEFAULT_PAGINATION_SETTING} pageCount={paging.paging.totalPageSize} setPage={paging.setPage} />
                         </Flex>
                     </div>
                 }

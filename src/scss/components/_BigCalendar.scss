@@ -1,0 +1,92 @@
+$out-of-range-color: lighten(#333, 40%);
+$out-of-range-bg-color: lighten(#333, 70%);
+
+$calendar-border: $grey-level1;
+$cell-border: $grey-level1;
+
+$border-color: $grey-level1;
+
+$segment-width: percentage(1 / 7);
+
+$time-selection-color: white;
+
+$event-bg: $grey-level2;
+$event-border: $primary-color-dark;
+$event-outline: $primary-color-dark;
+$event-color: #fff;
+$event-border-radius: $standard-border-radius;
+$event-padding: space(.5) space(1);
+$event-zindex: 4;
+
+$btn-color: $html-color;
+$btn-bg: #fff;
+$btn-border: #ccc;
+
+$current-time-color: $pink-color;
+
+$rbc-css-prefix: JDcal;
+$today-highlight-bg: $blue-opacity1;
+
+@import '../../../node_modules/react-big-calendar/lib/sass/styles.scss';
+
+
+
+.JDbigCalendar {
+    margin-top: space(2);
+}
+
+#root {
+    .rbc-calendar {}
+
+
+    .rbc-time-content {
+        border-top: 1px solid $grey-level1;
+    }
+    .rbc-header {
+        padding: space(1);
+        height: max-content;
+    }
+
+    .rbc-calendar .rbc-active {}
+
+    button.rbc-active {
+        box-shadow: none;
+        background-color: $primary-color;
+        color: white;
+
+        &:active {}
+
+        &:hover {
+            outline: none !important;
+            background-color: $primary-color-dark;
+        }
+    }
+
+    .rbc-allday-cell {
+        display: none;
+    }
+
+    .rbc-header {
+        border-bottom: none;
+    }
+
+    .rbc-event {
+        border: none!important;
+
+        &--permitted {
+            background-color: $primary-color;
+            color: white;
+        }
+
+        &--pending {
+            background-color: $grey-level4;
+            color: white;
+        }
+
+        &--cancel {
+            background-color: $pink-color;
+            color: white;
+        }
+    }
+}
+

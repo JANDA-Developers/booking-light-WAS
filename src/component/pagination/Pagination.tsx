@@ -2,7 +2,7 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import classNames from 'classnames';
 import { JDicon } from '../icons/Icons';
-import { JDalign, JDatomClasses, JDtypho } from '@janda-com/front';
+import { IusePagination, JDalign, JDatomClasses, JDtypho } from '@janda-com/front';
 import { IDiv, JDatomExtentionSet } from '@janda-com/front/dist/types/interface';
 
 const default_prev = (
@@ -177,6 +177,7 @@ export interface IProps extends JDatomExtentionSet {
      * 페이지 설정
      */
     setPage: (foo: number) => any;
+    totalPageCount: number;
 }
 
 export const Pagination: React.FC<IProps> = ({
@@ -189,6 +190,8 @@ export const Pagination: React.FC<IProps> = ({
     setPage,
     previousLabel = default_prev,
     nextLabel = default_next,
+    pageCount,
+    totalPageCount,
     ...props
 }) => {
     const classes = classNames(wrapProp?.className, undefined, {
@@ -204,6 +207,8 @@ export const Pagination: React.FC<IProps> = ({
         console.log({ selected });
         setPage(selected);
     };
+
+    console.log({ pageCount });
 
     return (
         <div {...wrapProp} className={classes}>
@@ -226,6 +231,7 @@ export const Pagination: React.FC<IProps> = ({
                 previousLabel={previousLabel}
                 nextLabel={nextLabel}
                 {...props}
+                pageCount={totalPageCount || 1}
                 onPageChange={onPageChange}
             />
         </div>

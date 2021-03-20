@@ -1,6 +1,7 @@
 import { Bold, Col, copytoClipboard, Flex, Grid, JDcard, JDcontainer, JDhorizen, JDlabel, JDpageHeader, JDselect, JDswitch, JDtypho, toast, WindowSize } from '@janda-com/front';
 import { ISet } from '@janda-com/front/dist/types/interface';
 import React, { useContext, useState } from 'react';
+import { IconButton } from '../../atom/iconButton/IconButton';
 import { JDicon } from '../../component/icons/Icons';
 import AppContext from '../../context';
 import { useCopy } from '../../hook/useCopy';
@@ -42,8 +43,8 @@ export const BuyPageSetDetail: React.FC<IProp> = () => {
                 <Col full={9} lg={12}>
                     <Flex between vCenter><JDlabel>미리보기</JDlabel>
                         <Flex vCenter>
-                            <JDicon mr mb hover onClick={handleCopyLink} icon="copy" />
-                            <JDicon mb hover onClick={handleView} icon="newWindow" />
+                            <IconButton tooltip="예약페이지 링크 복사하기" mr="small" mb onClick={handleCopyLink} icon="copy" />
+                            <IconButton tooltip="예약페이지 새창열기" mb hover onClick={handleView} icon="magnifier" />
                         </Flex>
                     </Flex>
                     <BuyPageRouter propConfigure={config} storeCode={selectedStore?.code} />

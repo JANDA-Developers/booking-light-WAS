@@ -16,7 +16,9 @@ export type IIcons =
   | 'sms'
   | 'historyWatch'
   | 'emptyStart'
+  | 'graphPie'
   | 'barGraph'
+  | 'circleGraphFill'
   | 'reservation'
   | 'won'
   | 'gear'
@@ -76,6 +78,7 @@ export type IIcons =
   | 'info'
   | 'letter'
   | 'pay'
+  | 'logo'
   | 'bell2'
   | 'newWindow'
   | 'photo'
@@ -107,6 +110,9 @@ export const IConOrigin: TConOrigin = {
   PATH: prop => (
     <BasicIcon path="" {...prop} />
   ),
+  circleGraphFill: prop => (
+    <BasicIcon {...prop} path={"M23.949 13c-.509 6.158-5.66 11-11.949 11-6.627 0-12-5.373-12-12 0-6.29 4.842-11.44 11-11.95v12.95h12.949zm-10.949-2h10.949c-.481-5.828-5.122-10.467-10.949-10.95v10.95z"} />
+  ),
   newWindow: prop => (
     <BasicIcon {...prop} path={"M22 6v12h-16v-12h16zm2-6h-20v20h20v-20zm-22 22v-19h-2v21h21v-2h-19z"} />
   ),
@@ -118,6 +124,15 @@ export const IConOrigin: TConOrigin = {
   ),
   link: prop => (
     <BasicIcon {...prop} path={"M6.188 8.719c.439-.439.926-.801 1.444-1.087 2.887-1.591 6.589-.745 8.445 2.069l-2.246 2.245c-.644-1.469-2.243-2.305-3.834-1.949-.599.134-1.168.433-1.633.898l-4.304 4.306c-1.307 1.307-1.307 3.433 0 4.74 1.307 1.307 3.433 1.307 4.74 0l1.327-1.327c1.207.479 2.501.67 3.779.575l-2.929 2.929c-2.511 2.511-6.582 2.511-9.093 0s-2.511-6.582 0-9.093l4.304-4.306zm6.836-6.836l-2.929 2.929c1.277-.096 2.572.096 3.779.574l1.326-1.326c1.307-1.307 3.433-1.307 4.74 0 1.307 1.307 1.307 3.433 0 4.74l-4.305 4.305c-1.311 1.311-3.44 1.3-4.74 0-.303-.303-.564-.68-.727-1.051l-2.246 2.245c.236.358.481.667.796.982.812.812 1.846 1.417 3.036 1.704 1.542.371 3.194.166 4.613-.617.518-.286 1.005-.648 1.444-1.087l4.304-4.305c2.512-2.511 2.512-6.582.001-9.093-2.511-2.51-6.581-2.51-9.092 0z"} />
+  ),
+  logo: prop => (
+    <svg {...prop} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 109.5 103" xmlSpace="preserve">
+      <style type="text/css" dangerouslySetInnerHTML={{ __html: "\n\t.st0{fill:#FFFFFF;}\n" }} />
+      <g>
+        <path className="st0" d="M4,42.5l16.8-15.3c0,0,30.4,31.1,32,72.1h-15C37.8,99.2,35.5,70.5,4,42.5z" />
+        <path className="st0" d="M53.7,91c0,0,11.7-58,51.8-87.2c0,0-37.9,14.7-59.8,58.4C45.7,62.2,52.8,75.6,53.7,91z" />
+      </g>
+    </svg>
   ),
   sqaureShape: prop => (
     <svg {...prop} version="1.1" id="Layer_1"

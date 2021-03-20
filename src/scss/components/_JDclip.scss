@@ -1,0 +1,7 @@
+.JDclip {
+    cursor: pointer;
+    background-color: $grey-level1;
+    &:hover {
+        background-color: $grey-level2;
+    }
+}

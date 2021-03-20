@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_USERERROR } from "./fragment/fragments";
+import { F_PAGEINFO, F_USERERROR } from "./fragment/fragments";
 import { F_INVOCIE } from "./fragment/invoice";
 
 export const INVOICE_FIND_ONE = gql`
@@ -34,6 +34,7 @@ export const INVOCIE_lIST = gql`
         }
     }
 }
+${F_PAGEINFO}
 ${F_INVOCIE}
 `
 

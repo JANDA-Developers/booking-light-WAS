@@ -238,7 +238,7 @@ export const PAY_METHOD_OPS: IselectedOption<Paymethod>[] = [
     },
 ];
 
-const enumToOps = (enumm: any, fn: (foo: any) => string) => {
+export const enumToOps = (enumm: any, fn: (foo: any) => string) => {
     return Object.keys(enumm)
         .map(key => ({
             label: fn(enumm[key]),

@@ -31,14 +31,18 @@ $side-bg: #333333;
     }
 
     &__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         max-width: $main-menu-width;
-
     }
     
 
     &__head {
         position: relative;
         padding: space(2);
+        padding-left: 0px;
+        padding-right: 0px;
         box-sizing: border-box;
         color: white;
         background: $primary-color;

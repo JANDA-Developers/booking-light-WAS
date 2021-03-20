@@ -60,6 +60,6 @@ const ProductView = (bi: IBookingInputData) => {
     const { dateRangeForUse } = productOrigin;
     return <JDbox mr>
         <JDtypho mb="tiny">{(hhmmRange(dateRangeForUse?.from, dateRangeForUse?.to))}</JDtypho>
-        {bi.countDetails?.map(cd => <JDbox mr key={cd.key}>{autoComma(cd.count)} {cd.label} {autoComma(cd.price)} </JDbox>)}
+        {bi.countDetails?.map(cd => <JDbox mr key={cd.key}>{autoComma(cd.count)}개 {cd.label} {autoComma(cd.price)} </JDbox>)}
     </JDbox>
 }

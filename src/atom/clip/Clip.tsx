@@ -6,7 +6,7 @@ interface IProp extends IJDtyphoProp {
 }
 
 export const Clip: React.FC<IProp> = ({ children, ...props }) => {
-    return <JDtypho hover onClick={() => {
+    return <JDtypho className="JDclip" hover onClick={() => {
         copytoClipboard(children as string)
         toast("클립보드에 복사 되었습니다.")
     }} {...props}>{children}</JDtypho>;

@@ -216,7 +216,7 @@ export interface invoiceFindOne_InvoiceFindOne {
   status: InvoiceStatus;
   unpaidReason: string | null;
   billingAt: any | null;
-  expectedBillingDayOfMonth: number;
+  expectedBillingDayOfMonth: number | null;
   isBilled: boolean;
   serviceUsageDetails: invoiceFindOne_InvoiceFindOne_serviceUsageDetails[];
   /**
@@ -301,7 +301,7 @@ export interface invoiceList_InvoiceList_items {
   status: InvoiceStatus;
   unpaidReason: string | null;
   billingAt: any | null;
-  expectedBillingDayOfMonth: number;
+  expectedBillingDayOfMonth: number | null;
   isBilled: boolean;
   serviceUsageDetails: invoiceList_InvoiceList_items_serviceUsageDetails[];
   /**
@@ -2313,6 +2313,156 @@ export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_pag
   totalPageCount: number;
 }
 
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_capacityDetails[];
+  usageDetails: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct_usageDetails[];
+  code: string;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_countDetails {
+  __typename: "Usage";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases {
+  __typename: "Booking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  paymentStatus: Status;
+  refundStatus: Status | null;
+  paymethod: Paymethod;
+  paymentExpiresAt: any | null;
+  currency: Currency | null;
+  pricePaymentPending: number;
+  pricePaymentCompleted: number;
+  priceRefundPending: number;
+  priceRefundCompleted: number;
+  isFullRefunded: boolean | null;
+  isRefundedPartial: boolean | null;
+  message: string | null;
+  status: Status;
+  isPaymentCompleted: boolean | null;
+  /**
+   * Booking의 경우 Count에 입력하는게 아니라 countDetails에 입력해야함. (Booking.count = countDetails.count의 합)
+   */
+  count: number;
+  type: ItemType;
+  paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_purchasedProduct;
+  countDetails: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases_countDetails[];
+}
+
 export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items {
   __typename: "PurchaseBundle";
   _id: any;
@@ -2331,6 +2481,7 @@ export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_ite
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
   code: string;
+  sellerMemo: string | null;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
@@ -2341,6 +2492,7 @@ export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer_ite
   purchaserContact: string;
   useNicepay: boolean | null;
   paymentTimeExpired: boolean;
+  purchases: purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items_purchases[];
 }
 
 export interface purchaseBundleListForCustomer_PurchaseBundleListForCustomer {
@@ -2391,6 +2543,156 @@ export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusiness
   totalPageCount: number;
 }
 
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_capacityDetails[];
+  usageDetails: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct_usageDetails[];
+  code: string;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_countDetails {
+  __typename: "Usage";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases {
+  __typename: "Booking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  paymentStatus: Status;
+  refundStatus: Status | null;
+  paymethod: Paymethod;
+  paymentExpiresAt: any | null;
+  currency: Currency | null;
+  pricePaymentPending: number;
+  pricePaymentCompleted: number;
+  priceRefundPending: number;
+  priceRefundCompleted: number;
+  isFullRefunded: boolean | null;
+  isRefundedPartial: boolean | null;
+  message: string | null;
+  status: Status;
+  isPaymentCompleted: boolean | null;
+  /**
+   * Booking의 경우 Count에 입력하는게 아니라 countDetails에 입력해야함. (Booking.count = countDetails.count의 합)
+   */
+  count: number;
+  type: ItemType;
+  paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_purchasedProduct;
+  countDetails: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases_countDetails[];
+}
+
 export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items {
   __typename: "PurchaseBundle";
   code: string;
@@ -2409,6 +2711,7 @@ export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusiness
   priceRefundCompleted: number;
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
+  sellerMemo: string | null;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
@@ -2419,6 +2722,7 @@ export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusiness
   purchaserContact: string;
   useNicepay: boolean | null;
   paymentTimeExpired: boolean;
+  purchases: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases[];
 }
 
 export interface purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser {
@@ -2708,6 +3012,17 @@ export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_purchas
   code: string;
 }
 
+export interface purchaseBundleFindById_PurchaseBundleFindById_purchases_countDetails {
+  __typename: "Usage";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
 export interface purchaseBundleFindById_PurchaseBundleFindById_purchases {
   __typename: "Booking";
   _id: any;
@@ -2740,6 +3055,7 @@ export interface purchaseBundleFindById_PurchaseBundleFindById_purchases {
    * 구매 내용 조회 및 필터를 하기위한
    */
   purchasedProduct: purchaseBundleFindById_PurchaseBundleFindById_purchases_purchasedProduct;
+  countDetails: purchaseBundleFindById_PurchaseBundleFindById_purchases_countDetails[];
 }
 
 export interface purchaseBundleFindById_PurchaseBundleFindById {
@@ -2760,6 +3076,7 @@ export interface purchaseBundleFindById_PurchaseBundleFindById {
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
   code: string;
+  sellerMemo: string | null;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
@@ -3961,6 +4278,7 @@ export interface purchaseBundleRefund_PurchaseBundleRefund_data {
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
   code: string;
+  sellerMemo: string | null;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
@@ -4684,7 +5002,7 @@ export interface profile_Profile_zoneinfo {
 }
 
 export interface profile_Profile {
-  __typename: "BusinessUser" | "SuperAdmin" | "Customer";
+  __typename: "SuperAdmin" | "BusinessUser" | "Customer";
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -5001,7 +5319,7 @@ export interface Finvoice {
   status: InvoiceStatus;
   unpaidReason: string | null;
   billingAt: any | null;
-  expectedBillingDayOfMonth: number;
+  expectedBillingDayOfMonth: number | null;
   isBilled: boolean;
   serviceUsageDetails: Finvoice_serviceUsageDetails[];
   /**
@@ -5615,6 +5933,165 @@ export interface Fproduct {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: Fbooking
+// ====================================================
+
+export interface Fbooking_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface Fbooking_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: Fbooking_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface Fbooking_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface Fbooking_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface Fbooking_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface Fbooking_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface Fbooking_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: Fbooking_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: Fbooking_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: Fbooking_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: Fbooking_purchasedProduct_capacityDetails[];
+  usageDetails: Fbooking_purchasedProduct_usageDetails[];
+  code: string;
+}
+
+export interface Fbooking_countDetails {
+  __typename: "Usage";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface Fbooking {
+  __typename: "Booking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  paymentStatus: Status;
+  refundStatus: Status | null;
+  paymethod: Paymethod;
+  paymentExpiresAt: any | null;
+  currency: Currency | null;
+  pricePaymentPending: number;
+  pricePaymentCompleted: number;
+  priceRefundPending: number;
+  priceRefundCompleted: number;
+  isFullRefunded: boolean | null;
+  isRefundedPartial: boolean | null;
+  message: string | null;
+  status: Status;
+  isPaymentCompleted: boolean | null;
+  /**
+   * Booking의 경우 Count에 입력하는게 아니라 countDetails에 입력해야함. (Booking.count = countDetails.count의 합)
+   */
+  count: number;
+  type: ItemType;
+  paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: Fbooking_purchasedProduct;
+  countDetails: Fbooking_countDetails[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Fpurchase
 // ====================================================
 
@@ -5783,6 +6260,7 @@ export interface Fpurchasebundle {
   isFullRefunded: boolean | null;
   isRefundedPartial: boolean | null;
   code: string;
+  sellerMemo: string | null;
   message: string | null;
   isPaymentCompleted: boolean | null;
   fullRefundPendingAt: any | null;
@@ -5953,7 +6431,7 @@ export interface FsettlementMallPlain {
 // ====================================================
 
 export interface FcollectionDataInterface {
-  __typename: "File" | "Verification" | "ServicePricing" | "ServiceUsage" | "BuyPage" | "Store" | "PurchaseBundle" | "Settlement" | "ServicePlan" | "Invoice" | "ServicePlanTemplate" | "BillingMethod" | "ProductAutomatorBooking" | "SystemNoti" | "Billing" | "TemplateSms" | "TemplateEmail" | "BusinessUser" | "SuperAdmin" | "SmsHistoryItem" | "EmailHistoryItem" | "TransactionPayment" | "TransactionRefund" | "Customer" | "SettlementMallPlain" | "SettlementMall" | "ItemBooking" | "ProductBooking" | "Booking" | "ItemService";
+  __typename: "File" | "Verification" | "ServicePricing" | "ServiceUsage" | "BuyPage" | "Store" | "PurchaseBundle" | "Settlement" | "ServicePlan" | "Invoice" | "ServicePlanTemplate" | "BillingMethod" | "ProductAutomatorBooking" | "SystemNoti" | "Billing" | "SuperAdmin" | "TransactionPayment" | "TransactionRefund" | "TemplateSms" | "TemplateEmail" | "BusinessUser" | "SmsHistoryItem" | "EmailHistoryItem" | "Customer" | "SettlementMallPlain" | "SettlementMall" | "ItemBooking" | "ProductBooking" | "Booking" | "ItemService";
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -6368,7 +6846,7 @@ export interface Fuser_zoneinfo {
 }
 
 export interface Fuser {
-  __typename: "BusinessUser" | "SuperAdmin" | "Customer";
+  __typename: "SuperAdmin" | "BusinessUser" | "Customer";
   _id: any;
   createdAt: any;
   updatedAt: any;
@@ -7800,6 +8278,8 @@ export interface _StoreFilter {
 export interface _SystemNotiFilter {
   AND?: _SystemNotiFilter[] | null;
   OR?: _SystemNotiFilter[] | null;
+  type__eq?: string | null;
+  type__not_eq?: string | null;
   _id__eq?: any | null;
   _id__not_eq?: any | null;
   _id__in?: any[] | null;

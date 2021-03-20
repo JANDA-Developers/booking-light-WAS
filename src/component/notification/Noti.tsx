@@ -1,10 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import { JDpreloader, InputText, JDtabs, Tab, TabList, TabPanel, JDdropDown, TUseInput, useDropDown, TOffset } from "@janda-com/front"
+import { JDpreloader, InputText, JDtabs, Tab, TabList, TabPanel, JDdropDown, TUseInput, useDropDown, TOffset, JDtypho, Flex, JDalign } from "@janda-com/front"
 import { JDicon } from '../icons/Icons';
 import { NotiLine, INotiLineProp } from './components/NotiLine';
 import { IconConifgProps } from '../icons/declation';
 import { useSystemNotiList, useSystemNotiRead } from '../../hook/useSystemNoti';
 import AppContext from '../../context';
+import { Empty } from '../../atom/Empty';
+import { isEmpty } from 'lodash';
+import { useHistory } from 'react-router';
+import { Paths } from '../../MainRouter';
 
 export type TtabData = {
   name: string;
@@ -32,13 +36,26 @@ export const Noti: React.FC<INotiProp> = ({
   offset,
   unReadCount,
 }) => {
-  const { isLogined } = useContext(AppContext);
-
-  console.log({ isLogined });
-  const { items } = useSystemNotiList({}, { pollInterval: 600000, skip: true })
+  const { me } = useContext(AppContext);
+  const { items } = useSystemNotiList({}, {
+    pollInterval: 600000, variables: {
+      pagingInput: {
+        pageIndex: 0,
+        pageItemCount: 99
+      },
+      filter: {
+        _id__in: me?.unReadSystemNoties || []
+      }
+    }
+  })
   const [notiRead] = useSystemNotiRead()
-  // TODO 이 컴포넌트 확장해서 만들기
   const dropDown = useDropDown();
+
+  const history = useHistory();
+
+  const toSystemNotiHistory = () => {
+    history.push(Paths.notiHistory)
+  }
 
   useEffect(() => {
     if (dropDown.isOpen) {
@@ -122,11 +139,14 @@ export const Noti: React.FC<INotiProp> = ({
               ))}
             </JDtabs>
           ) : (
-              items?.map((noti, i) => (
-                <NotiLine key={noti._id || `NotiLi${i}`} {...noti} />
-              )) || null
-            )}
+            items?.map((noti, i) => (
+              <NotiLine key={noti._id || `NotiLi${i}`} {...noti} />
+            ))
+          )}
         </>
+        {isEmpty(items) && <JDtypho mb="large" color="grey2" text="center" >새로운 알림이 존재하지 않습니다.</JDtypho>}
+
+        <JDtypho onClick={toSystemNotiHistory} hover color="grey2" size="small">자세히보기</JDtypho>
       </JDdropDown>
     </span>
   );

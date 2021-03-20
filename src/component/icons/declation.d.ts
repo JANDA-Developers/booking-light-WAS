@@ -12,6 +12,7 @@ export declare type IIcons =
   | 'historyWatch'
   | 'emptyStart'
   | 'barGraph'
+  
   | 'reservation'
   | 'won'
   | 'gear'

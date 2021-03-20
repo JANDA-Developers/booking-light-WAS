@@ -98,7 +98,7 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
 
     console.log({ attributes });
 
-    return <JDcontainer className="buyPageSetDetail__container" size={WindowSize.lg}>
+    return <JDcontainer verticalPadding className="buyPageSetDetail__container" size={WindowSize.lg}>
         <BackStepBar go={() => {
             if (step === "pick")
                 setDetailItemId("")

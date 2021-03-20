@@ -12,6 +12,8 @@ export type TSidebarSub = {
     title: string,
     exact?: boolean,
     path: string,
+    keywards: string[],
+    description: string,
     disabled: boolean,
     redirect?: Paths | AuthPaths,
     disabledTooltip?: string

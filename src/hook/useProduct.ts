@@ -23,7 +23,7 @@ export const getProductDeleteHandle = () => {
     });
 
     const handleDelete = (pid:string) => {
-        if (confirm(`정말로 상품을 취소하십니까?`))
+        if (confirm(`정말로 구매를 취소하십니까?`))
             deleteMu({
                 variables: {
                     productId: pid

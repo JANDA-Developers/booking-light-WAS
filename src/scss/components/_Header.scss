@@ -12,6 +12,13 @@ $header-white-1: $grey-level0;
     .iconSearch {
         color: white !important;
     }
+    
+    .dataModal {
+        right: 0;
+        left: unset!important;
+        width: 500px;
+        max-width: 100vw;
+    }
 
     .iconSearch--open {
         color: $html-color !important;

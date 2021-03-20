@@ -12,6 +12,8 @@ import BuyPageDetail from '../components/BuyPageDetail';
 import { _IItemFilter } from '../../../../type/api';
 import { integratedItemSearch } from '../../../../utils/integratedItemSearch';
 import { useItemList } from '../../../../hook/useItem';
+import { isEmpty } from 'lodash';
+import { Empty } from '../../../../atom/Empty';
 
 interface IProp {
 }
@@ -77,8 +79,10 @@ export const BuyPage: React.FC<IProp> = () => {
                 })
             }} mb dateTimePicker={dateTimePicker} />
             {productBundles.map(item => <BuyPageProductBundle onDetail={handleToDetail(item._id)} onImgView={handleImgView(item)} key={item._id} bundle={item} />)}
+            <Empty empty={isEmpty(productBundles)} msg="판매중인 상품이 없습니다." />
         </div> :
-            <BuyPageDetail setDetailItemId={setDetailItemId} productListHook={productListHook} key={detailItemId} itemId={detailItemId} />}
+            <BuyPageDetail setDetailItemId={setDetailItemId} productListHook={productListHook} key={detailItemId} itemId={detailItemId} />
+        }
         <JDphotoModal modalHook={modalHook} />
     </div>;
 };

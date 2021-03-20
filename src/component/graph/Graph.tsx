@@ -22,24 +22,42 @@ const defaultDataSets: chartjs.ChartData = {
 type TType = {
 }
 
-interface Iprops extends ChartComponentProps {
+export interface IJDgrpahProps extends ChartComponentProps {
   columns?: JDcolumn<TType>[]
   data: chartjs.ChartData
   viewMode: IGraphViewMode;
 }
 
 
-const JDgraph: React.FC<Iprops> = ({ data, viewMode, columns, ...prop }) => {
+const JDgraph: React.FC<IJDgrpahProps> = ({ data, viewMode, columns, ...prop }) => {
 
   const dataset: chartjs.ChartData = isEmpty(data) ? defaultDataSets : data;
   const dataLength = dataset.datasets?.[0].data?.length || 0;
+
+
+  const defaultColumns: JDcolumn<any>[] = [
+    {
+      Header: "구분",
+      accessor: "data",
+      Cell: ({ index }) => {
+        return <div>{dataset.labels?.[index || 0]}</div>;
+      }
+    },
+    {
+      Header: "값",
+      accessor: "data",
+      Cell: ({ original }) => {
+        return <div>{original}</div>;
+      }
+    }
+  ];
 
 
   // 각 그래프 형태에따라 데이터셋 변화
   const graphCustumByViewMode: ChartData<Chart.ChartData> = viewMode === IGraphViewMode.line
     ? {
       datasets: [{
-        borderColor: "rgba(75,192,192,1)"
+        borderColor: "rgba(75,192,192,1)",
       }]
     }
     : {};
@@ -57,6 +75,9 @@ const JDgraph: React.FC<Iprops> = ({ data, viewMode, columns, ...prop }) => {
     ]
   };
 
+  dataset.datasets?.forEach((ds, index) => {
+    ds.label = dataset.labels?.[index] as any || ""
+  })
   const cloneData = _.cloneDeep(dataset)
   _.merge(cloneData, graphCustum)
   _.merge(cloneData, graphCustumByViewMode)
@@ -71,7 +92,7 @@ const JDgraph: React.FC<Iprops> = ({ data, viewMode, columns, ...prop }) => {
       return (
         <JDtable
           data={cloneData.datasets?.[0].data || []}
-          columns={columns!}
+          columns={columns || defaultColumns}
         />
       );
     default:

@@ -5,5 +5,5 @@ import { getRefetch } from "@janda-com/front";
 import { ME } from "../apollo/gql/user";
 
 export const useSystemNotiList = generateListQueryHook<_SystemNotiFilter,_SystemNotiSort,systemNotiList,systemNotiListVariables, FsystemNoti>(SYSTEMNOTI_LIST,{initialSort:[_SystemNotiSort.createdAt__desc], initialViewCount:200});
-export const useSystemNotiRead = generateMutationHook<systemNotiRead,systemNotiReadVariables>(SYSTEMNOTI_READ,{...getRefetch(SYSTEMNOTI_LIST,ME)});
+export const useSystemNotiRead = generateMutationHook<systemNotiRead,systemNotiReadVariables>(SYSTEMNOTI_READ,{...getRefetch(SYSTEMNOTI_LIST), skipLoadingEffect: true});
 export const useSystemNotiHide = generateMutationHook<systemNotiHide,systemNotiHideVariables>(SYSTEMNOTI_HIDE,{...getRefetch(SYSTEMNOTI_LIST,ME)});

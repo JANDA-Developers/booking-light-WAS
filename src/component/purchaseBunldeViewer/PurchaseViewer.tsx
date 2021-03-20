@@ -1,4 +1,4 @@
-import { JDbox, Tiny } from '@janda-com/front';
+import { autoComma, JDbox, Tiny } from '@janda-com/front';
 import React from 'react';
 import { Info } from '../../atom/Info';
 import { Fpurchase } from '../../type/api';
@@ -13,5 +13,8 @@ export const PurchaseViewer: React.FC<IProp> = ({ purchase }) => {
         <Tiny>{purchase.itemName}</Tiny>
         {MMDDhhmmRange(purchase.purchasedProduct.dateRangeForUse)}
         <Info label={"수량"} value={purchase.count.toString()} />
+        <Info label="가격">
+            {autoComma(purchase.pricePaymentPending) + "원"}
+        </Info>
     </JDbox>;
 };

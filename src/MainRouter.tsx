@@ -2,18 +2,22 @@ import { getFromUrl } from "@janda-com/front";
 import React, { Suspense } from "react";
 import { Route, Switch } from 'react-router-dom';
 import { Page404 } from "./page/exceptions/Page404";
-import UsageGraph from "./page/usageGraph/UsageGraph";
+
+const Calendar = React.lazy(() => import('./page/Calendar/Calendar'));
+const NotiHistory = React.lazy(() => import('./page/notiHistory/NotiHistory'));
+const UsageGraph = React.lazy(() => import('./page/usageGraph/UsageGraph'));
 const Dashboard = React.lazy(() => import('./page/dashboard/Dashboard'));
 const StoreSet = React.lazy(() => import('./page/store/StoreList'));
 const ItemList = React.lazy(() => import('./page/item/ItemList'));
 const ItemDetail = React.lazy(() => import('./page/item/ItemDetail'));
 const ProductList = React.lazy(() => import('./page/product/ProductList'));
 const ProductDetail = React.lazy(() => import('./page/product/ProductDetail[depreacted]'));
-const BuyPageSet = React.lazy(() => import('./page/buypageSet/BuyPageSetDetail'));
+const BuyPageSet = React.lazy(() => import('./page/buypageSet/BuyPageSet'));
 const PurchaseList = React.lazy(() => import('./page/purchase/PurchaseBundleList'));
 
 export enum Paths {
   sms = '/sms',
+  calendar = '/calendar',
   itemDetail = '/itemList/detail',
   itemList = '/itemList',
   price = '/price-set',
@@ -30,6 +34,7 @@ export enum Paths {
   productGroup = '/product-group',
   productCapacity = '/product-capacity',
   storeSet = '/store-set',
+  notiHistory = '/notiHistory',
   graph = '/graph',
   main = '/',
 }
@@ -40,6 +45,8 @@ const storeCode = getFromUrl("storeCode");
 const MainRouter = () => {
   return <Suspense fallback={<div ></div>}>
     <Switch>
+      <Route exact path={Paths.notiHistory} render={() => <NotiHistory />} />
+      <Route exact path={Paths.calendar} render={() => <Calendar />} />
       <Route exact path={Paths.main} render={() => <Dashboard />} />
       <Route path={Paths.purchaseList} render={() => <PurchaseList />} />
       <Route path={Paths.graph} render={() => <UsageGraph />} />

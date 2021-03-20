@@ -16,7 +16,6 @@ interface IProp {
 export const SmsIndex: React.FC<IProp> = () => {
     const { usageMap } = useContext(AppContext);
     const { manager } = useContext(NotificationContext);
-    const { item } = useInvoiceFind(todayyyyymmNumber)
     const { emailPricing, currency, } = manager;
 
     const thisMonthSms = usageMap?.CREATE.NOTIFICATION_SMS;

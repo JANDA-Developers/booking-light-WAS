@@ -28,7 +28,7 @@ export const ProductList: React.FC<IProps> = () => {
             _ownerId__eq: me?._id
         }
     })
-    const { items, filter, setFilter, paginatorHook, getLoading } = productListHook;
+    const { items, filter, setFilter, paginatorHook, getLoading, pageInfo } = productListHook;
 
     const { handleDelete } = getProductDeleteHandle()
 
@@ -64,7 +64,7 @@ export const ProductList: React.FC<IProps> = () => {
                     <ProductTable handleDelete={({ _id }) => { handleDelete(_id) }} handleEdit={handleEdit} products={items} />
                 </JDcard>
             </SkipUpdate>
-            <Pagination   {...paginatorHook} />
+            <Pagination   {...paginatorHook} totalPageCount={pageInfo.totalPageCount} />
         </JDcontainer>
     </div>;
 };

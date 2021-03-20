@@ -9,7 +9,7 @@ interface IProp extends IJDalignProp {
 
 export const Info: React.FC<IProp> = ({ children, label, value, ...props }) => {
     return <Flex vCenter {...props}>
-        <JDtypho color="grey2" mr="small">{label}</JDtypho>
+        <JDtypho color="grey3" mr="small">{label}</JDtypho>
         {value || children}
     </Flex>;
 };

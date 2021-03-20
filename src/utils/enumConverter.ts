@@ -1,6 +1,7 @@
+import { autoComma } from "@janda-com/front";
 import { method } from "lodash";
-import { NotificationMethod, Paymethod, Status, StoreType, TransactionStatus } from "../type/api";
-
+import purchase from "../page/buypageRouter/page/helpers/purchase";
+import { Fbooking, Fbooking_countDetails, Fpurchase, NotificationMethod, Paymethod, purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items, Status, StoreType, TransactionStatus } from "../type/api";
 
 export const refundStatusKr = (status: TransactionStatus | null | "" = "" ) => {
     switch(status) {
@@ -86,3 +87,40 @@ export const notificationMethodKr = (method?:NotificationMethod) => {
 export const isRegisteredToAligoKr = (flag:boolean) => {
     return flag ? "등록완료" : "등록진행중"
 }
+
+export const purchaseBundleProductsDescribes = (
+    item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items[]
+):string => {
+    return item.map(item => purchaseBundleProductsDescribe(item)).join("")
+}
+
+
+export const purchaseBundleProductsDescribe = (
+    item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items
+) => {
+    const resultString = item.purchases.map(purchase => (
+         purchaseSummary(purchase) + "\n" 
+    ))
+    return resultString.join("|");
+}
+
+export const purchaseSummary = (purchase: Fbooking):string => {
+    return  purchase.itemName + "\n" + countDetailSummaryString(purchase.countDetails); 
+}
+
+export const countDetailSummaryString = (details:Fbooking_countDetails[]) => {
+    return details.map(detail =>  detail.label + ":" + detail.count + " 가격:" + autoComma(detail.price)).join("|");
+}
+
+
+
+// export const purchaseBundleProductsDescribe = (
+//     item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items
+// ) => {
+//     const resultString = item.purchases.map(purchase => (
+//         '품명:' + purchase.itemName + "\n" +
+//         '가격:' + autoComma(purchase.pricePaymentPending) + "\n" + 
+//         '수량:' + purchaseSummary(purchase) + "\n" 
+//     ))
+//     return resultString.join("|");
+// }
