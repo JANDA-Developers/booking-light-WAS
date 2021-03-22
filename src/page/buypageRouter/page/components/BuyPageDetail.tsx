@@ -9,15 +9,12 @@ import { AttributeInput } from '../../../../component/formCreater/components/Att
 import { useBookingsInput } from '../../../../hook/useBookingInput';
 import { useCopy } from '../../../../hook/useCopy';
 import { useItemFindById } from '../../../../hook/useItem';
-import { TUseProductList, useProductList } from '../../../../hook/useProduct';
-import { DisplayType, itemFindById_ItemFindById, _ProductFilter } from '../../../../type/api';
+import { TUseProductList } from '../../../../hook/useProduct';
+import { _ProductFilter } from '../../../../type/api';
 import { Ratio } from '../../../../type/const';
 import { BASKET } from '../../../../utils/Basket';
-import { updateURLParameters } from '../../../../utils/url';
-import { BuyPagePaths } from '../../BuyPageRouter';
 import { BuypageContext } from '../buypageList/helper/context';
 import { Capacity } from '../components/Capacity';
-import queryString from "query-string"
 import { BackStepBar } from '../../../../component/backstepBar/BackstepBar';
 import { ISet } from '@janda-com/front/dist/types/interface';
 import { generateProductPurchaseParam } from '../helpers/queryparamsGen';
@@ -30,12 +27,12 @@ interface IProp {
     productListHook: TUseProductList
     itemId?: string;
 }
-
+2
 export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, productListHook }) => {
     const { location } = useHistory();
     const context = useContext(BuypageContext);
     const { store, configure } = context;
-    const { RESERVATION_NORMAL: { useBasket } } = configure;
+    const { RESERVATION_NORMAL: { useBasket, texts } } = configure;
 
     const [step, setStep] = useState<"pick" | "purchase">("pick")
 
@@ -111,14 +108,14 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
                 <JDcard style={{ width: "100%" }} foot={
                     <Flex>
                         <CardBtn hide={!useBasket} mr onClick={handleAddBracket} thema="grey4">장바구니</CardBtn>
-                        <CardBtn onClick={handlePurchase} thema="primary" size="long">구매하기</CardBtn>
+                        <CardBtn onClick={handlePurchase} thema="primary" size="long">{texts.purchase.kr}</CardBtn>
                     </Flex>
                 } head={item?.name} >
                     <ImgSlider photoProps={{ ratio: Ratio['16:9'] }} imgs={item?.images.map(img => img.uri)} />
                     <Mb mb="large" />
                     <Large mb weight={600}>{item?.name}</Large>
                     <EditorView model={item?.descriptionDetail} />
-                    <Large id="ProductSelect" mb>선택</Large>
+                    <Large id="ProductSelect" mb>{texts.productSelectLabel.kr}</Large>
                     <Flex wrap>
                         {items.map(product =>
                             <Capacity bookingsInputHook={bookingsInputHook} key={product._id} product={product} />
@@ -126,7 +123,7 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
                     </Flex>
                     <JDhorizen margin={3} />
                     <div >
-                        <Large mb>추가사항</Large>
+                        <Large mb>{texts.addtionalInput.kr}</Large>
                         {attributes?.map(attr => <div>
                             <AttributeInput onChange={(val) => {
                                 attr.value = val;

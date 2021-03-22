@@ -1,9 +1,10 @@
-import { autoComma, JDtypho } from '@janda-com/front';
+import { autoComma, JDbadge, JDtypho } from '@janda-com/front';
 import React from 'react';
 import { IImgCardProps, ImgCard } from '../../../../../atom/ImgCard';
 import { CardBtn } from '../../../../../component/btns/ModalBtn';
 import { Ratio } from '../../../../../type/const';
 import { IBuypageProductData } from '../helper/productMap';
+import { SoldOutBadge } from './SoldOutBadge';
 
 interface IProp extends Partial<IImgCardProps> {
     bundle: IBuypageProductData;
@@ -26,6 +27,7 @@ export const BuyPageProductBundle: React.FC<IProp> = ({ onDetail: handleDetail, 
         }}
         {...props}
     >
+        <SoldOutBadge bundle={bundle} />
         {bundle.description}
     </ ImgCard>;
 

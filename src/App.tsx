@@ -81,9 +81,6 @@ export const AppWrap = () => {
   const { data: me, called, getLoading, networkStatus } = useMe({ notifyOnNetworkStatusChange: true })
   const contextQueryLoading = !called || getLoading || networkStatus < 7;
 
-  console.log("{me}");
-  console.log({ me });
-
   return <App contextQueryLoading={contextQueryLoading} key={(contextQueryLoading ? "appLoading" : "appReady") + me?._id} me={me} />
 }
 

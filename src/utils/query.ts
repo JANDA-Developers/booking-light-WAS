@@ -41,7 +41,6 @@ interface genrateOption<Q,V> extends QueryHookOptions<Q,V> {
 const dataCheck = (data:any,operationName:string, checkProperty?: string[]) => {
     try {
     if(data?.hasOwnProperty(operationName) === false) {
-        console.log({data});
         throw Error(`result data object dose not have property ${operationName} look this above object ↑ `)
     }
 
@@ -119,8 +118,6 @@ export const generateListQueryHook = <F,S,Q,V,R>(
             params.filter
         ])
 
-        console.log({data});
-
         return {getData, pageInfo,  getLoading, items, ...params,...queryElse }
     }
 
@@ -153,9 +150,6 @@ export const generateQueryHook = <Q, R, V = undefined>(
             if(!skipInit)
                 getData();
         },[])
-
-        console.log({_data})
-        console.log({data})
 
         return { getData, getLoading, data,...context }
     }

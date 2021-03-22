@@ -33,12 +33,12 @@ export const ReservationNormalConfiger: React.FC<IProp> = ({ config: _config, se
         </div>
         <Bold size="small">기타</Bold>
         <JDhorizen margin={1} />
-        <div>
+        {/* <div>
             <JDswitch onChange={(v) => {
                 config.useImgSlide = v;
                 setConfig({ ..._config })
             }} checked={useImgSlide} mb label="이미지 슬라이딩" />
-        </div>
+        </div> */}
         <div>
             <JDswitch onChange={(v) => {
                 config.useBasket = v;

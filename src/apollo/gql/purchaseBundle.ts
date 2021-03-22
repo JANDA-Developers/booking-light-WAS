@@ -12,6 +12,7 @@ export const PURCHASE_BUNDLE_CREATE = gql`
             error {
             ...FuserError
             }
+            paymentInfo
             data {
                 _id
             }
@@ -27,6 +28,42 @@ export const PURCHASE_BUNDLE_CANCEL = gql`
     ) {
     PurchaseBundleCancel(
         message:$message
+        purchaseBundleId:$purchaseBundleId
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+    }
+}
+${F_USERERROR}
+`
+
+export const PURCHASE_BUNDLE_SET_PAYMENT_STATUS = gql`
+    mutation purchaseBundleSetPaymentStatus(
+        $input: PurchaseBundleStatusSetInput!
+        $purchaseBundleId: ObjectId!
+    ) {
+    PurchaseBundleSetPaymentStatus(
+        input:$input
+        purchaseBundleId:$purchaseBundleId
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+    }
+}
+${F_USERERROR}
+`
+
+export const PURCHASE_BUNDLE_SET_REFUND_STATUS = gql`
+    mutation purchaseBundleSetRefundStatus(
+        $input: PurchaseBundleStatusSetInput!
+        $purchaseBundleId: ObjectId!
+    ) {
+    PurchaseBundleSetRefundStatus(
+        input:$input
         purchaseBundleId:$purchaseBundleId
     ) {
         ok
@@ -104,11 +141,11 @@ export const PURCHASE_FIND_BY_ID = gql`
     PurchaseFindById(
         purchaseId: $purchaseId 
     ) {
-        ...Fpurchase
+        ...Fbooking
 
     }
 }
-${F_PURCHASE}
+${F_BOOKING}
 `
 
 export const PURCHASE_BUNDLE_FIND_BY_ID = gql`

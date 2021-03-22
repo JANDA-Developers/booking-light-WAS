@@ -7,7 +7,7 @@ import { CapacityInput, productList_ProductList_items, productList_ProductList_i
 import { RemainViewer } from './RemainViewer';
 import { ProductSelecter } from './ProductSelecter';
 import { IUseBookingsInput } from '../../../../hook/useBookingInput';
-import { hhmmRange } from '../../../../utils/dateFormat';
+import { hhmmRange, MMDDhhmm, yyyymmddHHmm, yyyymmddHHmmRange } from '../../../../utils/dateFormat';
 
 interface IProp extends IDiv {
     bookingsInputHook: IUseBookingsInput;
@@ -30,10 +30,10 @@ export const Capacity: React.FC<IProp> = ({ product, bookingsInputHook, ...props
         }
     }
 
-    console.log({ bookingInputs });
 
     return <JDbox mr mb className="capacity" {...props} >
-        <Bold mb={"small"}>{hhmmRange(dateRangeForUse?.from, dateRangeForUse?.to)}</Bold>
+        <Bold >{MMDDhhmm(dateRangeForUse?.from)}부터</Bold>
+        <Bold mb={"small"}>{MMDDhhmm(dateRangeForUse?.to)}까지</Bold>
         <Flex between>
             {usageDetails.map((cd, index) => <CapacityDetail
                 isLast={isLast(index, usageDetails)}
@@ -58,8 +58,12 @@ export const CapacityDetail: React.FC<IDetailProps> = ({ isLast, cpacity, count,
 
     return <JDalign mr={isLast ? "no" : "normal"} className="capacity__cell" key={cpacity.key}>
         <Tiny style={{ alignSelf: "flex-end" }}>{cpacity.label}</Tiny>
-        <Flex mb vCenter vEnd>{autoComma(cpacity.price)} <Mr mr="superTiny" /> <Tiny>개당</Tiny></Flex>
+        <Flex mb vCenter vEnd>{autoComma(cpacity.price)} <Mr mr="superTiny" /><Tiny>개당</Tiny></Flex>
         <RemainViewer size="small" capacityDetail={cpacity} />
         <ProductSelecter maxCount={capacityCount - usage} count={count} onChange={onChange} />
     </JDalign>
 }
+function mmddHHmm(to: any): string | number | boolean | {} | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactNodeArray | React.ReactPortal | null | undefined {
+    throw new Error('Function not implemented.');
+}
+

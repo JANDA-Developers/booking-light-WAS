@@ -32,7 +32,8 @@ export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEd
             },
         },
         {
-            Header: () => <div>판매시간</div>,
+            Header: () => <div>판매기간</div>,
+            width: 200,
             accessor: 'dateRangeForSale',
             Cell: ({ original: { dateRangeForSale } }) => {
                 return <DateWithTimeRange from={dateRangeForSale?.from} to={dateRangeForSale?.to} />;
@@ -40,6 +41,7 @@ export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEd
         },
         {
             Header: () => <div>사용시간</div>,
+            width: 200,
             accessor: 'dateRangeForUse',
             Cell: ({ original: { dateRangeForUse } }) => {
                 return <DateWithTimeRange from={dateRangeForUse?.from} to={dateRangeForUse?.to} />;
@@ -56,15 +58,14 @@ export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEd
                 </JDbox>)}</div>;
             },
         },
-        {
-            Header: () => <div>활성화</div>,
-            accessor: 'disabled',
-            width: 80,
-            Cell: ({ original: { disabled } }) => {
-                return <DisableBadge disabled={disabled} />;
-            },
-        },
-
+        // {
+        //     Header: () => <div>활성화</div>,
+        //     accessor: 'disabled',
+        //     width: 80,
+        //     Cell: ({ original: { disabled } }) => {
+        //         return <DisableBadge disabled={disabled} />;
+        //     },
+        // },
         {
             Header: () => <div>기능</div>,
             width: 80,

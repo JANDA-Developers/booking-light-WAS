@@ -1,6 +1,7 @@
 import { Bold, InputText, JDbutton, JDcard, JDhorizen, JDselect, JDswitch, JDtabs, opFind, Tab, TabList, TabPanel } from '@janda-com/front';
 import { ISet } from '@janda-com/front/dist/types/interface';
 import React, { useContext } from 'react';
+import { ObjectInputRender } from '../../../component/objectInput/ObjectInputRender';
 import AppContext from '../../../context';
 import { useStoreUpdate } from '../../../hook/useStore';
 import { Paymethod } from '../../../type/api';
@@ -9,9 +10,9 @@ import { BuyPageType } from '../../../type/enum';
 import { completeMsg } from '../../../utils/onCompletedMessage';
 import { ReservationNormalConfiger } from './ReservationNomalConfiger';
 
-interface IBuypageTexts {
+const buypageTexts = {
     countUnit: {
-        kr: "개당",
+        kr: "개",
         description: "구매단위 라벨"
     },
     purchase: {
@@ -21,8 +22,13 @@ interface IBuypageTexts {
     addtionalInput: {
         kr: "추가사항",
         description: "커스텀인풋 라벨"
+    },
+    productSelectLabel: {
+        kr: "선택",
+        description: "상품선택 라벨"
     }
 }
+export type TBuypageNormalTexts = typeof buypageTexts;
 
 interface RESERVATION_NORMAL_PAGE_CONFIG {
     useSearchFilter: boolean
@@ -30,7 +36,7 @@ interface RESERVATION_NORMAL_PAGE_CONFIG {
     useRangeFilter: boolean
     useImgSlide: boolean
     useBasket: boolean
-    texts?: IBuypageTexts
+    texts: TBuypageNormalTexts
 }
 
 export interface IbuypageConfig {
@@ -48,6 +54,7 @@ export const DefaultBuypageConfig: IbuypageConfig = {
         useRangeFilter: false,
         useSearchFilter: false,
         useTimeFilter: false,
+        texts: buypageTexts
     }
 }
 
@@ -59,7 +66,9 @@ interface IProp {
 
 export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
     const { selectedStoreId } = useContext(AppContext);
-    const { type, payMethods, RESERVATION_NORMAL: { useBasket, useSearchFilter, useTimeFilter, useRangeFilter, useImgSlide } } = config;
+    const { type, payMethods, RESERVATION_NORMAL: { texts, useBasket, useSearchFilter, useTimeFilter, useRangeFilter, useImgSlide } } = config;
+
+    console.log({ texts });
     const [storeUpdate] = useStoreUpdate({
         onCompleted: ({ StoreUpdate }) => {
             completeMsg(StoreUpdate, "변경 저장완료")
@@ -109,7 +118,12 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
                 <ReservationNormalConfiger setConfig={setConfig} config={config} />
             </TabPanel>
             <TabPanel>
-                <InputText />
+                <ObjectInputRender onChange={(object) => {
+                    config.RESERVATION_NORMAL.texts = object
+                    setConfig({
+                        ...config
+                    })
+                }} value={texts || buypageTexts} />
             </TabPanel>
         </JDtabs>
         {/* <JDselect onChange={ } /> */}

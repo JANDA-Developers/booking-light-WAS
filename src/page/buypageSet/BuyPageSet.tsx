@@ -10,9 +10,6 @@ import { mergeDeepOnlyExsistProperty } from '../../utils/merge';
 import { buyPageLinkCreater, BuyPagePaths, BuyPageRouterWrap as BuyPageRouter } from '../buypageRouter/BuyPageRouter';
 import { DefaultBuypageConfig, BuypageConfiger, IbuypageConfig } from './compoents/BuypageConfiger';
 
-
-
-
 interface IProp {
 }
 
@@ -21,7 +18,6 @@ export const BuyPageSetDetail: React.FC<IProp> = () => {
     const [config, setConfig] = useCopy<IbuypageConfig>(
         mergeDeepOnlyExsistProperty(DefaultBuypageConfig, selectedStore?.buypage?.configure || {})
     )
-
 
     const getLink = () => buyPageLinkCreater({
         storeCode: selectedStore?.code
@@ -35,6 +31,7 @@ export const BuyPageSetDetail: React.FC<IProp> = () => {
         copytoClipboard(getLink())
         toast("클립보드에 복사 되었습니다.")
     }
+
 
     return <div className="buy">
         <JDpageHeader title="예약페이지 생성하기" desc="원하는 형태의 예약페이지 생성하기" />

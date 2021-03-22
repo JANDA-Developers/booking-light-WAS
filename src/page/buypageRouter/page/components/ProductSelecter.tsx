@@ -9,6 +9,7 @@ interface IProp {
 }
 
 export const ProductSelecter: React.FC<IProp> = ({ maxCount, count, onChange }) => {
+    if (maxCount < 0) return null
     const Count = selectOpCreater({ count: maxCount + 1, labelAdd: "개", start: 0 });
     return <JDselectCounter selectHook={{
         selectedOption: opFind(count || 0 as any, Count),

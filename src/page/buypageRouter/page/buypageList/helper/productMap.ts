@@ -15,15 +15,11 @@ export const productMap = (items: itemList_ItemList_items_ItemBooking[], product
         ...genBundleInfo(item, products),
     })) || []).filter(bundle => !isEmpty(bundle.products))
 
-    console.log({bundle});
-
     return bundle
 }
 
 const genBundleInfo = (item:itemList_ItemList_items_ItemBooking, products:productList_ProductList_items[] ):Pick<IBuypageProductData,"lowPrice" | "averagePrice" | "products"> =>  {
     let lowPrice = 1000000000;
-
-    console.log({products});
 
     const filteredProducts = products.filter(pd => {
         const checked = pd._itemId === item._id;

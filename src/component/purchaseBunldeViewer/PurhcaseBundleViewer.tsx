@@ -9,6 +9,9 @@ import { payMethodKr, payStatusKr } from '../../utils/enumConverter';
 import { PurchaseViewer } from "./PurchaseViewer";
 import dayjs from "dayjs";
 import { IJDcardProps } from '@janda-com/front/dist/components/cards/Card';
+import { ExpireTimer } from '../expireTImer/ExpireTimer';
+import { usePurchaseBundleCancel, usePurchaseBundleRefund } from '../../hook/usePurchase';
+import { PormptModal } from '../promptModal/PromptModal';
 
 interface IProp extends IJDcardProps {
     isAdmin?: boolean;
@@ -23,47 +26,32 @@ export const PurchaseBundleViewer: React.FC<IProp> = ({ bundle, isAdmin, ...prop
 
     return <JDcard  {...props} >
         <div>
-            <div>
+            {isBankPay &&
                 <div>
-                    <JDlabel txt="입금 만료까지" />
+                    <div>
+                        <JDlabel txt="입금 만료까지" />
+                    </div>
+                    <ExpireTimer timeInit={diff} />
                 </div>
-                <JDTimer initialTime={diff} direction="backward">
-                    {({ timerState }: any) => {
-                        return (
-                            <span className="JDtimer">
-                                <span className="JDtimer__minute">
-                                    <Timer.Days />
-                                일
-                                </span>
-                                <span className="JDtimer__second">
-                                    <Timer.Minutes />
-                                    분
-                                </span>
-                                <Tiny component="span" className="JDtimer__second">
-                                    <Timer.Seconds />
-                                        초
-                                    </Tiny>
-                            </span>
-                        );
-                    }}
-                </JDTimer>
-            </div>
-            <Flex mb="small" vCenter>
-                <Info mr="large" label="입금만료">{yyyymmddHHmm(bundle.paymentExpiresAt)}</Info>
-                <Info label="예약일">{yyyymmddHHmmLabel(bundle.createdAt)}</Info>
+            }
+            <Flex mb>
+                <Flex mb="small" mr column style={{ alignItems: "baseline" }}>
+                    <Info mb="tiny" mr="large" label="입금만료">{yyyymmddHHmm(bundle.paymentExpiresAt)}</Info>
+                    <Info mb="tiny" label="예약일">{yyyymmddHHmmLabel(bundle.createdAt)}</Info>
+                    <Info mb="tiny" mr="large" label="예약자명">{bundle.purchaserName}</Info>
+                    <Info label="예약번호">{bundle.code}</Info>
+                </Flex>
+                <Flex mb="small" column vCenter style={{ alignItems: "baseline" }}>
+                    <Info mb="tiny" mr="large" label="연락처">{bundle.purchaserContact}</Info>
+                    <Info mb="tiny" label="결제금액">{autoComma(bundle.pricePaymentPending)}</Info>
+                    <Info mb="tiny" mr="large" label="결제수단">{payMethodKr(bundle.paymethod)}</Info>
+                    <Info label="결제상태">{payStatusKr(bundle.paymentStatus)}</Info>
+                </Flex>
             </Flex>
-            <Flex mb="small" vCenter>
-                <Info mr="large" label="예약자명">{bundle.purchaserName}</Info>
-                <Info label="예약번호">{bundle.code}</Info>
-            </Flex>
-            <Flex mb="small" vCenter>
-                <Info mr="large" label="연락처">{bundle.purchaserContact}</Info>
-                <Info label="입금액">{autoComma(bundle.pricePaymentPending)}</Info>
+            {/* <Flex mb="small" vCenter>
             </Flex>
             <Flex mb vCenter>
-                <Info mr="large" label="결제수단">{payMethodKr(bundle.paymethod)}</Info>
-                <Info label="결제상태">{payStatusKr(bundle.paymentStatus)}</Info>
-            </Flex>
+            </Flex> */}
 
             <JDlabel>상품확인</JDlabel>
             {bundle.purchases.map(purchase => <PurchaseViewer purchase={purchase} />)}

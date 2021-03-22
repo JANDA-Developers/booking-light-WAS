@@ -1,5 +1,5 @@
-import { Flex, JDbutton, JDcard, JDcontainer, JDlabel, JDpageHeader, JDpagination, Mb, SkipUpdate, useDayPicker, WindowSize } from '@janda-com/front';
-import React, { useContext } from 'react';
+import { Flex, JDbutton, JDcard, JDcontainer, JDlabel, JDpageHeader, JDpagination, Mb, SkipUpdate, useDayPicker, useModal, WindowSize } from '@janda-com/front';
+import React, { useContext, useState } from 'react';
 import AppContext from '../../context';
 import { useProductDelete, useProductList } from '../../hook/useProduct';
 import { me_Me_stores_items, productList_ProductList_items, _ProductFilter, _ProductSort } from '../../type/api';
@@ -13,6 +13,7 @@ import Calendar from '../../component/Calendar/Calendar';
 import dayjs from "dayjs";
 import { today, tomorrow } from '../../type/const';
 import { ScrollBox } from '../../component/scrollBox/ScrollBox';
+import { IUseModalInfo, ProductViewModal } from '../../component/productViewModal/ProductViewModal';
 
 interface IProps { }
 
@@ -20,6 +21,7 @@ type IDetailRouteProp = { itemId?: string }
 
 export const CalendarPage: React.FC<IProps> = () => {
     const history = useHistory()
+    const productViewModal = useModal<IUseModalInfo>()
     const { params: { itemId } } = useRouteMatch<IDetailRouteProp>();
     const dayPickerHook = useDayPicker(null, null);
 
@@ -31,7 +33,7 @@ export const CalendarPage: React.FC<IProps> = () => {
             _ownerId__eq: me?._id
         }
     })
-    const { items, filter, setFilter, paginatorHook, getLoading } = productListHook;
+    const { items, filter, setFilter, getLoading } = productListHook;
 
 
     const handleSelectItem = (item?: me_Me_stores_items) => {
@@ -64,6 +66,11 @@ export const CalendarPage: React.FC<IProps> = () => {
                             console.log({ date });
                             dayPickerHook.setDate(date);
                         }}
+                        onDoubleClickEvent={(event) => {
+                            productViewModal.openModal({
+                                productId: event.resource._id
+                            })
+                        }}
                         onView={() => { }}
                         displayTools
                         startHour={today}
@@ -77,6 +84,7 @@ export const CalendarPage: React.FC<IProps> = () => {
                     />
                 </SkipUpdate>
             </JDcard>
+            <ProductViewModal key={productViewModal.info?.productId} modalHook={productViewModal} />
         </JDcontainer>
     </div>;
 };

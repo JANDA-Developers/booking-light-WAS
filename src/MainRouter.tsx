@@ -36,6 +36,7 @@ export enum Paths {
   storeSet = '/store-set',
   notiHistory = '/notiHistory',
   graph = '/graph',
+  error = '/error',
   main = '/',
 }
 

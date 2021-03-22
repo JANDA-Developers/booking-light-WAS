@@ -2,6 +2,7 @@ import { autoComma } from "@janda-com/front";
 import { method } from "lodash";
 import purchase from "../page/buypageRouter/page/helpers/purchase";
 import { Fbooking, Fbooking_countDetails, Fpurchase, NotificationMethod, Paymethod, purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items, Status, StoreType, TransactionStatus } from "../type/api";
+import { MMDDhhmmRange } from "./dateFormat";
 
 export const refundStatusKr = (status: TransactionStatus | null | "" = "" ) => {
     switch(status) {
@@ -26,12 +27,14 @@ export const payMethodKr = (method:Paymethod | undefined) => {
             return "카드결제"
         case Paymethod.CASH:
             return "현금결제"
+        case Paymethod.CARD:
+            return "카드결제"
     }
 
     return ""
 }
 
-export const payStatusKr = (status:Status) => {
+export const payStatusKr = (status?:Status) => {
 
     switch(status) {
         case Status.CANCELED:
@@ -40,6 +43,21 @@ export const payStatusKr = (status:Status) => {
             return "결제완료"
         case Status.PENDING:
             return "입금확인중"
+    }
+
+    return ""
+}
+
+
+export const statusKr = (status?:Status) => {
+
+    switch(status) {
+        case Status.CANCELED:
+            return "취소"
+        case Status.COMPLETED:
+            return "완료"
+        case Status.PENDING:
+            return "대기"
     }
 
     return ""
@@ -105,11 +123,12 @@ export const purchaseBundleProductsDescribe = (
 }
 
 export const purchaseSummary = (purchase: Fbooking):string => {
-    return  purchase.itemName + "\n" + countDetailSummaryString(purchase.countDetails); 
+    console.log({purchase});
+    return  MMDDhhmmRange(purchase.purchasedProduct.dateRangeForUse) + "\n" + countDetailSummaryString(purchase.countDetails); 
 }
 
 export const countDetailSummaryString = (details:Fbooking_countDetails[]) => {
-    return details.map(detail =>  detail.label + ":" + detail.count + " 가격:" + autoComma(detail.price)).join("|");
+    return details?.map(detail =>  detail.label + ":" + detail.count + " 가격:" + autoComma(detail.price)).join("|");
 }
 
 

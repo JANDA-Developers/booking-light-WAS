@@ -6,17 +6,15 @@ import VerificationModal, { IVerfiModalInfo } from '../../../../component/verfi/
 import { TUseAnnonymouseVerifi } from '../../../../hook/useUser';
 import { VerificationEvent, VerificationTarget } from '../../../../type/api';
 
+export interface AnonyMouseVerifiData {
+    name: string;
+    phoneNumber: string;
+    email: string;
+}
+
 interface IProp extends IJDcardProps {
     verificationHook: TUseAnnonymouseVerifi
-    userInfoHook: [{
-        name: string;
-        phoneNumber: string;
-        email?: string;
-    }, React.Dispatch<React.SetStateAction<{
-        name: string;
-        phoneNumber: string;
-        email?: string;
-    }>>]
+    userInfoHook: [AnonyMouseVerifiData, React.Dispatch<React.SetStateAction<AnonyMouseVerifiData>>]
 }
 
 export const AnonyPurchaseForm: React.FC<IProp> = ({ verificationHook, userInfoHook, ...props }) => {

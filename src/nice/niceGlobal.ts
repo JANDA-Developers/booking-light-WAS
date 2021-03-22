@@ -62,7 +62,7 @@ export function PCnicepaySubmit() {
   target.submit();
 }
 
-function jdPayStart() {
+function nicePay() {
   const target = $("form[name=payForm]");
   const isMobile = checkPlatform(window.navigator.userAgent) == "mobile";
   if (isMobile) {
@@ -79,7 +79,7 @@ function jdPayStart() {
 //[PC Only]payment window close function <<'nicezpayClose()' DO NOT CHANGE>>
 function nicepayClose() {
   alert("결제가 취소 되었습니다");
-  location.reload();
+  // location.reload();
 }
 
 declare global {
@@ -88,7 +88,7 @@ declare global {
     nicepaySubmit: any;
     jdPayCallBackSucess: () => any;
     checkPlatform: (ua: any) => any;
-    jdPayStart: () => any;
+    nicePay: () => any;
     nicepayClose: () => any;
     goPay: (foo: any) => any;
   }
@@ -96,5 +96,5 @@ declare global {
 
 window.jdPayCallBackSucess = jdPayCallBackSucess;
 window.checkPlatform = checkPlatform;
-window.jdPayStart = jdPayStart;
+window.nicePay = nicePay;
 window.nicepayClose = nicepayClose;

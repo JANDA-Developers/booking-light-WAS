@@ -1,24 +1,20 @@
-import { useMutation, useQuery } from '@apollo/client';
 import { InputText, arraySum, autoComma, Flex, isPhone, JDbutton, JDcard, JDselect, JDtypho, Large, useInput, useSelect, Validater } from '@janda-com/front';
-import { stringifyUrl } from 'query-string';
 import React, { useContext, useState } from 'react';
-import { Router, useHistory, useLocation, useParams } from 'react-router';
-import { BackStepBar } from '../../../../component/backstepBar/BackstepBar';
+import { useHistory, useLocation } from 'react-router';
 import { CardBtn } from '../../../../component/btns/ModalBtn';
 import { useBasket } from '../../../../hook/useBasket';
 import { IBookingInputData } from '../../../../hook/useBookingInput';
-import { usePurchaseBundleCreate } from '../../../../hook/usePurchase';
+import { nicePayAuthData, purchaseCreatePaymentInfoReader, usePurchaseBundleCreate } from '../../../../hook/usePurchase';
 import { useAnnonymouseVerifi } from '../../../../hook/useUser';
 import NiceElments from '../../../../nice/NiceElments';
-import { VerificationTarget } from '../../../../type/api';
-import { PAY_METHOD_OPS } from '../../../../type/const';
+import { Paymethod, purchaseBundleCreate_PurchaseBundleCreate, purchaseBundleCreate_PurchaseBundleCreate_data, VerificationTarget } from '../../../../type/api';
+import { nicePayJDlogo, PAY_METHOD_OPS } from '../../../../type/const';
 import { BASKET } from '../../../../utils/Basket';
 import { completeMsg } from '../../../../utils/onCompletedMessage';
 import { BuyPagePaths } from '../../BuyPageRouter';
 import { BuypageContext } from '../buypageList/helper/context';
-import { AnonyPurchaseForm } from '../components/AnonyPurchaseForm';
+import { AnonyMouseVerifiData, AnonyPurchaseForm } from '../components/AnonyPurchaseForm';
 import { ProductSelectViewer } from '../components/ProductSelectViewer';
-import { getProductPurchaseParam } from '../helpers/queryparamsGen';
 
 interface IProp {
     purchaseProduct?: IBookingInputData[]
@@ -40,16 +36,20 @@ export const BuyPagePurchase: React.FC<IProp> = ({ purchaseProduct }) => {
 
     const messageHook = useInput("");
     const paymethodHook = useSelect(availablePayMethods[0], availablePayMethods)
-    const userInfoHook = useState({
+    const userInfoHook = useState<AnonyMouseVerifiData>({
         name: "",
-        phoneNumber: ""
+        phoneNumber: "",
+        email: ""
     })
+    const [niceAuthData, setNiceAuthData] = useState<nicePayAuthData>()
+    const [anonyUserInfo] = userInfoHook;
 
     // const purchaseProduct = getProductPurchaseParam(search);
     // console.log({ purchaseProduct });
 
-    //번들 후 헤더에서 키를 뺴냄
-    //REST API를 호출한다.
+    // TODO
+    // 번들 후 키를 빼내서
+    // 결제창을 호출한다.
 
     const items = BASKET.getItems();
 
@@ -73,8 +73,23 @@ export const BuyPagePurchase: React.FC<IProp> = ({ purchaseProduct }) => {
     }])
 
 
+    const isCardPay = paymethodHook.selectedOption?.value === Paymethod.CARD
     const fullList = items.concat(purchaseProduct || []);
     const totalPrice = arraySum(fullList.map(list => list.priceOrigin || 0));
+
+
+    const toSucessPage = (data: purchaseBundleCreate_PurchaseBundleCreate_data) => {
+        history.push(BuyPagePaths.sucess + "/" + data._id)
+    }
+
+    const openNicePayModal = (data: Required<purchaseBundleCreate_PurchaseBundleCreate>) => {
+        const result = purchaseCreatePaymentInfoReader(data.paymentInfo!, data.data!._id);
+        setNiceAuthData(result);
+        setTimeout(() => {
+            window.nicePay();
+        }, 100)
+    }
+
     const hanldePurchase = () => {
         if (validate()) {
 
@@ -95,9 +110,12 @@ export const BuyPagePurchase: React.FC<IProp> = ({ purchaseProduct }) => {
                     }
                 }
             }).then(({ data }) => {
-                const { data: _data, ok } = data?.PurchaseBundleCreate || {}
-                if (ok) {
-                    history.push(BuyPagePaths.sucess + "/" + _data?._id)
+                if (data?.PurchaseBundleCreate.ok) {
+                    if (isCardPay) {
+                        openNicePayModal(data.PurchaseBundleCreate);
+                    } else {
+                        toSucessPage(data.PurchaseBundleCreate.data!);
+                    }
                 }
             })
         }
@@ -106,7 +124,25 @@ export const BuyPagePurchase: React.FC<IProp> = ({ purchaseProduct }) => {
     //장바구니에 담아둔것들과 방금 선택한것을 한번에 구매해야한다.
 
     return <div >
-        <NiceElments />
+        <NiceElments
+            ReturnURL={process.env.REACT_APP_API_NICE_PAY_END_POINT}
+            endPoint={process.env.REACT_APP_API_NICE_PAY_END_POINT}
+            BuyerEmail={anonyUserInfo.email}
+            BuyerName={anonyUserInfo.name}
+            Amt={totalPrice.toString()}
+            BuyerTel={anonyUserInfo.phoneNumber}
+            EdiDate={niceAuthData?.editDate}
+            GoodsName={store.name}
+            IspCancelUrl={location.href}
+            MID={"stayjand1m"}
+            Moid={niceAuthData?.moid}
+            PayMethod={"CARD"}
+            hex={niceAuthData?.hash}
+            isAuth={niceAuthData ? true : false}
+            logo={nicePayJDlogo}
+            CustomParam={niceAuthData?.customParam}
+            merchantID={"stayjand1m"}
+        />
         {/* 선택아이템 */}
         {purchaseProduct && <ProductSelectViewer head={"선택 상품확인"} mb bookingInputs={purchaseProduct} />}
         {/* 장바구니 아이템 */}

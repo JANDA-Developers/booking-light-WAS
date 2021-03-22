@@ -4,10 +4,11 @@ import { purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_ite
 import { yyyymmddHHmm } from '../../../utils/dateFormat';
 import { JDicon } from '../../../component/icons/Icons';
 import { Taccent } from '../../../atom/format/DateFormat';
-import { payMethodKr, purchaseBundleProductsDescribe } from '../../../utils/enumConverter';
-import { autoHypen, Small } from '@janda-com/front';
+import { payMethodKr, payStatusKr, purchaseBundleProductsDescribe, statusKr } from '../../../utils/enumConverter';
+import { autoHypen, Bold, Flex, JDalign, JDtypho, Small } from '@janda-com/front';
 import { Clip } from '../../../atom/clip/Clip';
 import { PurchaseBundleViewer } from '../../../component/purchaseBunldeViewer/PurhcaseBundleViewer';
+import { StatusBadge } from '../../../component/statusBadges/StatusBadges';
 
 export type TBundleRow = Partial<purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items | purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items>;
 
@@ -40,6 +41,15 @@ export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDe
             },
         },
         {
+            Header: () => <div>상태</div>,
+            accessor: 'status',
+            Cell: ({ original: { status } }) => {
+                return <StatusBadge status={status!}>
+                    {statusKr(status)}
+                </StatusBadge>;
+            },
+        },
+        {
             Header: () => <div>구매코드</div>,
             accessor: 'code',
             Cell: ({ original: { code } }) => {
@@ -49,8 +59,13 @@ export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDe
         {
             Header: () => <div>결제수단</div>,
             accessor: 'paymethod',
-            Cell: ({ original: { paymethod } }) => {
-                return payMethodKr(paymethod)
+            Cell: ({ original: { paymethod, paymentStatus } }) => {
+                return <Flex column center vCenter>
+                    <JDtypho mb="tiny">{payMethodKr(paymethod)}</JDtypho>
+                    <StatusBadge status={paymentStatus!} >
+                        {payStatusKr(paymentStatus)}
+                    </StatusBadge>
+                </Flex>
             },
         },
         {
@@ -64,7 +79,7 @@ export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDe
             Header: () => <div>연락처</div>,
             accessor: 'purchaserContact',
             Cell: ({ original: { purchaserContact } }) => {
-                return <div>{autoHypen(purchaserContact)}</div>
+                return <Clip>{autoHypen(purchaserContact)}</Clip>
             },
         },
         {

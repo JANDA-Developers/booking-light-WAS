@@ -26,11 +26,13 @@ export const serviceUsageMapper = (item:invoiceFindOne_InvoiceFindOne) => {
     }
     
     const usageTypeMap:UsageTypeMap = {
-        CREATE:usage,
-        DELETE:usage,
-        READ:usage,
-        UPDATE:usage
+        CREATE: {...usage},
+        DELETE:{...usage},
+        READ:{...usage},
+        UPDATE:{...usage}
     }
+
+    console.log({item})
 
     item.serviceUsageDetails.forEach((detail)=> {
         usageTypeMap[detail.action][detail.type] = detail

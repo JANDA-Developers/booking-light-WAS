@@ -10,10 +10,11 @@ import { BuyPage } from './page/buypageList/BuyPage';
 import { BuyPagePurchase } from './page/buypagePurchase/BuyPagePurchase';
 import { BuyPageSucess } from './page/buypageSucess/BuyPageSucess';
 import { BuyPageFail } from './page/buypageFail/BuyPageFail';
-import { IbuypageConfig } from '../buypageSet/compoents/BuypageConfiger';
+import { IbuypageConfig, TBuypageNormalTexts } from '../buypageSet/compoents/BuypageConfiger';
 import { updateURLParameters } from '../../utils/url';
 import { IselectedOption } from '@janda-com/front/dist/types/interface';
 import { Storage } from '../../utils/storage';
+import { generateLanguageProxy } from './helper';
 
 
 // 바이페이지 라우터 (에디팅용)
@@ -44,13 +45,13 @@ interface IProp extends IBuyPageWrapProp {
 }
 
 export const BuypageRouter: React.FC<IProp> = ({ store, propConfigure }) => {
-    const configure = propConfigure || store.buypage.configure;
+    const configure = propConfigure || store.buypage.configure as IbuypageConfig;
     localStorage.setItem("storeId", store._id)
 
     return <BuypageContext.Provider value={{
         isLogined: false,
         store,
-        configure
+        configure,
     }}>
         <Switch>
             <Route exact path={[BuyPagePaths.index]} render={() => <BuyPage />} />

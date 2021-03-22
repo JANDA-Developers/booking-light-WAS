@@ -8,6 +8,7 @@ export interface INiceElementProp {
   MID: string;
   Moid: string;
   hex: string;
+  CustomParam: string;
   BuyerName: string;
   BuyerEmail: string;
   BuyerTel: string;
@@ -40,6 +41,7 @@ const NiceElments: React.FC<Partial<INiceElementProp>> = ({
   Moid,
   PayMethod,
   ReturnURL,
+  CustomParam,
   VbankExpDate,
   merchantID,
   WapUrl,
@@ -152,7 +154,7 @@ const NiceElments: React.FC<Partial<INiceElementProp>> = ({
           id="ReqReserved"
           name="ReqReserved"
           onChange={() => { }}
-          value=""
+          value={CustomParam}
         />{" "}
         <input id="NiceReqReturnURL"
           name="ReturnURL" onChange={() => { }} value={ReturnURL} />
@@ -174,3 +176,5 @@ const NiceElments: React.FC<Partial<INiceElementProp>> = ({
 };
 
 export default NiceElments;
+
+

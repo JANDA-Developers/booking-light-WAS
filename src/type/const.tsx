@@ -3,11 +3,14 @@ import { DisplayType, FoffsetPagingInfo, ItemType, NotificationMethod, Notificat
 import dayjs from "dayjs";
 import { NotiType, selectOpCreater } from "@janda-com/front";
 import { enumToOption } from "../utils/enumToOption";
-import { BuyPageType } from "./enum";
+import { BuyPageType, CreateSalesTime } from "./enum";
 import { storeTypeKr } from "../utils/enumConverter";
 
 const { version } = require("../../package.json");
 export const JDVERSION = version
+
+
+export const nicePayJDlogo = "https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/logo/jungleBooking.png";
 
 export const BANK_LIST = {
     "001": "한국은행",
@@ -147,8 +150,28 @@ export const EVENT_OPS: IselectedOption<NotificationTriggerEvent>[] = [
     },
 ];
 
-
-
+export const CREATE_SALES_TIME_OP: IselectedOption<CreateSalesTime>[] = [
+    {
+        label: "지금부터 사용시간 종료 전까지",
+        value: CreateSalesTime.BEFORE_USE_END,
+    },
+    {
+        label: "지금부터 사용시간 시작 전까지",
+        value: CreateSalesTime.BEFORE_USE_START,
+    },
+    {
+        label: "지금부터 사용시간 시작 하루 전까지",
+        value: CreateSalesTime.ONE_DAY_BEFORE,
+    },
+    {
+        label: "지금부터 사용시간 시작 N시간 전까지",
+        value: CreateSalesTime.N_HOURS_BEFORE,
+    },
+    {
+        label: "커스텀 시간 설정",
+        value: CreateSalesTime.CUSTOM_TIME,
+    },
+];
 
 export const INPUT_OPS: IselectedOption<DisplayType>[] = [
     {

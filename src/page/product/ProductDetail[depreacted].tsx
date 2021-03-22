@@ -27,7 +27,7 @@ interface IProp {
 // 전달방법은 장바구니에 담아두는 방식임.
 // 장바구니에 저장된후 계속하기 또는 구매하기로 진행가능함.
 export const ProductDetail: React.FC<IProp> = ({ item }) => {
-    const paging = generateClientPaging(item?.products || [], 8);
+    const paging = generateClientPaging(item?.products || [], 5);
     const productCreateModal = useModal<IProductModalInfo>()
     const { handleDelete } = getProductDeleteHandle()
 

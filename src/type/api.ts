@@ -1787,6 +1787,156 @@ export interface productFindById_ProductFindById_item {
   images: productFindById_ProductFindById_item_images[];
 }
 
+export interface productFindById_ProductFindById_purchase_purchasedProduct_attrs_tags {
+  __typename: "Tag";
+  key: string;
+  value: string;
+}
+
+export interface productFindById_ProductFindById_purchase_purchasedProduct_attrs {
+  __typename: "Attribute";
+  /**
+   * 기타 옵션값
+   */
+  tags: productFindById_ProductFindById_purchase_purchasedProduct_attrs_tags[] | null;
+  /**
+   * 이건 예약시 받는 값
+   */
+  value: string | null;
+  placeHolder: string | null;
+  default: string | null;
+  require: boolean | null;
+  options: string[] | null;
+  label: string | null;
+  key: string;
+  displayType: DisplayType;
+}
+
+export interface productFindById_ProductFindById_purchase_purchasedProduct_dateRangeForSale {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface productFindById_ProductFindById_purchase_purchasedProduct_dateRangeForUse {
+  __typename: "DateRange";
+  from: any | null;
+  to: any | null;
+}
+
+export interface productFindById_ProductFindById_purchase_purchasedProduct_capacityDetails {
+  __typename: "Capacity";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface productFindById_ProductFindById_purchase_purchasedProduct_usageDetails {
+  __typename: "CapacitySummary";
+  key: string;
+  label: string;
+  capacityCount: number;
+  usage: number;
+  /**
+   * 1을 기준으로 소수점 3자리까지 출력. 곱하기 100해서 사용할것
+   */
+  usageRatio: number;
+  /**
+   * Product에 등록되어있는 가격임.
+   */
+  price: number;
+}
+
+export interface productFindById_ProductFindById_purchase_purchasedProduct {
+  __typename: "ProductBooking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  type: ProductType;
+  /**
+   * item에서 설정한 필드값
+   */
+  attrs: productFindById_ProductFindById_purchase_purchasedProduct_attrs[];
+  disabled: boolean | null;
+  /**
+   * 판매 기간. null 인경우 항상 판매.
+   */
+  dateRangeForSale: productFindById_ProductFindById_purchase_purchasedProduct_dateRangeForSale | null;
+  /**
+   * 상품 사용 기간. or 이용 시간 몇시~몇시까지?(고정임)
+   */
+  dateRangeForUse: productFindById_ProductFindById_purchase_purchasedProduct_dateRangeForUse | null;
+  itemCode: string;
+  itemName: string;
+  _itemId: any;
+  currency: Currency;
+  price: number;
+  /**
+   * PurchaseBooking.Count를 이용하여 검증함
+   */
+  capacity: number | null;
+  /**
+   * 한번 예약시 선택 가능한 수. null 이면 제한 없음..
+   */
+  capacityPick: number | null;
+  /**
+   * 어떤 타입의 Capacity가 몇개 들어갈 수 있는지 정의함
+   */
+  capacityDetails: productFindById_ProductFindById_purchase_purchasedProduct_capacityDetails[];
+  usageDetails: productFindById_ProductFindById_purchase_purchasedProduct_usageDetails[];
+  code: string;
+}
+
+export interface productFindById_ProductFindById_purchase_countDetails {
+  __typename: "Usage";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
+export interface productFindById_ProductFindById_purchase {
+  __typename: "Booking";
+  _id: any;
+  createdAt: any;
+  updatedAt: any;
+  paymentStatus: Status;
+  refundStatus: Status | null;
+  paymethod: Paymethod;
+  paymentExpiresAt: any | null;
+  currency: Currency | null;
+  pricePaymentPending: number;
+  pricePaymentCompleted: number;
+  priceRefundPending: number;
+  priceRefundCompleted: number;
+  isFullRefunded: boolean | null;
+  isRefundedPartial: boolean | null;
+  message: string | null;
+  status: Status;
+  isPaymentCompleted: boolean | null;
+  /**
+   * Booking의 경우 Count에 입력하는게 아니라 countDetails에 입력해야함. (Booking.count = countDetails.count의 합)
+   */
+  count: number;
+  type: ItemType;
+  paymentTimeExpired: boolean;
+  itemName: string;
+  purchaserName: string;
+  purchaserContact: string;
+  /**
+   * 구매 내용 조회 및 필터를 하기위한
+   */
+  purchasedProduct: productFindById_ProductFindById_purchase_purchasedProduct;
+  countDetails: productFindById_ProductFindById_purchase_countDetails[];
+}
+
 export interface productFindById_ProductFindById {
   __typename: "ProductBooking";
   _id: any;
@@ -1826,6 +1976,7 @@ export interface productFindById_ProductFindById {
   usageDetails: productFindById_ProductFindById_usageDetails[];
   code: string;
   item: productFindById_ProductFindById_item;
+  purchase: productFindById_ProductFindById_purchase[];
 }
 
 export interface productFindById {
@@ -2236,6 +2387,10 @@ export interface purchaseBundleCreate_PurchaseBundleCreate {
   __typename: "PurchaseBundleCreateResponse";
   ok: boolean;
   error: purchaseBundleCreate_PurchaseBundleCreate_error | null;
+  /**
+   * editDate__priceOrigin__hashed__moid
+   */
+  paymentInfo: string | null;
   data: purchaseBundleCreate_PurchaseBundleCreate_data | null;
 }
 
@@ -2281,6 +2436,74 @@ export interface purchaseBundleCancel {
 
 export interface purchaseBundleCancelVariables {
   message: string;
+  purchaseBundleId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: purchaseBundleSetPaymentStatus
+// ====================================================
+
+export interface purchaseBundleSetPaymentStatus_PurchaseBundleSetPaymentStatus_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface purchaseBundleSetPaymentStatus_PurchaseBundleSetPaymentStatus {
+  __typename: "PurchaseBundleUpdateResponse";
+  ok: boolean;
+  error: purchaseBundleSetPaymentStatus_PurchaseBundleSetPaymentStatus_error | null;
+}
+
+export interface purchaseBundleSetPaymentStatus {
+  PurchaseBundleSetPaymentStatus: purchaseBundleSetPaymentStatus_PurchaseBundleSetPaymentStatus;
+}
+
+export interface purchaseBundleSetPaymentStatusVariables {
+  input: PurchaseBundleStatusSetInput;
+  purchaseBundleId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: purchaseBundleSetRefundStatus
+// ====================================================
+
+export interface purchaseBundleSetRefundStatus_PurchaseBundleSetRefundStatus_error {
+  __typename: "UserError";
+  code: string | null;
+  message: string;
+  /**
+   * 다음과 같은 포멧으로 출력됨 => ${FIELD}: ${VALIDATION_FAIL_MESSAGE}
+   */
+  details: string[] | null;
+}
+
+export interface purchaseBundleSetRefundStatus_PurchaseBundleSetRefundStatus {
+  __typename: "PurchaseBundleUpdateResponse";
+  ok: boolean;
+  error: purchaseBundleSetRefundStatus_PurchaseBundleSetRefundStatus_error | null;
+}
+
+export interface purchaseBundleSetRefundStatus {
+  PurchaseBundleSetRefundStatus: purchaseBundleSetRefundStatus_PurchaseBundleSetRefundStatus;
+}
+
+export interface purchaseBundleSetRefundStatusVariables {
+  input: PurchaseBundleStatusSetInput;
   purchaseBundleId: any;
 }
 
@@ -2857,6 +3080,17 @@ export interface purchaseFindById_PurchaseFindById_purchasedProduct {
   code: string;
 }
 
+export interface purchaseFindById_PurchaseFindById_countDetails {
+  __typename: "Usage";
+  /**
+   * User에게는 표시되지 않고 Front쪽에서 임의로 사용하는 Key 같은 아이... 변수이름 정도로 생각하면됨!
+   */
+  key: string;
+  count: number;
+  label: string;
+  price: number;
+}
+
 export interface purchaseFindById_PurchaseFindById {
   __typename: "Booking";
   _id: any;
@@ -2889,6 +3123,7 @@ export interface purchaseFindById_PurchaseFindById {
    * 구매 내용 조회 및 필터를 하기위한
    */
   purchasedProduct: purchaseFindById_PurchaseFindById_purchasedProduct;
+  countDetails: purchaseFindById_PurchaseFindById_countDetails[];
 }
 
 export interface purchaseFindById {
@@ -7020,6 +7255,7 @@ export enum StoreType {
  * 시스템 노티피케이션 타입
  */
 export enum SystemNotiType {
+  SystemNotiType = "SystemNotiType",
   booking = "booking",
   cancel = "cancel",
   payment = "payment",
@@ -7482,6 +7718,11 @@ export interface PurchaseBundleCreateInput {
   priceOrigin: number;
   currency?: Currency | null;
   purchaserMessage?: string | null;
+}
+
+export interface PurchaseBundleStatusSetInput {
+  status: Status;
+  message?: string | null;
 }
 
 /**

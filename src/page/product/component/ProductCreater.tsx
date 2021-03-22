@@ -121,9 +121,9 @@ export const ProductCreater: React.FC<IProp> = ({ item, product, itemId, ...prop
             <CardBtn size="long" onClick={handleEdit} hide={isCreate} thema="primary">수정하기</CardBtn>
         </>
     } head="판매 추가하기" mb {...props}>
-        <JDlabel>판매기한</JDlabel>
+        {/* <JDlabel>판매기한</JDlabel>
         <DateWithTimePicker {...salesTimePicker} />
-        <Mb />
+        <Mb /> */}
         <JDlabel>사용기간</JDlabel>
         <DateWithTimePicker {...useTimePicker} />
         <Mb />
