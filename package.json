@@ -1,6 +1,6 @@
 {
   "name": "temp",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.7",
@@ -65,6 +65,7 @@
     "wait-on": "^5.3.0"
   },
   "scripts": {
+    "start:admin": "cp .env.superAdmin .env && react-scripts start",
     "start": "cp .env.dev .env && react-scripts start",
     "build": "cp .env.prod .env && react-scripts build",
     "test": "react-scripts test",
