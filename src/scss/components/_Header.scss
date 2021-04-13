@@ -44,4 +44,7 @@ $header-white-1: $grey-level0;
         min-width: 100px;
     }
 
-}
+    &__avatar {
+        border: 2px solid white;
+    }
+} 

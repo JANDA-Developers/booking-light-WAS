@@ -1,13 +1,14 @@
 import { autoComma } from "@janda-com/front";
 import { method } from "lodash";
 import purchase from "../page/buypageRouter/page/helpers/purchase";
-import { Fbooking, Fbooking_countDetails, Fpurchase, NotificationMethod, Paymethod, purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items, Status, StoreType, TransactionStatus } from "../type/api";
+import { Fbooking, Fbooking_countDetails, Fpurchase, NotificationMethod, Paymethod, purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items, purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases, Status, StoreType, TransactionStatus } from "../type/api";
+import { BuyPageType } from "../type/enum";
 import { MMDDhhmmRange } from "./dateFormat";
 
-export const refundStatusKr = (status: TransactionStatus | null | "" = "" ) => {
+export const refundStatusKr = (status:  Status | TransactionStatus | null | "" = "" ) => {
     switch(status) {
         case null:
-            return ""
+            return "-"
         case TransactionStatus.CANCELED:
             return "환불취소"
         case TransactionStatus.PENDING:
@@ -85,9 +86,24 @@ export const storeTypeKr = (type:StoreType) => {
             return "극장"
         case StoreType.ELSE:
             return "기타"
+        case StoreType.EXPERIENCE:
+            return "체험"
     }
 
     return ""
+}
+
+export const BuyPageTypeMatcher:Record<StoreType,BuyPageType> ={
+    ACCOMMODATION: BuyPageType.RESERVATION_NORMAL,
+    CAFE: BuyPageType.RESERVATION_NORMAL,
+    ELSE: BuyPageType.RESERVATION_NORMAL,
+    PUP: BuyPageType.RESERVATION_NORMAL,
+    EXPERIENCE: BuyPageType.TIME_MALL,
+    LEISURE: BuyPageType.TIME_MALL,
+    RENTAL: BuyPageType.TIME_MALL,
+    RESTAURANT: BuyPageType.TIME_MALL,
+    SHOW: BuyPageType.TIME_MALL, 
+    SHOPPING: BuyPageType.SHOPPING_MALL
 }
 
 export const notificationMethodKr = (method?:NotificationMethod) => {
@@ -106,10 +122,8 @@ export const isRegisteredToAligoKr = (flag:boolean) => {
     return flag ? "등록완료" : "등록진행중"
 }
 
-export const purchaseBundleProductsDescribes = (
-    item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items[]
-):string => {
-    return item.map(item => purchaseBundleProductsDescribe(item)).join("")
+export const countDetailSummaryString = (details:Fbooking_countDetails[]) => {
+    return details?.map(detail =>  detail.label + ":" + detail.count + " 가격:" + autoComma(detail.price)).join("\n");
 }
 
 
@@ -119,16 +133,33 @@ export const purchaseBundleProductsDescribe = (
     const resultString = item.purchases.map(purchase => (
          purchaseSummary(purchase) + "\n" 
     ))
-    return resultString.join("|");
+    return resultString.join("\n");
 }
-
-export const purchaseSummary = (purchase: Fbooking):string => {
-    console.log({purchase});
+export const purchaseBundleProductsDescribes = (
+    item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items[]
+):string => {
+    return item.map(item => purchaseBundleProductsDescribe(item)).join("")
+}
+export const purchaseSummary = (purchase: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases):string => {
     return  MMDDhhmmRange(purchase.purchasedProduct.dateRangeForUse) + "\n" + countDetailSummaryString(purchase.countDetails); 
 }
 
-export const countDetailSummaryString = (details:Fbooking_countDetails[]) => {
-    return details?.map(detail =>  detail.label + ":" + detail.count + " 가격:" + autoComma(detail.price)).join("|");
+
+export const purchaseBundleProductsShoppingDescribe = (
+    item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items
+) => {
+    const resultString = item.purchases.map(purchase => (
+         purchaseShoppingSummary(purchase) + "\n" 
+    ))
+    return resultString.join("\n");
+}
+export const purchaseBundleShoppingDescribe = (
+    item: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items[]
+) => {
+    return item.map(item => purchaseBundleProductsShoppingDescribe(item)).join("")
+}
+export const purchaseShoppingSummary = (purchase: purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items_purchases):string => {
+    return  countDetailSummaryString(purchase.countDetails); 
 }
 
 

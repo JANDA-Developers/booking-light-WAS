@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import SecurityLevelViewer, { TCheck } from '../passwordChecker/SecurityLevelViewer';
 
-type CompleteCallBackParam = {
+export type CompleteCallBackParam = {
     email: string;
     key: string;
     newPassword: string;
@@ -47,7 +47,7 @@ const DEFAULT_LANGS = {
     check_new_password: '새 비밀번호 확인',
 };
 
-export interface IProps extends JDmodalConfigProps {
+export interface IPasswordResetModalProp extends JDmodalConfigProps {
     langs?: Partial<TPasswordReseterLangs>;
     requireField?: {
         password?: boolean;
@@ -60,7 +60,7 @@ export interface IProps extends JDmodalConfigProps {
     modalHook: IUseModal;
 }
 
-export const PasswordResetModal: React.FC<IProps> = ({
+export const PasswordResetModal: React.FC<IPasswordResetModalProp> = ({
     langs = DEFAULT_LANGS,
     onClickVerifyBtn,
     onClickCompleteBtn,

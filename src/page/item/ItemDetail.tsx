@@ -1,36 +1,38 @@
 import { InputText, Flex, JDcard, JDcontainer, JDpageHeader, JDselect, opFind, useInput, useSelect, JDlabel, JDtagInput } from '@janda-com/front';
-import { cloneDeep } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import ModalBtn from '../../component/btns/ActBtn';
 import JDEditor from '../../component/editor/Editor';
 import { FormCreater } from '../../component/formCreater/FormCreater';
+import { ItemCategorySelecter } from '../../component/itemCategorySelecter/ItemCategorySelecter';
 import { PhotoGrider } from '../../component/photoGrider.tsx/PhotoGrider';
+import { ScrollBox } from '../../component/scrollBox/ScrollBox';
 import AppContext from '../../context';
 import { useAttributes } from '../../hook/useAttributes';
+import { useCategoryList } from '../../hook/useCategory';
 import { useCopy } from '../../hook/useCopy';
 import { useItemCreate, useItemDelete, useItemFindById, useItemUpdate } from '../../hook/useItem';
 import { useTagInput } from '../../hook/useTagInput';
 import { useMultiUpload } from '../../hook/useUpload';
 import { Paths } from '../../MainRouter';
-import { ItemBookingCreateInput, ItemBookingUpdateInput, itemFindById_ItemFindById } from '../../type/api';
+import { ItemBookingCreateInput, ItemBookingUpdateInput, itemFindById_ItemFindById, itemFindById_ItemFindById_ItemBooking } from '../../type/api';
 import { ITEM_TYPE_OPS } from '../../type/const';
 import { omits } from '../../utils/omits';
 import { promptConfirm } from '../../utils/prompt';
 import { completeMsg } from '../../utils/utils';
-import { ItemCard } from './components/ItemCard';
 
 
 type IDetailRouteProp = { itemId?: string }
 interface IProp {
     itemId?: string;
-    defaultItem?: itemFindById_ItemFindById
+    defaultItem?: itemFindById_ItemFindById_ItemBooking
 }
 
 export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
     const history = useHistory();
-    const { selectedStore } = useContext(AppContext)
+    const { selectedStore, selectedStoreId } = useContext(AppContext)
     const isCreateMode = !itemId;
+
     const [itemUpdate] = useItemUpdate({
         awaitRefetchQueries: true,
         onCompleted: ({ ItemBookingUpdate }) => {
@@ -57,6 +59,7 @@ export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
     });
     const [item, setItem] = useCopy(defaultItem);
     const priceHook = useInput(0);
+    const [cat, setCat] = useState(defaultItem?.categoryId)
     const uploads = useMultiUpload(defaultItem?.images)
     const attributesHook = useAttributes(defaultItem?.attrs);
     const nameHook = useInput<string>(defaultItem?.name || "")
@@ -67,6 +70,7 @@ export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
     const [detail, setDetail] = useState(defaultItem?.descriptionDetail)
 
     const nextData: ItemBookingCreateInput & ItemBookingUpdateInput = {
+        type: itemTypeHook.selectedOption?.value,
         attrs: attributesHook.attributes,
         tags: [],
         name: nameHook.value,
@@ -74,7 +78,8 @@ export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
         images: uploads.createInput,
         description: descriptionHook.value,
         descriptionDetail: detail,
-        keywards: tagHook.tags
+        keywards: tagHook.tags,
+        categoryId: cat ? cat : undefined
     }
 
 
@@ -100,7 +105,6 @@ export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
         })
     }
 
-
     const handleItemDelete = () => {
         if (!item) return;
         promptConfirm(item.name, `아이템을 삭제하실려면 ${item.name}을 정확하게 입력 해주세요.`, () => {
@@ -111,8 +115,6 @@ export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
             })
         })
     }
-
-
 
     return <div >
         <JDpageHeader title={itemId ? defaultItem?.name + "수정하기" : "상품군 등록하기"} desc="당신의 상품군을 등록하세요." />
@@ -125,11 +127,16 @@ export const ItemDetial: React.FC<IProp> = ({ defaultItem, itemId }) => {
                 <JDselect mb {...itemTypeHook} label="상품타입" />
                 <InputText mb {...nameHook} label="상품이름" />
                 <InputText mb comma {...priceHook} label="상품 기본 가격" />
+                <ItemCategorySelecter placeholder="필수아님" mb storeId={selectedStoreId!} label="카테고리" onChange={(op) => {
+                    setCat(op?.value);
+                }} catId={cat} />
                 <JDlabel txt="태그" />
                 <JDtagInput {...tagHook} />
             </JDcard>
             <JDcard mb="large" head="사진정보">
-                <PhotoGrider onChange={uploads.setFiles} files={uploads.files || []} />
+                <ScrollBox>
+                    <PhotoGrider onChange={uploads.setFiles} files={uploads.files || []} />
+                </ScrollBox>
             </JDcard>
             <JDcard mb="large" head="기타정보">
                 <InputText {...descriptionHook} mb label="간략히" textarea />

@@ -1,10 +1,10 @@
-import { Flex, JDbutton, InputText, useModal, Validater, isPhone, JDcard } from '@janda-com/front';
-import { IJDcardProps } from '@janda-com/front/dist/components/cards/Card';
+import { Flex, InputText, useModal } from '@janda-com/front';
+import { IDiv } from '@janda-com/front/dist/types/interface';
 import React from 'react';
 import { CheckBtn } from '../../../../component/checkBtn/CheckBtn';
 import VerificationModal, { IVerfiModalInfo } from '../../../../component/verfi/VerificationModal';
 import { TUseAnnonymouseVerifi } from '../../../../hook/useUser';
-import { VerificationEvent, VerificationTarget } from '../../../../type/api';
+import { VerificationTarget } from '../../../../type/api';
 
 export interface AnonyMouseVerifiData {
     name: string;
@@ -12,7 +12,7 @@ export interface AnonyMouseVerifiData {
     email: string;
 }
 
-interface IProp extends IJDcardProps {
+interface IProp extends IDiv {
     verificationHook: TUseAnnonymouseVerifi
     userInfoHook: [AnonyMouseVerifiData, React.Dispatch<React.SetStateAction<AnonyMouseVerifiData>>]
 }
@@ -22,7 +22,7 @@ export const AnonyPurchaseForm: React.FC<IProp> = ({ verificationHook, userInfoH
     const { verifiData } = verificationHook;
     const [info, setInfo] = userInfoHook;
 
-    return <JDcard head="비회원 예약하기" {...props}>
+    return <div>
         <InputText
             id="NameInput"
             onChange={(value: any) => {
@@ -68,5 +68,5 @@ export const AnonyPurchaseForm: React.FC<IProp> = ({ verificationHook, userInfoH
             target={VerificationTarget.PHONE}
             payload={info.phoneNumber}
         />
-    </JDcard>;
+    </div>
 };

@@ -6,8 +6,10 @@ export type TUseDateTimePicker = ReturnType<typeof useDateTimepicker>;
 export interface IUseDatePickerProps {
     defaultStart: Date,
     defaultEnd: Date,
+    rangeFix?: boolean;
 }
-export const useDateTimepicker = ({defaultEnd,defaultStart}:IUseDatePickerProps = {defaultEnd: tommorrowDate, defaultStart: todayDate}) => {
+export const useDateTimepicker = ({defaultEnd,defaultStart}:IUseDatePickerProps = {defaultEnd: tommorrowDate, defaultStart: todayDate }) => {
+    // const [] = useState()
     const startDateHook = useDayPicker(defaultStart, defaultStart);
     const endDateHook = useDayPicker(defaultEnd, defaultEnd);
     const startTimerHook = useTimePicker({

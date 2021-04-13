@@ -29,7 +29,7 @@ export const JDsearchBar = <F, S>({ defaultOp, setRangeFilter, setViewCount, vie
     const selectedSearchOps = selectBoxHook.selectedOption as ISearchOption<keyof F>;
     const inputTextHook = useInput("");
 
-    const dateString = dayPickerHook.from ? dayjs(dayPickerHook.from).format("YYYY년MM월DD일~YYYY년MM월DD일") : "";
+    const dateString = dayPickerHook.from ? dayjs(dayPickerHook.from).format("YYYY년 MM월 DD일~YYYY년 MM월 DD일") : "";
 
     const handleInputClick = () => {
         console.log({ selectedSearchOps });

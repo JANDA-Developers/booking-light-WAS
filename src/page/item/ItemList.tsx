@@ -79,9 +79,9 @@ export const ItemList: React.FC<IProp> = () => {
                             <>
                                 <Tiny color={item.productCount === 0 ? "warn" : undefined} mb> <JDicon mr="tiny" icon="info" />{item.productCount === 0 ? "생성된 상품이 없습니다. 상품을 생성해주세요." : `누적 상품수 ${item.productCount}`}</Tiny>
                                 <CardBtn mr thema="primary" onClick={handleEdit(item)} label="수정하기" />
-                                <CardBtn mr hide={!item.productCount} onClick={() => {
-                                    toProductList(item._id)
-                                }} label={"상품보기"} />
+                                <CardBtn mr hide={!item.productCount} onClick={
+                                    handleEdit(item)
+                                } label={"상품보기"} />
                                 <CardBtn blink={item.productCount === 0} onClick={() => {
                                     toProductCreate(item._id)
                                 }} label={"판매설정"} />

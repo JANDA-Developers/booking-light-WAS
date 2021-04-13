@@ -73,7 +73,6 @@ const TimePicker: React.FC<IProps> = ({
   return (
     <JDalign
       flex={{
-        between: true,
         grow: true,
       }}
       className="timepicker"

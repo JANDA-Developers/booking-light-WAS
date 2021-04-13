@@ -9,9 +9,6 @@
 @import "./system/hack";
 @import "~slick-carousel/slick/slick.css";
 
-.JDcard__head {
-    font-weight: 600;
-}
 
 .JDglobalFocus {
     outline: 1px auto;
@@ -20,15 +17,57 @@
 .smsTemplates__smsCard {
     min-width: 31%;
     .JDcard__body {
-    height: space(10);
-    overflow: auto;
+        height: space(10);
+        overflow: auto;
     }
 }
-
+.smsTemplates__smsCardWrap {
+    margin-right: -1 * space(2);
+}
 .JDmodal__head {
     font-weight: 600;
 }
 
-.ProductViewModal {
+.ProductBookingViewModal {
     width:  1000px;
+}
+
+ @keyframes appear {
+    from {
+        opacity: 0;
+    }
+  
+    to {
+        opacity: 1;
+    }
+  }
+
+
+  @keyframes disappear {
+    from {
+        opacity: 1;
+        max-height: 300px;
+    }
+  
+    to {
+        max-height: 0px;
+        opacity: 0;
+        display: none;
+    }
+  }
+
+
+
+.loadingEffect {
+    &--disappear {
+        animation-duration: 1s;
+        animation-name: disappear;
+        animation-fill-mode: forwards;
+        overflow: hidden;
+    }
+
+    &--appear {
+        animation-duration: 1s;
+        animation-name: appear;
+    }
 }

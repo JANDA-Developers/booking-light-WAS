@@ -1,5 +1,7 @@
 export enum BuyPageType {
     RESERVATION_NORMAL = "RESERVATION_NORMAL",
+    SHOPPING_MALL = "SHOPPING_MALL",
+    TIME_MALL = "TIME_MALL",
 }
 
 export enum CreateSalesTime {
@@ -8,4 +10,7 @@ export enum CreateSalesTime {
     ONE_DAY_BEFORE = "ONE_DAY_BEFORE",
     N_HOURS_BEFORE = "N_HOURS_BEFORE",
     CUSTOM_TIME = "CUSTOM_TIME",
+}
+export enum BoardKeys  {
+    QNA = "qna"
 }

@@ -7,7 +7,7 @@ import { useFileUpload, useSingleUpload } from '../../hook/useUpload';
 import { Ffile } from '../../type/api';
 import { reorder } from '../../utils/reorder';
 import DotButton from '../dotButton/DotButton';
-import { Draager } from '../dragger/Dragger';
+import { Dragger } from '../dragger/Dragger';
 import { JDicon } from '../icons/Icons';
 
 interface IProp {
@@ -44,7 +44,7 @@ export const PhotoGrider: React.FC<IProp> = ({ files, onChange }) => {
 
 
     return <Flex className="photoGrider">
-        <Draager<Ffile>
+        <Dragger<Ffile>
             items={files}
             idKey={"_id"}
             handle

@@ -25,12 +25,10 @@ export const SmsTemplates: React.FC<IProp> = () => {
         smsModalHook.openModal()
     }
 
-    const handleEdit = (deleteId: string) => () => {
-        deleteMu({
-            variables: {
-                templateId: deleteId
-            }
-        })
+    const handleEdit = (template: notificationTemplateList_NotificationTemplateList_items) => () => {
+        smsModalHook.openModal({
+            template
+        });
     }
 
     const handleDelete = (template: notificationTemplateList_NotificationTemplateList_items) => () => {
@@ -52,23 +50,18 @@ export const SmsTemplates: React.FC<IProp> = () => {
             <Mb /> */}
             <DotButton mb onClick={handleCreate}>생성하기</DotButton>
             <SkipUpdate skip={getLoading} >
-                <Grid>
+                <Flex oneone wrap className="smsTemplates__smsCardWrap">
                     {items.map((item, index) =>
-                        <Col
-                            full={4}
-                            lg={12}
-                            key={item._id}
-                        >
-                            <SmsCard
-                                mb
-                                className="smsTemplates__smsCard"
-                                onDelete={handleDelete(item)}
-                                onEdit={handleEdit(item._id)}
-                                template={item}
-                            />
-                        </Col>
+                        <SmsCard
+                            mb
+                            mr
+                            className="smsTemplates__smsCard"
+                            onDelete={handleDelete(item)}
+                            onEdit={handleEdit(item)}
+                            template={item}
+                        />
                     )}
-                </Grid>
+                </Flex>
             </SkipUpdate>
         </JDcontainer>
         <SmsTEmplateModal key={(smsModalHook.info?.template?._id || "create") + "SmsTEmplateModal"} modalHook={smsModalHook} />

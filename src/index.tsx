@@ -1,5 +1,5 @@
 import 'core-js';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './normalize.css';
 import './index.css';
@@ -8,10 +8,20 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from '@apollo/client';
 import client from "./apollo/apolloClient"
 import App from './App';
+import { JDpreloader, JDpreloaderModal } from '@janda-com/front';
+
+const SuperAdminApp = React.lazy(() => import('./superAdmin/SuperAdminApp'));
+
+const mode = process.env.REACT_APP_API_BUILD_MODE;
+console.log({ mode });
+const isSuperAdmin = process.env.REACT_APP_API_BUILD_MODE === "superAdmin";
+
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    {isSuperAdmin ? <Suspense fallback={() => <JDpreloaderModal loading />}>
+      <SuperAdminApp />
+    </Suspense> : <App />}
   </ApolloProvider>,
   document.getElementById('root')
 );

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import JDtable, { IJDTableProps, JDcolumn } from '../../../component/table/Table';
 import { purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items, purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items, purchaseListForBusinessUser_PurchaseListForBusinessUser_items } from '../../../type/api';
 import { yyyymmddHHmm } from '../../../utils/dateFormat';
 import { JDicon } from '../../../component/icons/Icons';
 import { Taccent } from '../../../atom/format/DateFormat';
-import { payMethodKr, payStatusKr, purchaseBundleProductsDescribe, statusKr } from '../../../utils/enumConverter';
+import { payMethodKr, payStatusKr, purchaseBundleProductsDescribe, purchaseBundleProductsShoppingDescribe, statusKr } from '../../../utils/enumConverter';
 import { autoHypen, Bold, Flex, JDalign, JDtypho, Small } from '@janda-com/front';
 import { Clip } from '../../../atom/clip/Clip';
 import { PurchaseBundleViewer } from '../../../component/purchaseBunldeViewer/PurhcaseBundleViewer';
 import { StatusBadge } from '../../../component/statusBadges/StatusBadges';
+import AppContext from '../../../context';
 
 export type TBundleRow = Partial<purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items | purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items>;
 
@@ -18,6 +19,8 @@ interface IProp extends Partial<IJDTableProps> {
     purchaseBundles: TBundleRow[]
 }
 export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDelete, handleView, ...props }) => {
+    const { type, isShoppingType } = useContext(AppContext);
+
 
     const [accent, setAccent] = useState<Taccent>("time")
 
@@ -37,7 +40,13 @@ export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDe
             Header: () => <div>상품</div>,
             accessor: 'code',
             Cell: ({ original }) => {
-                return <Small style={{ whiteSpace: "pre-line" }}>{purchaseBundleProductsDescribe(original as any)} </Small>
+                let describe = "";
+                if (isShoppingType) describe = purchaseBundleProductsShoppingDescribe(original as any)
+                else describe = purchaseBundleProductsDescribe(original as any)
+
+                return <Small style={{ whiteSpace: "pre-line" }}>
+                    {describe}
+                </Small>
             },
         },
         {
@@ -100,6 +109,6 @@ export const PurchaseBundleTable: React.FC<IProp> = ({ purchaseBundles, handleDe
     ];
 
 
-    return <JDtable columns={columns} data={purchaseBundles} {...props} />;
+    return <JDtable defaultPageSize={20} columns={columns} data={purchaseBundles} {...props} />;
 };
 

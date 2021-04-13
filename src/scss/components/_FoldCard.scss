@@ -1,0 +1,19 @@
+.foldCard {
+    padding: 0px!important;
+    .JDcard__body {
+        padding: 0px!important;
+    }
+
+    &__header {
+        padding: space(2);
+        cursor: pointer;
+        &:hover {
+            background-color: $grey-level1;
+        }
+    }
+
+    &__body {
+        padding: space(2);
+        border-top: 1px dotted $grey-level1;
+    }
+}

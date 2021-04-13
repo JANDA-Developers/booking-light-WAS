@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import {  F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE, F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragment/fragments";
+import {  F_NOTIFICATION_MANAGER, F_NOTIFICATION_SENDER, F_NOTIFICATION_TEMPLATE, F_PAGEINFO, F_STORE, F_USER, F_USERERROR, F_VERIFICATION } from "./fragment/fragments";
 
 export const BUSINESS_USER_RESET_PASSWORD = gql`
   mutation businessUserResetPassword($newPassword: String!) {
@@ -143,6 +143,15 @@ export const ME = gql`
   ${F_USER}
 `
 
+export const SUPER_ME = gql`
+  query superMe {
+    SuperMe {
+      ...Fuser
+    }
+  }
+  ${F_USER}
+`
+
 export const MY_NOTIFICATION_MANAGER = gql`
   query myNotificationManager {
     MyNotificationManager {
@@ -184,8 +193,8 @@ export const USER_DUPLICATE_CHECK = gql`
 
 
 export const PROFILE_UPDATE_FOR_BUSINESS_USER = gql`
-  mutation profileUpdateForBusinessUser($input: ProfileUpdateForBusinessUserInput!) {
-    ProfileUpdateForBusinessUser(input:$input) {
+  mutation profileUpdateForBusinessUser($input: ProfileUpdateForBusinessUserInput!,$pw: String!) {
+    ProfileUpdateForBusinessUser(input:$input, pw:$pw) {
       ok
       error {
         ...FuserError
@@ -211,4 +220,26 @@ export const STORE_SIGINUP = gql`
   ${F_USER}
 `
 
+export const USER_LIST = gql`
+  query userList(
+    $sort: [_IUserSort!]
+    $filter: _IUserFilter
+    $pagingInput: OffsetPagingInput!
+  ) {
+    UserList(
+      sort: $sort, 
+      filter:$filter, 
+      pagingInput: $pagingInput
+    ) {
+      pageInfo {
+            ...FoffsetPagingInfo
+        }
+      items {
+          ...Fuser
+      }
+    }
+  }
+  ${F_PAGEINFO}
+  ${F_USER}
+`
 

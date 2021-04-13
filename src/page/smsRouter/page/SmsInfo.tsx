@@ -1,11 +1,14 @@
 import { IMG_REPO, JDbutton, JDcard, JDcontainer, JDdoc, JDdocHeader, JDdocSection, JDlist, JDpageHeader } from "@janda-com/front";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import PhotoFrame from "../../../component/photoFrame/PhotoFram";
+import { Paths } from "../../../MainRouter";
 
 interface Iprops {
 }
 
 export const SmsInfo: React.FC<Iprops> = ({ }) => {
+    const history = useHistory();
 
     return (
         <div>
@@ -69,6 +72,7 @@ export const SmsInfo: React.FC<Iprops> = ({ }) => {
                             <JDbutton
                                 mr="no"
                                 onClick={() => {
+                                    history.push(Paths.sms);
                                 }}
                                 thema="primary"
                                 iconProp={{

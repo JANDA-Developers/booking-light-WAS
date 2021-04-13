@@ -1,7 +1,7 @@
 import { Flex, getAllFromUrl, JDcard, JDcontainer, JDhorizen, Large, Mb, toast, updateURLParameter, WindowSize, WindowSizeNumber } from '@janda-com/front';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ImgSlider } from '../../../../atom/Imgslider';
 import { CardBtn } from '../../../../component/btns/ModalBtn';
 import { EditorView } from '../../../../component/editor/EditorView';
@@ -17,9 +17,9 @@ import { BuypageContext } from '../buypageList/helper/context';
 import { Capacity } from '../components/Capacity';
 import { BackStepBar } from '../../../../component/backstepBar/BackstepBar';
 import { ISet } from '@janda-com/front/dist/types/interface';
-import { generateProductPurchaseParam } from '../helpers/queryparamsGen';
 import { BuyPagePurchase } from '../buypagePurchase/BuyPagePurchase';
 import { Validater } from '../../../../utils/Validater';
+import { findUnFilledAttribute } from '../../../../utils/attribute';
 
 type IDetailRouteProp = { itemId?: string }
 interface IProp {
@@ -32,13 +32,15 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
     const { location } = useHistory();
     const context = useContext(BuypageContext);
     const { store, configure } = context;
-    const { RESERVATION_NORMAL: { useBasket, texts } } = configure;
+    const { RESERVATION_NORMAL: { texts } } = configure;
 
     const [step, setStep] = useState<"pick" | "purchase">("pick")
 
     const { item } = useItemFindById(itemId);
 
-    const { items } = productListHook;
+    const { items: _items } = productListHook;
+
+    const items = _items.filter(item => item._itemId === itemId);
     const history = useHistory();
 
     const bookingsInputHook = useBookingsInput([]);
@@ -53,13 +55,7 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
     }
 
 
-    const unFilledForm = attributes.find(attr => {
-        const unFilled = attr.require && !attr.value
-        if (unFilled) {
-            return true;
-        }
-        return !!unFilled
-    });
+    const unFilledForm = findUnFilledAttribute(attributes);
 
     const { validate } = new Validater([
         {
@@ -75,14 +71,6 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
 
     const handlePurchase = () => {
         if (!validate()) return;
-
-        const selectProductParams = bookingInputs.map(bi => ({ ...bi, attrs: attributes }));
-        const link = generateProductPurchaseParam("", selectProductParams)
-        console.log({ link });
-        // history.push({
-        //     pathname: BuyPagePaths.purchase,
-        //     search: link
-        // });
         setStep("purchase");
     }
 
@@ -93,7 +81,6 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
         }
     }, [item?._id])
 
-    console.log({ attributes });
 
     return <JDcontainer verticalPadding className="buyPageSetDetail__container" size={WindowSize.lg}>
         <BackStepBar go={() => {
@@ -107,14 +94,14 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
             <Flex hide={step !== "pick"} oneone >
                 <JDcard style={{ width: "100%" }} foot={
                     <Flex>
-                        <CardBtn hide={!useBasket} mr onClick={handleAddBracket} thema="grey4">장바구니</CardBtn>
                         <CardBtn onClick={handlePurchase} thema="primary" size="long">{texts.purchase.kr}</CardBtn>
                     </Flex>
                 } head={item?.name} >
-                    <ImgSlider photoProps={{ ratio: Ratio['16:9'] }} imgs={item?.images.map(img => img.uri)} />
+                    <ImgSlider key={item?._id} photoProps={{ ratio: Ratio['16:9'] }} imgs={item?.images.map(img => img.uri)} />
                     <Mb mb="large" />
                     <Large mb weight={600}>{item?.name}</Large>
                     <EditorView model={item?.descriptionDetail} />
+                    <JDhorizen margin={3} />
                     <Large id="ProductSelect" mb>{texts.productSelectLabel.kr}</Large>
                     <Flex wrap>
                         {items.map(product =>
@@ -135,12 +122,11 @@ export const BuyPageDetail: React.FC<IProp> = ({ setDetailItemId, itemId, produc
                         </div>
                         )}
                     </div>
-                    {/* <ProductSelectViewer bookingInputs={bookingsInputHook.bookingInputs} /> */}
                 </JDcard >
             </Flex>
         </div>
         {step === "purchase" ?
-            <BuyPagePurchase purchaseProduct={bookingsInputHook.bookingInputs} /> : undefined
+            <BuyPagePurchase attributes={attributes} purchaseProduct={bookingsInputHook.bookingInputs} /> : undefined
         }
     </JDcontainer>
 };

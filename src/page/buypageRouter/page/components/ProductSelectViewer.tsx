@@ -56,10 +56,14 @@ const ItemViewBox: React.FC<ItemViewBoxProp> = ({ _id, thumbNail, name, bookingI
 }
 
 const ProductView = (bi: IBookingInputData) => {
+    const { configure } = useContext(BuypageContext);
+    const texts = configure?.RESERVATION_NORMAL?.texts || {}
+    const unit = texts?.countUnit.kr
+
     const { productOrigin } = bi;
     const { dateRangeForUse } = productOrigin;
     return <JDbox mr>
         <JDtypho mb="tiny">{(hhmmRange(dateRangeForUse?.from, dateRangeForUse?.to))}</JDtypho>
-        {bi.countDetails?.map(cd => <JDbox mr key={cd.key}>{autoComma(cd.count)}개 {cd.label} {autoComma(cd.price)} </JDbox>)}
+        {bi.countDetails?.map(cd => <JDbox mr key={cd.key}>{autoComma(cd.count)} {unit || "개"} {cd.label} {autoComma(cd.price)} </JDbox>)}
     </JDbox>
 }

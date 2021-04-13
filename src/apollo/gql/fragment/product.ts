@@ -31,7 +31,15 @@ fragment Fproduct on Product {
     attrs {
         ...Fattribute
     }
-    ... on ProductBooking {
+}
+${F_ATTRIBUTE}
+${F_COLLECTION_DATA_INTERFACE}
+`
+
+
+export const F_PRODUCT_BOOKING = gql`
+fragment FproductBooking on ProductBooking {
+    ...Fproduct
         disabled
         dateRangeForSale {
             from
@@ -55,12 +63,9 @@ fragment Fproduct on Product {
             ...FcapacitySummary
         }
         code
-    }
 }
-${F_ATTRIBUTE}
+${F_PRODUCT}
 ${F_CAPACITY}
+${F_ATTRIBUTE}
 ${F_CAPACITY_SUMMARY}
-${F_COLLECTION_DATA_INTERFACE}
 `
-
-

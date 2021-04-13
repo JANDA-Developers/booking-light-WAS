@@ -2,7 +2,7 @@ import { Flex, JDbutton, JDcard, JDcontainer, JDlabel, JDpageHeader, JDpaginatio
 import React, { useContext, useState } from 'react';
 import AppContext from '../../context';
 import { useProductDelete, useProductList } from '../../hook/useProduct';
-import { me_Me_stores_items, productList_ProductList_items, _ProductFilter, _ProductSort } from '../../type/api';
+import { me_Me_stores_items, productList_ProductList_items, productList_ProductList_items_ProductBooking, _ProductFilter, _ProductSort } from '../../type/api';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { CardBtn } from '../../component/btns/ModalBtn';
 import { Paths } from '../../MainRouter';
@@ -13,7 +13,7 @@ import Calendar from '../../component/Calendar/Calendar';
 import dayjs from "dayjs";
 import { today, tomorrow } from '../../type/const';
 import { ScrollBox } from '../../component/scrollBox/ScrollBox';
-import { IUseModalInfo, ProductViewModal } from '../../component/productViewModal/ProductViewModal';
+import { IUseModalInfo, ProductBookingViewModal } from '../../component/productViewModal/ProductBookingViewModal';
 
 interface IProps { }
 
@@ -21,7 +21,7 @@ type IDetailRouteProp = { itemId?: string }
 
 export const CalendarPage: React.FC<IProps> = () => {
     const history = useHistory()
-    const productViewModal = useModal<IUseModalInfo>()
+    const productBookingViewModalHook = useModal<IUseModalInfo>()
     const { params: { itemId } } = useRouteMatch<IDetailRouteProp>();
     const dayPickerHook = useDayPicker(null, null);
 
@@ -47,7 +47,7 @@ export const CalendarPage: React.FC<IProps> = () => {
         history.push(Paths.productDetail + "/" + itemId);
     }
 
-    const handleEdit = (product: Partial<productList_ProductList_items>) => {
+    const handleEdit = (product: Partial<productList_ProductList_items_ProductBooking>) => {
         toDetail(product._itemId)
     }
 
@@ -67,7 +67,7 @@ export const CalendarPage: React.FC<IProps> = () => {
                             dayPickerHook.setDate(date);
                         }}
                         onDoubleClickEvent={(event) => {
-                            productViewModal.openModal({
+                            productBookingViewModalHook.openModal({
                                 productId: event.resource._id
                             })
                         }}
@@ -84,7 +84,7 @@ export const CalendarPage: React.FC<IProps> = () => {
                     />
                 </SkipUpdate>
             </JDcard>
-            <ProductViewModal key={productViewModal.info?.productId} modalHook={productViewModal} />
+            <ProductBookingViewModal key={productBookingViewModalHook.info?.productId} modalHook={productBookingViewModalHook} />
         </JDcontainer>
     </div>;
 };

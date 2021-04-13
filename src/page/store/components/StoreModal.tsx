@@ -49,7 +49,7 @@ export const StoreModal: React.FC<IProp> = ({ modalHook, onCreate, onUpdate }) =
     const uploads = useSingleUpload(store?.image || undefined)
     const nameHook = useInput(store?.name || "");
     const descHook = useInput(store?.description || "");
-    const addressHook = useInput(store?.location.address || "");
+    const addressHook = useInput(store?.location?.address || "");
     const typeHook = useSelect<StoreType>(opFind(store?.type, STORE_TYPE_OPS), STORE_TYPE_OPS);
 
     const handleDelete = () => {
@@ -115,7 +115,7 @@ export const StoreModal: React.FC<IProp> = ({ modalHook, onCreate, onUpdate }) =
             </Flex>
         }
         head={{
-            title: store?.name || "새로운 숙소"
+            title: store?.name || "새로운 상점"
         }}  {...modalHook} >
         <JDselect mb label="스토어타입" {...typeHook} />
         <InputText mb {...nameHook} label="이름" />

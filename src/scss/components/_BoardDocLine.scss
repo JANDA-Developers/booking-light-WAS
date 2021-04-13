@@ -1,0 +1,7 @@
+.boardDocLine {
+    padding: space(2);
+    border-top: 1px solid $outborder-color;
+    &:last-child {
+        border-bottom: 1px solid $outborder-color;
+    }
+}

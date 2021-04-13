@@ -46,7 +46,11 @@ export const RefundModal: React.FC<IProp> = ({ modalHook, onSucess }) => {
     return <JDmodal head={{ title: "환불하기" }} foot={
         <ModalBtn onClick={handleRefund} label="환불하기" />
     } {...modalHook} >
+
+
         <JDswitch mb label="전체환불" {...refundHook} />
         <InputText disabled={refundHook.checked} comma label="환불금액" {...amtHook} />
     </JDmodal>;
 };
+
+

@@ -1,11 +1,11 @@
 import { autoComma, Bold, Flex, JDbutton, JDcard, JDlist } from '@janda-com/front';
 import { IJDcardProps } from '@janda-com/front/dist/components/cards/Card';
 import React from 'react';
-import { productList_ProductList_items } from '../../../type/api';
+import { productList_ProductList_items, productList_ProductList_items_ProductBooking } from '../../../type/api';
 import { yyyymmddHHmm, yyyymmddHHmmLabel } from '../../../utils/dateFormat';
 
 interface IProp extends IJDcardProps {
-    item: productList_ProductList_items;
+    item: productList_ProductList_items_ProductBooking;
     onDelete: () => void;
     onEdit: () => void;
 }

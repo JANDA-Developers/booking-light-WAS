@@ -1,24 +1,23 @@
 import { getAverage } from "@janda-com/front";
 import { isEmpty } from "lodash";
-import { itemList_ItemList_items, itemList_ItemList_items_ItemBooking, productList_ProductList_items,  storeFindByCode_StoreFindByCode_items } from "../../../../../type/api";
-import { IBuyPageContext } from "./context";
+import { itemList_ItemList_items_ItemBooking,   productList_ProductList_items_ProductBooking } from "../../../../../type/api";
 
 export interface IBuypageProductData extends itemList_ItemList_items_ItemBooking {
-    products: productList_ProductList_items[]
+    products: productList_ProductList_items_ProductBooking[]
     lowPrice: number;
     averagePrice: number;
 }
 
-export const productMap = (items: itemList_ItemList_items_ItemBooking[], products: productList_ProductList_items[]) => {
-    const bundle:IBuypageProductData[] = (items?.map(item => ({
+export const productMap = (items: itemList_ItemList_items_ItemBooking[], products: productList_ProductList_items_ProductBooking[]) => {
+    let bundle:IBuypageProductData[] = (items?.map(item => ({
         ...item,
         ...genBundleInfo(item, products),
-    })) || []).filter(bundle => !isEmpty(bundle.products))
-
+    })) || [])
+    
     return bundle
 }
 
-const genBundleInfo = (item:itemList_ItemList_items_ItemBooking, products:productList_ProductList_items[] ):Pick<IBuypageProductData,"lowPrice" | "averagePrice" | "products"> =>  {
+const genBundleInfo = (item:itemList_ItemList_items_ItemBooking, products:productList_ProductList_items_ProductBooking[] ):Pick<IBuypageProductData,"lowPrice" | "averagePrice" | "products"> =>  {
     let lowPrice = 1000000000;
 
     const filteredProducts = products.filter(pd => {
@@ -30,13 +29,17 @@ const genBundleInfo = (item:itemList_ItemList_items_ItemBooking, products:produc
             const price = pd.capacityDetails[0].price;
             if( price < lowPrice)
                 lowPrice = price; 
+
+            return true;
         }
+
+        return false;
     })
 
     
     return ({
         averagePrice: getAverage(filteredProducts.map(p => p.price)),
         lowPrice: lowPrice,
-        products,
+        products: filteredProducts,
     })
 }

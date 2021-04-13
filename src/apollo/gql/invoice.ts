@@ -52,7 +52,6 @@ export const BILLING_METHOD_REGIST = gql`
     }
 }
 ${F_USERERROR}
-${F_INVOCIE}
 `
 
 export const BILLING_METHOD_DELETE = gql`

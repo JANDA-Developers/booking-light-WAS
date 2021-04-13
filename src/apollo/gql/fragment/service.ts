@@ -12,7 +12,7 @@ fragment FserviceOfferResource on ServiceOfferResource {
 }
 `
 
-export const F_PRODUCT = gql`
+export const F_SERVICE_PLAN_TEMPLATE = gql`
 fragment FservicePlanTemplate on ServicePlanTemplate {
     ...FcollectionDataInterface
     name

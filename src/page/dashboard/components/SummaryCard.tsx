@@ -6,12 +6,13 @@ import React from 'react';
 import { Empty } from '../../../atom/Empty';
 
 export interface ISummaryCardProps extends JDcardProps {
+    contentsId: string;
     contents: TElements[]
     Empty?: TElements;
 }
 
-export const SummaryCard: React.FC<ISummaryCardProps> = ({ contents, Empty: EmptyComponent, ...props }) => {
-    const Contents = contents.map(c => <Flex className="summaryCard__li" vCenter between  >{c}</Flex>)
+export const SummaryCard: React.FC<ISummaryCardProps> = ({ contentsId, contents, Empty: EmptyComponent, ...props }) => {
+    const Contents = contents.map((c, index) => <Flex key={contentsId + index} className="summaryCard__li" vCenter between  >{c}</Flex>)
     const empty = isEmpty(contents);
     return <JDcard className="summaryCard" head="요약카드" {...props}>
         <div>

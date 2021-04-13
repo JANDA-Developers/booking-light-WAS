@@ -17,6 +17,10 @@ export const SmsHistoryDetailModal: React.FC<IProp> = ({ modalHook }) => {
     return <JDmodal {...modalHook} head={{ title: "SMS 발신 내역 자세히보기" }} >
         <Info value={title || ""} label={"타이틀"} />
         {/* ... */}
-        <JDpolicyViewer >{content}</JDpolicyViewer>
+        <JDpolicyViewer >
+            <div dangerouslySetInnerHTML={{
+                __html: content || ""
+            }} />
+        </JDpolicyViewer>
     </JDmodal>;
 };

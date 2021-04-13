@@ -24,4 +24,11 @@
         border-bottom: 1px solid $grey-level1;
         margin-bottom: space(1);
     }
+
+    &--hover {
+        &:hover {
+            cursor: pointer;
+            filter: brightness(0.9);
+        }
+    }
 }

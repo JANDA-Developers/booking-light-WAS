@@ -6,11 +6,11 @@ import { useHistory } from 'react-router-dom';
 import { Paths } from '../../MainRouter';
 
 interface IProp extends CardProps, JDatomExtentionSet {
-    label: string;
+    label?: string;
     go?: (() => void) | string;
 }
 
-export const BackStepBar: React.FC<IProp> = ({ label, go, ...props }) => {
+export const BackStepBar: React.FC<IProp> = ({ label = "뒤로가기", go, ...props }) => {
     const history = useHistory();
 
     const handleBack = () => {

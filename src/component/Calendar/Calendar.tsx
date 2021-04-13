@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { dateFnsLocalizer, Calendar as RCBcalendar, CalendarProps, Views } from "react-big-calendar";
-import classNames from "classnames";
 import { JDradioButton, JDbutton, useRadioButton, JDalign, JDtypho, useDayPicker } from "@janda-com/front"
 import dayjs from "dayjs";
 import { IDateRange } from "../../type/interface";
@@ -8,8 +7,7 @@ import format from 'date-fns/format'
 import parse from 'date-fns/parse'
 import startOfWeek from 'date-fns/startOfWeek'
 import getDay from 'date-fns/getDay'
-import { today, tomorrow } from "../../type/const";
-import { productList_ProductList_items } from "../../type/api";
+import { productList_ProductList_items_ProductBooking } from "../../type/api";
 let allViews = ['month', 'week', 'day', 'agenda']
 const locales = {
     'en-US': require('date-fns/locale/en-US'),
@@ -25,7 +23,7 @@ const localizer = dateFnsLocalizer({
 interface IProps extends Omit<CalendarProps, "localizer"> {
     date: Date;
     dateTimeRange: IDateRange;
-    data: productList_ProductList_items[];
+    data: productList_ProductList_items_ProductBooking[];
     startHour: number;
     endHour: number;
     displayTools?: boolean;

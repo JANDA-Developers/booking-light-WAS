@@ -23,6 +23,6 @@ export const TemplateSummaryCard: React.FC<IProp> = ({ ...props }) => {
 
     const Nodes = items.map(item => ([<span className="summaryCard__cell" >{item.name}</span>, <span className="summaryCard__cell">{notificationMethodKr(item.notificationMethod)}</span>, <span className="summaryCard__cell">{yyyymmddHHmm(item.createdAt)}</span>]));
 
-    return <SummaryCard {...props} Empty={<DotButton onClick={handleViewMore}>생성하기</DotButton>} mb className="summaryCard" head={<Flex between ><span>발신 템플리</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
+    return <SummaryCard contentsId="TemplateSummaryCard" {...props} Empty={<DotButton onClick={handleViewMore}>생성하기</DotButton>} mb className="summaryCard" head={<Flex between ><span>발신 템플리</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
 };
 

@@ -1,5 +1,6 @@
 import { JDcontainer, JDpageHeader, useModal } from '@janda-com/front';
 import React, { useContext } from 'react';
+import { Tip } from '../../../atom/tip/Tip';
 import DotButton from '../../../component/dotButton/DotButton';
 import { SenderViwer } from '../components/SenederViewer';
 import { SmsSendRegistModal } from '../components/SmsSenderRegistModal';

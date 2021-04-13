@@ -1,36 +1,45 @@
 .summaryCard {
 
-     &__list {
-         font-size: $typho-tiny;
-         overflow: auto;
-         &::-webkit-scrollbar {
+    &__list {
+        max-height: 18.75rem;
+        font-size: $typho-tiny;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
             transition: 0.3s;
             background-color: transparent;
             width: 4px;
             height: 4px;
-          }
-         @extend %JDscrollbar--slender;
-     }
+        }
+
+        @extend %JDscrollbar--slender;
+    }
 
 
-     &__cell {
-         max-width: 33.3%;
-         width: 33.3%;
-         overflow: hidden;
-         text-overflow: ellipsis;
-         text-align: center;
-         min-width: 25%;
-     }
+    &__cell {
+        max-width: 33.3%;
+        width: 33.3%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        min-width: 25%;
+        white-space: pre;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: center;
+        @extend %JDscrollbar--slender;
+    }
 
-     &__li {
-         flex: 1 1;
-         height: 100%;
-     }
+    &__li {
+        flex: 1 1;
+        height: 100%;
+    }
 
-     .JDlist__li {
-         display: flex;
-         align-items: center;
-     }
+    .JDlist__li {
+        display: flex;
+        align-items: center;
+    }
 }
 
 

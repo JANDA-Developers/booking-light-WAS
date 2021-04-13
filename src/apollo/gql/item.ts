@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_ITEM, F_ITEM_BOOKING, F_PAGEINFO, F_PRODUCT, F_USERERROR } from "./fragment/fragments";
+import { F_ITEM, F_ITEM_BOOKING, F_PAGEINFO, F_PRODUCT, F_PRODUCT_BOOKING, F_USERERROR } from "./fragment/fragments";
 import { F_SUMMARY_BOOKING } from "./fragment/summary";
 
 
@@ -17,7 +17,7 @@ export const ITEM_BOOKING_UPDATE = gql`
             ...FuserError
         }
     }
-    }
+}
 ${F_USERERROR}
 `
 
@@ -99,20 +99,20 @@ ${F_USERERROR}
 `
 
 export const ITEM_FIND_BY_ID = gql`
-
-    query itemFindById(
-        $itemId: ObjectId!
+query itemFindById(
+    $itemId: ObjectId!
+) {
+    ItemFindById(
+        itemId: $itemId
     ) {
-        ItemFindById(
-            itemId: $itemId
-        ) {
-            ...Fitem
-            products {
-                ...Fproduct
-            }
+        ...FitemBooking
+        products {
+            ...FproductBooking
         }
     }
-${F_PRODUCT}
+}
+${F_ITEM_BOOKING}
+${F_PRODUCT_BOOKING}
 ${F_ITEM}
 `
 

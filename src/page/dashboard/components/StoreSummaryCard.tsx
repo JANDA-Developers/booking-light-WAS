@@ -21,11 +21,10 @@ export const StoreSummaryCard: React.FC<IProp> = (props) => {
 
     const handleTitelClick = (item: storeList_StoreList_items) => () => {
         history.push(Paths.itemDetail + "/" + item._id)
-
     }
 
-    const Nodes = items.map(item => ([<span className="summaryCard__cell" onClick={handleTitelClick(item)}>{item.name}</span>, <span className="summaryCard__cell">{yyyymmdd(item.createdAt)}</span>, <Clip className="summaryCard__cell">{item.description}</Clip>]));
+    const Nodes = items.map(item => ([<span className="summaryCard__cell" onClick={handleTitelClick(item)}>{item.name}</span>, <span className="summaryCard__cell">{yyyymmdd(item.createdAt)}</span>, <span className="summaryCard__cell">{item.description}</span>]));
 
-    return <SummaryCard mb className="summaryCard" head={<Flex between ><span>스토어현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
+    return <SummaryCard contentsId="StoreSummaryCard" mb className="summaryCard" head={<Flex between ><span>스토어현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
 
 };

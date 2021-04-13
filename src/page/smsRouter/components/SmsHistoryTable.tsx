@@ -75,6 +75,6 @@ export const SmsHistoryTable: React.FC<IProp> = ({ histories, handleView, ...pro
     ];
 
 
-    return <JDtable columns={columns} data={histories} {...props} />;
+    return <JDtable defaultPageSize={20} columns={columns} data={histories} {...props} />;
 };
 

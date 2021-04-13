@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import JDtable, { IJDTableProps, JDcolumn } from '../../../component/table/Table';
-import { productList_ProductList_items } from '../../../type/api';
-import { yyyymmdd, yyyymmddHHmm, yyyymmddHHmmLabel, yyyymmddHHmmRange } from '../../../utils/dateFormat';
+import { itemFindById_ItemFindById_ItemBooking_products, itemFindById_ItemFindById_ItemBooking_products_ProductBooking, productList_ProductList_items, productList_ProductList_items_ProductBooking, StoreType } from '../../../type/api';
+import { hhmmRange, yyyymmdd, yyyymmddHHmm, yyyymmddHHmmLabel, yyyymmddHHmmRange } from '../../../utils/dateFormat';
 import { autoComma, Bold, Flex, JDbox, JDlabel, JDtypho, Small } from '@janda-com/front';
 import { DisableBadge } from '../../../component/statusBadges/StatusBadges';
 import { JDicon } from '../../../component/icons/Icons';
 import { DateWithTimeRange, Taccent } from '../../../atom/format/DateFormat';
 import { Info } from '../../../atom/Info';
+import AppContext from '../../../context';
 
-export type TproductRowData = Partial<productList_ProductList_items>;
+export type TproductRowData = Partial<itemFindById_ItemFindById_ItemBooking_products_ProductBooking>;
 
 interface IProp extends Partial<IJDTableProps> {
     handleDelete?: (product: TproductRowData) => void;
@@ -16,7 +17,8 @@ interface IProp extends Partial<IJDTableProps> {
     products: TproductRowData[]
 }
 export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEdit, ...props }) => {
-    const columns: JDcolumn<TproductRowData>[] = [
+    const { type, isTimeMall } = useContext(AppContext);
+    let columns: JDcolumn<TproductRowData>[] = [
         {
             Header: () => <div>상품코드</div>,
             accessor: 'code',
@@ -36,6 +38,9 @@ export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEd
             width: 200,
             accessor: 'dateRangeForSale',
             Cell: ({ original: { dateRangeForSale } }) => {
+                // TODO N일전 셀렉터 흐음... 최소 N일전 ? 이런식으로
+                // 0일전일때는 시간 단위로 ..!
+                // 판매기한은 N일 전까지로 표기해야함.
                 return <DateWithTimeRange from={dateRangeForSale?.from} to={dateRangeForSale?.to} />;
             },
         },
@@ -44,18 +49,33 @@ export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEd
             width: 200,
             accessor: 'dateRangeForUse',
             Cell: ({ original: { dateRangeForUse } }) => {
+                if (isTimeMall) return <div>
+                    <JDtypho>
+                        {yyyymmdd(dateRangeForUse?.from)}
+                    </JDtypho>
+                    {hhmmRange(dateRangeForUse?.from, dateRangeForUse?.to)}
+                </div>
                 return <DateWithTimeRange from={dateRangeForUse?.from} to={dateRangeForUse?.to} />;
             },
         },
         {
             Header: () => <div>항목/가격/수량</div>,
             accessor: 'capacityDetails',
-            Cell: ({ original: { capacityDetails } }) => {
-                return <div>{capacityDetails?.map(cd => <JDbox mb="tiny" padding={1} theme="grey1" key={cd.key}>
-                    <Bold size="small" component="div">{cd.label}</Bold>
-                    <Small component="div">{autoComma(cd.price)}원</Small>
-                    <Small component="div">{cd.count}개</Small>
-                </JDbox>)}</div>;
+            Cell: ({ original: { capacityDetails, price, capacity } }) => {
+
+                if (isTimeMall) return <div>
+                    {autoComma(price)} /
+                    {capacity}명
+                </div>
+
+                return <div>
+                    {capacityDetails?.map(cd =>
+                        <JDbox mb="tiny" padding={1} theme="grey1" key={cd.key}>
+                            <Bold size="small" component="div">{cd.label}</Bold>
+                            <Small component="div">{autoComma(cd.price)}원</Small>
+                            <Small component="div">{cd.count}개</Small>
+                        </JDbox>
+                    )}</div>;
             },
         },
         // {
@@ -83,5 +103,12 @@ export const ProductTable: React.FC<IProp> = ({ products, handleDelete, handleEd
         },
     ];
 
-    return <JDtable columns={columns} data={products} {...props} />;
+    if (type === StoreType.SHOPPING) {
+        columns = columns.filter(colum => colum.accessor !== "dateRangeForUse")
+    } else {
+        columns = columns.filter(colum => colum.accessor !== "dateRangeForSale")
+    }
+
+
+    return <JDtable defaultPageSize={20} columns={columns} data={products} {...props} />;
 };

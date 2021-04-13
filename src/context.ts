@@ -1,6 +1,6 @@
 import { IselectedOption } from "@janda-com/front/dist/types/interface";
 import React, { useEffect, useState } from "react";
-import { invoiceFindOne_InvoiceFindOne, me_Me, me_Me as MyProfile, me_Me_stores } from "./type/api";
+import { invoiceFindOne_InvoiceFindOne, me_Me, me_Me as MyProfile, me_Me_stores, StoreType } from "./type/api";
 import { UsageTypeMap } from "./utils/invoiceMapper";
 import { storage } from "./utils/storage";
 
@@ -21,17 +21,24 @@ export interface IAppContext {
   isLogined?: boolean;
   thisMonthInvoice?: invoiceFindOne_InvoiceFindOne,
   usageMap?: UsageTypeMap
+  selectStore: (id:string) => void;
+  type?: StoreType;
+  isShoppingType?: boolean;
+  isTimeMall?: boolean;
 }
 
 export const DEFAULT_APP_CONTEXT: IAppContext = {
   stores: [],
-  updateContext: () =>{},
+  updateContext: (foo:any) =>{},
   storeOptions: [],
+  selectStore() {
+  }
 };
 
 const AppContext = React.createContext<IAppContext>(
     DEFAULT_APP_CONTEXT
 );
+
 
 export const useAppContext = (me?: me_Me) => {
   const defaultContext = getDefaultContextFromMe(me);
@@ -53,6 +60,12 @@ export const useAppContext = (me?: me_Me) => {
 
   const selectedStoreId = context?.selectedStore?._id;
 
+  const selectStore = (storeId:string) => {
+    const target = context.stores.find(sto => sto._id === storeId);
+    context.selectedStore = target;
+    updateContext({ ...context })
+  }
+
   //LocalStorageUpdate;
   useEffect(()=>{
     if(selectedStoreId) {
@@ -73,6 +86,7 @@ export const useAppContext = (me?: me_Me) => {
 
   return {
     ...context,
+    selectStore,
     isLogined,
     selectedStoreId,
     updateContext,

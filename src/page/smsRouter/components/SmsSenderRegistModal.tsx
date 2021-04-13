@@ -1,5 +1,6 @@
 import { InputText, Flex, IUseModal, JDcard, JDmodal, useInput, useModal, Bold, JDicon, Mb, JDtypho, Small, Validater } from '@janda-com/front';
 import React, { useState } from 'react';
+import { Tip } from '../../../atom/tip/Tip';
 import ModalBtn from '../../../component/btns/ActBtn';
 import { CheckBtn } from '../../../component/checkBtn/CheckBtn';
 import SingleUploader from '../../../component/singleUploader/SingleUploader';
@@ -9,6 +10,7 @@ import { useNotificationSenderAdd } from '../../../hook/useNotification';
 import { useFileUpload, useSingleUpload } from '../../../hook/useUpload';
 import { useVerification } from '../../../hook/useVerification';
 import { NotificationMethod, VerificationEvent, VerificationTarget } from '../../../type/api';
+import { ONLINE_TELL_INFO_LINK } from '../../../type/const';
 import { completeMsg } from '../../../utils/onCompletedMessage';
 
 interface IProp {
@@ -36,7 +38,6 @@ export const SmsSendRegistModal: React.FC<IProp> = ({ modalHook }) => {
     const isVerified = methodVeifiHook.verifiData?.isVerified;
     const payload = methodVeifiHook.verifiData?.payload;
 
-
     const { validate } = new Validater([{
         value: labelHook.value,
         failMsg: "발신자 명칭을 입력 해주세요."
@@ -62,10 +63,10 @@ export const SmsSendRegistModal: React.FC<IProp> = ({ modalHook }) => {
 
 
     return <JDmodal {...modalHook} foot={<ModalBtn disabled={!methodVeifiHook.verifiData?.isVerified} onClick={handleAdd}>등록하기</ModalBtn>} head={{ title: "SMS발신자 등록하기" }}>
-        <JDcard mb onClick={handleSetMethod(NotificationMethod.SMS)} selected={isSms} >
+        <JDcard hover mb onClick={handleSetMethod(NotificationMethod.SMS)} selected={isSms} >
             <Bold>SMS 핸드폰 번호등록</Bold>
         </JDcard>
-        <JDcard mb onClick={handleSetMethod(NotificationMethod.EMAIL)} selected={!isSms} >
+        <JDcard hover mb onClick={handleSetMethod(NotificationMethod.EMAIL)} selected={!isSms} >
             <Bold>EAIL 발신 메일등록</Bold>
         </JDcard>
         <InputText
@@ -91,7 +92,11 @@ export const SmsSendRegistModal: React.FC<IProp> = ({ modalHook }) => {
             }} checked={!!isVerified} >인증하기</CheckBtn>
         </Flex>
         <SingleUploader label="통신판매 증명원" {...fileUploaderHook} />
-        <Small hover weight={600}>통신판매 증명원이란?</Small>
+        <Tip message="통신 판매증명원 등록방법">
+            <Small onClick={() => {
+                window.open(ONLINE_TELL_INFO_LINK, "_blank")
+            }} hover weight={600}>통신판매 증명원이란?</Small>
+        </Tip>
         <VerificationModal key={method} target={isSms ? VerificationTarget.PHONE : VerificationTarget.EMAIL} {...methodVeifiHook} payload={payloadHook.value} modalHook={verifiModal} />
     </JDmodal>;
 };

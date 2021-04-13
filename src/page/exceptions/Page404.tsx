@@ -1,4 +1,4 @@
-import { JDbutton, JDexceptionPage } from '@janda-com/front';
+import { JDexceptionPage } from '@janda-com/front';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Centerlize } from '../../component/centerlize/Centerlize';

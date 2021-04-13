@@ -13,7 +13,7 @@ interface IProp<T = any> {
     handle?: boolean;
 }
 
-export const Draager = <T,>({ handle, dir = "vertical", items, idKey, ItemRender, onOrder, ulClassName }: PropsWithChildren<IProp<T>>): JSX.Element => {
+export const Dragger = <T,>({ handle, dir = "vertical", items, idKey, ItemRender, onOrder, ulClassName }: PropsWithChildren<IProp<T>>): JSX.Element => {
     const handleDrop = (result: DropResult) => {
         const ordered = reorder(items, result.source.index, result.destination?.index!);
         onOrder([...ordered]);

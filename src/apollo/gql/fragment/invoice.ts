@@ -39,6 +39,7 @@ ${F_SERVICE_DETAIL}
 
 export const F_SERVICE_PLAN = gql`
 fragment FservicePlan on ServicePlan {
+    _id
     name
     price
     billingFrequency
@@ -50,6 +51,7 @@ fragment FservicePlan on ServicePlan {
         description
         serviceProviderName
     }
+    _servicePlanTemplateId
     description
     serviceProviderName
     isDesubscribed

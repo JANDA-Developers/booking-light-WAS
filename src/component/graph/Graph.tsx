@@ -87,7 +87,7 @@ const JDgraph: React.FC<IJDgrpahProps> = ({ data, viewMode, columns, ...prop }) 
     case "doughnut":
       return <Doughnut data={cloneData} {...prop} />;
     case "line":
-      return <Line data={cloneData} {...prop} />;
+      return <Line options={{ responsive: true }} data={cloneData} {...prop} />;
     case "list":
       return (
         <JDtable

@@ -9,6 +9,27 @@ fragment FcollectionDataInterface on CollectionDataInterface {
 }
 `
 
+export const F_DELIVERY = gql`
+fragment Fdelivery on Delivery {
+    fee
+    overFreePrice
+    lowerPrice
+}
+`
+
+export const F_DELIVERY_INFO = gql`
+fragment FdeliveryInfo on DeliveryInfo {
+    receiverSmaeWithBuyer
+    receiverName
+    receiverPhone
+    address
+    addressDetail
+    deliveryStatus
+    deliveryNumber
+    deliveryPrice
+}
+`
+
 export const F_PAGEINFO = gql`
     fragment FoffsetPagingInfo on OffsetPagingInfo {
         pageIndex

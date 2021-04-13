@@ -1,0 +1,34 @@
+.buyPageShopping {
+
+    &__itemsList {
+        margin-right: -1 * space(2);
+    }
+
+    &__item {
+        min-width: 15%;
+        max-width: 16.6%;
+
+        @include response($desktophd) {
+            min-width: 17%;
+            max-width: 20%;
+        }   
+     
+        @include response($desktop) {
+            min-width: 22%;
+            max-width: 25%;
+        }   
+        @include response($tablet) {
+            min-width: 30%;
+            max-width: 33.33%;
+        }   
+        @include response($mobile) {
+            min-width: 47%;
+            max-width: 50%;
+        }   
+        @include response($smobile) {
+            min-width: 95%;
+            max-width: 100%;
+        }
+    }
+
+}

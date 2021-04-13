@@ -1,5 +1,5 @@
 import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
-import { DisplayType, FoffsetPagingInfo, ItemType, NotificationMethod, NotificationTriggerEvent, OffsetPagingInput, Paymethod, StoreType, UserRole, VerificationEvent, VerificationTarget } from "./api";
+import { BankCode, DayOfWeek, DisplayType, FoffsetPagingInfo, ItemType, me_Me_stores_buypage_delivery, NotificationMethod, NotificationTriggerEvent, OffsetPagingInput, Paymethod, StoreType, SystemNotiType, UserRole, VerificationEvent, VerificationTarget, _BoardDocSort, _ProductSort, _PurchaseBundleSort } from "./api";
 import dayjs from "dayjs";
 import { NotiType, selectOpCreater } from "@janda-com/front";
 import { enumToOption } from "../utils/enumToOption";
@@ -8,6 +8,12 @@ import { storeTypeKr } from "../utils/enumConverter";
 
 const { version } = require("../../package.json");
 export const JDVERSION = version
+
+export const ALLOW_LOGINS = [
+    UserRole.BUSINESS_USER,
+    UserRole.STORE_USER,
+    UserRole.SUPERADMIN,
+];
 
 
 export const nicePayJDlogo = "https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/logo/jungleBooking.png";
@@ -209,13 +215,25 @@ export const BUYPAGE_TYPE_OPS: IselectedOption<BuyPageType>[] = [
     {
         label: "일반예약",
         value: BuyPageType.RESERVATION_NORMAL,
+    },
+    {
+        label: "쇼핑몰예약",
+        value: BuyPageType.SHOPPING_MALL,
+    },
+    {
+        label: "회차예약",
+        value: BuyPageType.TIME_MALL,
     }
 ];
 
+
+
+
+
 export const ITEM_TYPE_OPS: IselectedOption<ItemType>[] = [
     {
-        label: "배달서비스",
-        value: ItemType.DELIVERY,
+        label: "물품판매",
+        value: ItemType.GOODS,
     },
     {
         label: "예약",
@@ -272,9 +290,18 @@ export const enumToOps = (enumm: any, fn: (foo: any) => string) => {
 export const STORE_TYPE_OPS: IselectedOption<StoreType>[] = enumToOps(StoreType, storeTypeKr);
 
 export const COUNT = selectOpCreater({
-    count: 99,
+    count: 1000,
     start: 0,
     labelAdd: "개"
+});
+
+
+
+
+export const COUNT_GEN = (label: string) => selectOpCreater({
+    count: 9990,
+    start: 0,
+    labelAdd: label
 });
 
 
@@ -405,9 +432,73 @@ export enum Ratio {
 }
 
 
-export const DEFAULT_SENDER = "08015212"
+export const DEFAULT_SENDER = "18334157"
+// 통신가입 증명원 링크
+export const ONLINE_TELL_INFO_LINK = "https://m.blog.naver.com/PostView.nhn?blogId=popbill&logNo=221030696103&proxyReferer=https:%2F%2Fwww.google.com%2F";
 
 export const DefaultSenderOP: IselectedOption = {
     label: "기본발신자",
     value: DEFAULT_SENDER
 }
+
+export const BankCodeKr: Record<BankCode, string> = {
+    CITY: "시티은행",
+    HANA: "하나은행",
+    SHINHAN: "신한은행",
+    KDB: "산업은행",
+    NONGHYUP: "농협은행",
+    WOORI: "우리은행",
+    BOK: "한국은행",
+    BUSAN: "부산은행",
+    DAEGU: "대우은행",
+    GUANGJU: "광주은행",
+    IBK: "IBK은행",
+    JEJU: "제주은행",
+    KAKAO: "카카오은행",
+    KB: "국민은행",
+    KN_BANK: "경남은행",
+    POST: "우체국은행",
+    STANDARD_CHARTERED: "sc은행",
+    SUHYUP: "수협은행"
+};
+
+export const BANK_OPS = enumToOps(BankCode, (key) => BankCodeKr[key as BankCode])
+
+export const SystemNotiKr: Record<SystemNotiType, string> = {
+    janda: "공지알림",
+    booking: "예약",
+    cancel: "취소",
+    payment: "결제",
+    system: "시스템",
+    user: "유저"
+}
+
+export const SYSTEM_NOTI_OPS = enumToOps(SystemNotiType, (key) => SystemNotiKr[key as SystemNotiType]);
+
+export const SortKr: Partial<Record<any, string>> = {
+    createdAt__asc: "생성일↓",
+    createdAt__desc: "생성일↑",
+    updatedAt__asc: "업데이트↓",
+    updatedAt__desc: "업데이트↑",
+    paymentAt__asc: "결제일↓",
+    paymentAt__desc: "결제일↑",
+    disabled__asc: "활성화X",
+    disabled__desc: "활성화O",
+};
+
+
+export const WeekKr: Record<DayOfWeek, string> = {
+    FRI: "금",
+    MON: "월",
+    SAT: "토",
+    SUN: "일",
+    THU: "목",
+    TUE: "화",
+    WED: "수"
+}
+
+export const WeekOption = enumToOps(DayOfWeek, (key) => WeekKr[key as keyof typeof WeekKr])
+
+export const FOREVER = new Date("2099-01-01").valueOf();
+
+export const DEFAULT_DELIVERY: me_Me_stores_buypage_delivery = { __typename: "Delivery", fee: 0, lowerPrice: 0, overFreePrice: 0 }

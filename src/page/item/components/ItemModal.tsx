@@ -8,7 +8,7 @@ import { useAttributes } from '../../../hook/useAttributes';
 import { useCopy } from '../../../hook/useCopy';
 import { useItemCreate, useItemFindById, useItemUpdate } from '../../../hook/useItem';
 import { useMultiUpload } from '../../../hook/useUpload';
-import { ItemBookingCreateInput, ItemBookingUpdateInput } from '../../../type/api';
+import { ItemBookingCreateInput, ItemBookingUpdateInput, ItemType } from '../../../type/api';
 import { ITEM_TYPE_OPS } from '../../../type/const';
 
 export interface IItemModalInfo {
@@ -39,6 +39,7 @@ export const ItemModal: React.FC<IProp> = ({ modalHook }) => {
 
 
     const nextData: ItemBookingCreateInput & ItemBookingUpdateInput = {
+        type: ItemType.BOOKING,
         attrs: [],
         tags: [],
         name: nameHook.value,
@@ -79,7 +80,6 @@ export const ItemModal: React.FC<IProp> = ({ modalHook }) => {
     }, [defaultItem?._id])
 
     console.log({ attributesHook })
-
 
     return <JDmodal head={{ title: "상품 정보" }} {...modalHook} >
         <JDtabs mb="large">

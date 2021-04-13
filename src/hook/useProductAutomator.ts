@@ -1,0 +1,10 @@
+import { getRefetch } from "@janda-com/front";
+import { PRODUCT_AUTOMATOR_BOOKING_CREATE, PRODUCT_AUTOMATOR_BOOKING_UPDATE, PRODUCT_AUTOMATOR_DELETE, PRODUCT_AUTOMATOR_FIND_BYID, PRODUCT_AUTOMATOR_LIST } from "../apollo/gql/productAutomator";
+import { productAutomatorBookingFindById, productAutomatorBookingFindByIdVariables, productAutomatorBookingDelete, productAutomatorBookingFindById_ProductAutomatorBookingFindById,productAutomatorBookingDeleteVariables,_ProductAutomatorBookingFilter,_ProductAutomatorBookingSort,productAutomatorBookingCreate, productAutomatorBookingCreateVariables, productAutomatorBookingList,productAutomatorBookingListVariables,productAutomatorBookingList_ProductAutomatorBookingList_items, productAutomatorBookingUpdate, productAutomatorBookingUpdateVariables } from "../type/api";
+import { generateFindQuery, generateListQueryHook, generateMutationHook } from "../utils/query";
+
+export const useProductAutomatorFindById = generateFindQuery<productAutomatorBookingFindById, productAutomatorBookingFindByIdVariables,productAutomatorBookingFindById_ProductAutomatorBookingFindById>("automatorId", PRODUCT_AUTOMATOR_FIND_BYID);
+export const useProductAutomatorList = generateListQueryHook<_ProductAutomatorBookingFilter,_ProductAutomatorBookingSort,productAutomatorBookingList,productAutomatorBookingListVariables,productAutomatorBookingList_ProductAutomatorBookingList_items>(PRODUCT_AUTOMATOR_LIST);
+export const useProductAutomatorCreate = generateMutationHook<productAutomatorBookingCreate,productAutomatorBookingCreateVariables>(PRODUCT_AUTOMATOR_BOOKING_CREATE,{...getRefetch(PRODUCT_AUTOMATOR_LIST)});
+export const useProductAutomatorDelete = generateMutationHook<productAutomatorBookingDelete,productAutomatorBookingDeleteVariables>(PRODUCT_AUTOMATOR_DELETE,{...getRefetch(PRODUCT_AUTOMATOR_LIST)});
+export const useProductAutomatorUpdate = generateMutationHook<productAutomatorBookingUpdate, productAutomatorBookingUpdateVariables>(PRODUCT_AUTOMATOR_BOOKING_UPDATE,{...getRefetch(PRODUCT_AUTOMATOR_LIST)});

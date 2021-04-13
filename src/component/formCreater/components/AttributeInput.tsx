@@ -40,7 +40,9 @@ export const AttributeInput: React.FC<IProp> = ({ attribute, onChange, onEdit: h
     if (displayType === DisplayType.CHECK_BOX) return <div {...shared}>
         <JDlabel {...labelShare} />
         <div>
-            <JDcheckBox onChange={onChange} checked={!!value} defaultChecked={!!defaultValue} />
+            <JDcheckBox onChange={(flag) => {
+                onChange?.(flag ? "Y" : "N")
+            }} checked={value === "Y"} defaultChecked={!!defaultValue} />
         </div>
     </div>
     if (displayType === DisplayType.DROPDOWN) return <div {...shared}>

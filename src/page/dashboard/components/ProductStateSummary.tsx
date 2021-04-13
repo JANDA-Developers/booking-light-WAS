@@ -26,6 +26,6 @@ export const ProductStatusSummaryCard: React.FC<IProp> = () => {
 
     const Nodes = items.map(item => ([<span className="summaryCard__cell" onClick={handleTitelClick(item)}>{item.name}</span>, <span className="summaryCard__cell">{yyyymmdd(item.createdAt)}</span>, <Clip className="summaryCard__cell">{item.description}</Clip>]));
 
-    return <SummaryCard mb className="summaryCard" head={<Flex between ><span>스토어현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
+    return <SummaryCard contentsId="ProductStatusSummaryCard" mb className="summaryCard" head={<Flex between ><span>스토어현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
 
 };

@@ -4,18 +4,13 @@ import { JDicon } from '../../icons/Icons';
 import dayjs from 'dayjs';
 import { TElements } from '@janda-com/front/dist/types/interface';
 import { FsystemNoti } from '../../../type/api';
+import { getDateDiffText } from '../../../utils/getDateDiffText';
 
 export interface INotiLineProp extends FsystemNoti {
 }
 
 export const NotiLine: React.FC<INotiLineProp> = ({ content, createdAt, type }) => {
-  let dateText = dayjs(createdAt).format('YYYY-MM-DD');
-  const timeDiff = Math.abs(dayjs(createdAt).diff(new Date(), 'h'));
-  const dateDiff = Math.abs(dayjs(createdAt).diff(new Date(), 'd')) < 1;
 
-  if (dateDiff) {
-    dateText = `${timeDiff}시간 전`;
-  }
 
   return (
     <JDalign
@@ -38,7 +33,7 @@ export const NotiLine: React.FC<INotiLineProp> = ({ content, createdAt, type }) 
           </JDtypho>
         </div>
       </JDalign>
-      <JDtypho size="tiny">{dateText}</JDtypho>
+      <JDtypho size="tiny">{getDateDiffText(createdAt)}</JDtypho>
     </JDalign>
   );
 };

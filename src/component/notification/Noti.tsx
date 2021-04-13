@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { JDpreloader, InputText, JDtabs, Tab, TabList, TabPanel, JDdropDown, TUseInput, useDropDown, TOffset, JDtypho, Flex, JDalign } from "@janda-com/front"
+import { JDpreloader, InputText, JDtabs, Tab, TabList, TabPanel, JDdropDown, TUseInput, useDropDown, TOffset, JDtypho, Flex, JDalign, JDbutton, deepCopy } from "@janda-com/front"
 import { JDicon } from '../icons/Icons';
 import { NotiLine, INotiLineProp } from './components/NotiLine';
 import { IconConifgProps } from '../icons/declation';
@@ -36,8 +36,10 @@ export const Noti: React.FC<INotiProp> = ({
   offset,
   unReadCount,
 }) => {
-  const { me } = useContext(AppContext);
+  const context = useContext(AppContext);
+  const { me, isLogined, updateContext } = context;
   const { items } = useSystemNotiList({}, {
+    skip: !isLogined,
     pollInterval: 600000, variables: {
       pagingInput: {
         pageIndex: 0,
@@ -48,14 +50,29 @@ export const Noti: React.FC<INotiProp> = ({
       }
     }
   })
-  const [notiRead] = useSystemNotiRead()
+  const [notiRead] = useSystemNotiRead({
+    onCompleted: ({ SystemNotiRead }) => {
+      if (SystemNotiRead.ok) {
+        const copyMe = deepCopy(me);
+        if (copyMe) {
+          copyMe.unReadSystemNoties = [];
+          updateContext({
+            ...context
+          })
+        }
+      }
+
+    }
+  })
   const dropDown = useDropDown();
 
   const history = useHistory();
 
   const toSystemNotiHistory = () => {
-    history.push(Paths.notiHistory)
+    history.push(Paths.notiHistory);
+    dropDown.close();
   }
+
 
   useEffect(() => {
     if (dropDown.isOpen) {
@@ -144,9 +161,10 @@ export const Noti: React.FC<INotiProp> = ({
             ))
           )}
         </>
-        {isEmpty(items) && <JDtypho mb="large" color="grey2" text="center" >새로운 알림이 존재하지 않습니다.</JDtypho>}
-
-        <JDtypho onClick={toSystemNotiHistory} hover color="grey2" size="small">자세히보기</JDtypho>
+        <div style={{ padding: "0.8rem" }}>
+          <Empty empty={isEmpty(items)} msg={"새로운 알림이 존재하지 않습니다."} />
+        </div>
+        <JDbutton thema="black" onClick={toSystemNotiHistory} hover size="tiny">자세히보기</JDbutton>
       </JDdropDown>
     </span>
   );

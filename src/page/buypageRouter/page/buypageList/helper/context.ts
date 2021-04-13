@@ -1,12 +1,31 @@
+import { IselectedOption } from "@janda-com/front/dist/types/interface";
 import React from "react";
 import { storeFindByCode_StoreFindByCode } from "../../../../../type/api";
-import { DefaultBuypageConfig, IbuypageConfig } from "../../../../buypageSet/compoents/BuypageConfiger";
+import { IbuypageConfig } from "../../../../buypageSet/config/config";
+import { DefaultBuypageConfig } from "../../../../buypageSet/config/configDefault";
 
 export interface IBuyPageContext {
     store: storeFindByCode_StoreFindByCode;
     configure: IbuypageConfig
     isLogined: boolean;
+    itemCats: IselectedOption[]
+    updateBasket: () => void
 }
 
-export const BuypageContext = React.createContext<IBuyPageContext>({ isLogined: false, store: {} as any, configure: DefaultBuypageConfig});
+export const BuypageContext = React.createContext<IBuyPageContext>(
+    { isLogined: false, 
+        store: {} as any,
+        configure: DefaultBuypageConfig,
+        itemCats: [],
+        updateBasket: () => {}
+    });
+
+
+    
+export interface IBuyPageShoppingContext {
+}
+
+export const BuypageShoppingContext = React.createContext<IBuyPageShoppingContext>(
+    { 
+    });
 

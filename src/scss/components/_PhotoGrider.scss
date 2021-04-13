@@ -1,9 +1,12 @@
 .photoGrider {
 
+    @extend %JDscrollbar--slender;
+
     &__cell {
         position: relative;
         width: space(20);
         height: space(20);
+        min-width: space(20);
         max-width: space(20);
         max-height: space(20);
         margin: space(1);

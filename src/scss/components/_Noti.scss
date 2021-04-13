@@ -1,0 +1,6 @@
+.JDnoti {
+    &__dropBox {
+        max-height: 31.25rem;
+        @extend %JDscrollbar--slender;
+    }
+}

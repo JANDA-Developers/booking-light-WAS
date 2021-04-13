@@ -28,6 +28,16 @@ $side-bg: #333333;
         .sidebar__infozone {
             display:none;
         }
+
+        .sidebar__mo-curtain {
+            display: none;
+        }
+    }
+
+    &__foot {
+        position: absolute;
+        bottom: 0;
+        color: white;
     }
 
     &__logo {
@@ -61,6 +71,7 @@ $side-bg: #333333;
     }
 
     &__menu {
+        position: relative;
         display: flex;
         flex-direction: row;
         min-height: 100%;
@@ -106,6 +117,27 @@ $side-bg: #333333;
                     background: white;
                 }
             }
+        }
+    }
+
+    
+    @include response($tablet) {
+
+        &--close {
+            display: none;
+        }
+
+        position: absolute;
+        .sidebar__mo-curtain {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            top:0;
+            right:0;
+            left: 0;
+            background-color: rgba(0,0,0,.3);
+            backdrop-filter: blur(3px);
+            z-index: -1;
         }
     }
 }

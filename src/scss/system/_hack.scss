@@ -1,3 +1,5 @@
+@import "./hack/card";
+
 html, body, #body, #JDoutWrapper {
     overflow-x: hidden;
 }
@@ -108,13 +110,77 @@ border: none; }
 #body .counter__btn:disabled {
 background-color: #eee; }
 #body .counter .react-select__control {
-border: none;
 border-radius: 0px !important;
-border-left: 1px solid #bebebe;
-border-right: 1px solid #bebebe; }
+border: 1px solid #bebebe!important;
+}
 #body .counter__inner {
 border: 1px solid #bebebe; }
 
 .JDtable .rt-td {
     white-space: pre-line;
+}
+
+
+
+// 라이브러리에 추가해도 좋음
+.JDflex--grow  > select {
+    flex-grow: 1;
+}
+
+// 라이브러리에 추가해도 좋음
+#root .DayPicker.DayPicker--right, .ReactModalPortal .DayPicker.DayPicker--right {
+    position: absolute!important;
+}
+
+html .JDtextColor--black {
+    color: $html-color;
+}
+
+.JDselect--native {
+    min-height: 2.325rem
+}
+
+.counter 
+.JDselect--native {
+    min-height: 2.2rem
+}
+
+.JDradios__circle {
+    height: 24px!important;
+    line-height: 24px!important;
+}
+
+.JDselect .react-select__control {
+    min-height: 2.325rem
+}
+
+
+#body .counter {
+    &__btn {
+        border: 1px solid $outborder-color;
+        &:first-child {
+            border-right: none;
+            border-radius: $br1 0px 0px $br1;
+        }
+        &:last-child {
+            border-left: none;
+            border-radius: 0px $br1 $br1 0px;
+        }
+    }
+    &__inner {
+        border: none;
+    }
+}
+
+html .JDtabs--tabsAlign-normal .react-tabs__tab {
+    white-space: nowrap;
+}
+.JDbadge--border {
+    padding: .2em 1em !important;
+}
+
+canvas {
+    width: 100% !important;
+    max-width: 800px;
+    height: auto !important;
 }

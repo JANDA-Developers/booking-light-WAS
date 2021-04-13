@@ -1,20 +1,21 @@
-import { Bold, Col, copytoClipboard, Flex, Grid, JDcard, JDcontainer, JDhorizen, JDlabel, JDpageHeader, JDselect, JDswitch, JDtypho, toast, WindowSize } from '@janda-com/front';
-import { ISet } from '@janda-com/front/dist/types/interface';
-import React, { useContext, useState } from 'react';
+import { Col, copytoClipboard, Flex, Grid, JDcard, JDcontainer, JDhorizen, JDlabel, JDpageHeader, JDselect, JDswitch, JDtypho, toast, WindowSize } from '@janda-com/front';
+import React, { useContext } from 'react';
 import { IconButton } from '../../atom/iconButton/IconButton';
-import { JDicon } from '../../component/icons/Icons';
+import { Tip } from '../../atom/tip/Tip';
 import AppContext from '../../context';
 import { useCopy } from '../../hook/useCopy';
-import { BuyPageType } from '../../type/enum';
 import { mergeDeepOnlyExsistProperty } from '../../utils/merge';
 import { buyPageLinkCreater, BuyPagePaths, BuyPageRouterWrap as BuyPageRouter } from '../buypageRouter/BuyPageRouter';
-import { DefaultBuypageConfig, BuypageConfiger, IbuypageConfig } from './compoents/BuypageConfiger';
+import { BuypageConfiger } from './compoents/BuypageConfiger';
+import { IbuypageConfig } from './config/config';
+import { DefaultBuypageConfig } from './config/configDefault';
 
 interface IProp {
 }
 
 export const BuyPageSetDetail: React.FC<IProp> = () => {
     const { selectedStore } = useContext(AppContext);
+
     const [config, setConfig] = useCopy<IbuypageConfig>(
         mergeDeepOnlyExsistProperty(DefaultBuypageConfig, selectedStore?.buypage?.configure || {})
     )
@@ -33,6 +34,8 @@ export const BuyPageSetDetail: React.FC<IProp> = () => {
     }
 
 
+    const hasConfigure = !!selectedStore?.buypage.configure;
+
     return <div className="buy">
         <JDpageHeader title="예약페이지 생성하기" desc="원하는 형태의 예약페이지 생성하기" />
         <JDcontainer verticalPadding size={WindowSize.full}>
@@ -40,15 +43,22 @@ export const BuyPageSetDetail: React.FC<IProp> = () => {
                 <Col full={9} lg={12}>
                     <Flex between vCenter><JDlabel>미리보기</JDlabel>
                         <Flex vCenter>
-                            <IconButton tooltip="예약페이지 링크 복사하기" mr="small" mb onClick={handleCopyLink} icon="copy" />
-                            <IconButton tooltip="예약페이지 새창열기" mb hover onClick={handleView} icon="magnifier" />
+                            <Tip message={hasConfigure ? "예약페이지 새창열기" : "구매페이지 설정을 저장 해주세요"}>
+                                <IconButton mr="tiny" disabled={!hasConfigure} mb hover onClick={handleView} icon="magnifier" />
+                            </Tip>
+                            <Tip message="예약페이지 링크 복사하기">
+                                <IconButton mb onClick={handleCopyLink} icon="copy" />
+                            </Tip>
                         </Flex>
                     </Flex>
                     <BuyPageRouter propConfigure={config} storeCode={selectedStore?.code} />
                 </Col>
                 <Col full={3} lg={12}>
                     <JDlabel> 편집</JDlabel>
-                    <BuypageConfiger setConfig={setConfig} config={config} />
+                    <BuypageConfiger
+                        setConfig={setConfig}
+                        config={config}
+                    />
                 </Col>
             </Grid>
         </JDcontainer>

@@ -1,11 +1,18 @@
 import { MutationHookOptions, useMutation } from "@apollo/client";
 import { getRefetch, toast } from "@janda-com/front";
 import { useEffect, useState } from "react";
-import { BUSINESS_USER_FIND_EMAIL, BUSINESS_USER_RESET_PASSWORD, CUSTOMER_USER_FIND_EMAIL, CUSTOMER_USER_RESET_PASSWORD, ME,  MY_NOTIFICATION_MANAGER,  PROFILE,  PROFILE_UPDATE_FOR_BUSINESS_USER, SIGN_IN, SIGN_OUT, SIGN_UP, STORE_SIGINUP, STORE_SIGNIN_ANONYMOUSE_COMPLETE, STORE_SIGNIN_ANONYMOUSE_START, USER_DUPLICATE_CHECK } from "../apollo/gql/user";
-import {  me, me_Me,  profileUpdateForBusinessUser, profileUpdateForBusinessUserVariables,
-      signInVariables,  signIn, signUp, signUpVariables, storeSignInAnonymousComplete, storeSignInAnonymousCompleteVariables, storeSignInAnonymousStart, storeSignInAnonymousStartVariables, storeSignUp, storeSignUpVariables, _IItemFilter, _IItemSort, _InvoiceFilter, _InvoiceSort, businessUserFindEmail, businessUserFindEmail_BusinessUserFindEmail, customerFindEmail, customerFindEmail_CustomerFindEmail, businessUserResetPassword, businessUserResetPasswordVariables, customerResetPassword_CustomerResetPassword, customerResetPassword, customerResetPasswordVariables, signOut, userDuplicateCheck, userDuplicateCheckVariables, userDuplicateCheck_UserDuplicateCheck, UserRole, Fuser, profileVariables, VerificationTarget, verificationComplete_VerificationComplete_data, myNotificationManager, myNotificationManager_MyNotificationManager} from "../type/api";
+import { BUSINESS_USER_FIND_EMAIL, BUSINESS_USER_RESET_PASSWORD, CUSTOMER_USER_FIND_EMAIL, CUSTOMER_USER_RESET_PASSWORD, ME,  MY_NOTIFICATION_MANAGER,  PROFILE,  PROFILE_UPDATE_FOR_BUSINESS_USER, SIGN_IN, SIGN_OUT, SIGN_UP, STORE_SIGINUP, STORE_SIGNIN_ANONYMOUSE_COMPLETE, STORE_SIGNIN_ANONYMOUSE_START, SUPER_ME, USER_DUPLICATE_CHECK, USER_LIST } from "../apollo/gql/user";
+import {  _IUserFilter,_IUserSort,userList,userList_UserList_items, userListVariables,
+    me, me_Me,  profileUpdateForBusinessUser, profileUpdateForBusinessUserVariables,
+      signInVariables,  signIn, signUp, 
+      signUpVariables, storeSignInAnonymousComplete,
+       storeSignInAnonymousCompleteVariables,
+        storeSignInAnonymousStart, storeSignInAnonymousStartVariables,
+         storeSignUp, storeSignUpVariables, _IItemFilter,
+          _IItemSort, _InvoiceFilter, _InvoiceSort, businessUserFindEmail, 
+          businessUserFindEmail_BusinessUserFindEmail, customerFindEmail, customerFindEmail_CustomerFindEmail, businessUserResetPassword, businessUserResetPasswordVariables, customerResetPassword_CustomerResetPassword, customerResetPassword, customerResetPasswordVariables, signOut, userDuplicateCheck, userDuplicateCheckVariables, userDuplicateCheck_UserDuplicateCheck, UserRole, Fuser, profileVariables, VerificationTarget, verificationComplete_VerificationComplete_data, myNotificationManager, myNotificationManager_MyNotificationManager, superMe, superMe_SuperMe} from "../type/api";
 import { completeMsg, errorMessage } from "../utils/onCompletedMessage";
-import {  generateMutationHook, generateQueryHook } from "../utils/query";
+import {  generateListQueryHook, generateMutationHook, generateQueryHook } from "../utils/query";
 
 export const useStoreSignInAnonymousStart = generateMutationHook<storeSignInAnonymousStart, storeSignInAnonymousStartVariables>(STORE_SIGNIN_ANONYMOUSE_START);
 export const useStoreSignInAnonymousComplete = generateMutationHook<storeSignInAnonymousComplete, storeSignInAnonymousCompleteVariables>(STORE_SIGNIN_ANONYMOUSE_COMPLETE);
@@ -13,12 +20,15 @@ export const useStoreSignUp = generateMutationHook<storeSignUp, storeSignUpVaria
 export const useBusiProfileUpdate = generateMutationHook<profileUpdateForBusinessUser, profileUpdateForBusinessUserVariables>(PROFILE_UPDATE_FOR_BUSINESS_USER);
 export const useStoreSign = generateMutationHook<profileUpdateForBusinessUser, profileUpdateForBusinessUserVariables>(PROFILE_UPDATE_FOR_BUSINESS_USER);
 export const useMe = generateQueryHook<me,me_Me>(ME);
+export const useSuperMe = generateQueryHook<superMe,superMe_SuperMe>(SUPER_ME);
+
 export const useProfile = generateQueryHook<any,profileVariables>(PROFILE);
 export const useUserDuplicateCheck = generateQueryHook<userDuplicateCheck,userDuplicateCheck_UserDuplicateCheck,userDuplicateCheckVariables>(USER_DUPLICATE_CHECK, { skipInit: true });
 
+export const useUserList = generateListQueryHook<_IUserFilter,_IUserSort, userList, userListVariables, userList_UserList_items>(USER_LIST)
 export const useSignUp = generateMutationHook<signUp,signUpVariables>(SIGN_UP);
 export const useSignIn = generateMutationHook<signIn,signInVariables>(SIGN_IN,{...getRefetch(ME)});
-export const useSignOut = (options?:MutationHookOptions<signOut>) => useMutation<signOut>(SIGN_OUT,options)
+ export const useSignOut =generateMutationHook<signOut>(SIGN_OUT,{...getRefetch(ME)})
 
 export const useBusiEmailFind = generateQueryHook<businessUserFindEmail,businessUserFindEmail_BusinessUserFindEmail>(BUSINESS_USER_FIND_EMAIL);
 export const useCustomerEmailFind = generateMutationHook<customerFindEmail,customerFindEmail_CustomerFindEmail>(CUSTOMER_USER_FIND_EMAIL);

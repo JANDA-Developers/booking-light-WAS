@@ -1,0 +1,20 @@
+
+
+:root {
+    --primary-color: black;
+    --primary-color-light: #637796;
+    --primary-color-dark: #162743;
+    --primary-color-on: #fff;
+  }
+
+
+$primary-color : black;
+$primary-color-dark : darken(#129a98, 10);
+$primary-color-light : lighten(#129a98, 5);
+$point-color: #ff6760;
+
+
+
+.header__inputComponent {
+    background-color: white;
+}

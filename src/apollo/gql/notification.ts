@@ -91,9 +91,11 @@ ${F_NOTIFICATION_TEMPLATE}
 export const SMS_SEND_SINGLE = gql`
     mutation smsSendSingle(
         $input: SmsSendInput!
+        $method: NotificationMethod!
     ) {
         SmsSendSingle(
             input:$input
+            method:$method
         ) {
             ok
             error {

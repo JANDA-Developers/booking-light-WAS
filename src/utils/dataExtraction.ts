@@ -1,6 +1,5 @@
 import {  isEmpty } from "@janda-com/front";
 import { FoffsetPagingInfo } from "../type/api";
-import { IPageInfo } from "../type/interface";
 import { DEFAULT_PAGE_INFO } from "../type/const";
 
 function extractDoc<T, K extends keyof T, C extends keyof T[K], D>(

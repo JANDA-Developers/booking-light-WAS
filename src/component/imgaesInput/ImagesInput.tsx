@@ -1,5 +1,4 @@
-import { JDphotoFrame } from '@janda-com/front';
-import { JDicon } from '@janda-com/front/dist/components/icons/Icons';
+import { JDphotoFrame, JDicon } from '@janda-com/front';
 import React, { useRef } from 'react';
 import { TUseMultiUpload } from '../../hook/useUpload';
 

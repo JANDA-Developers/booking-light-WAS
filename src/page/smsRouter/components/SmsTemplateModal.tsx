@@ -128,7 +128,7 @@ export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
             <ModalBtn mr onClick={handleUpdate} hide={isCreate} thema="primary">수정하기</ModalBtn>
             <ModalBtn onClick={handleCreate} hide={!isCreate} thema="primary">생성하기</ModalBtn>
         </div>
-    } {...modalHook} head={{ title: "SMS 템플릿" }} >
+    } {...modalHook} head={{ title: "알림 템플릿" }} >
         <Grid>
             <Col full={6} lg={12}>
                 <InputText mb {...titleHook} label={"템플릿 타이틀"} />
@@ -140,7 +140,7 @@ export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
             </Col>
             <Col full={6} lg={12}>
                 <JDlabel txt="미리보기" />
-                {isSms ? <InputText textarea {...contentHook} />
+                {isSms ? <InputText className="smsTemplateModal__preview" textarea {...contentHook} />
                     : <JDEditor model={contentHook.value} setModel={(value) => {
                         contentHook.onChange(value);
                     }} />}

@@ -9,7 +9,7 @@ import { Ratio } from '../../../type/const';
 import { yyyymmddHHmm, yyyymmddHHmmLabel } from '../../../utils/dateFormat';
 
 interface IProp extends IJDcardProps {
-    item: Fitem | itemList_ItemList_items_ItemBooking | itemFindById_ItemFindById;
+    item: itemList_ItemList_items_ItemBooking;
     onDelete?: () => void;
     onEdit?: () => void;
 }
@@ -38,9 +38,10 @@ export const ItemCard: React.FC<IProp> = ({
                 </div>
                 <Vertical margin={3} />
                 <div>
-                    <Info mb label="기본가격" value={autoComma(item.price)} />
-                    <Info mb label="타입" value={item.type} />
-                    <Info mb label="생성일" value={yyyymmddHHmm(item.createdAt)} />
+                    <Info mb="small" label="기본가격" value={autoComma(item.price)} />
+                    <Info mb="small" label="타입" value={item.type} />
+                    <Info mb="small" label="생성일" value={yyyymmddHHmm(item.createdAt)} />
+                    <Info label="카테고리" value={item.categoryName || ""} />
                 </div>
             </Flex>
         </div>

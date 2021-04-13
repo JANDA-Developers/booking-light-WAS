@@ -113,9 +113,10 @@ export const JDEditor: React.FC<IEditorProps> = ({
                 // Set max image size to 5MB.
                 imageMaxSize: 5 * 1024 * 1024,
                 // Allow to upload PNG and JPG.
-                imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+                imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif'],
                 imageAltButtons: ['imageBack'],
                 language: 'ko',
+                toolbarSticky: false,
                 toolbarButtons: {
                     // Key represents the more button from the toolbar.
                     moreText: {

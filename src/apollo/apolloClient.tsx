@@ -21,7 +21,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     });
     const msg = graphQLErrors[0].message
     const errorMsg = process.env.NODE_ENV === "development" ? msg : "알수 없는 문제가 발생했습니다. 문의 부탁드립니다."
-    toast.warn(errorMsg);
+    toast.warn(errorMsg, { toastId: "UnkownErrorToast" });
   } else if (networkError) {
     toast.warn("서버가 응답하지 않습니다.", { toastId: "ServerIsNotRespond" });
   }
@@ -31,10 +31,12 @@ const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const storeId = localStorage.getItem("storeId") || "";
   // return the headers to the context so httpLink can read them
+  const serviceProvider = localStorage.getItem("serviceProvider");
 
   return {
     headers: {
       ...headers,
+      serviceProvider,
       storeId,
     }
   }

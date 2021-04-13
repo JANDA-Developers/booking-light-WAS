@@ -1,17 +1,18 @@
 import React, { useContext } from 'react'
-import { Flex, JDalign, JDicon, JDselect, opFind } from '@janda-com/front';
-import { IIcons } from '@janda-com/front/dist/components/icons/declation';
-import { TElements } from '@janda-com/front/dist/types/interface';
+import { Flex, JDalign, JDselect, opFind } from '@janda-com/front';
 import AppContext from '../../context';
-import { ProductBookingCreateInput } from '../../type/api';
+import { SuperAppContext } from '../../superAdmin/helper/superContext';
+import { JDicon } from '../icons/Icons';
 
 interface IProps {
-    onMenuClick: () => void;
+    sideOpen?: boolean;
+    onMenuClick?: () => void;
 }
 
-const Header: React.FC<IProps> = ({ children, onMenuClick }) => {
+const Header: React.FC<IProps> = ({ children, onMenuClick, sideOpen }) => {
     const context = useContext(AppContext);
-    const { storeOptions, selectedStore, updateContext, stores } = context
+    const { superMe } = useContext(SuperAppContext);
+    const { storeOptions, selectedStore, updateContext, stores, selectStore } = context
 
     return (
         <header className="header">
@@ -20,13 +21,12 @@ const Header: React.FC<IProps> = ({ children, onMenuClick }) => {
                 between: true
             }} className="header__items">
                 <Flex vCenter>
-                    <JDicon mr="huge" size="small" hover onClick={onMenuClick} color="white" icon="menu" />
-                    <JDselect selectedOption={opFind(selectedStore?._id, storeOptions)} className="header__storeSelect" autoSize
+                    <JDicon mr="huge" size="small" hover onClick={onMenuClick} color="white" icon={sideOpen ? "menu" : "verticalDots"} />
+                    <JDselect hide={!!superMe}
+                        selectedOption={opFind(selectedStore?._id, storeOptions)}
+                        className="header__storeSelect" autoSize
                         onChange={(op) => {
-                            const target = stores.find(sto => sto._id === op.value);
-                            context.selectedStore = target;
-                            console.log({ context });
-                            updateContext({ ...context })
+                            selectStore(op.value);
                         }} options={storeOptions}>
                     </JDselect>
                 </Flex>

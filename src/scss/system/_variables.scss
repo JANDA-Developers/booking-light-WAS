@@ -6,10 +6,13 @@
     --primary-color-on: #fff;
   }
 
-$button-height: $standard-line-height+0.125rem !default;
-$primary-color : #129a98;
+$standard-line-height: 2.325rem;
+$button-height: $standard-line-height;
+$input-height: $standard-line-height;
+$primary-color : #129a98 !default;
 $primary-color-dark : darken(#129a98, 10);
 $primary-color-light : lighten(#129a98, 5);
+
 $point-color: #ff6760;
 
 $sidebar-width: 17.625rem;

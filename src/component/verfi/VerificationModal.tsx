@@ -32,7 +32,6 @@ const VerificationModal: React.FC<IProps> = ({
   target = modalHook.info?.target
 }) => {
   const _target = modalHook.info?.target || target;
-  console.log({ _target });
   const isPhone = _target === VerificationTarget.PHONE;
   const [isTimeOver, setTimeOver] = useState(false);
 

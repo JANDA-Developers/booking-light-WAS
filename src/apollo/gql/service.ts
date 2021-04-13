@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
-import { F_USERERROR } from "./fragment/fragments";
+import {  F_USERERROR } from "./fragment/fragments";
+import { F_SERVICE_PLAN_TEMPLATE } from "./fragment/service";
 
 export const SERVICE_PLAN_DE_SUBSCRIBE = gql`
 mutation servicePlanDesubscribe(
@@ -85,7 +86,7 @@ ${F_USERERROR}
 `
 
 export const SERVICE_PLAN_TEMPLATE_LIST = gql`
-mutation servicePlanTemplateList(
+query servicePlanTemplateList(
     $serviceProviderName: String!
 ) {
     ServicePlanTemplateList(
@@ -94,5 +95,5 @@ mutation servicePlanTemplateList(
         ...FservicePlanTemplate
     }
 }
-${F_USERERROR}
+${F_SERVICE_PLAN_TEMPLATE}
 `

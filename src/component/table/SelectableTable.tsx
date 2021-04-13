@@ -56,7 +56,7 @@ const s4 = () => {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 };
 
-const JDSelectableJDtable: React.FC<IJDTableProps &
+const JDSelectable: React.FC<IJDTableProps &
   SelectTableAdditionalProps &
   IUseCheckBoxTable> = prop => {
     const { selectAll, onToogleAllRow, onToogleRow } = prop;
@@ -86,5 +86,6 @@ const JDSelectableJDtable: React.FC<IJDTableProps &
     );
   };
 
-export { JDSelectableJDtable };
-export default JDSelectableJDtable;
+
+export { JDSelectable };
+export default JDSelectable;

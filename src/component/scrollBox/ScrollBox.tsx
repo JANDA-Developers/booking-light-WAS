@@ -8,12 +8,14 @@ export interface IScrollBoxProps extends IUl, JDatomExtentionSet {
     height?: number,
     maxHeight?: number,
     components?: "ul"
+    direction?: "horizen" | "vertical"
 }
 
-export const ScrollBox: React.FC<IScrollBoxProps> = ({ children, components, height, maxHeight, className, scrollSize, ...props }) => {
+export const ScrollBox: React.FC<IScrollBoxProps> = ({ children, direction, components, height, maxHeight, className, scrollSize, ...props }) => {
 
     const classes = classNames('JDscrollBox', className, {
         'JDscrollBox--small': scrollSize === "small",
+        'JDscrollBox--horizien': direction === "horizen",
         ...JDatomClasses(props)
     });
 

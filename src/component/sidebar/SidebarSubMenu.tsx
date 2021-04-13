@@ -6,12 +6,14 @@ import { Paths } from '../../MainRouter';
 import { AuthPaths } from '../../AuthRouter';
 import classNames from "classnames";
 import AppContext from '../../context';
+import { StoreType } from '../../type/api';
 
 export type TSidebarSub = {
     icon: IIcons,
     title: string,
     exact?: boolean,
     path: string,
+    excludeStoreType?: StoreType[],
     keywards: string[],
     description: string,
     disabled: boolean,
@@ -27,7 +29,7 @@ interface IProps {
 
 const SidebarSubMenu: React.FC<IProps> = ({ menu, onMenuClick }) => {
     const history = useHistory()
-    const { contextQueryLoading } = useContext(AppContext);
+    const { contextQueryLoading, type } = useContext(AppContext);
     const { pathname } = useLocation()
     const { disabled, icon, path, redirect, title, exact, disabledTooltip } = menu;
 
@@ -58,9 +60,13 @@ const SidebarSubMenu: React.FC<IProps> = ({ menu, onMenuClick }) => {
     }, [location.href])
 
 
+    const shouldExclude = !type ? false : menu.excludeStoreType?.includes(type);
+
+    if (shouldExclude) return null;
+
     return (
         <li data-effect="solid" data-place="top" data-for="mainTooltip" data-tip={disabled ? disabledTooltip : undefined} onClick={handleClick} className={classes} >
-            <JDicon mr="small" icon={icon} />
+            {/* <JDicon mr="small" icon={icon} /> */}
             <Bold size="small">{title}</Bold>
         </li>
     )

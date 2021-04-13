@@ -1,5 +1,4 @@
 import { Flex, IJDalignProp, JDbox, Split } from '@janda-com/front';
-import { JDicon } from '@janda-com/front/dist/components/icons/Icons';
 import { TElements } from '@janda-com/front/dist/types/interface';
 import dayjs from "dayjs";
 import React from 'react';

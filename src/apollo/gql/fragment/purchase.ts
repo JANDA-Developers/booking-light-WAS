@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { F_PRODUCT } from "./product";
-import { F_COLLECTION_DATA_INTERFACE } from "./shared";
+import { F_ATTRIBUTE, F_COLLECTION_DATA_INTERFACE, F_DELIVERY_INFO } from "./shared";
 
 export const F_BOOKING = gql`
 fragment Fbooking on Booking  {
@@ -25,9 +25,6 @@ fragment Fbooking on Booking  {
   itemName
   purchaserName
   purchaserContact 
-  purchasedProduct {
-    ...Fproduct
-  }
   countDetails {
       key
       count
@@ -35,9 +32,9 @@ fragment Fbooking on Booking  {
       price
     }
   }
-${F_PRODUCT}
 ${F_COLLECTION_DATA_INTERFACE}
 `
+
 export const F_PURCHASE = gql`
 fragment Fpurchase on IPurchase  {
   ...FcollectionDataInterface
@@ -96,6 +93,14 @@ export const F_PURCHASE_BUNDLE = gql`
     purchaserContact
     useNicepay
     paymentTimeExpired
+    attrs {
+      ...Fattribute
+    }
+    devlieryInfo {
+      ...FdeliveryInfo
+    }
   }
+  ${F_ATTRIBUTE}
+  ${F_DELIVERY_INFO}
   ${F_COLLECTION_DATA_INTERFACE}
 `

@@ -47,7 +47,7 @@ export const NotiHistory: React.FC<IProp> = () => {
                 {groupItems.map((group, index) => <div key={index + "notiGroup"}>
                     <Flex mb vCenter >
                         <JDicon mr icon="addCircle" />
-                        <Bold>{group.date} </Bold>
+                        <Bold>{group.date}</Bold>
                     </Flex>
                     {group.items.map((item, i) =>
                         <JDcard key={item._id} mb>

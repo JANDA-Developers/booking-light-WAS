@@ -56,6 +56,6 @@ export const PurchaseTable: React.FC<IProp> = ({ purchases, ...props }) => {
         }
     ];
 
-    return <JDtable columns={columns} data={purchases} {...props} />;
+    return <JDtable defaultPageSize={20} columns={columns} data={purchases} {...props} />;
 };
 

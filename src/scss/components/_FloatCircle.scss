@@ -1,0 +1,51 @@
+.floatCircle {
+    bottom: space(4);
+    right: space(4);
+    width: space(10);
+    height: space(10);
+    border-radius: 50%;
+    z-index: $z-index-9;
+    background-color: white;
+    @include shadow(3);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        @include shadow(4);
+        cursor: pointer;
+    }
+
+    &--inlineOffset {
+        left:unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+    }
+}
+
+
+.shoppingCircle {
+    .JDbadge {
+        // animation: shake 0.82s infinite;
+    }
+}
+
+//   @keyframes shake {
+//     10%, 90% {
+//       transform: translate3d(-1px, 0, 0);
+//     }
+    
+//     20%, 80% {
+//       transform: translate3d(2px, 0, 0);
+//     }
+  
+//     30%, 50%, 70% {
+//       transform: translate3d(-4px, 0, 0);
+//     }
+  
+//     40%, 60% {
+//       transform: translate3d(4px, 0, 0);
+//     }
+// }

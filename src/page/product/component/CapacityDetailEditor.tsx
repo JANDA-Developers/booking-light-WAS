@@ -57,7 +57,8 @@ export const CapacityDetailEditor: React.FC<IProp> = ({ defaultPrice, defaultLab
         <CardBtn br="square" thema="grey4" onClick={handleAdd}>추가항목 만들기</CardBtn>
     }  >
         <>
-            {usageDetails.map((detail, index) => <JDcard head={<Flex between><Small>{index ? "추가항목" : "대표항목"}</Small> {index !== 0 && <JDicon size="superTiny" onClick={handleDelete(detail.key)} hover icon="close" />} </Flex>} className="capacityDetailEditor__detailBox" mb mode="border" key={detail.key}>
+            {usageDetails.map(
+                (detail, index) => <JDcard head={<Flex between><Small>{index ? "추가항목" : "대표항목"}</Small> {index !== 0 && <JDicon size="superTiny" onClick={handleDelete(detail.key)} hover icon="close" />} </Flex>} className="capacityDetailEditor__detailBox" mb mode="border" key={detail.key}>
                 {/* {index !== 0 && <JDhorizen margin={3} />} */}
                 <InputText id={CpadityDetailId("name", index)} mb label={`품명`} onChange={handleChange(detail, "label")} value={detail.label} />
                 <InputText id={CpadityDetailId("price", index)} mb comma onChange={handleChange(detail, "price")} value={detail.price} label="가격" />

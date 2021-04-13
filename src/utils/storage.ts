@@ -1,6 +1,7 @@
-import { LocalManager, s4 } from "@janda-com/front";
+import {  s4 } from "@janda-com/front";
 import { Fitem, PurchaseBundleCreateInput } from "../type/api";
 import dayjs from "dayjs";
+import LocalManager from "./localManager";
 
 export const storage = new LocalManager<"lastStore">({
     storage: "localStorage"
@@ -32,7 +33,7 @@ export class LocalItemStorage<Item extends Partial<IBaseItem>> {
     }
     
     getItems() {
-        return Storage?.getLocalObj<Item[]>(this.key, []) || [];
+        return storage?.getLocalObj<Item[]>(this.key as any, []) || [];
     }
 
     deleteExpireItem() {
@@ -40,7 +41,7 @@ export class LocalItemStorage<Item extends Partial<IBaseItem>> {
         this.saveItems(bracket || []);
     }
 
-    removeItems() {
+    removeBasket() {
         return localStorage.removeItem(this.key);
     }
 
@@ -60,6 +61,12 @@ export class LocalItemStorage<Item extends Partial<IBaseItem>> {
         }
 
         this.saveItems(items);
+    }
+
+    removeItems(_ids: string[]) {
+        _ids.forEach(_id => { 
+            this.removeItem(_id)
+        })
     }
 
     removeItem(_id: string) {
@@ -101,14 +108,14 @@ export class LocalItemStorage<Item extends Partial<IBaseItem>> {
 
     saveItems(items: Item[]) {
         items.forEach(p => { p.version = this.version });
-        Storage?.saveLocal(this.key, items)
+        storage.saveLocal(this.key as any, items)
     }
 
 
     bracketVergionChange = () => {
         const items = this.getItems();
         if (items && items.find(prod => prod.version !== this.version)) {
-            this.removeItems();
+            this.removeBasket();
         }
     }
 

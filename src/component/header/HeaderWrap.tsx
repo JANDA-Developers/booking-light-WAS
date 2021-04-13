@@ -10,7 +10,6 @@ import Noti from '../notification/Noti';
 import ProfileModal, { Tservice } from '../profile/ProfileModal';
 import Header from './Header';
 import { version } from "../../../package.json"
-import { usePurchaseBusinessBundleList } from '../../hook/usePurchase';
 import { getMenuData } from '../sidebar/Sidebar';
 
 interface IProp {
@@ -20,7 +19,6 @@ interface IProp {
 }
 
 export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
-    const uploader = useFilesManager();
     const history = useHistory();
     const dropDownHook = useDropDown();
     const context = useContext(AppContext);
@@ -65,7 +63,7 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
             icon: "menu",
             title: "마이페이지",
             onClick: () => {
-                toast("준비중입니다.")
+                history.push(Paths.profile)
             }
         },
         {
@@ -78,7 +76,7 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
         }
     ]
 
-    return <Header onMenuClick={() => {
+    return <Header sideOpen={sideOpen} onMenuClick={() => {
         setSide(!sideOpen)
     }}>
         <JDalign style={{
@@ -92,8 +90,10 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
                 SearchComponent={(prop) => <div>
                     <JDiconSearchInput {...prop} />
                 </div>}
-                onSelectData={() => {
-                    console.log("");
+                onSelectData={(data) => {
+                    if (data.tag === "Menu") {
+                        history.push(data.id);
+                    }
                 }}
                 onSearchChange={v => {
                     setSearch(v);
@@ -113,14 +113,19 @@ export const HeaderWrap: React.FC<IProp> = ({ setSide, sideOpen }) => {
                     }}
                     notiIds={me?.unReadSystemNoties} />
             </JDalign>
-            <JDavatar hover size="small" onClick={(e) => {
-                e.stopPropagation();
-                const cooldinate = {
-                    top: '2.5rem',
-                    right: 0
-                }
-                dropDownHook.open(undefined, cooldinate)
-            }} uploader={uploader} />
+            <JDavatar
+                className="header__avatar"
+                img={me?.profileImage?.uri}
+                hover
+                size="normal"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    const cooldinate = {
+                        top: '2.5rem',
+                        right: 0
+                    }
+                    dropDownHook.open(undefined, cooldinate)
+                }} />
             <ProfileModal dropBoxHook={dropDownHook} userInfo={{
                 image: me?.profileImage?.uri || "",
                 name: me?.name || "",

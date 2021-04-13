@@ -26,6 +26,6 @@ export const SettlementSummaryCard: React.FC<IProp> = () => {
 
     const Nodes = items.map(item => ([<span className="summaryCard__cell" onClick={handleTitelClick(item._id)}>{item.message}</span>, <span className="summaryCard__cell">{yyyymmdd(item.createdAt)}</span>, <Clip className="summaryCard__cell">{item.sequence}</Clip>]));
 
-    return <SummaryCard mb className="summaryCard" head={<Flex between ><span>아이템 현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
+    return <SummaryCard contentsId="SettlementSummaryCard" mb className="summaryCard" head={<Flex between ><span>아이템 현황</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
 
 };

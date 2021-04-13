@@ -1,12 +1,12 @@
 import { IUseModal, JDbutton, JDmodal } from '@janda-com/front';
 import React from 'react';
-import { Fitem, Fproduct, itemFindById_ItemFindById } from '../../../type/api';
+import { Fitem, itemFindById_ItemFindById_ItemBooking, FproductBooking } from '../../../type/api';
 import { ProductCreater } from './ProductCreater';
 
 export interface IProductModalInfo {
     itemId: string;
     item?: Fitem
-    product?: Fproduct
+    product?: FproductBooking
 }
 
 interface IProp {
@@ -25,6 +25,6 @@ export const ProductCreateModal: React.FC<IProp> = ({ modalHook }) => {
             <JDbutton hide={isCreateMode} onClick={handleItemUpdate} label="업데이트" /> */}
         </div>
     } head={{ title: "상품 정보" }} {...modalHook} >
-        <ProductCreater item={item as itemFindById_ItemFindById} head="상품수정하기" mode="border" product={product} itemId={itemId} />
+        <ProductCreater item={item as itemFindById_ItemFindById_ItemBooking} head="상품수정하기" mode="border" product={product} itemId={itemId} />
     </JDmodal>;
 };

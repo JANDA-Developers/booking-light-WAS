@@ -56,3 +56,19 @@ export const SYSTEMNOTI_HIDE = gql`
 }
 ${F_USERERROR}
 `
+
+export const SYSTEMNOTI_CREATE = gql`
+  mutation SystemNotiCreate(
+    $message: String!
+  ) {
+    SystemNotiCreate(
+      message: $message
+    ) {
+    ok
+    error {
+        ...FuserError
+    }
+  }
+}
+${F_USERERROR}
+`

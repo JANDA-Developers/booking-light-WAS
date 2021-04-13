@@ -1,0 +1,48 @@
+$card-padding: $standard-space;
+.creaditCard {
+  padding: $card-padding;
+  text-align: left;
+  border-radius: $br1;
+  height: 130px;
+  width: 240px;
+  box-sizing: border-box;
+  color: white;
+  position: relative;
+
+  &--unExsist {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: $grey-level1;
+    color: $html-color;
+    pointer-events: none;
+  }
+
+  &--selected {
+    @include shadow(2);
+    bottom: 0.4rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.15);
+  }
+
+  &__badgeWrap {
+    position: absolute;
+    right: $card-padding;
+    top: -0.5rem;
+  }
+
+  &__label {
+  }
+
+  &__logoWrap {
+    display: flex;
+    margin-bottom: $standard-margin-bottom;
+  }
+
+  &__logo {
+  }
+}

@@ -32,7 +32,7 @@ export const capitalize = (s:string) => {
   }
 
 
-interface genrateOption<Q,V> extends QueryHookOptions<Q,V> {
+export interface genrateOption<Q,V> extends QueryHookOptions<Q,V> {
     queryName?: string;
     skipInit?: boolean;
     overrideVariables?: Partial<V>
@@ -63,19 +63,22 @@ export const generateListQueryHook = <F,S,Q,V,R>(
 ) => {
     const listQueryHook = (
         {
-            initialPageIndex = 0,
-            initialSort = [],
-            initialFilter = {} as F,
-            initialViewCount = 20,
+            initialPageIndex = queryInit.initialPageIndex ||  0,
+            initialSort = queryInit.initialSort || [],
+            initialFilter = queryInit.initialFilter || {} as F,
+            initialViewCount = queryInit.initialViewCount || 20,
+            fixingFilter
         }: Partial<ListInitOptions<F, S>> = {...queryInit},
         options: genrateOption<Q, V> = {...defaultOptions}
     )=> {
-        const { variables, overrideVariables, ...ops } = options;
+        let _option = {...defaultOptions, ...options}
+        const { variables, overrideVariables, ...ops } = _option;
         const { integratedVariable,...params } = useListQuery({
             initialFilter,
             initialPageIndex,
             initialSort,
-            initialViewCount
+            initialViewCount,
+            fixingFilter
         })
         
         const [getData, { data, loading: getLoading,...queryElse }] = useLazyQuery<Q,V>(QUERY,{
@@ -117,6 +120,8 @@ export const generateListQueryHook = <F,S,Q,V,R>(
             params.paginatorHook.pageCount,
             params.filter
         ])
+
+    
 
         return {getData, pageInfo,  getLoading, items, ...params,...queryElse }
     }
@@ -163,7 +168,7 @@ interface GenerateMutationHookMu<M,V> extends MutationHookOptions<M,V> {
     skipLoadingEffect?: boolean;
 }
 
-export const generateMutationHook = <M,V>(MUTATION:DocumentNode,{ skipLoadingEffect, ...defaultOptions}: GenerateMutationHookMu<M,V> = {}) => {
+export const generateMutationHook = <M, V = any>(MUTATION:DocumentNode,{ skipLoadingEffect, ...defaultOptions}: GenerateMutationHookMu<M,V> = {}) => {
     const mutationHook = (options?: MutationHookOptions<M,V>) => {
         const muhook = useMutation<M, V>(MUTATION, {
             awaitRefetchQueries: true,
@@ -172,8 +177,7 @@ export const generateMutationHook = <M,V>(MUTATION:DocumentNode,{ skipLoadingEff
         });
 
         if(!skipLoadingEffect)
-        pageLoadingEffect(muhook[1].loading)
-        
+            pageLoadingEffect(muhook[1].loading)
 
         return muhook
     }
@@ -183,7 +187,7 @@ export const generateMutationHook = <M,V>(MUTATION:DocumentNode,{ skipLoadingEff
 
 export const generateFindQuery = <Q,V,ResultFragment>(findBy: keyof V, QUERY:DocumentNode) => {
     const findQueryHook = (key?:any, options:QueryHookOptions<Q, V> = {}) => {
-        const [getData, { data, loading, error:apolloError }] = useLazyQuery<Q, V>(QUERY, {
+        const [getData, { data, loading, error:apolloError, ...context }] = useLazyQuery<Q, V>(QUERY, {
             skip: !key,
             nextFetchPolicy: "network-only",
             // @ts-ignore
@@ -211,7 +215,7 @@ export const generateFindQuery = <Q,V,ResultFragment>(findBy: keyof V, QUERY:Doc
 
         const error = apolloError || errorFromServer 
 
-        return {item, loading, error}
+        return {item, loading, error,...context}
     }
 
     return findQueryHook

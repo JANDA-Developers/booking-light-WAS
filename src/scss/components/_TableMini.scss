@@ -1,0 +1,27 @@
+.JDselectTable--mini {
+    .JDtable  {
+        .rt-tbody {
+            border: none;
+        }   
+        .rt-tbody .rt-td {
+            border: none;
+        }
+        .rt-thead {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            margin: 0px;
+            .rt-th {
+                padding-top: 0px;
+                padding-bottom: space(2);
+            
+                & > div {
+                    border: none;
+                }
+            }
+        }
+        .rt-noData {
+            display: none;
+        }
+    }
+}

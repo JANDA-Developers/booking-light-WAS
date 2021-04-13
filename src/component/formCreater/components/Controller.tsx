@@ -29,7 +29,7 @@ export const Controller: React.FC<IProp> = ({ onSubmit, attribute }) => {
     const nextData: Fattribute = {
         __typename: "Attribute",
         displayType,
-        key: s4(),
+        key: attribute?.key || s4(),
         label: labelHook.value,
         options: optionsHook.tags,
         placeHolder: placeHolderHook.value,
@@ -43,6 +43,10 @@ export const Controller: React.FC<IProp> = ({ onSubmit, attribute }) => {
         value: labelHook.value,
         id: "LabelInput",
         failMsg: "라벨값은 필수 입니다."
+    }, {
+        value: !isDropBox || optionsHook.tags.length > 0,
+        id: "tagInput",
+        failMsg: "선택 옵션을 넣어주세요."
     }])
 
     const handleSubmitData = () => {
@@ -62,7 +66,7 @@ export const Controller: React.FC<IProp> = ({ onSubmit, attribute }) => {
             {holderAB && <InputText mb id="LabelInput" {...placeHolderHook} label="플레이스 홀더" />}
             {isDropBox && <div>
                 <JDlabel txt="선택항목 입력" />
-                <JDtagInput className="controller__dropboxInput" mb {...optionsHook} />
+                <JDtagInput id="tagInput" className="controller__dropboxInput" mb {...optionsHook} />
             </div>
             }
             <JDcheckBox size="small" {...requireHook} label="필수" />

@@ -1,9 +1,9 @@
 import { arraySum } from "@janda-com/front";
 import { useState } from "react"
-import { BookingInput, CapacityInput, Fproduct } from "../type/api"
+import { BookingInput, CapacityInput, Fproduct, FproductBooking, productList_ProductList_items_ProductBooking, productList_ProductList_items_ProductBooking_capacityDetails, productList_ProductList_items_ProductBooking_usageDetails } from "../type/api"
 
 export interface IBookingInputData extends BookingInput {
-    productOrigin: Partial<Fproduct>
+    productOrigin: Partial<FproductBooking>
 }
 
 export interface IUseBookingsInput extends ReturnType<typeof useBookingsInput> {} 
@@ -21,8 +21,9 @@ export const useBookingsInput = (defaultProps: IBookingInputData[]) => {
     const cdPrices = (cd:CapacityInput[]):number => {
         return arraySum(cd.map(cd => cd.price)) || 0;
     }
-    
 
+    const priceSum = arraySum(bookingInputs.map(input => input.priceOrigin || 0));
+    
     const findBookingInput = (pid:string) => {
         return bookingInputs.find(bi => bi.productId === pid);
     }
@@ -86,5 +87,20 @@ export const useBookingsInput = (defaultProps: IBookingInputData[]) => {
         setBookingInputs([...recalculatedGet(bookingInputs)]);
     }
 
-    return {bookingInputs, setBookingInputs, capacityChange,addCpacity,addProduct, removeCapacity,removeProduct, findCpacity,findBookingInput}
+
+    // 없으면 추가 있으면 캐파시티 변경
+    const capacityChangeMaster = (product:productList_ProductList_items_ProductBooking, cd: productList_ProductList_items_ProductBooking_usageDetails | productList_ProductList_items_ProductBooking_capacityDetails, num:number) => {
+        const isIncluded = findBookingInput(product._id);
+        const update: CapacityInput = { count: num, key: cd.key, label: cd.label, price: (cd.price * num) };
+        if (isIncluded) {
+            capacityChange(product._id, update);
+        } else {
+            addProduct({ productOrigin: product, itemId: product._itemId, productId: product._id, countDetails: [update] })
+        }
+    }
+
+
+    
+
+    return { priceSum, bookingInputs, setBookingInputs, capacityChange,addCpacity,addProduct, removeCapacity,removeProduct, findCpacity,findBookingInput, capacityChangeMaster}
 }

@@ -25,5 +25,5 @@ export const SenderSummaryCard: React.FC<IProp> = () => {
 
     const Nodes = manager.senders.map(item => ([<span className="summaryCard__cell" >{item.sender}</span>, <span className="summaryCard__cell">{notificationMethodKr(item.type)}</span>, <span className="summaryCard__cell">{isRegisteredToAligoKr(item.isRegisteredToAligo)}</span>]));
 
-    return <SummaryCard mb className="summaryCard" head={<Flex between ><span>등록 발신자</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
+    return <SummaryCard contentsId="SenderSummaryCard" mb className="summaryCard" head={<Flex between ><span>등록 발신자</span> <CardHeadButton onClick={handleViewMore} label="자세히보기" /></Flex>} mr contents={Nodes} />;
 };

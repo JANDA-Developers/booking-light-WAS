@@ -1,0 +1,5 @@
+.promptModal {
+    @include response($tablet) {
+        min-width: 22rem;
+    }
+}

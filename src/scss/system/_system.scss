@@ -11,26 +11,34 @@ body,
 
 html {
     @include response($full, desktophd) {
-        font-size: 1.1rem; //이것이 모든 타이포에 영향을줌
+        font-size: 1.1rem; 
     }
 
-    font-size: 1rem; //이것이 모든 타이포에 영향을줌
+    font-size: 1rem; 
 
     @include response($tablet) {
-        font-size: .9rem; //이것이 모든 타이포에 영향을줌
+        font-size: .9rem; 
     }
 
     @include response($mobile) {
-        font-size: 0.8rem; //이것이 모든 타이포에 영향을줌
+        font-size: 0.75rem; 
     }
 
     @include response($smobile) {
-        font-size: 0.75rem; //이것이 모든 타이포에 영향을줌
+        font-size: 0.7rem; 
     }
 }
 
 .layout  {
     &__contents {
         overflow: hidden;
+    }
+}
+
+
+
+.container {
+    @include response($tablet) {
+        padding: space(2); 
     }
 }

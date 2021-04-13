@@ -1,6 +1,7 @@
 import { JDselectCounter, opFind, selectOpCreater } from '@janda-com/front';
-import React from 'react';
+import React, { useContext } from 'react';
 import { COUNT } from '../../../../type/const';
+import { BuypageContext } from '../buypageList/helper/context';
 
 interface IProp {
     maxCount: number;
@@ -9,8 +10,12 @@ interface IProp {
 }
 
 export const ProductSelecter: React.FC<IProp> = ({ maxCount, count, onChange }) => {
+    const { configure: { RESERVATION_NORMAL } } = useContext(BuypageContext)
+    const unit = RESERVATION_NORMAL.texts.countUnit;
+    const maxPickConfigure = RESERVATION_NORMAL.maxSelectableCount;
     if (maxCount < 0) return null
-    const Count = selectOpCreater({ count: maxCount + 1, labelAdd: "개", start: 0 });
+    const countLimit = maxPickConfigure > maxCount ? maxCount : maxPickConfigure;
+    const Count = selectOpCreater({ count: countLimit + 1, labelAdd: unit.kr, start: 0 });
     return <JDselectCounter selectHook={{
         selectedOption: opFind(count || 0 as any, Count),
         options: Count,

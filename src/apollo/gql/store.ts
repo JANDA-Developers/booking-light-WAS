@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
-import {  F_FILE, F_ITEM, F_PAGEINFO, F_STORE, F_USER, F_USERERROR } from "./fragment/fragments";
-import { F_PURCHASE_BUNDLE } from "./fragment/purchase";
+import {  F_CATEGORY, F_FILE, F_ITEM, F_PAGEINFO, F_STORE, F_USER, F_USERERROR } from "./fragment/fragments";
 
 export const STORE_USER_PROFILE = gql`
   query storeCustomerProfile {
@@ -96,11 +95,15 @@ export const STORE_FIND_BY_CODE = gql`
         code: $code 
     ) {
         ...Fstore
+        itemCategories {
+            ...Fcategory
+        }
         items {
             ...Fitem
         }
     }
 }
+${F_CATEGORY}
 ${F_ITEM}
 ${F_STORE}
 `
@@ -116,28 +119,5 @@ export const STORE_FIND_BY_ID = gql`
         ...Fstore
     }
 }
-${F_STORE}
-`
-
-export const PURCHASE_BUNDLE_REFUND = gql`
-    mutation purchaseBundleRefund (
-        $amount: Float!
-        $purchaseBundleId: ObjectId!
-    ) {
-    PurchaseBundleRefund(
-        amount: $amount
-        purchaseBundleId: $purchaseBundleId
-    ) {
-        ok
-        error {
-            ...FuserError
-        }
-        data {
-            ...Fpurchasebundle
-        }
-    }
-}
-${F_PURCHASE_BUNDLE}
-${F_USERERROR}
 ${F_STORE}
 `

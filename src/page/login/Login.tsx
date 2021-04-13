@@ -93,8 +93,6 @@ const LoginPage = () => {
                 history.push(AuthPaths.signUp)
             }}
         />
-        <VerificationModal {...verificationHook} target={VerificationTarget.EMAIL
-        } modalHook={verifiModalHook} />
         <PasswordResetModal
             requireField={passwordFind ? {
                 email: true,
@@ -114,6 +112,7 @@ const LoginPage = () => {
             }}
             modalHook={authManagerHook}
         />
+        <VerificationModal {...verificationHook} target={VerificationTarget.PHONE} modalHook={verifiModalHook} />
     </JDcontainer>;
 }
 

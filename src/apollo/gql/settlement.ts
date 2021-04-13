@@ -176,3 +176,28 @@ export const SETTLEMENT_TRANSFTER_LIST = gql`
 ${F_PAGEINFO}
 ${F_SETTLEMENT}
 `
+
+
+
+export const SETTLEMENT_MALL_LIST = gql`
+    query settlementMallList(
+        $sort: [_SettlementMallSort!]
+        $filter: _SettlementMallFilter
+        $pagingInput: OffsetPagingInput!
+    ) {
+    SettlementMallList(
+        sort: $sort
+        filter: $filter
+        pagingInput: $pagingInput
+    ) {
+        pageInfo {
+            ...FoffsetPagingInfo
+        }
+        items {
+            ...FsettlementMall
+        }
+    }
+}
+${F_PAGEINFO}
+${F_SETTLEMENT_MALL}
+`

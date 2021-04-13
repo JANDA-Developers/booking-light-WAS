@@ -5,11 +5,22 @@ import React from 'react';
 interface IProp extends IJDalignProp {
     label: TElements;
     value?: TElements;
+    center?: boolean;
+    vCenter?: boolean;
+    between?: boolean;
+    around?: boolean;
+    wrap?: boolean;
+    vEnd?: boolean;
+    column?: boolean;
+    oneone?: boolean;
+    grow?: boolean;
+    alignEnd?: boolean;
+    end?: boolean;
 }
 
 export const Info: React.FC<IProp> = ({ children, label, value, ...props }) => {
-    return <Flex vCenter {...props}>
-        <JDtypho color="grey3" mr="small">{label}</JDtypho>
+    return <Flex typho={{ color: "grey3" }} vCenter {...props}>
+        <JDtypho color="black" weight={600} mr="small">{label}</JDtypho>
         {value || children}
     </Flex>;
 };

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_BOOKING, F_ITEM, F_PAGEINFO, F_PRODUCT, F_PURCHASE, F_USERERROR } from "./fragment/fragments";
+import { F_BOOKING, F_ITEM, F_PAGEINFO, F_PRODUCT, F_PRODUCT_BOOKING, F_PURCHASE, F_USERERROR } from "./fragment/fragments";
 
 export const PRODUCT_BOOKING_UPDATE = gql`
     mutation productBookingUpdate(
@@ -68,12 +68,12 @@ export const PRODUCT_LIST = gql`
             ...FoffsetPagingInfo
         }
         items {
-            ...Fproduct
+            ...FproductBooking
         }
     }
 }
 ${F_PAGEINFO}
-${F_PRODUCT}
+${F_PRODUCT_BOOKING}
 `
 
 
@@ -84,7 +84,7 @@ export const PRODUCT_FIND_BY_ID = gql`
     ProductFindById(
         productId: $productId
     ) {
-        ...Fproduct
+        ...FproductBooking
         item {
             ...Fitem
         }
@@ -93,9 +93,9 @@ export const PRODUCT_FIND_BY_ID = gql`
         }
     }
 }
+${F_PRODUCT_BOOKING}
 ${F_ITEM}
 ${F_BOOKING}
-${F_PRODUCT}
 `
 
 

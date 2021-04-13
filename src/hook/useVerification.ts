@@ -40,12 +40,12 @@ export const useVerification = (event:VerificationEvent,target: VerificationTarg
         })
     }
 
-    const verifiComplete = async () => {
+    const verifiComplete = async (_code?:string) => {
         if(!verifiData) return;
         return await verifyCompleteMu({
             variables: {
                 input: {
-                    code,
+                    code: _code || code,
                     payload: verifiData.payload,
                     target: verifiData.target,
                     verificationId: verifiData._id
