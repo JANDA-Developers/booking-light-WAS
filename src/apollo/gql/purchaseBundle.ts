@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { F_BOOKING, F_COLLECTION_DATA_INTERFACE, F_PAGEINFO, F_PURCHASE, F_PURCHASE_BUNDLE, F_USERERROR } from "./fragment/fragments";
+import { F_BOOKING,  F_PAGEINFO, F_PRODUCT_BOOKING, F_PURCHASE, F_PURCHASE_BUNDLE, F_USERERROR } from "./fragment/fragments";
 
 export const PURCHASE_BUNDLE_CREATE = gql`
     mutation purchaseBundleCreate(
@@ -18,6 +18,88 @@ export const PURCHASE_BUNDLE_CREATE = gql`
             }
         }
     }
+${F_USERERROR}
+`
+
+
+// export const PURCHASE_BUNDLE_UPDATE = gql`
+//     mutation purchaseBundleUpdate(
+//         $input: PurchaseBundleStatusSetInput!
+//     ) {
+//         PurchaseBundleUpdate(
+//             input:$input
+//         ) {
+//             ok
+//             error {
+//             ...FuserError
+//             }
+//         }
+//     }
+// ${F_USERERROR}
+// `
+
+export const PURCHASE_BUNDLE_REFUND = gql`
+    mutation purchaseBundleRefund (
+        $amount: Float!
+        $purchaseBundleId: ObjectId!
+    ) {
+    PurchaseBundleRefund(
+        amount: $amount
+        purchaseBundleId: $purchaseBundleId
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+        data {
+            ...Fpurchasebundle
+        }
+    }
+}
+${F_PURCHASE_BUNDLE}
+${F_USERERROR}
+`
+
+export const PURCHASE_BUNDLE_DELETE = gql`
+    mutation purchaseBundleDelete (
+        $purchaseBundleId: ObjectId!
+    ) {
+    PurchaseBundleDelete(
+        purchaseBundleId: $purchaseBundleId
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+        data {
+            ...Fpurchasebundle
+        }
+    }
+}
+${F_PURCHASE_BUNDLE}
+${F_USERERROR}
+`
+
+
+export const PURCHASE_BUNDLE_UPDATE = gql`
+    mutation purchaseBundleUpdate (
+        $purchaseBundleId: ObjectId!
+        $input: PurchaseBundleUpdateInput!
+    ) {
+    PurchaseBundleUpdate(
+        purchaseBundleId: $purchaseBundleId
+        input: $input
+    ) {
+        ok
+        error {
+            ...FuserError
+        }
+        data {
+            ...Fpurchasebundle
+        }
+    }
+}
+${F_PURCHASE_BUNDLE}
 ${F_USERERROR}
 `
 
@@ -57,23 +139,23 @@ export const PURCHASE_BUNDLE_SET_PAYMENT_STATUS = gql`
 ${F_USERERROR}
 `
 
-export const PURCHASE_BUNDLE_SET_REFUND_STATUS = gql`
-    mutation purchaseBundleSetRefundStatus(
-        $input: PurchaseBundleStatusSetInput!
-        $purchaseBundleId: ObjectId!
-    ) {
-    PurchaseBundleSetRefundStatus(
-        input:$input
-        purchaseBundleId:$purchaseBundleId
-    ) {
-        ok
-        error {
-            ...FuserError
-        }
-    }
-}
-${F_USERERROR}
-`
+// export const PURCHASE_BUNDLE_SET_REFUND_STATUS = gql`
+//     mutation purchaseBundleSetRefundStatus(
+//         $input: PurchaseBundleStatusSetInput!
+//         $purchaseBundleId: ObjectId!
+//     ) {
+//     PurchaseBundleSetRefundStatus(
+//         input:$input
+//         purchaseBundleId:$purchaseBundleId
+//     ) {
+//         ok
+//         error {
+//             ...FuserError
+//         }
+//     }
+// }
+// ${F_USERERROR}
+// `
 
 export const PURCHASE_BUNDLE_LIST_FORCUSTOMER = gql`
     query purchaseBundleListForCustomer(
@@ -124,6 +206,9 @@ export const PURCHASE_BUNDLE_LIST_FOR_BUSINESSUSER = gql`
             purchases {
                 ...on Booking {
                     ...Fbooking
+                    purchasedProduct {
+                        ...FproductBooking
+                    }
                 }
             }
         }
@@ -131,6 +216,7 @@ export const PURCHASE_BUNDLE_LIST_FOR_BUSINESSUSER = gql`
 }
 ${F_BOOKING}
 ${F_PAGEINFO}
+${F_PRODUCT_BOOKING}
 ${F_PURCHASE_BUNDLE}
 `
 
@@ -142,10 +228,38 @@ export const PURCHASE_FIND_BY_ID = gql`
         purchaseId: $purchaseId 
     ) {
         ...Fbooking
+        purchasedProduct {
+            ...FproductBooking
+        }
+    }
+}
+${F_PRODUCT_BOOKING}
+${F_BOOKING}
+`
 
+export const PURCHASE_BUNDLE_FIND_BY_INFO = gql`
+    query purchaseBundleFindByInfo(
+        $name: String!
+        $contact: String!
+    ) {
+    PurchaseBundleFindByInfo(
+        name: $name 
+        contact: $contact 
+    ) {
+        ...Fpurchasebundle
+        purchases {
+            ...on Booking {
+                ...Fbooking
+                purchasedProduct {
+                    ...FproductBooking
+                }
+            }
+        }
     }
 }
 ${F_BOOKING}
+${F_PRODUCT_BOOKING}
+${F_PURCHASE_BUNDLE}
 `
 
 export const PURCHASE_BUNDLE_FIND_BY_ID = gql`
@@ -159,11 +273,15 @@ export const PURCHASE_BUNDLE_FIND_BY_ID = gql`
         purchases {
                 ...on Booking {
                     ...Fbooking
+                    purchasedProduct {
+                        ...FproductBooking
+                    }
                 }
             }
     }
 }
 ${F_BOOKING}
+${F_PRODUCT_BOOKING}
 ${F_PURCHASE_BUNDLE}
 `
 
