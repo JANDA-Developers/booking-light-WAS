@@ -1,7 +1,10 @@
 {
   "name": "temp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
+  "homepage": "./",
+  "author": "JANDA",
+  "description": "JANDA Booking Application",
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@janda-com/front": "^4.0.5",
@@ -48,7 +51,7 @@
     "copyright": "© JANDA",
     "appId": "janda-super-admin",
     "win": {
-      "icon": "https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/booking_app/icon/bookingIcon.png"
+      "icon": "public/favicon.ico"
     }
   },
   "devDependencies": {
