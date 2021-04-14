@@ -4,8 +4,12 @@ import { myNotificationManager_MyNotificationManager } from "../../type/api";
 
 export interface INotificationContext {
     manager: myNotificationManager_MyNotificationManager;
-    sendersOps: IselectedOption[]
+    smsSendersOps: IselectedOption[]
+    emailSendersOps: IselectedOption[]
 }
 
-export const NotificationContext = React.createContext<INotificationContext>({ manager: undefined as any,sendersOps: [] });
-
+export const NotificationContext = React.createContext<INotificationContext>({ 
+    manager: undefined as any,
+    smsSendersOps: [],
+    emailSendersOps: [] 
+});

@@ -2587,10 +2587,10 @@ export interface smsSendWithTemplateVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: smsTemplateCreate
+// GraphQL mutation operation: notificationTemplateCreate
 // ====================================================
 
-export interface smsTemplateCreate_SmsTemplateCreate_error {
+export interface notificationTemplateCreate_NotificationTemplateCreate_error {
   __typename: "UserError";
   code: string | null;
   message: string;
@@ -2600,18 +2600,18 @@ export interface smsTemplateCreate_SmsTemplateCreate_error {
   details: string[] | null;
 }
 
-export interface smsTemplateCreate_SmsTemplateCreate {
-  __typename: "SmsTemplateCreateResponse";
+export interface notificationTemplateCreate_NotificationTemplateCreate {
+  __typename: "NotificationTemplateCreateResponse";
   ok: boolean;
-  error: smsTemplateCreate_SmsTemplateCreate_error | null;
+  error: notificationTemplateCreate_NotificationTemplateCreate_error | null;
 }
 
-export interface smsTemplateCreate {
-  SmsTemplateCreate: smsTemplateCreate_SmsTemplateCreate;
+export interface notificationTemplateCreate {
+  NotificationTemplateCreate: notificationTemplateCreate_NotificationTemplateCreate;
 }
 
-export interface smsTemplateCreateVariables {
-  input: SmsTemplateCreateInput;
+export interface notificationTemplateCreateVariables {
+  input: NotificationTemplateCreateInput;
 }
 
 /* tslint:disable */
@@ -11241,6 +11241,14 @@ export interface LocationInput {
   lng?: number | null;
 }
 
+export interface NotificationTemplateCreateInput {
+  name: string;
+  content: string;
+  method: NotificationMethod;
+  description?: string | null;
+  triggers?: NotificationTriggerInput[] | null;
+}
+
 export interface NotificationTriggerInput {
   sender: string;
   event: NotificationTriggerEvent;
@@ -11442,13 +11450,6 @@ export interface SmsSendWithTemplateInput {
   content?: string | null;
   sender: string;
   replacements: ReceiverWithReplacementSetsInput[];
-}
-
-export interface SmsTemplateCreateInput {
-  name: string;
-  content: string;
-  description?: string | null;
-  triggers?: NotificationTriggerInput[] | null;
 }
 
 export interface SmsTemplateUpdateInput {

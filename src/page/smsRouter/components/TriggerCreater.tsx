@@ -1,22 +1,24 @@
 import { Flex, JDbutton, JDlabel, JDselect, JDswitch, opFind } from '@janda-com/front';
 import React, { useContext } from 'react';
-import { notificationTemplateList_NotificationTemplateList_items_trigger } from '../../../type/api';
+import { NotificationMethod, notificationTemplateList_NotificationTemplateList_items_trigger } from '../../../type/api';
 import { EVENT_OPS } from '../../../type/const';
 import { NotificationContext } from '../context';
 
 interface IProp {
+    templateMethod: NotificationMethod
     trigger: notificationTemplateList_NotificationTemplateList_items_trigger;
     onChange: (trigger: notificationTemplateList_NotificationTemplateList_items_trigger) => void;
     onDelete: () => void;
 }
 
-export const TriggerCreater: React.FC<IProp> = ({ trigger, onChange, onDelete: handleDelete }) => {
-    const { sendersOps } = useContext(NotificationContext);
+export const TriggerCreater: React.FC<IProp> = ({ trigger, onChange, onDelete: handleDelete, templateMethod }) => {
+    const { smsSendersOps, emailSendersOps } = useContext(NotificationContext);
     const { event, isEnabled, sender } = trigger;
-
+    const isSMS = templateMethod === NotificationMethod.SMS;
+    const option = isSMS ? smsSendersOps : emailSendersOps;
     return <Flex oneone mb vCenter between >
         {/* 발신자선택 */}
-        <JDselect mr label="발신자" selectedOption={opFind(sender, sendersOps)} options={sendersOps} onChange={(ops) => {
+        <JDselect mr label="발신자" selectedOption={opFind(sender, option)} options={option} onChange={(ops) => {
             trigger.sender = ops.value;
             onChange(trigger)
         }} />

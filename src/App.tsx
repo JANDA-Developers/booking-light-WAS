@@ -34,7 +34,6 @@ const App: React.FC<IAppProp> = ({ me, contextQueryLoading }) => {
   const { item: thisMonthInvoice } = useInvoiceFind(todayyyyymmNumber)
   const usageMap = thisMonthInvoice ? serviceUsageMapper(thisMonthInvoice) : undefined;
 
-
   const storeCode = getFromUrl("storeCode");
   const type = context.selectedStore?.type;
 

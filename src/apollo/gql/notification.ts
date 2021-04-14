@@ -122,11 +122,11 @@ export const SMS_SEND_WITH_TEMPLATE = gql`
 ${F_USERERROR}
 `
 
-export const SMS_TEMPLATE_CREATE = gql`
-    mutation smsTemplateCreate(
-        $input: SmsTemplateCreateInput!
+export const NOTIFICATION_TEMPLATE_CREATE = gql`
+    mutation notificationTemplateCreate(
+        $input: NotificationTemplateCreateInput!
     ) {
-        SmsTemplateCreate(
+        NotificationTemplateCreate(
             input:$input
         ) {
             ok

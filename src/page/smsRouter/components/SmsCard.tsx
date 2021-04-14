@@ -19,7 +19,7 @@ export const SmsCard: React.FC<IProp> = ({ template, onDelete: handleDelete, onE
     const badges: IJDbadge[] = [{ label: type, mode: "folded", thema: "grey2" }];
     const noTrigger = isEmpty(isEmpty(trigger))
 
-    if (noTrigger) {
+    if (!noTrigger) {
         badges.push({ label: "자동발신", mode: "folded", thema: "primary" })
     }
 

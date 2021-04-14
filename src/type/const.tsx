@@ -423,8 +423,7 @@ export const thisMonthLastDate = dayjs().endOf("month").toDate();
 export const thisMonthFirstDate = dayjs().startOf("month").toDate();
 export const oneYearBefore = dayjs().add(-1, "y").toDate();
 export const sixMonthBefore = dayjs().add(-6, "month").toDate();
-export const todayyyyymmNumber = parseInt(dayjs().format("yyyymm"));
-
+export const todayyyyymmNumber = parseInt(dayjs().format("YYYYMM"));
 
 export enum Ratio {
     "16:9" = 1.77777,
@@ -433,12 +432,18 @@ export enum Ratio {
 
 
 export const DEFAULT_SENDER = "18334157"
+export const DEFAULT_EMAIL_SENDER = "no-replay@stayjanda.com"
 // 통신가입 증명원 링크
 export const ONLINE_TELL_INFO_LINK = "https://m.blog.naver.com/PostView.nhn?blogId=popbill&logNo=221030696103&proxyReferer=https:%2F%2Fwww.google.com%2F";
 
 export const DefaultSenderOP: IselectedOption = {
     label: "기본발신자",
     value: DEFAULT_SENDER
+}
+
+export const DefaultSmsSenderOP: IselectedOption = {
+    label: "기본발신자",
+    value: DEFAULT_EMAIL_SENDER
 }
 
 export const BankCodeKr: Record<BankCode, string> = {

@@ -10,8 +10,9 @@ import { SmsIndex } from './page/SmsIndex';
 import { SmsTemplates } from './page/SmsTEmplates';
 import { IselectedOption } from '@janda-com/front/dist/types/interface';
 import SmsHistory from './page/SmsHistory';
-import { DefaultSenderOP } from '../../type/const';
+import { DefaultSenderOP, DefaultSmsSenderOP } from '../../type/const';
 import { autoHypen } from '@janda-com/front';
+import { NotificationMethod } from '../../type/api';
 
 
 // 바이페이지 라우터 (에디팅용)
@@ -37,16 +38,25 @@ export const SmsRouter: React.FC<IProp> = ({ }) => {
     if (!data) return null;
     const manager = data;
 
-    const sendersOps: IselectedOption[] = manager?.senders.map(sender => ({
-        label: autoHypen(sender.sender),
-        value: sender.sender
-    }));
-    sendersOps.push(DefaultSenderOP)
+
+    const getOpsByType = (type: NotificationMethod) => {
+        const typeSenders = manager?.senders.filter(sender => sender.type === type);
+        const ops = typeSenders.map(sender => ({
+            label: autoHypen(sender.sender),
+            value: sender.sender
+        }))
+
+        const isSms = type === NotificationMethod.SMS;
+        const defaultOp = isSms ? DefaultSmsSenderOP : DefaultSenderOP;
+        ops.push(defaultOp)
+        return ops
+    }
 
     return <div>
         <NotificationContext.Provider value={{
             manager,
-            sendersOps
+            smsSendersOps: getOpsByType(NotificationMethod.SMS),
+            emailSendersOps: getOpsByType(NotificationMethod.EMAIL)
         }}>
             <Switch>
                 <Route exact path={SmsPaths.index} render={() => <SmsIndex />} />

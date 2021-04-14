@@ -1,13 +1,12 @@
-import { Col, Flex, Grid, isLast, JDcontainer, JDpageHeader, JDpreloader, Mb, SkipUpdate, useModal } from '@janda-com/front';
+import { Flex, JDcontainer, JDpageHeader, JDpreloader, SkipUpdate, useModal } from '@janda-com/front';
 import React from 'react';
-import JDsearchBar from '../../../atom/SearchBar';
 import DotButton from '../../../component/dotButton/DotButton';
 import { useNotificationTemplateList, useTemplateCreate, useTemplateDelete, useTemplateUpdate } from '../../../hook/useNotification';
 import { notificationTemplateList_NotificationTemplateList_items, _IItemSort, _ITemplateFilter } from '../../../type/api';
 import { completeMsg } from '../../../utils/onCompletedMessage';
 import { promptConfirm } from '../../../utils/prompt';
 import { SmsCard } from '../components/SmsCard';
-import { ISmsDetailModalInfo, SmsTEmplateModal } from '../components/SmsTemplateModal';
+import { ISmsDetailModalInfo, NotificationTemplateModal } from '../components/NotificationTemplateModal';
 
 interface IProp { }
 
@@ -64,7 +63,7 @@ export const SmsTemplates: React.FC<IProp> = () => {
                 </Flex>
             </SkipUpdate>
         </JDcontainer>
-        <SmsTEmplateModal key={(smsModalHook.info?.template?._id || "create") + "SmsTEmplateModal"} modalHook={smsModalHook} />
+        <NotificationTemplateModal key={(smsModalHook.info?.template?._id || "create") + "NotificationTemplateModal"} modalHook={smsModalHook} />
     </div>;
 };
 

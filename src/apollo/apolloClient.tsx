@@ -5,9 +5,8 @@ import cache from "./cache";
 import { createUploadLink } from "apollo-upload-client";
 import { toast } from "@janda-com/front";
 import { onError } from "@apollo/client/link/error";
-import { Storage } from "../utils/storage";
 import { setContext } from '@apollo/client/link/context';
-
+import { version } from "../../package.json";
 
 const headers = {
 };
@@ -54,6 +53,7 @@ dotenv.config({
 const client = new ApolloClient({
   link: from([authLink, errorLink, fileUploadLink as any]),
   uri,
+  version,
   cache,
   credentials: "include",
 });

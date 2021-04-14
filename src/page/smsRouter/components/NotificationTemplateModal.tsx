@@ -6,7 +6,7 @@ import JDEditor from '../../../component/editor/Editor';
 import AppContext from '../../../context';
 import { useCopy } from '../../../hook/useCopy';
 import { useTemplateCreate, useTemplateDelete, useTemplateUpdate } from '../../../hook/useNotification';
-import { NotificationMethod, notificationTemplateList_NotificationTemplateList_items, NotificationTriggerEvent, SmsTemplateCreateInput, SmsTemplateUpdateInput } from '../../../type/api';
+import { NotificationMethod, notificationTemplateList_NotificationTemplateList_items, NotificationTriggerEvent, NotificationTemplateCreateInput, SmsTemplateUpdateInput } from '../../../type/api';
 import { NOTI_METHOD_OPS } from '../../../type/const';
 import { omits } from '../../../utils/omits';
 import { completeMsg } from '../../../utils/onCompletedMessage';
@@ -24,7 +24,7 @@ interface IProp {
     modalHook: IUseModal<ISmsDetailModalInfo>
 }
 
-export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
+export const NotificationTemplateModal: React.FC<IProp> = ({ modalHook }) => {
     const { info } = modalHook;
     const isCreate = !info?.template;
     const { _id, content: defaultContent, createdAt, description, name, notificationMethod, replacers, updatedAt, trigger: defaultTrigger } = info?.template || {};
@@ -51,13 +51,15 @@ export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
         }
     })
     const [templateCreate] = useTemplateCreate({
-        onCompleted: ({ SmsTemplateCreate }) => {
-            completeMsg(SmsTemplateCreate, "템플릿 생성완료")
+        onCompleted: ({ NotificationTemplateCreate }) => {
+            completeMsg(NotificationTemplateCreate, "템플릿 생성완료")
             modalHook.closeModal();
         }
     })
 
-    const nextData: SmsTemplateUpdateInput & SmsTemplateCreateInput = {
+    const method = smsTypeHook.selectedOption?.value;
+    const nextData: NotificationTemplateCreateInput = {
+        method: method!,
         content: contentHook.value,
         name: titleHook.value,
         description: descriptionHook.value,
@@ -82,13 +84,14 @@ export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
     }
 
     const handleUpdate = () => {
-        if (validate())
+        if (validate()) {
             templateUpdate({
                 variables: {
-                    input: omits(nextData),
+                    input: omits(nextData, ["method"]),
                     templateId: _id
                 }
             })
+        }
     }
 
     const handleDelete = () => {
@@ -131,8 +134,8 @@ export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
     } {...modalHook} head={{ title: "알림 템플릿" }} >
         <Grid>
             <Col full={6} lg={12}>
+                {isCreate && <JDselect mb {...smsTypeHook} label={"템플릿 발신 방법"} />}
                 <InputText mb {...titleHook} label={"템플릿 타이틀"} />
-                <JDselect mb {...smsTypeHook} label={"템플릿 발신 방법"} />
                 <InputText className="smsTemplateModal__preview" mb textarea {...descriptionHook} label={"요약정보"} />
                 {PurchaseChangeAble.map((replace, index) =>
                     <JDbutton onClick={handleAddTemplateString(replace.value)} key={"replaceBtn" + index} mr="small" mb="small" size="small" mode="border">{replace.label}</JDbutton>
@@ -149,12 +152,19 @@ export const SmsTEmplateModal: React.FC<IProp> = ({ modalHook }) => {
         </Grid>
         <JDhorizen margin={3} />
         <JDtypho mb>발신트리거 설정</JDtypho>
-        {triggers.map((trigger, index) => <TriggerCreater key={index + "trriggerCreater"} onDelete={() => {
-            triggers.splice(index, 1);
-            setTriggers([...triggers])
-        }} onChange={() => {
-            setTriggers([...triggers])
-        }} trigger={trigger} />)}
+        {triggers.map((trigger, index) =>
+            <TriggerCreater
+                templateMethod={method}
+                key={index + "trriggerCreater"}
+                onDelete={() => {
+                    triggers.splice(index, 1);
+                    setTriggers([...triggers])
+                }}
+                onChange={() => {
+                    setTriggers([...triggers])
+                }}
+                trigger={trigger}
+            />)}
         <DotButton onClick={handleAddTrigger}>추가하기</DotButton>
     </JDmodal>;
 };
