@@ -1,6 +1,6 @@
 {
   "name": "temp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "homepage": "./",
   "author": "JANDA",
@@ -85,7 +85,7 @@
     "precodegen": "apollo schema:download --endpoint=http://localhost:5000/graphql && node src/gpt.js",
     "codegen": "apollo codegen:generate src/type/api.ts   --includes=src/apollo/gql/**/* --queries=src/apollo/gql/*.ts --addTypename --localSchemaFile=schema.json --target=typescript --outputFlat",
     "electron-build--win": "electron-builder --windows nsis:ia32",
-    "electron-build": "cp .env.superAdmin .env && electron-builder",
+    "electron-build": "cp .env.superAdmin .env && react-scripts build && electron-builder",
     "electron-start": "cp .env.superAdmin .env && concurrently \"cross-env BROWSER=none yarn react-scripts start\" \"wait-on http://localhost:4125 && electron .\""
   },
   "eslintConfig": {
