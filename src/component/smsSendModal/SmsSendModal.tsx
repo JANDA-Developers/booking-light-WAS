@@ -1,13 +1,10 @@
-import { IUseModal, JDmodal } from '@janda-com/front';
-import { InputText } from '@janda-com/front/dist/components/InputText/InputText';
-import React from 'react';
-import { useSmsSendSingle } from '../../hook/useNotification';
-
+import { InputText, IUseModal, JDmodal } from "@janda-com/front";
+import React from "react";
+import { useNotificationSendSingle } from "../../hook/useNotification";
 
 interface ISmsSendModalInfo {
-    receviers: string[]
+    receviers: string[];
 }
-
 
 // 어떻게하면 되지?
 
@@ -19,7 +16,7 @@ interface IProp {
 }
 
 export const SmsSendModal: React.FC<IProp> = ({ modalHook }) => {
-    const [sendSms] = useSmsSendSingle()
+    const [sendSms] = useNotificationSendSingle();
 
     const handleSendSms = () => {
         // sendSms({
@@ -34,9 +31,11 @@ export const SmsSendModal: React.FC<IProp> = ({ modalHook }) => {
         //         }
         //     }
         // })
-    }
+    };
 
-    return <JDmodal {...modalHook} >
-        <InputText />
-    </JDmodal>;
+    return (
+        <JDmodal {...modalHook}>
+            <InputText />
+        </JDmodal>
+    );
 };

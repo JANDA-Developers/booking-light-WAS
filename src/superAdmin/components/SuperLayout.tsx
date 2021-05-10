@@ -1,19 +1,24 @@
-import { Flex, isEmpty, JDalign, JDiconSearchInput, JDsearchInput } from '@janda-com/front';
-import React, { useState } from 'react';
-import Header from "../../component/header/Header"
-import { IIcons } from '../../component/icons/declation';
-import { IAppContext } from '../../context';
-import { SuperAdminPaths } from '../SuperAdminApp';
-import SuperHeader from './SuperHeader';
-import Sidebar from "../../component/sidebar/Sidebar"
-import { TSidebarSub } from "../../component/sidebar/SidebarSubMenu"
+import {
+    Flex,
+    isEmpty,
+    JDalign,
+    JDiconSearchInput,
+    JDsearchInput,
+} from "@janda-com/front";
+import React, { useState } from "react";
+import Header from "../../component/header/Header";
+import { IIcons } from "../../component/icons/declation";
+import { IAppContext } from "../../context";
+import { SuperAdminPaths } from "../SuperAdminApp";
+import SuperHeader from "./SuperHeader";
+import Sidebar from "../../component/sidebar/Sidebar";
+import { TSidebarSub } from "../../component/sidebar/SidebarSubMenu";
 
-interface IProp { }
-
+interface IProp {}
 
 export interface IMenu {
-    icon: IIcons,
-    title: string,
+    icon: IIcons;
+    title: string;
     sub: Pick<TSidebarSub, "icon" | "title" | "exact" | "path">[];
 }
 
@@ -33,8 +38,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     icon: "barGraph",
                     title: "서비스 사용현황",
                     path: SuperAdminPaths.usageGraph,
-                }
-            ]
+                },
+            ],
         },
         {
             icon: "store",
@@ -44,8 +49,8 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     icon: "menu",
                     title: "스토어 리스트",
                     path: SuperAdminPaths.storeList,
-                }
-            ]
+                },
+            ],
         },
         {
             icon: "box2",
@@ -56,7 +61,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "전체 구매목록",
                     path: SuperAdminPaths.purchaseList,
                 },
-            ]
+            ],
         },
         {
             icon: "addCircle",
@@ -67,7 +72,23 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "유저리스트",
                     path: SuperAdminPaths.userList,
                 },
-            ]
+            ],
+        },
+        {
+            icon: "sms",
+            title: "SMS",
+            sub: [
+                {
+                    icon: "menu",
+                    title: "발신자관리",
+                    path: SuperAdminPaths.senderRequest,
+                },
+                {
+                    icon: "menu",
+                    title: "사용량관리",
+                    path: SuperAdminPaths.smsManagers,
+                },
+            ],
         },
         {
             icon: "pay",
@@ -83,7 +104,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "서브몰 & 지급",
                     path: SuperAdminPaths.settlement,
                 },
-            ]
+            ],
         },
         {
             icon: "addCircle",
@@ -109,8 +130,7 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                     title: "질문 리스트",
                     path: SuperAdminPaths.question,
                 },
-
-            ]
+            ],
         },
         {
             icon: "board",
@@ -119,28 +139,31 @@ export const getMenuData = (context: IAppContext): IMenu[] => {
                 {
                     icon: "menu",
                     title: "게시판 설정",
-                    path: SuperAdminPaths.boardConfig
+                    path: SuperAdminPaths.boardConfig,
                 },
-
-            ]
+            ],
         },
-    ]
+    ];
 
     return MainMenuData;
-}
-
-
+};
 
 export const SuperLayout: React.FC<IProp> = ({ children }) => {
     const [isOpen, setIsOpen] = useState(true);
 
-    return <div>
-        <Flex className="layout" oneone >
-            <Sidebar setSide={setIsOpen} _getMenuData={getMenuData as any} isOpen={isOpen} />
-            <div className="layout__contents">
-                <SuperHeader sideOpen={isOpen} setSide={setIsOpen} />
-                {children}
-            </div>
-        </Flex>
-    </div>
+    return (
+        <div>
+            <Flex className="layout" oneone>
+                <Sidebar
+                    setSide={setIsOpen}
+                    _getMenuData={getMenuData as any}
+                    isOpen={isOpen}
+                />
+                <div className="layout__contents">
+                    <SuperHeader sideOpen={isOpen} setSide={setIsOpen} />
+                    {children}
+                </div>
+            </Flex>
+        </div>
+    );
 };

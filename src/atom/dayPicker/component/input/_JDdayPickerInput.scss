@@ -1,0 +1,9 @@
+&--input {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: $dayPicker-input-height;
+    background-color:white;
+    z-index: $z-index-3;
+    @extend %z-depth-3;
+}

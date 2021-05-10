@@ -81,7 +81,6 @@ export const ProductDetail: React.FC<IProp> = ({ item }) => {
 
     const handleCreate = () => {
         if (validate()) {
-            alert("afterValidate");
             create({
                 variables: {
                     input: {

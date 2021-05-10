@@ -2,7 +2,7 @@ import { Action, FserviceUsageDetails, invoiceFindOne_InvoiceFindOne, ServiceUsa
 
 type UsageMap = Record<ServiceUsageType, FserviceUsageDetails | null>
 export type UsageTypeMap = Record<Action, UsageMap>
-
+ 
 export const serviceUsageMapper = (item:invoiceFindOne_InvoiceFindOne) => {
 
     const usage = {

@@ -1,12 +1,12 @@
-.buyPageShopping {
+.buyPageShopping,.itemList {
 
     &__itemsList {
         margin-right: -1 * space(2);
     }
 
     &__item {
-        min-width: 15%;
-        max-width: 16.6%;
+        min-width: 17%;
+        max-width: 20%;
 
         @include response($desktophd) {
             min-width: 17%;
@@ -17,6 +17,7 @@
             min-width: 22%;
             max-width: 25%;
         }   
+
         @include response($tablet) {
             min-width: 30%;
             max-width: 33.33%;
@@ -31,4 +32,7 @@
         }
     }
 
+}
+.itemList {
+    
 }

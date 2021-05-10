@@ -14,6 +14,11 @@ export class BasketStorage extends LocalItemStorage<IBasketItem> {
         const items = this.getItems() || [];
         return arraySum(items.map(item => item.priceOrigin || 0));
     }
+
+    findByKey(key:string) {
+        const items = this.getItems() || [];
+        return items.find(item => item.countDetails?.find(cd => cd.key === key))
+    }
 }
 
 export const BASKET = new BasketStorage("bracket");

@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 export const useIdSelecter = (list:string[], defaultIds:string[] = []) => {
+    console.log({defaultIds});
     const [selectedIds, setSelectedIds] = useState(defaultIds);
+    console.log({selectedIds});
 
     const selectAll = () => {
         setSelectedIds([...list]);

@@ -1,13 +1,34 @@
 import { IselectedOption } from "@janda-com/front/dist/components/select/SelectBox";
-import { BankCode, DayOfWeek, DisplayType, FoffsetPagingInfo, ItemType, me_Me_stores_buypage_delivery, NotificationMethod, NotificationTriggerEvent, OffsetPagingInput, Paymethod, StoreType, SystemNotiType, UserRole, VerificationEvent, VerificationTarget, _BoardDocSort, _ProductSort, _PurchaseBundleSort } from "./api";
+import {
+    BankCode,
+    DayOfWeek,
+    DisplayType,
+    Ffile,
+    FoffsetPagingInfo,
+    ItemType,
+    me_Me_stores_buypage_delivery,
+    NotificationMethod,
+    NotificationTriggerEvent,
+    OffsetPagingInput,
+    Paymethod,
+    Status,
+    StoreType,
+    SystemNotiType,
+    UserRole,
+    VerificationEvent,
+    VerificationTarget,
+    _BoardDocSort,
+    _ProductSort,
+    _PurchaseBundleSort,
+} from "./api";
 import dayjs from "dayjs";
 import { NotiType, selectOpCreater } from "@janda-com/front";
 import { enumToOption } from "../utils/enumToOption";
-import { BuyPageType, CreateSalesTime } from "./enum";
+import { BoardKeys, BuyPageType, CreateSalesTime } from "./enum";
 import { storeTypeKr } from "../utils/enumConverter";
 
 const { version } = require("../../package.json");
-export const JDVERSION = version
+export const JDVERSION = version;
 
 export const ALLOW_LOGINS = [
     UserRole.BUSINESS_USER,
@@ -15,8 +36,8 @@ export const ALLOW_LOGINS = [
     UserRole.SUPERADMIN,
 ];
 
-
-export const nicePayJDlogo = "https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/logo/jungleBooking.png";
+export const nicePayJDlogo =
+    "https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/logo/jungleBooking.png";
 
 export const BANK_LIST = {
     "001": "한국은행",
@@ -65,48 +86,49 @@ export const BANK_LIST = {
     "094": "서울보증보험",
     "095": "경찰청",
     "096": "한국전자금융(주)",
-    "099": "금융결제원"
-}
+    "099": "금융결제원",
+};
 
 export const DEFAULT_PAGE_SEARCH: OffsetPagingInput = {
     pageItemCount: 20,
-    pageIndex: 0
-}
+    pageIndex: 0,
+};
 
 export const DEFAULT_PAGE_INFO: FoffsetPagingInfo = {
     __typename: "OffsetPagingInfo",
     currentItemCount: 0,
     pageIndex: 0,
     pageItemCount: 0,
-    totalPageCount: 0
-}
+    totalPageCount: 0,
+};
 
 export const DEFAULT_VEIFI_METHOD = {
     target: VerificationTarget.PHONE,
     event: VerificationEvent.UserVerifyPhone,
-}
-
+};
 
 export const DEFAULT_ADDRESS = {
     address: "default",
     addressDetail: "default",
     lat: 0,
-    lng: 0
-}
+    lng: 0,
+};
 
-export const BANK_SELECT_OP: IselectedOption[] = Object.entries(BANK_LIST).map(([key, value]) => {
-    return {
-        label: value,
-        value: key
+export const BANK_SELECT_OP: IselectedOption[] = Object.entries(BANK_LIST).map(
+    ([key, value]) => {
+        return {
+            label: value,
+            value: key,
+        };
     }
-})
+);
 
 export const GET_EVERY = {
     pagingInput: {
         pageIndex: 0,
-        pageItemCount: 99
-    }
-}
+        pageItemCount: 99,
+    },
+};
 
 // export const DEFAULT_ITEM_CREATE: ICreateSubmitInput = process.env.NODE_ENV === "development" ? {
 //     amount: 1000,
@@ -130,12 +152,7 @@ export const GET_EVERY = {
 //         toTm: ""
 //     }
 
-export default ""
-
-
-
-
-
+export default "";
 
 export const EVENT_OPS: IselectedOption<NotificationTriggerEvent>[] = [
     {
@@ -201,6 +218,10 @@ export const INPUT_OPS: IselectedOption<DisplayType>[] = [
     //     value: DisplayType.DATE_RANGE_PICKER,
     // },
     {
+        label: "파일",
+        value: DisplayType.FILE,
+    },
+    {
         label: "타임픽커",
         value: DisplayType.TIME_PICKER,
     },
@@ -209,7 +230,6 @@ export const INPUT_OPS: IselectedOption<DisplayType>[] = [
         value: DisplayType.DATE_PICKER,
     },
 ];
-
 
 export const BUYPAGE_TYPE_OPS: IselectedOption<BuyPageType>[] = [
     {
@@ -223,12 +243,12 @@ export const BUYPAGE_TYPE_OPS: IselectedOption<BuyPageType>[] = [
     {
         label: "회차예약",
         value: BuyPageType.TIME_MALL,
-    }
+    },
+    {
+        label: "연일예약",
+        value: BuyPageType.DAY_RANGE,
+    },
 ];
-
-
-
-
 
 export const ITEM_TYPE_OPS: IselectedOption<ItemType>[] = [
     {
@@ -280,31 +300,35 @@ export const PAY_METHOD_OPS: IselectedOption<Paymethod>[] = [
 ];
 
 export const enumToOps = (enumm: any, fn: (foo: any) => string) => {
-    return Object.keys(enumm)
-        .map(key => ({
-            label: fn(enumm[key]),
-            value: enumm[key]
-        }));
-}
+    return Object.keys(enumm).map((key) => ({
+        label: fn(enumm[key]),
+        value: enumm[key],
+    }));
+};
 
-export const STORE_TYPE_OPS: IselectedOption<StoreType>[] = enumToOps(StoreType, storeTypeKr);
+export const enumToOp = (enumm: any, record: any) => {
+    return Object.keys(enumm).map((key) => ({
+        label: record[key],
+        value: enumm[key],
+    }));
+};
+export const STORE_TYPE_OPS: IselectedOption<StoreType>[] = enumToOp(
+    StoreType,
+    storeTypeKr
+);
 
 export const COUNT = selectOpCreater({
     count: 1000,
     start: 0,
-    labelAdd: "개"
+    labelAdd: "개",
 });
 
-
-
-
-export const COUNT_GEN = (label: string) => selectOpCreater({
-    count: 9990,
-    start: 0,
-    labelAdd: label
-});
-
-
+export const COUNT_GEN = (label: string) =>
+    selectOpCreater({
+        count: 9990,
+        start: 0,
+        labelAdd: label,
+    });
 
 export const HOURS_SELECT_OP: IselectedOption<number>[] = [
     {
@@ -412,39 +436,59 @@ export let MINUTES_SELECT_OP: IselectedOption<number>[] = Array(60)
         value: i,
     }));
 
-
 export const tommorrowDate = dayjs().add(1, "day").startOf("day").toDate();
 export const todayDate = dayjs().startOf("day").toDate();
 export const today = dayjs().startOf("day").valueOf();
 export const tomorrow = dayjs().add(1, "day").startOf("day").valueOf();
-export const lastMonthFirstDate = dayjs().add(-1, "month").set("day", 1).toDate();
-export const lastMonthLastDate = dayjs().add(-1, "month").endOf("month").toDate();
+export const lastMonthFirstDate = dayjs()
+    .add(-1, "month")
+    .set("day", 1)
+    .toDate();
+export const lastMonthLastDate = dayjs()
+    .add(-1, "month")
+    .endOf("month")
+    .toDate();
 export const thisMonthLastDate = dayjs().endOf("month").toDate();
 export const thisMonthFirstDate = dayjs().startOf("month").toDate();
 export const oneYearBefore = dayjs().add(-1, "y").toDate();
 export const sixMonthBefore = dayjs().add(-6, "month").toDate();
 export const todayyyyymmNumber = parseInt(dayjs().format("YYYYMM"));
 
+export const DATE = {
+    today: dayjs().startOf("day").toDate(),
+    tomorrow: dayjs().add(1, "day").startOf("day").toDate(),
+    lastMonthFirstDate,
+    lastMonthLastDate,
+    thisMonthFirstDate,
+    oneYearBefore,
+    sixMonthBefore,
+};
+
+export const TIME_VALUE = {
+    today,
+    tomorrow,
+};
+
 export enum Ratio {
     "16:9" = 1.77777,
-    "4:3" = 0.75
+    "4:3" = 0.75,
 }
 
-
-export const DEFAULT_SENDER = "18334157"
-export const DEFAULT_EMAIL_SENDER = "no-replay@stayjanda.com"
+export const DEFAULT_SENDER = "18334157";
+export const DEFAULT_EMAIL_SENDER = "no-reply@stayjanda.com";
 // 통신가입 증명원 링크
-export const ONLINE_TELL_INFO_LINK = "https://m.blog.naver.com/PostView.nhn?blogId=popbill&logNo=221030696103&proxyReferer=https:%2F%2Fwww.google.com%2F";
+export const ONLINE_TELL_INFO_LINK =
+    "https://m.blog.naver.com/PostView.nhn?blogId=popbill&logNo=221030696103&proxyReferer=https:%2F%2Fwww.google.com%2F";
 
 export const DefaultSenderOP: IselectedOption = {
-    label: "기본발신자",
-    value: DEFAULT_SENDER
-}
+    label: "기본발신자[S]",
+    value: DEFAULT_SENDER,
+};
 
-export const DefaultSmsSenderOP: IselectedOption = {
-    label: "기본발신자",
-    value: DEFAULT_EMAIL_SENDER
-}
+export const DefaultEmailSenderOP: IselectedOption = {
+    label: "기본발신자[E]",
+    value: DEFAULT_EMAIL_SENDER,
+};
 
 export const BankCodeKr: Record<BankCode, string> = {
     CITY: "시티은행",
@@ -464,10 +508,13 @@ export const BankCodeKr: Record<BankCode, string> = {
     KN_BANK: "경남은행",
     POST: "우체국은행",
     STANDARD_CHARTERED: "sc은행",
-    SUHYUP: "수협은행"
+    SUHYUP: "수협은행",
 };
 
-export const BANK_OPS = enumToOps(BankCode, (key) => BankCodeKr[key as BankCode])
+export const BANK_OPS = enumToOps(
+    BankCode,
+    (key) => BankCodeKr[key as BankCode]
+);
 
 export const SystemNotiKr: Record<SystemNotiType, string> = {
     janda: "공지알림",
@@ -475,10 +522,13 @@ export const SystemNotiKr: Record<SystemNotiType, string> = {
     cancel: "취소",
     payment: "결제",
     system: "시스템",
-    user: "유저"
-}
+    user: "유저",
+};
 
-export const SYSTEM_NOTI_OPS = enumToOps(SystemNotiType, (key) => SystemNotiKr[key as SystemNotiType]);
+export const SYSTEM_NOTI_OPS = enumToOps(
+    SystemNotiType,
+    (key) => SystemNotiKr[key as SystemNotiType]
+);
 
 export const SortKr: Partial<Record<any, string>> = {
     createdAt__asc: "생성일↓",
@@ -491,7 +541,6 @@ export const SortKr: Partial<Record<any, string>> = {
     disabled__desc: "활성화O",
 };
 
-
 export const WeekKr: Record<DayOfWeek, string> = {
     FRI: "금",
     MON: "월",
@@ -499,11 +548,60 @@ export const WeekKr: Record<DayOfWeek, string> = {
     SUN: "일",
     THU: "목",
     TUE: "화",
-    WED: "수"
-}
+    WED: "수",
+};
 
-export const WeekOption = enumToOps(DayOfWeek, (key) => WeekKr[key as keyof typeof WeekKr])
+export const SatusKr: Record<Status, string> = {
+    CANCELED: "취소",
+    COMPLETED: "완료",
+    PENDING: "대기",
+};
+
+export const BoardKeyKr: Record<BoardKeys, string> = {
+    bug: "버그",
+    notice: "공지",
+    qna: "자주하는질문",
+    question: "질문",
+};
+
+export const WeekOption = enumToOps(
+    DayOfWeek,
+    (key) => WeekKr[key as keyof typeof WeekKr]
+);
+
+export const StatusOption = enumToOps(
+    Status,
+    (key) => SatusKr[key as keyof typeof SatusKr]
+);
 
 export const FOREVER = new Date("2099-01-01").valueOf();
 
-export const DEFAULT_DELIVERY: me_Me_stores_buypage_delivery = { __typename: "Delivery", fee: 0, lowerPrice: 0, overFreePrice: 0 }
+export const DEFAULT_DELIVERY: me_Me_stores_buypage_delivery = {
+    __typename: "Delivery",
+    fee: 0,
+    lowerPrice: 0,
+    overFreePrice: 0,
+};
+
+export const FOREVER_SALE_END_TIME = new Date("2099-01-01");
+
+export const DEFAULT_FILE: Ffile = {
+    __typename: "File",
+    _id: "",
+    tags: [],
+    createdAt: new Date(),
+    description: "",
+    extension: "",
+    fileType: "",
+    name: "",
+    updatedAt: new Date(),
+    uri: "",
+};
+
+export const NO_IMG =
+    "https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/infographic/noimg.png";
+
+export const LOADING_SVG =
+    "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/03ac7912-1eb4-494d-88d0-c3b831c98607/Infinity-1.6s-200px.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210430%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210430T050156Z&X-Amz-Expires=86400&X-Amz-Signature=a937227e274041595e7cade19362db049430a76d5aee85898927ba68eec01c06&X-Amz-SignedHeaders=host";
+export const LOADING_CIRCLE =
+    "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e9c8292d-d3f4-49bd-b05c-fe11e753a119/Double_Ring-3.4s-227px_%281%29.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210430%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210430T050156Z&X-Amz-Expires=86400&X-Amz-Signature=c0c3cfbdaf3cc514d0897261129a2d9453c0b115f59e262f45cc977884d5480c&X-Amz-SignedHeaders=host";

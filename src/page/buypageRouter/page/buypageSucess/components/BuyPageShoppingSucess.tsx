@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-interface IProp { }
+interface IProp {}
 
-export const BuyPageShoppingSucess: React.FC<IProp> = () => {
+export const BuypageTableSucess: React.FC<IProp> = () => {
     return <div />;
 };

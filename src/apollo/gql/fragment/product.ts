@@ -1,45 +1,40 @@
 import { gql } from "@apollo/client";
 import { F_ATTRIBUTE, F_COLLECTION_DATA_INTERFACE } from "./shared";
 
-
-
 export const F_CAPACITY = gql`
-    fragment Fcapacity  on Capacity  {
+    fragment Fcapacity on Capacity {
         key
         count
         label
         price
     }
-`
+`;
 
 export const F_CAPACITY_SUMMARY = gql`
-    fragment FcapacitySummary on CapacitySummary  {
+    fragment FcapacitySummary on CapacitySummary {
         key
         label
         capacityCount
         usage
-        usageRatio
         price
-    } 
-`
-
+    }
+`;
 
 export const F_PRODUCT = gql`
-fragment Fproduct on Product {
-    ...FcollectionDataInterface
-    type
-    attrs {
-        ...Fattribute
+    fragment Fproduct on Product {
+        ...FcollectionDataInterface
+        type
+        attrs {
+            ...Fattribute
+        }
     }
-}
-${F_ATTRIBUTE}
-${F_COLLECTION_DATA_INTERFACE}
-`
-
+    ${F_ATTRIBUTE}
+    ${F_COLLECTION_DATA_INTERFACE}
+`;
 
 export const F_PRODUCT_BOOKING = gql`
-fragment FproductBooking on ProductBooking {
-    ...Fproduct
+    fragment FproductBooking on ProductBooking {
+        ...Fproduct
         disabled
         dateRangeForSale {
             from
@@ -63,9 +58,9 @@ fragment FproductBooking on ProductBooking {
             ...FcapacitySummary
         }
         code
-}
-${F_PRODUCT}
-${F_CAPACITY}
-${F_ATTRIBUTE}
-${F_CAPACITY_SUMMARY}
-`
+    }
+    ${F_PRODUCT}
+    ${F_CAPACITY}
+    ${F_ATTRIBUTE}
+    ${F_CAPACITY_SUMMARY}
+`;

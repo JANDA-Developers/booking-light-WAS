@@ -1,8 +1,9 @@
 import { JDcontainer, JDpageHeader, WindowSize } from '@janda-com/front';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import { CardBtn } from '../../component/btns/ModalBtn';
 import DotButton from '../../component/dotButton/DotButton';
+import AppContext from '../../context';
 import { useProductAutomatorDelete, useProductAutomatorList, useProductAutomatorUpdate } from '../../hook/useProductAutomator';
 import { Paths } from '../../MainRouter';
 import { productAutomatorBookingList_ProductAutomatorBookingList_items } from '../../type/api';
@@ -13,7 +14,12 @@ import { AutoCreateCard } from './component/AutoCreateCard';
 interface IProp { }
 
 export const ProductAutomator: React.FC<IProp> = () => {
-    const { items } = useProductAutomatorList();
+    const { selectedStoreId } = useContext(AppContext);
+    const { items } = useProductAutomatorList({
+        fixingFilter: {
+            _storeId__eq: selectedStoreId
+        }
+    });
     const history = useHistory();
     const [update] = useProductAutomatorUpdate({
         onCompleted: ({ ProductAutomatorBookingUpdate }) => {

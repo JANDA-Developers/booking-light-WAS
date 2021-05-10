@@ -6,15 +6,16 @@ import { BuypageContext } from '../buypageList/helper/context';
 
 interface IProp extends IJDtyphoProp {
     countLabel?: string;
-    capacityDetail: productList_ProductList_items_ProductBooking_usageDetails
+    usageDetail: productList_ProductList_items_ProductBooking_usageDetails
 }
 
-export const RemainViewer: React.FC<IProp> = ({ countLabel = "개", capacityDetail, ...props }) => {
+export const RemainViewer: React.FC<IProp> = ({ countLabel = "개", usageDetail, ...props }) => {
     const { configure } = useContext(BuypageContext);
     const texts = configure?.RESERVATION_NORMAL?.texts || {}
     const unit = texts?.countUnit.kr
 
-    const remain = capacityDetail.capacityCount - capacityDetail.usage;
+
+    const remain = usageDetail.capacityCount - usageDetail.usage;
 
     return <JDtypho text="right"  {...props} size="superTiny">({remain + (unit || countLabel) + " " + "남음"})</JDtypho>;
 };

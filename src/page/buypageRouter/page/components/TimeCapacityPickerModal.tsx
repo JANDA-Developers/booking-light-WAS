@@ -1,14 +1,53 @@
-import { Flex, IUseModal, JDalign, JDbutton, JDdayPicker, JDmodal, JDmodalConfigProps, JDpolicyViewer, TimePerMs, useDayPicker } from '@janda-com/front';
-import React, { useContext } from 'react';
-import { useProductList } from '../../../../hook/useProduct';
-import { BuypageContext } from '../buypageList/helper/context';
+import {
+    deepCopy,
+    Flex,
+    IUseModal,
+    JDalign,
+    JDbutton,
+    JDdayPicker,
+    JDlabel,
+    JDmodal,
+    JDmodalConfigProps,
+    JDpolicyViewer,
+    JDselect,
+    TimePerMs,
+    useDayPicker,
+    WindowSize,
+    WindowSizeNumber,
+} from "@janda-com/front";
+import React, { useContext, useEffect } from "react";
+import { useProductList } from "../../../../hook/useProduct";
+import { BuypageContext } from "../buypageList/helper/context";
 import dayjs from "dayjs";
-import { startOfDate, startOfMonth, endOfMonth } from '../../../../utils/dateFormat';
-import { TimeBlock } from './TimeBlock';
-import { productList_ProductList_items_ProductBooking, productList_ProductList_items_ProductBooking_dateRangeForUse } from '../../../../type/api';
-import { IUseBookingsInput, useBookingsInput } from '../../../../hook/useBookingInput';
-import { IBuypageProductData, productMap } from '../buypageList/helper/productMap';
-import { endOfDay } from 'date-fns';
+import {
+    startOfDate,
+    startOfMonth,
+    endOfMonth,
+} from "../../../../utils/dateFormat";
+import { TimeBlock } from "./TimeBlock";
+import {
+    FproductBooking,
+    productList_ProductList_items_ProductBooking,
+    productList_ProductList_items_ProductBooking_dateRangeForUse,
+} from "../../../../type/api";
+import {
+    IBookingInputData,
+    IUseBookingsInput,
+    useBookingsInput,
+} from "../../../../hook/useBookingInput";
+import {
+    IBuypageProductData,
+    productMap,
+} from "../buypageList/helper/productMap";
+import { endOfDay } from "date-fns";
+import { ModalBtn } from "../../../../component/btns/ModalBtn";
+import { DATE } from "../../../../type/const";
+import {
+    checkIsDisableDay,
+    ProductBookingUtils,
+    rangeCheck,
+} from "../../../../utils/productBookingUtils";
+import { CpacityTimeSelecter } from "./Capacity";
 
 export interface IPrivacyModalInfo extends JDmodalConfigProps {
     policy: string;
@@ -16,95 +55,164 @@ export interface IPrivacyModalInfo extends JDmodalConfigProps {
 }
 
 interface IProp {
-    item: IBuypageProductData
+    item: IBuypageProductData;
     defaultFrom: Date;
     bookingsInputHook: IUseBookingsInput;
     defaultTo: Date;
     itemId: string;
-    modalHook: IUseModal<IPrivacyModalInfo>
+    modalHook: IUseModal<IPrivacyModalInfo>;
 }
 
-export const TimeCapacityPickerModal: React.FC<IProp> = ({ bookingsInputHook, modalHook, defaultFrom, defaultTo, itemId }) => {
+export const TimeCapacityPickerModal: React.FC<IProp> = ({
+    bookingsInputHook,
+    modalHook,
+    defaultFrom,
+    defaultTo,
+    itemId,
+}) => {
+    const isMobile = window.innerWidth < WindowSizeNumber.PHABLET;
     const context = useContext(BuypageContext);
+    const {
+        noPayMethod,
+        configure: { salesDates },
+    } = context;
     const dayPickerHook = useDayPicker(defaultFrom, defaultTo);
 
-    const useDateFIlter = {
+    const useDateFilter = {
         dateRangeForUse_from__gte: startOfMonth(dayPickerHook.from),
-        dateRangeForUse_to__lte: endOfMonth(dayPickerHook.from)
-    }
+        dateRangeForUse_to__lte: endOfMonth(dayPickerHook.from),
+    };
 
     const productListHook = useProductList({
         fixingFilter: {
             _itemId__eq: itemId,
         },
         initialFilter: {
-            ...useDateFIlter
+            ...useDateFilter,
         },
-        initialViewCount: 999999999
-    })
+        initialViewCount: 999999999,
+    });
 
     const { items } = productListHook;
 
-    const rangeCheck = (item: productList_ProductList_items_ProductBooking, val: number): boolean => {
-        const dateStart = dayjs(val).startOf("day").valueOf();
-        const dateEnd = dayjs(val).endOf("day").valueOf();
-        return (item.dateRangeForUse?.from >= dateStart) && (item.dateRangeForUse?.to <= dateEnd);
-    }
+    const filteredItems = items.filter((item) => {
+        return rangeCheck(
+            item,
+            dayPickerHook.from?.setHours(12).valueOf() || 0
+        );
+    });
 
-    const checkIsDisableDay = (day: Date) => {
-        const val = day.valueOf();
-        if (val < new Date().valueOf()) return true;
-        const availableItem = items.find(item => rangeCheck(item, val));
-        return !availableItem
-    }
-
-    const filteredItems = items.filter(item => {
-        return rangeCheck(item, dayPickerHook.from?.setHours(12).valueOf() || 0);
-    })
+    const selectedProducts = bookingsInputHook.bookingInputs.map(
+        (bi) => bi.productOrigin as FproductBooking
+    );
 
     const hasTimeDiff = checkHasDiffTime(filteredItems);
     const hasPriceDiff = checkHasDiffPrice(filteredItems);
     const hasCpacityDiff = checkHasDiffCpacity(filteredItems);
 
+    useEffect(() => {
+        bookingsInputHook.setBookingInputs([]);
+    }, [dayPickerHook.from?.valueOf()]);
+
     const { info } = modalHook;
-    return <JDmodal head={{
-        title: "날짜 및 시간 선택하기"
-    }} fullInMobile  {...modalHook} {...info} >
-        <JDalign mb>
-            <JDdayPicker calenaderPosition="left" isRange={false} disabledDays={checkIsDisableDay} {...dayPickerHook} />
-        </JDalign>
-        <Flex>
-            {filteredItems.map((item, index) =>
-                <TimeBlock
-                    hover
-                    onClick={() => {
-                        bookingsInputHook.addProduct({
-                            itemId: item._itemId,
-                            productId: item._id,
-                            productOrigin: item,
-                            attrs: item.attrs,
-                            priceOrigin: 0,
-                        })
-                    }}
-                    text={"center"}
-                    mr="small"
-                    showEnd={hasTimeDiff}
-                    priceShow={hasPriceDiff}
-                    capacityShow={hasCpacityDiff}
-                    key={item._id + "timeblock"}
-                    item={item}
-                    selected={!!bookingsInputHook.findBookingInput(item._id)}
-                    index={index}
-                />)}
-        </Flex>
-    </JDmodal>;
+    return (
+        <JDmodal
+            foot={
+                <Flex>
+                    <ModalBtn
+                        thema="primary"
+                        mr
+                        onClick={modalHook.closeModal}
+                        label="선택완료"
+                        size="long"
+                    />
+                    <ModalBtn
+                        thema="grey2"
+                        onClick={bookingsInputHook.empty}
+                        label="선택해제"
+                        size="long"
+                    />
+                </Flex>
+            }
+            head={{
+                title: "날짜 및 시간 선택하기",
+            }}
+            fullInMobile
+            {...modalHook}
+            {...info}
+        >
+            <JDalign mb>
+                <div>
+                    <JDlabel txt="날짜선택" />
+                    <JDdayPicker
+                        mr
+                        mb
+                        calenaderPosition="left"
+                        isRange={false}
+                        disabledDays={checkIsDisableDay(salesDates, items)}
+                        {...dayPickerHook}
+                    />
+                </div>
+                <div>
+                    <JDlabel txt="시간선택" />
+                    <Flex wrap>
+                        {ProductBookingUtils.sortByDateRangeForSale(
+                            filteredItems
+                        ).map((item, index) => (
+                            <TimeBlock
+                                mb
+                                hover
+                                onClick={() => {
+                                    const detail = deepCopy(
+                                        item.capacityDetails[0]
+                                    );
+                                    detail.count = 1;
+                                    const targetProduct: IBookingInputData = {
+                                        itemId: item._itemId,
+                                        productId: item._id,
+                                        productOrigin: item,
+                                        attrs: item.attrs,
+                                        priceOrigin: 0,
+                                        countDetails: [detail],
+                                    };
+                                    bookingsInputHook.toggleProduct(
+                                        targetProduct
+                                    );
+                                }}
+                                text={"center"}
+                                mr="small"
+                                showEnd={hasTimeDiff}
+                                priceShow={!hasPriceDiff && !noPayMethod}
+                                capacityShow={true}
+                                key={item._id + "timeblock"}
+                                item={item}
+                                selected={
+                                    !!bookingsInputHook.findBookingInput(
+                                        item._id
+                                    )
+                                }
+                                index={index}
+                            />
+                        ))}
+                    </Flex>
+                </div>
+            </JDalign>
+            <JDlabel txt="인원선택" />
+            <CpacityTimeSelecter
+                products={selectedProducts}
+                bookingsInputHook={bookingsInputHook}
+            />
+        </JDmodal>
+    );
 };
 
-const checkHasDiffTime = (itmes: productList_ProductList_items_ProductBooking[]) => {
+const checkHasDiffTime = (
+    itmes: productList_ProductList_items_ProductBooking[]
+) => {
     const getDiff = (item: productList_ProductList_items_ProductBooking) => {
         const useRange = item?.dateRangeForUse;
-        return useRange?.from - useRange?.to
-    }
+        return useRange?.from - useRange?.to;
+    };
     let firstTIme = getDiff(itmes[0]);
 
     for (const item of itmes) {
@@ -113,11 +221,13 @@ const checkHasDiffTime = (itmes: productList_ProductList_items_ProductBooking[])
         }
     }
     return false;
-}
-const checkHasDiffPrice = (itmes: productList_ProductList_items_ProductBooking[]) => {
+};
+const checkHasDiffPrice = (
+    itmes: productList_ProductList_items_ProductBooking[]
+) => {
     const getPrice = (item: productList_ProductList_items_ProductBooking) => {
-        return item?.price
-    }
+        return item?.price;
+    };
     let firstPrice = getPrice(itmes[0]);
 
     for (const item of itmes) {
@@ -126,12 +236,14 @@ const checkHasDiffPrice = (itmes: productList_ProductList_items_ProductBooking[]
         }
     }
     return false;
-}
+};
 
-const checkHasDiffCpacity = (itmes: productList_ProductList_items_ProductBooking[]) => {
+const checkHasDiffCpacity = (
+    itmes: productList_ProductList_items_ProductBooking[]
+) => {
     const getCpacity = (item: productList_ProductList_items_ProductBooking) => {
-        return item?.capacity
-    }
+        return item?.capacity;
+    };
     let firstPrice = getCpacity(itmes[0]);
 
     for (const item of itmes) {
@@ -140,4 +252,4 @@ const checkHasDiffCpacity = (itmes: productList_ProductList_items_ProductBooking
         }
     }
     return false;
-}
+};

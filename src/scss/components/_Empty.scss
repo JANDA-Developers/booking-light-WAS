@@ -1,0 +1,7 @@
+html body .empty {
+    &--plain {
+        border: none;
+        background-color: transparent;
+        padding: none;
+    }
+}

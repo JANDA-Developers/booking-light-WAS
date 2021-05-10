@@ -1,57 +1,80 @@
-import React from 'react';
-import classNames from 'classnames';
-import { JDatomClasses, WindowSizeNumber } from '@janda-com/front';
-import { IDiv, JDatomExtentionSet } from '@janda-com/front/dist/types/interface';
-import { IUploadIconProp } from '@janda-com/front/dist/components/iconUploader/IconUploader';
+import React, { useEffect, useRef, useState } from "react";
+import classNames from "classnames";
+import { JDatomClasses, WindowSizeNumber } from "@janda-com/front";
+import {
+    IDiv,
+    JDatomExtentionSet,
+} from "@janda-com/front/dist/types/interface";
+import { IUploadIconProp } from "@janda-com/front/dist/components/iconUploader/IconUploader";
+import { LOADING_SVG, NO_IMG } from "../../type/const";
+import {
+    fileExtendDivider,
+    urlExtendDivider,
+} from "../../utils/fileExtendDivider";
+import { Ffile } from "../../type/api";
 
-export interface IPhotoFrameProps extends JDatomExtentionSet, IDiv, IUploadIconProp {
+export interface IPhotoFrameProps
+    extends JDatomExtentionSet,
+        IDiv,
+        IUploadIconProp {
     /** 소스 */
-    src?: string;
+    src?: string | null;
     /** 언어 소스에서 명명법을 이용해 참조 */
     lang?: string;
-    /** 반응형 소스에서 명명법을 이용해 참조 */
-    responseImg?: boolean;
     /** 프레임 스타일을 제거 */
     unStyle?: boolean;
     type?: string;
     /** 백그라운드 이미지로 변경 */
     isBgImg?: boolean;
-    ratio?: number
+    ratio?: number;
     context?: any;
     windowWidth?: number;
+    loading?: boolean;
+    resizeds?: string[];
 }
 
 // Lang should be a TShortCut
 export const PhotoFrame: React.FC<IPhotoFrameProps> = ({
     mb,
     mr,
-    src: srcProp = 'https://s3.ap-northeast-2.amazonaws.com/booking.stayjanda.files/infographic/noimg.png',
+    hover,
+    src: srcProp,
     type,
     unStyle = true,
     lang,
     context,
-    responseImg,
     isBgImg,
     children,
+    loading,
     className,
+    resizeds,
     ratio,
     windowWidth = window.innerWidth,
     ...props
 }) => {
-    let src = srcProp;
+    const refContinaer = useRef<HTMLDivElement>(null);
+    const [containerWidth, setContainerWidth] = useState(0);
+    let src = srcProp || NO_IMG;
 
-    const sideIsOpen = context?.sideNavIsOpen;
+    if (resizeds) {
+        src = "";
+    }
 
-    // "mb" || "pc"
-    if (responseImg) {
-        const changePoint = sideIsOpen
-            ? WindowSizeNumber.DESKTOP
-            : WindowSizeNumber.TABLET;
+    if (resizeds && containerWidth) {
+        let imgWidth = containerWidth;
+        const biggerThans = resizeds
+            .map((size) => parseInt(size))
+            .filter((reszied) => reszied > containerWidth * 2);
+        const sorted = biggerThans.sort((a, b) => a - b);
 
-        if (windowWidth < changePoint) {
-            src += '--mb';
+        if (sorted[0]) {
+            imgWidth = sorted[0];
+
+            const { extend, namePart } = urlExtendDivider(srcProp || ".");
+
+            src = namePart + "---" + imgWidth + "." + extend;
         } else {
-            src += '--pc';
+            src = srcProp || NO_IMG;
         }
     }
 
@@ -60,25 +83,33 @@ export const PhotoFrame: React.FC<IPhotoFrameProps> = ({
     }
     if (type) src += type;
 
-    const classes = classNames('photoFrame', className, {
-        'photoFrame--fixHeight': isBgImg,
-        'photoFrame--unStyle': unStyle,
-        ...JDatomClasses({ mb, mr })
+    const classes = classNames("photoFrame", className, {
+        "photoFrame--fixHeight": isBgImg,
+        "photoFrame--unStyle": unStyle,
+        ...JDatomClasses({ mb, mr, hover }),
     });
-
-    const bg = src;
 
     const paddingTop = ratio ? 100 / ratio : undefined;
 
     const RATIO_DIV_STYLE: React.CSSProperties = {
         height: 0,
-        position: 'relative',
-        width: '100%',
+        position: "relative",
+        width: "100%",
         paddingTop: `${paddingTop}%`,
+    };
+
+    useEffect(() => {
+        if (refContinaer.current)
+            setContainerWidth(refContinaer.current.clientWidth);
+    }, [refContinaer]);
+
+    if (loading) {
+        src = LOADING_SVG;
     }
 
+    const bg = src;
     return (
-        <div className={classes} {...props}>
+        <div ref={refContinaer} className={classes} {...props}>
             {isBgImg && (
                 <div
                     style={{
@@ -95,3 +126,18 @@ export const PhotoFrame: React.FC<IPhotoFrameProps> = ({
 };
 
 export default PhotoFrame;
+
+interface IProp extends IPhotoFrameProps {
+    file?: Ffile | null;
+}
+//래팩토링 Me 이건 파일받아서 만들어주는 hight api
+export const Photo: React.FC<IProp> = ({ file, ...props }) => {
+    if (!file) return <PhotoFrame {...props} />;
+    const { tags } = file;
+    const resizeds = tags
+        .find((tag) => tag.key === "resized")
+        ?.value.split(",");
+
+    console.log({ resizeds });
+    return <PhotoFrame src={file.uri} {...props} resizeds={resizeds} />;
+};

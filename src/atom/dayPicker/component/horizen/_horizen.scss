@@ -1,0 +1,74 @@
+$horizen-calendarCell-width : calc(14.28vw - 2.8px);
+
+/*  Horizen-------------------------------------------------------------------------- */
+
+&--horizen {
+    min-width: 100%;
+    overflow: hidden;
+    margin-bottom: $standard-margin-bottom!important;
+    
+    
+
+    .DayPicker-NavBar {
+    }
+
+    .DayPicker-Months {
+        white-space: nowrap;
+        overflow-x: scroll;
+
+
+        .DayPicker-Month {
+            display: inline-block;
+            border-right:$horizen-month-bordeRight;
+
+            .DayPicker-Caption {
+                height: auto;
+                margin-bottom: 0;
+                font-weight: normal;
+
+                &__year {
+                    text-align: left;
+                    font-weight: normal;
+                    padding-left: 1rem;
+                    background-color: $horizen-caption-bgcolor;
+                    margin-right: 0;
+                }
+
+                &__month {
+                    margin-left: .5rem;
+                }
+
+                &__week {
+                    display: inline-block;
+                    width: $horizen-calendarCell-width;
+                }
+            }
+
+            .DayPicker-Body {
+                white-space: nowrap;
+
+                .DayPicker-Week {
+                    display: inline-block;
+                    white-space: nowrap;
+
+                    .DayPicker-Day {
+
+                        height: $daypicker-block-size - 0.1rem;
+                        line-height: $daypicker-block-size - 0.1rem;
+                        border: none;
+                        display: inline-block;
+                        width: $horizen-calendarCell-width;
+
+                        &--outside {
+                            display: none;
+                        }
+
+                        &__month {
+                            font-size: 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

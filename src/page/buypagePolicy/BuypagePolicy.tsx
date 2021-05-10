@@ -82,7 +82,6 @@ export const BuypagePolicy: React.FC<IProp> = () => {
     return <div>
         <JDpageHeader title="예약 폴리시 관리" desc="예약페이지에서 동의받을 폴리시를 설정 해주세요." />
         <JDcontainer verticalPadding>
-
             {!editMode && <div>
                 {policies.map(policy =>
                     <FoldCard mb key={policy._id} foot={

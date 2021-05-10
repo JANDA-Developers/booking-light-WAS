@@ -1,4 +1,6 @@
 @import "./hack/card";
+@import "./hack/horizenDayPicker";
+@import "./hack/photoFrame";
 
 html, body, #body, #JDoutWrapper {
     overflow-x: hidden;
@@ -128,8 +130,8 @@ border: 1px solid #bebebe; }
 }
 
 // 라이브러리에 추가해도 좋음
-#root .DayPicker.DayPicker--right, .ReactModalPortal .DayPicker.DayPicker--right {
-    position: absolute!important;
+.ReactModalPortal .DayPicker.DayPicker--right {
+    // position: absolute!important;
 }
 
 html .JDtextColor--black {

@@ -1,5 +1,10 @@
 .timeblock {
     &--selected {
-        border: 1px solid $primary-color!important;
+        border: 2px solid $primary-color!important;
+    }
+    &--disabled {
+        background-color: $grey-level1;
+        cursor: none;
+        pointer-events: none;
     }
 }

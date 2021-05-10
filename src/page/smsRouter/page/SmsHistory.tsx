@@ -20,7 +20,7 @@ export const SmsHistoryList: React.FC<IProps> = () => {
     const modalHook = useModal<ISmsHistoryModalInfo>()
 
     return <div>
-        <JDpageHeader title="구매리스트" desc="구매리스트 확인하기." />
+        <JDpageHeader title="SMS 히스토리" desc="SMS 히스토리 확인하기." />
         <JDcontainer size={WindowSize.full}>
             {/* <ItemRadio handleSelectItem={handleSelectItem} itemIdFilter={itemIdFilter} /> */}
             <JDsearchBar searchOps={[{

@@ -1,0 +1,48 @@
+
+export class StoreTypeSwitch {
+    private type: StoreType;
+    private buypageType: BuyPageType;
+
+    public isDateRangeMall: boolean;
+    public isShoppingType: boolean;
+    public isTimeMall: boolean;
+
+    constructor(type: StoreType) {
+        this.type = type;
+        this.buypageType = BuyPageTypeMatcher[type];
+        this.isDateRangeMall =
+            BuyPageTypeMatcher[type] === BuyPageType.DAY_RANGE;
+        this.isShoppingType =
+            BuyPageTypeMatcher[type] === BuyPageType.SHOPPING_MALL;
+        this.isTimeMall = BuyPageTypeMatcher[type] === BuyPageType.TIME_MALL;
+    }
+
+    get itemListDefaultView(): TItemListViewType {
+        if (this.isShoppingType) return "gallery";
+        return "list";
+    }
+
+    public purchaseBundleDescribe(
+        original:
+            | purchaseBundleListForBusinessUser_PurchaseBundleListForBusinessUser_items
+            | purchaseBundleListForCustomer_PurchaseBundleListForCustomer_items
+    ): string {
+        let describe = "";
+        if (this.isDateRangeMall)
+            describe = purchaseBundleDayRangeDescribe(original as any);
+        else if (this.isShoppingType)
+            describe = purchaseBundleProductsShoppingDescribe(original as any);
+        else if (this.isTimeMall)
+            describe = purchaseBundleProductsTimeDescribe(original as any);
+        else describe = purchaseBundleProductsDescribe(original as any);
+        return describe;
+    }
+
+    get dateRangeViewFactory(): React.FC<IDateRangeViewFactoryProps> {
+        if (this.isTimeMall) return TimeMallUseRangeView;
+
+        if (this.isDateRangeMall) return DateRangeMallRangeView;
+
+        return DateAndTimeRangeView;
+    }
+}

@@ -8,11 +8,33 @@
     bottom: 0;
     opacity: 0;
     display: none;
+    transition: .3s;
 
-    &--visible {
-        display: block;
+    // &--visible {
+    //     display: flex;
+    //     opacity: 1;
+    //     align-items: center;
+    //     justify-content: center;
+    //     .muPageLoading__circle {
+    //         opacity: 1;
+    //     }
+    // }
+    
+    // &__circle {
+    //     transition: 3s;
+    //     transition-timing-function: ease-in-out;
+    //     opacity: 0;
+    // }
+
+    // move visible to this
+    &:not([data-fetchingid=""]) {
+        display: flex;
         opacity: 1;
+        align-items: center;
+        justify-content: center;
+        .muPageLoading__circle {
+            opacity: 1;
+        }
     }
-
 }
 

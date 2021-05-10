@@ -20,7 +20,7 @@ export const PrivacyModal: React.FC<IProp> = ({ modalHook, }) => {
         </div>
     } {...modalHook} {...info} >
         <JDpolicyViewer>
-            {info?.policy}
+            <div dangerouslySetInnerHTML={{ __html: info?.policy || "" }} />
         </JDpolicyViewer>
     </JDmodal>;
 };

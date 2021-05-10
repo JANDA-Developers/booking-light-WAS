@@ -6,6 +6,7 @@ import ReactTable, {
   RowRenderProps,
   Column,
 } from 'react-table-6';
+import { Empty } from '../../atom/Empty';
 
 export interface JDrowInfo<T, C extends keyof T = any> extends RowRenderProps {
   original: T;
@@ -39,7 +40,7 @@ const overrideConfig: Partial<TableProps<any, any>> = {
   previousText: '이전',
   nextText: '다음',
   loadingText: '로딩...',
-  noDataText: '데이터가 존재하지 않습니다.',
+  noDataText: <Empty mode="plain" />,
   pageText: '페이지',
   ofText: '/',
   rowsText: '줄',

@@ -1,0 +1,14 @@
+
+.dateSelecter {
+    border-radius: $standard-border-radius;
+    border: $standard-small-space solid $grey-level2;
+    padding: $standard-small-space;
+    &__inner {
+      padding: $standard-small-space;
+      cursor: pointer;
+      &:hover {
+      background-color: $grey-level1;
+      }
+    }
+  }
+  

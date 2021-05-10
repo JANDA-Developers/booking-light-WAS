@@ -1,0 +1,46 @@
+#root .DayPicker--horizen {
+    width: 100%;
+    .DayPicker-NavBar:after {
+        display: none!important;
+    }
+
+    .DayPicker-Months {
+        overflow: overlay;
+        &::-webkit-scrollbar {
+            transition: 0.3s;
+            background-color: $JDscrollbar-bar-color;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: transparent;
+            width: 4px;
+            height: 4px;
+          }
+          &::-webkit-scrollbar-track {
+            background-color: $JDscrollbar-bar-color;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: $JDscrollbar-thumb-color;
+            box-sizing: border-box;
+            border: 1px solid $JDscrollbar-thumb-color;
+            cursor: pointer;
+            &:hover {
+              background-color: $JDscrollbar-thumb-hover-color;
+            }
+          }
+          &::-webkit-scrollbar-button {
+            display: none;
+          }
+        @extend %JDscrollbar--slender;
+    }
+    .DayPicker-Months .DayPicker-Month .DayPicker-Body .DayPicker-Week .DayPicker-Day {
+        z-index: 2;
+        max-width: 60px;
+        margin: 0px!important;
+
+        &:hover {
+            overflow: visible!important;
+        } 
+    }
+
+ 
+}

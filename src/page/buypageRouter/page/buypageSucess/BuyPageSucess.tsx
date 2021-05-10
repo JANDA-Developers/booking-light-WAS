@@ -5,6 +5,7 @@ import { AttributeViewer } from '../../../../component/attributeViewer/Attribute
 import { BackStepBar } from '../../../../component/backstepBar/BackstepBar';
 import { BankHolderViewer } from '../../../../component/bankHolderViewer/BankHolderViewer';
 import { PurchaseBundleViewer } from '../../../../component/purchaseBunldeViewer/PurhcaseBundleViewer';
+import AppContext from '../../../../context';
 import { usePurchaseBundleFindById } from '../../../../hook/usePurchase';
 import { Paymethod } from '../../../../type/api';
 import { BuyPagePaths } from '../../BuyPageRouter';
@@ -16,6 +17,7 @@ interface IProp { }
 
 export const BuyPageSucess: React.FC<IProp> = () => {
     const routeMatch = useRouteMatch<IDetailRouteProp>();
+    const {isNonProfit} = useContext(AppContext);
     const { params: { bundleId } } = routeMatch;
     const { configure: { RESERVATION_NORMAL: { texts } } } = useContext(BuypageContext)
     const { item } = usePurchaseBundleFindById(bundleId);
@@ -26,7 +28,7 @@ export const BuyPageSucess: React.FC<IProp> = () => {
     if (!item) return null;
     return <JDcontainer verticalPadding className="buyPageSetDetail__container">
         <BackStepBar mb label={"예약페이지로"} go={BuyPagePaths.index} />
-        <Bold size="h6">구매가 완료 되었습니다.</Bold>
+        <Bold size="h6">{isNonProfit ? "예약이 완료 되었습니다." : "구매가 완료 되었습니다."}</Bold>
         {isBankPay && <BankHolderViewer title={"아래 계좌로 입금 해주세요."} bankHolder={accountHolder.kr} bankName={bankName.kr} bankAccount={bankAccount.kr} mb />}
         <PurchaseBundleViewer mb bundle={item} />
         <JDcard mb >

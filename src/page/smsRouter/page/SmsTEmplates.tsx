@@ -10,13 +10,13 @@ import { ISmsDetailModalInfo, NotificationTemplateModal } from '../components/No
 
 interface IProp { }
 
-export const SmsTemplates: React.FC<IProp> = () => {
+export const NotificationTemplates: React.FC<IProp> = () => {
     const templateListHook = useNotificationTemplateList()
     const { getLoading, items } = templateListHook;
     const smsModalHook = useModal<ISmsDetailModalInfo>();
     const [deleteMu] = useTemplateDelete({
-        onCompleted: ({ SmsTemplateDelete }) => {
-            completeMsg(SmsTemplateDelete, "템플릿 삭제완료")
+        onCompleted: ({ NotificationTemplateDelete }) => {
+            completeMsg(NotificationTemplateDelete, "템플릿 삭제완료")
         }
     });
 
@@ -63,7 +63,7 @@ export const SmsTemplates: React.FC<IProp> = () => {
                 </Flex>
             </SkipUpdate>
         </JDcontainer>
-        <NotificationTemplateModal key={(smsModalHook.info?.template?._id || "create") + "NotificationTemplateModal"} modalHook={smsModalHook} />
+        <NotificationTemplateModal key={(smsModalHook.isOpen ? "open" : "close" + smsModalHook.info?.template?._id || "create") + "NotificationTemplateModal"} modalHook={smsModalHook} />
     </div>;
 };
 

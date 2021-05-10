@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client";
 
 export const F_SYSTEMNOTI = gql`
     fragment FsystemNoti on SystemNoti {
@@ -8,5 +8,6 @@ export const F_SYSTEMNOTI = gql`
         type
         content
         isRead
+        severity
     }
-`
+`;

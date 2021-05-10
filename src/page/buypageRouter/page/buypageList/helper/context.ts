@@ -6,26 +6,24 @@ import { DefaultBuypageConfig } from "../../../../buypageSet/config/configDefaul
 
 export interface IBuyPageContext {
     store: storeFindByCode_StoreFindByCode;
-    configure: IbuypageConfig
+    configure: IbuypageConfig;
     isLogined: boolean;
-    itemCats: IselectedOption[]
-    updateBasket: () => void
+    noPayMethod: boolean;
+    itemCats: IselectedOption[];
+    updateBasket: () => void;
 }
 
-export const BuypageContext = React.createContext<IBuyPageContext>(
-    { isLogined: false, 
-        store: {} as any,
-        configure: DefaultBuypageConfig,
-        itemCats: [],
-        updateBasket: () => {}
-    });
+export const BuypageContext = React.createContext<IBuyPageContext>({
+    isLogined: false,
+    store: {} as any,
+    noPayMethod: false,
+    configure: DefaultBuypageConfig,
+    itemCats: [],
+    updateBasket: () => {},
+});
 
-
-    
-export interface IBuyPageShoppingContext {
-}
+export interface IBuyPageShoppingContext {}
 
 export const BuypageShoppingContext = React.createContext<IBuyPageShoppingContext>(
-    { 
-    });
-
+    {}
+);

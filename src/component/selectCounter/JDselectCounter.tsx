@@ -1,8 +1,33 @@
 import { JDtypho, JDselect, IJDalignProp, IUseSelect, JDalign, JDbutton } from '@janda-com/front';
 import { JDselectProps } from '@janda-com/front/dist/components/select/SelectBox';
 import { IJDtyphoProp } from '@janda-com/front/dist/components/typho/Typho';
-import React from 'react';
+import React, { Component } from 'react';
 import { lastOf } from '../../utils/lastOf';
+import { createFilter } from "react-select";
+import { FixedSizeList as List } from "react-window";
+
+
+const height = 35;
+
+class MenuList extends Component {
+    render() {
+        const { options, children, maxHeight, getValue } = this.props as any;
+        const [value] = getValue();
+        const initialOffset = options.indexOf(value) * height;
+
+        return (
+            // @ts-ignore
+            <List
+                height={maxHeight}
+                itemCount={children.length}
+                itemSize={height}
+                initialScrollOffset={initialOffset}
+            >
+                {({ index, style }: any) => <div style={style}>{children[index]}</div>}
+            </List>
+        );
+    }
+}
 
 export interface ISelectCountProp extends IJDalignProp {
     selectHook: IUseSelect;
@@ -28,6 +53,9 @@ export const JDselectCounter: React.FC<ISelectCountProp> = ({
         onChange(options[count + (plus ? 1 : -1)]);
     };
 
+
+    const speedyMode = options.length > 100;
+
     return (
         <JDalign
             className="counter"
@@ -43,10 +71,8 @@ export const JDselectCounter: React.FC<ISelectCountProp> = ({
             )}
             <JDalign flex className="counter__inner">
                 <JDbutton
-
                     disabled={count === 0}
                     thema="grey1"
-
                     mode="flat"
                     className="counter__btn"
                     onClick={() => {
@@ -55,7 +81,10 @@ export const JDselectCounter: React.FC<ISelectCountProp> = ({
                 >
                     -
                 </JDbutton>
-                <JDselect mr="no" mb="no" {...selectHook} {...selectProps} />
+                <JDselect
+                    filterOption={speedyMode ? createFilter({ ignoreAccents: false }) : undefined}
+                    components={{ MenuList: speedyMode ? MenuList : undefined }}
+                    mr="no" mb="no" {...selectHook} {...selectProps} />
                 <JDbutton
                     disabled={maxCount <= count}
                     thema="grey1"

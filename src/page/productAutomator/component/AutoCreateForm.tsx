@@ -1,13 +1,12 @@
-import { Bold, Flex, HOURS_SELECT_OP, InputText, isEmpty, JDalign, JDbutton, JDhorizen, JDlabel, JDselect, JDtypho, Mb, MINUTES_SELECT_OP, opFind, selectOpCreater, Split, TimePicker, useSelect, useTimePicker } from '@janda-com/front';
+import { Bold, Flex, InputText, JDalign, JDbutton, JDhorizen, JDlabel, JDselect, Mb, opFind, selectOpCreater, TimePicker, useSelect, useTimePicker } from '@janda-com/front';
 import { ISet } from '@janda-com/front/dist/types/interface';
 import React, { useContext, useState } from 'react';
 import AppContext from '../../../context';
-import { FproductBookingTemplate_capacityDetails, ItemBookingCreateInput, ProductAutomatorBookingCreateInput, ProductBookingTemplateInput } from '../../../type/api';
-import { WeekOption } from '../../../type/const';
+import { FproductBookingTemplate_capacityDetails, ProductAutomatorBookingCreateInput, ProductBookingTemplateInput } from '../../../type/api';
+import { HOURS_SELECT_OP, MINUTES_SELECT_OP, WeekOption } from '../../../type/const';
 import { minsTohhmm24 } from '../../../utils/dateFormat';
 import { Validater } from '../../../utils/Validater';
 import { CapacityDetailEditor } from '../../product/component/CapacityDetailEditor';
-import { ProductTable } from '../../product/component/ProductTable';
 import { ProductTemplateTable } from '../../product/component/ProductTemplateTable';
 
 const IntervalOptions = selectOpCreater({
@@ -29,7 +28,7 @@ interface IProp {
 
 // TODO 타스처럼
 export const AutoCreateForm: React.FC<IProp> = ({ data, setData }) => {
-    const { selectedStore } = useContext(AppContext);
+    const { selectedStore, isTimeMall } = useContext(AppContext);
     const items = selectedStore?.items || []
 
     const itemOps = items.map(item => ({
@@ -37,9 +36,12 @@ export const AutoCreateForm: React.FC<IProp> = ({ data, setData }) => {
         value: item._id
     }))
     const [capacityDetails, setCapacityDetails] = useState<FproductBookingTemplate_capacityDetails[]>([])
+
     const startTimeHook = useTimePicker();
     const endTimeHook = useTimePicker();
     const inmtervalHook = useSelect({ label: "60분", value: 60 }, IntervalOptions)
+
+    const capacityCount = capacityDetails?.[0]?.count || 0
 
     const targetItemOp = itemOps.find(ops => ops.value === data.targetItemId);
     const targetItem = items.find(item => item._id === targetItemOp?.value);
@@ -53,7 +55,13 @@ export const AutoCreateForm: React.FC<IProp> = ({ data, setData }) => {
         value: (inmtervalHook.selectedOption?.value || 0) > 10,
         failMsg: "설정간격을 입력 해주세요 (최소 간격은 10분.)",
         id: "autoTime"
+    }, {
+        value: capacityCount > 0,
+        failMsg: "수량을 1 이상 입력 해주세요.",
+        id: "monoSelectCounter"
     }])
+
+
 
 
     const generate = (): ProductBookingTemplateInput[] => {
@@ -64,15 +72,16 @@ export const AutoCreateForm: React.FC<IProp> = ({ data, setData }) => {
         const diff = endMin - startMin
         const step = diff / interval;
 
-
         const intervalAdd = (index: number) => {
             return index * interval;
         }
+        const capacity = isTimeMall ? capacityDetails?.[0]?.count : -1;
+        const price = isTimeMall ? capacityDetails?.[0]?.price : 0;
 
         const inputs: ProductBookingTemplateInput[] = new Array(step).fill(null).map((_, index): ProductBookingTemplateInput => (
             {
-                capacity: -1,
-                price: 9000,
+                capacity,
+                price,
                 timeRangeForUse: {
                     end: minsTohhmm24(startMin + intervalAdd(index + 1)),
                     start: minsTohhmm24(startMin + intervalAdd(index))
@@ -154,6 +163,7 @@ export const AutoCreateForm: React.FC<IProp> = ({ data, setData }) => {
         </Flex>
         {/* 아래 캐파시티로 */}
         <CapacityDetailEditor
+            mode={isTimeMall ? "single" : undefined}
             onChange={setCapacityDetails}
             usageDetails={capacityDetails}
         />

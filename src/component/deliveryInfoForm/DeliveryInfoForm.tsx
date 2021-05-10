@@ -19,19 +19,26 @@ export const DeliveryInfoForm: React.FC<IProp> = ({ input, setInput }) => {
             setInput({ ...input });
         }} checked={receiverSmaeWithBuyer} /> </JDtypho>
         <Flex mb>
-            <InputText id="ReceiverNameInput" mr label="수령인" onChange={(val: any) => {
+            <InputText readOnly={receiverSmaeWithBuyer} id="ReceiverNameInput" mr label="수령인" onChange={(val: any) => {
                 input.receiverName = val
                 setInput({ ...input });
             }} value={receiverName} />
-            <InputText id="ReceiverPhoneInput" onChange={(val: any) => {
+            <InputText readOnly={receiverSmaeWithBuyer} id="ReceiverPhoneInput" onChange={(val: any) => {
                 input.receiverPhone = val;
                 setInput({ ...input });
             }} value={receiverPhone} hyphen label="연락처" />
         </Flex>
-        <AddressInput id="AddressInput" inputProps={{ label: "배송지" }} mb address={address} setAddress={(address) => {
-            input.address = address
-            setInput({ ...input });
-        }} />
+        <AddressInput
+            modalProps={{
+                head: {
+                    title: "배송지 검색하기"
+                }
+            }}
+            id="AddressInput"
+            inputProps={{ label: "배송지" }} mb address={address} setAddress={(address) => {
+                input.address = address
+                setInput({ ...input });
+            }} />
         <InputText id="AddressDetailInput" label="상세주소" value={addressDetail} onChange={(val: any) => {
             input.addressDetail = val;
             setInput({ ...input });

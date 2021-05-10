@@ -1,0 +1,12 @@
+[] DATE 객체안에 숏컷용 date객체들 전부 넣기
+[] TIME_VALUE 객체안에 숏컷용 date value들 전부 넣기
+[] 각 커셉들 명명법 검사
+[] 어뎁터 인풋들의 인터페이스는 하나의 공통 인터페이스를 implement 해야함.
+[] 각 예약페이지들 공통적인 부분들 묶어놓기
+[] BookingInput에 이상한 값이 들어오는것 같다. 벨리데이션을 좀더 해봐야할듯 하다.
+[] noProfit 타입별 정리
+[] noProfit 텍스트정리
+[] IItem resolveType에 type플래그 매칭 관계에 관해서 조금 손볼 필요가 있음.
+ type이 분기 MAP에 들어가지 않았을떄, 처리가 필요함
+
+ 
