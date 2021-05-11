@@ -7,6 +7,7 @@ import { IBuypagePurchaseCommon } from "../buypageDetail/BuyPageDetailBase";
 import { IBuypageProductData } from "../buypageList/helper/productMap";
 import { DayRangeProductViewer } from "../components/DayRangeProductsViewer";
 import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { CommonPriceViewer } from "./components/PriceViewer";
 
 interface IProp extends IBuypagePurchaseCommon {
     item: IBuypageProductData;
@@ -47,12 +48,7 @@ export const BuyPageRangeDayPurchase: React.FC<IProp> = ({
             handleBackStep={handleBackStep}
             {...usePurchaseHook}
             PriceViewer={
-                <Flex typho={{ size: "large" }}>
-                    <JDtypho mr>최종금액</JDtypho>
-                    <JDtypho color="error">
-                        {autoComma(optionsAndProductsPrice)} 원
-                    </JDtypho>
-                </Flex>
+                <CommonPriceViewer totalPrice={optionsAndProductsPrice} />
             }
             SelectViewer={
                 <DayRangeProductViewer

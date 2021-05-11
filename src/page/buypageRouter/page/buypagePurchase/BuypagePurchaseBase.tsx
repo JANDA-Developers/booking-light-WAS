@@ -13,9 +13,11 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router";
 import { AttributeInputs } from "../../../../component/attributeInputs/AttributeInputs";
 import { BackStepBar } from "../../../../component/backstepBar/BackstepBar";
+import { OptionsViewer } from "../../../../component/optionsViewer/OptionsViewer";
 import { PrivacyModal } from "../../../../component/privacyModal/PrivacyModal";
 import { TUsePurchase } from "../../../../hook/usePay";
 import NiceElments from "../../../../nice/NiceElments";
+import { SelectOptionInput } from "../../../../type/api";
 import { getNiceProperty } from "../../utils/getNiceProperty";
 import { BuypageContext } from "../buypageList/helper/context";
 import { AnonyPurchaseForm } from "../components/AnonyPurchaseForm";
@@ -24,6 +26,7 @@ import { PolicyBlocks } from "./components/PolicyBlocks";
 import { PurchaseBtn } from "./components/PurchaseBtn";
 
 interface IProp extends TUsePurchase {
+    options?: SelectOptionInput[];
     UnderAnonyMouseForm?: JSX.Element;
     SelectViewer?: JSX.Element;
     PriceViewer?: JSX.Element;
@@ -32,6 +35,7 @@ interface IProp extends TUsePurchase {
 }
 
 export const BuyPagePurchaseBase: React.FC<IProp> = ({
+    options,
     SelectViewer,
     UnderAnonyMouseForm,
     userInfoHook,
@@ -68,6 +72,7 @@ export const BuyPagePurchaseBase: React.FC<IProp> = ({
                         />
                         <Large mb>선택정보</Large>
                         {SelectViewer}
+                        <OptionsViewer options={options} />
                         <JDhorizen margin={3} />
                         <Large mb>예약자정보</Large>
                         <AnonyPurchaseForm

@@ -33,6 +33,7 @@ import {
 import { DeliveryPriceInfoViewer } from "../buypageList/components/DeliveryInfoView";
 import { BuypageContext } from "../buypageList/helper/context";
 import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { CommonPriceViewer } from "./components/PriceViewer";
 
 interface IProp extends IBuypagePurchaseCommon {
     handleBackStep: () => void;
@@ -67,19 +68,15 @@ export const BuyPageShoppingPurchase: React.FC<IProp> = ({
     buypageDetailHook,
     handleBackStep,
 }) => {
-    const { bookingsInputHook } = buypageDetailHook;
+    const { bookingsInputHook, optionsPrice } = buypageDetailHook;
     const histroy = useHistory();
     const selectedOps = extractKeys(bookingsInputHook?.bookingInputs || []);
     const purchaseProducts = bookingsInputHook?.bookingInputs || [];
 
-    const { store, configure, updateBasket, noPayMethod } = useContext(
-        BuypageContext
-    );
-    const {
-        deliveryInfo,
-        setDeliveryInfo,
-        deliverValidate,
-    } = useDeliveryForm();
+    const { store, configure, updateBasket, noPayMethod } =
+        useContext(BuypageContext);
+    const { deliveryInfo, setDeliveryInfo, deliverValidate } =
+        useDeliveryForm();
 
     const buypage = store.buypage;
     const policies = buypage.policies || [];
@@ -212,25 +209,17 @@ export const BuyPageShoppingPurchase: React.FC<IProp> = ({
                 </JDcard>
             }
             PriceViewer={
-                <div>
-                    <Flex mb="small">
-                        <JDtypho mr>상품금액</JDtypho>
-                        <div>{autoComma(checkPriceSum)} 원</div>
-                    </Flex>
-                    <Flex mb>
-                        <JDtypho mr>배송비</JDtypho>
+                <CommonPriceViewer
+                    optionsPrice={optionsPrice}
+                    productPrice={checkPriceSum}
+                    DeliveryPriceView={
                         <DeliveryPriceInfoViewer
                             delivery={deliveryConfig as any}
                             mr
                         />
-                    </Flex>
-                    <Flex typho={{ size: "large" }}>
-                        <JDtypho mr>최종금액</JDtypho>
-                        <JDtypho color="error">
-                            {autoComma(totalPrice)} 원
-                        </JDtypho>
-                    </Flex>
-                </div>
+                    }
+                    totalPrice={totalPrice}
+                />
             }
         />
     );

@@ -10,6 +10,7 @@ import { IBuypagePurchaseCommon } from "../buypageDetail/BuyPageDetailBase";
 import { BuypageContext } from "../buypageList/helper/context";
 import { TimeBlock } from "../components/TimeBlock";
 import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { CommonPriceViewer } from "./components/PriceViewer";
 
 interface IProp extends IBuypagePurchaseCommon {
     handleBackStep: () => void;
@@ -33,25 +34,18 @@ export const BuyPageTimePurchase: React.FC<IProp> = ({
     handleBackStep,
 }) => {
     const { bookingsInputHook, itemAttrs, options } = buypageDetailHook;
-    const purchaseProducts = bookingsInputHook?.bookingInputs || [];
-    const totalPrice = bookingsInputHook?.priceSum || 0;
 
     const usePurchaseHook = usePurchase({
         buypageDetailHook,
     });
 
-    const { totalOptionPrice } = usePurchaseHook;
+    const { optionsAndProductsPrice } = usePurchaseHook;
 
     return (
         <BuyPagePurchaseBase
             handleBackStep={handleBackStep}
             PriceViewer={
-                <Flex typho={{ size: "large" }}>
-                    <JDtypho mr>최종금액</JDtypho>
-                    <JDtypho color="error">
-                        {autoComma(totalOptionPrice)} 원
-                    </JDtypho>
-                </Flex>
+                <CommonPriceViewer totalPrice={optionsAndProductsPrice} />
             }
             SelectViewer={
                 <Flex>

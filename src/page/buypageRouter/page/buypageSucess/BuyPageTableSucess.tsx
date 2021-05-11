@@ -19,6 +19,8 @@ import { payMethodKr } from "../../../../utils/enumConverter";
 import { Clip } from "../../../../atom/clip/Clip";
 import { ShareMaster } from "../../../../atom/ShareMaster";
 import { CardBtn } from "../../../../component/btns/ModalBtn";
+import { isEmpty } from "lodash";
+import { OptionsViewer } from "../../../../component/optionsViewer/OptionsViewer";
 type IDetailRouteProp = { bundleId: string };
 
 interface IProp {}
@@ -37,6 +39,7 @@ export const BuypageTableSucess: React.FC<IProp> = () => {
 
     const isBankPay = prucahseBundle?.paymethod === Paymethod.BANK_TRANSFER;
     const itemnames = prucahseBundle?.itemNames.join(",") || "";
+    const options = prucahseBundle?.options;
 
     return (
         <JDcard
@@ -73,6 +76,13 @@ export const BuypageTableSucess: React.FC<IProp> = () => {
                 between
                 label="상품명"
                 value={prucahseBundle?.itemNames.join(", ")}
+            />
+            <Info
+                hide={isEmpty(options)}
+                mb
+                between
+                label="옵션상품"
+                value={<OptionsViewer options={options} />}
             />
             <Info
                 mb
