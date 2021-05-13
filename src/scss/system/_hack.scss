@@ -196,3 +196,23 @@ canvas {
 .JDbtn__contents {
     font-weight: 400;
 }
+
+//  overflow overlay 는 안먹힘
+#root .DayPicker--horizen .DayPicker-Months:hover, 
+.configer__enables:hover, .configer__unables:hover, 
+.JDnoti__dropBox:hover, .JDnoti__ul:hover, 
+.JDscrollBox--small:hover, .JDscrollBox:hover, 
+.JDsearchInput .dataModal__body:hover, 
+.JDselect .react-select-container 
+.react-select__menu-list:hover, 
+.JDtextarea.JDtextarea--scroll:hover, 
+.photoGrider:hover, 
+.radioBox__inner--noWrap:hover, 
+.ReactModal__Content:hover, 
+.statistic__shortBtnsWrap:hover, 
+.summaryCard__cell:hover, 
+.summaryCard__list:hover {
+    overflow: auto;
+    overflow: overlay;
+
+}
