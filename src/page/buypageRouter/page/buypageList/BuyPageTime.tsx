@@ -35,9 +35,9 @@ export const BuyPageTime: React.FC<IProp> = () => {
     const { push } = useHistory();
     const { ref, width } = useResizeDetector();
     const {
-        configure: { RESERVATION_NORMAL, salesDates },
+        configure: { TIME_MALL, salesDates },
     } = context;
-    const { useRangeFilter, useSearchFilter } = RESERVATION_NORMAL;
+    const { useSearchFilter } = TIME_MALL;
     const {
         handleBuyPageItemSearch,
         dayPickerHook,
@@ -84,7 +84,6 @@ export const BuyPageTime: React.FC<IProp> = () => {
                         mode={isMobile ? undefined : "horizen"}
                     />
                     <BuyPageSearchBar
-                        useRangeFilter={useRangeFilter}
                         useSearchFilter={useSearchFilter}
                         onSearch={handleBuyPageItemSearch}
                         mb

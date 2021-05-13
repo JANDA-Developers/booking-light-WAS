@@ -21,7 +21,7 @@ import { IBuypagePurchaseCommon } from "../buypageDetail/BuyPageDetailBase";
 import { BuyPageShoppingTable } from "../buypageList/components/BuyPageShoppingTable";
 import { DeliveryPriceInfoViewer } from "../buypageList/components/DeliveryInfoView";
 import { BuypageContext } from "../buypageList/helper/context";
-import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { BuyPagePurchaseBase } from "./BuypagePurchaseBase";
 import { CommonPriceViewer } from "./components/PriceViewer";
 
 interface IProp extends IBuypagePurchaseCommon {

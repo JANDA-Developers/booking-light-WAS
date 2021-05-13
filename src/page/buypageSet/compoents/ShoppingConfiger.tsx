@@ -1,7 +1,7 @@
-import { InputText, Bold, JDhorizen, JDswitch } from "@janda-com/front";
+import { Bold, JDhorizen, JDswitch } from "@janda-com/front";
 import { ISet } from "@janda-com/front/dist/types/interface";
 import React from "react";
-import { me_Me_stores_buypage } from "../../../type/api";
+import { SalesDaysRange } from "src/page/product/component/SalesDaysRange";
 import { BuyPageType } from "../../../type/enum";
 import { IbuypageConfig } from "../config/config";
 
@@ -14,7 +14,7 @@ export const ShoppingConfiger: React.FC<IProp> = ({
     config: _config,
     setConfig,
 }) => {
-    const { SHOPPING_MALL: config, type } = _config;
+    const { SHOPPING_MALL: config, type, salesDates } = _config;
     const { useBasket, useSearchFilter } = config;
 
     if (type !== BuyPageType.SHOPPING_MALL) return null;
@@ -46,6 +46,20 @@ export const ShoppingConfiger: React.FC<IProp> = ({
                     mb
                     label="장바구니 사용"
                 />
+            </div>
+            <div>
+                <Bold size="small">예약 가능 기간</Bold>
+                <JDhorizen margin={1} />
+                <div>
+                    <SalesDaysRange
+                        from={salesDates.from}
+                        to={salesDates.to}
+                        onChange={(range) => {
+                            _config.salesDates = range;
+                            setConfig({ ..._config });
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );

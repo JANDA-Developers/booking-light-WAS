@@ -109,8 +109,6 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
                     </ScrollBox>
                 </TabList>
                 <TabPanel>
-                    <Bold size="small">기본</Bold>
-                    <JDhorizen margin={1} />
                     <JDselect
                         hide={true}
                         options={BUYPAGE_TYPE_OPS}
@@ -142,22 +140,6 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
                         setConfig={setConfig}
                         config={config}
                     />
-                    {isShopping && (
-                        <div>
-                            <Bold size="small">예약 가능 기간</Bold>
-                            <JDhorizen margin={1} />
-                            <div>
-                                <SalesDaysRange
-                                    from={salesDates.from}
-                                    to={salesDates.to}
-                                    onChange={(range) => {
-                                        config.salesDates = range;
-                                        setConfig({ ...config });
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    )}
                     <ShoppingConfiger setConfig={setConfig} config={config} />
                     <TimeConfiger setConfig={setConfig} config={config} />
                 </TabPanel>

@@ -2,7 +2,7 @@ import React from "react";
 import { usePurchase } from "../../../../hook/usePay";
 import { IBuypagePurchaseCommon } from "../buypageDetail/BuyPageDetailBase";
 import { ProductSelectViewer } from "../components/ProductSelectViewer";
-import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { BuyPagePurchaseBase } from "./BuypagePurchaseBase";
 
 interface IProp extends IBuypagePurchaseCommon {
     handleBackStep: () => void;

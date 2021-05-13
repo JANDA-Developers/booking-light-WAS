@@ -12,23 +12,29 @@ import {
 import { _ProductFilter } from "../../../../type/api";
 import { genProductDateFilter } from "../helpers/productListFiltert";
 
+let DefaultFrom = DATE.today;
+let DefaultTo = DATE.today;
+
 export const useBuypageList = () => {
-    const { store, configure, isShoppingType, isDateRangeMall } =
+    const { store, configure, isShoppingType, isDateRangeMall, isTimeMall } =
         useContext(BuypageContext);
     const [detailItem, setDetailItem] = useState<IBuypageProductData>();
 
-    let from = DATE.today;
-    let to = DATE.today;
     if (isDateRangeMall) {
-        from = DATE.today;
-        to = DATE.tomorrow;
+        DefaultFrom = DATE.today;
+        DefaultTo = DATE.tomorrow;
     }
-    const dayPickerHook = useDayPicker(from, to);
+    const dayPickerHook = useDayPicker(DefaultFrom, DefaultTo);
 
-    const useDateFilter = genProductDateFilter(from, to, {
-        isDateRangeMall,
-        isShoppingType,
-    });
+    const useDateFilter = genProductDateFilter(
+        dayPickerHook.from,
+        dayPickerHook.to,
+        {
+            isDateRangeMall,
+            isShoppingType,
+            isTimeMall,
+        }
+    );
 
     const {
         items,
@@ -76,8 +82,6 @@ export const useBuypageList = () => {
             productListHook.setFilter({
                 ...useDateFilter,
             });
-
-            productListHook.getData();
         }
     }, [dayPickerHook.from?.valueOf(), dayPickerHook.to?.valueOf()]);
 

@@ -3,7 +3,7 @@ import React from "react";
 import { usePurchase } from "../../../../hook/usePay";
 import { IBuypagePurchaseCommon } from "../buypageDetail/BuyPageDetailBase";
 import { TimeBlock } from "../components/TimeBlock";
-import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { BuyPagePurchaseBase } from "./BuypagePurchaseBase";
 import { CommonPriceViewer } from "./components/PriceViewer";
 
 interface IProp extends IBuypagePurchaseCommon {

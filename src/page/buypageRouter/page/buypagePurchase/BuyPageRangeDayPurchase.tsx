@@ -6,7 +6,7 @@ import { getStartAndEndUse } from "../../../../utils/productBookingUtils";
 import { IBuypagePurchaseCommon } from "../buypageDetail/BuyPageDetailBase";
 import { IBuypageProductData } from "../buypageList/helper/productMap";
 import { DayRangeProductViewer } from "../components/DayRangeProductsViewer";
-import { BuyPagePurchaseBase } from "./BuyPagePurchaseBase";
+import { BuyPagePurchaseBase } from "./BuypagePurchaseBase";
 import { CommonPriceViewer } from "./components/PriceViewer";
 
 interface IProp extends IBuypagePurchaseCommon {

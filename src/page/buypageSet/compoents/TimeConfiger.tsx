@@ -21,7 +21,7 @@ export const TimeConfiger: React.FC<IProp> = ({
 
     return (
         <div>
-            {/* <Bold size="small">필터</Bold>
+            <Bold size="small">필터</Bold>
             <JDhorizen margin={1} />
             <div>
                 <JDswitch
@@ -33,7 +33,7 @@ export const TimeConfiger: React.FC<IProp> = ({
                     mb
                     label="검색필터 출력"
                 />
-            </div> */}
+            </div>
         </div>
     );
 };
