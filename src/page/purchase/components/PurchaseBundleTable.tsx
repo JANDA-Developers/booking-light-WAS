@@ -138,6 +138,7 @@ export const PurchaseBundleTable: React.FC<IProp> = ({
         {
             Header: () => <div>선택옵션</div>,
             accessor: "options",
+            width: 300,
             Cell: ({ original: { options } }) => {
                 return <OptionsViewer options={options || []} />;
             },
@@ -146,10 +147,12 @@ export const PurchaseBundleTable: React.FC<IProp> = ({
             skip: !isShoppingType,
             Header: () => <div>배송정보</div>,
             accessor: "deliveryInfo",
+            width: 350,
             Cell: ({ original: { deliveryInfo } }) => {
                 return (
                     <div>
                         <DeliveryInfoViewer
+                            column
                             delivery={deliveryInfo as FdeliveryInfo}
                         />
                     </div>

@@ -38,18 +38,17 @@ export const CapacityDetailEditor: React.FC<IProp> = ({
     const { isDateRangeMall, isTimeMall, isNonProfit } = useContext(AppContext);
     const isSingleMode = mode === "single";
 
-    const handleChange = (detail: Fcapacity, key: keyof Fcapacity) => (
-        v: any
-    ) => {
-        let _v = v;
-        if (key === "price") {
-            _v = toNumber(v);
-        }
-        // @ts-ignore
-        detail[key] = _v;
+    const handleChange =
+        (detail: Fcapacity, key: keyof Fcapacity) => (v: any) => {
+            let _v = v;
+            if (key === "price") {
+                _v = toNumber(v);
+            }
+            // @ts-ignore
+            detail[key] = _v;
 
-        onChange([...usageDetails]);
-    };
+            onChange([...usageDetails]);
+        };
 
     const handleAdd = () => {
         usageDetails.push({
@@ -151,14 +150,18 @@ export const CapacityDetailEditor: React.FC<IProp> = ({
                             onChange={handleChange(detail, "label")}
                             value={detail.label}
                         />
-                        <InputText
-                            id={CpadityDetailId("price", index)}
-                            mb
-                            comma
-                            onChange={handleChange(detail, "price")}
-                            value={detail.price}
-                            label="가격"
-                        />
+                        <div>
+                            {isNonProfit && (
+                                <InputText
+                                    id={CpadityDetailId("price", index)}
+                                    mb
+                                    comma
+                                    onChange={handleChange(detail, "price")}
+                                    value={detail.price}
+                                    label="가격"
+                                />
+                            )}
+                        </div>
                         <SelectCounter
                             id={CpadityDetailId("selectCounter", index)}
                             mb

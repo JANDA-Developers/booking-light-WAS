@@ -15,6 +15,7 @@ interface IProp {}
 export const AnnounceSummaryCard: React.FC<IProp> = () => {
     const { items } = useBoardDocList(
         {
+            initialViewCount: 5,
             initialFilter: {
                 boardKey__eq: BoardKeys.ANNOUNCE,
             },

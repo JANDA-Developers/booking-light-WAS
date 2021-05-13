@@ -19,7 +19,7 @@ export const ItemGalleryView: React.FC<IItemListviewProps> = ({
                     mb
                     className="itemList__item"
                     foot={
-                        <Flex>
+                        <Flex center>
                             <CardBtn
                                 size="small"
                                 padding="small"

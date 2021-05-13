@@ -1,6 +1,10 @@
 import { IselectedOption } from "@janda-com/front/dist/types/interface";
 import React from "react";
-import { storeFindByCode_StoreFindByCode } from "../../../../../type/api";
+import {
+    storeFindByCode_StoreFindByCode,
+    StoreType,
+} from "../../../../../type/api";
+import { BuyPageType } from "../../../../../type/enum";
 import { IbuypageConfig } from "../../../../buypageSet/config/config";
 import { DefaultBuypageConfig } from "../../../../buypageSet/config/configDefault";
 
@@ -11,6 +15,10 @@ export interface IBuyPageContext {
     noPayMethod: boolean;
     itemCats: IselectedOption[];
     updateBasket: () => void;
+    buypageType: BuyPageType;
+    isDateRangeMall: boolean;
+    isShoppingType: boolean;
+    isTimeMall: boolean;
 }
 
 export const BuypageContext = React.createContext<IBuyPageContext>({
@@ -20,10 +28,13 @@ export const BuypageContext = React.createContext<IBuyPageContext>({
     configure: DefaultBuypageConfig,
     itemCats: [],
     updateBasket: () => {},
+    buypageType: BuyPageType.DAY_RANGE,
+    isDateRangeMall: false,
+    isShoppingType: false,
+    isTimeMall: false,
 });
 
 export interface IBuyPageShoppingContext {}
 
-export const BuypageShoppingContext = React.createContext<IBuyPageShoppingContext>(
-    {}
-);
+export const BuypageShoppingContext =
+    React.createContext<IBuyPageShoppingContext>({});

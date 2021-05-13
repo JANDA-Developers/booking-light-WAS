@@ -15,7 +15,9 @@ interface IProp extends Omit<ISummaryCardProps, "contents" | "contentsId"> {}
 
 export const HistorySummaryCard: React.FC<IProp> = ({ ...props }) => {
     const { items } = useNotificationHistory(
-        {},
+        {
+            initialViewCount: 5,
+        },
         { fetchPolicy: "cache-first" }
     );
 

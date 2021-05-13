@@ -29,13 +29,17 @@ export const PurchaseBundleModal: React.FC<IProp> = ({ modalHook }) => {
 
     const [paymentStatusChange] = usePurchaseBundleSetPaymentStatus({
         onCompleted: ({ PurchaseBundleSetPaymentStatus }) => {
-            completeMsg(PurchaseBundleSetPaymentStatus, "업데이트 완료");
+            if (completeMsg(PurchaseBundleSetPaymentStatus, "업데이트 완료")) {
+                modalHook.closeModal();
+            }
         },
     });
 
     const [cancel] = usePurchaseBundleCancel({
         onCompleted: ({ PurchaseBundleCancel }) => {
-            completeMsg(PurchaseBundleCancel, "취소완료", "취소실패");
+            if (completeMsg(PurchaseBundleCancel, "취소완료", "취소실패")) {
+                modalHook.closeModal();
+            }
         },
     });
 

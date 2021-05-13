@@ -17,6 +17,7 @@ export const pageLoadingEffect = (loading: boolean, operationName: string) => {
     if (typeof document === "undefined") return;
     const MuPageLoading = document.getElementById("MuPageLoading");
     if (MuPageLoading) {
+        MuPageLoading.style.display = "flex";
         const fetches = MuPageLoading.dataset.fetchingid?.split(",");
         if (loading) {
             if (!fetches?.includes(operationName)) {
@@ -29,6 +30,10 @@ export const pageLoadingEffect = (loading: boolean, operationName: string) => {
             MuPageLoading.dataset.fetchingid = fetches
                 ?.filter((fetch) => fetch !== operationName)
                 .join(",");
+            setTimeout(() => {
+                if (!MuPageLoading.dataset.fetchingid)
+                    MuPageLoading.style.display = "none";
+            }, 300);
         }
     }
 };
@@ -114,19 +119,18 @@ export const generateListQueryHook = <F, S, Q, V, R>(
             fixingFilter,
         });
 
-        const [
-            getData,
-            { data, loading: getLoading, ...queryElse },
-        ] = useLazyQuery<Q, V>(QUERY, {
-            fetchPolicy: "cache-and-network",
-            // @ts-ignore
-            variables: {
-                ...integratedVariable,
-                ...variables,
-                ...overrideVariables,
-            },
-            ...ops,
-        });
+        console.log({ ops });
+        const [getData, { data, loading: getLoading, ...queryElse }] =
+            useLazyQuery<Q, V>(QUERY, {
+                fetchPolicy: "cache-and-network",
+                // @ts-ignore
+                variables: {
+                    ...integratedVariable,
+                    ...variables,
+                    ...overrideVariables,
+                },
+                ...ops,
+            });
 
         const operationName = defaultOptions?.queryName || getQueryName(QUERY);
 
@@ -256,20 +260,18 @@ export const generateFindQuery = <Q, V, ResultFragment>(
     QUERY: DocumentNode
 ) => {
     const findQueryHook = (key?: any, options: QueryHookOptions<Q, V> = {}) => {
-        const [
-            getData,
-            { data, loading, error: apolloError, ...context },
-        ] = useLazyQuery<Q, V>(QUERY, {
-            skip: !key,
-            nextFetchPolicy: "network-only",
-            // @ts-ignore
-            variables: findBy
-                ? {
-                      [findBy]: key,
-                  }
-                : undefined,
-            ...options,
-        });
+        const [getData, { data, loading, error: apolloError, ...context }] =
+            useLazyQuery<Q, V>(QUERY, {
+                skip: !key,
+                nextFetchPolicy: "network-only",
+                // @ts-ignore
+                variables: findBy
+                    ? {
+                          [findBy]: key,
+                      }
+                    : undefined,
+                ...options,
+            });
 
         const operationName = getQueryName(QUERY);
 

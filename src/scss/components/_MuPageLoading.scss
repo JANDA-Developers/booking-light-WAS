@@ -1,3 +1,39 @@
+
+
+    @keyframes circle{
+        0%{
+            top:60px;
+            height:5px;
+            border-radius: 50px 50px 25px 25px;
+            transform: scaleX(1.7);
+        }
+        40%{
+            height:20px;
+            border-radius: 50%;
+            transform: scaleX(1);
+        }
+        100%{
+            top:0%;
+        }
+    }
+
+
+    @keyframes shadow{
+        0%{
+            transform: scaleX(1.5);
+        }
+        40%{
+            transform: scaleX(1);
+            opacity: .7;
+        }
+        100%{
+            transform: scaleX(.2);
+            opacity: .4;
+        }
+    }
+   
+
+
 .muPageLoading {
     position: fixed;
     z-index: $z-index-9;
@@ -7,7 +43,9 @@
     right: 0;
     bottom: 0;
     opacity: 0;
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: .3s;
 
     // &--visible {
@@ -28,13 +66,77 @@
 
     // move visible to this
     &:not([data-fetchingid=""]) {
-        display: flex;
         opacity: 1;
-        align-items: center;
-        justify-content: center;
-        .muPageLoading__circle {
+  
+        .muPageLoading__wrapper {
             opacity: 1;
         }
+    }
+
+    &__wrapper{
+        transition-timing-function: cubic-bezier(1, 1, 1, 0);
+        transition: 5s;
+        opacity: 0;
+        width:200px;
+        height:60px;
+        position: relative;
+    }
+    &__circle{
+        width:20px;
+        height:20px;
+        position: absolute;
+        border-radius: 50%;
+        background-color: #4fcec9;
+        left:15%;
+        transform-origin: 50%;
+        animation: circle .5s alternate infinite ease;
+
+        &:nth-child(2){
+            background-color:#01b7b0;
+            left:45%;
+            animation-delay: .2s;
+        }
+        &:nth-child(3){
+            background-color:#129a98;
+            left:auto;
+            right:15%;
+            animation-delay: .3s;
+        }
+    }
+
+ 
+    &__shadow{
+        width:20px;
+        height:4px;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,.15);
+        position: absolute;
+        top:62px;
+        transform-origin: 50%;
+        z-index: -1;
+        left:15%;
+        filter: blur(1px);
+        animation: shadow .5s alternate infinite ease;
+
+        &:nth-child(4){
+            left: 45%;
+            animation-delay: .2s
+        }
+        &:nth-child(5){
+            left:auto;
+            right:15%;
+            animation-delay: .3s;
+        }
+    }
+
+    &__wrapper span{
+        position: absolute;
+        top:75px;
+        font-family: 'noto sans';
+        font-size: 20px;
+        letter-spacing: 12px;
+        color: #333;
+        left:15%;
     }
 }
 

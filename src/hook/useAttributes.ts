@@ -1,4 +1,3 @@
-import { deepCopy } from "@janda-com/front";
 import { useState } from "react";
 import { Fattribute } from "../type/api";
 

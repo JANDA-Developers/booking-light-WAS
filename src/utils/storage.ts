@@ -36,8 +36,8 @@ export interface IBaseItem {
 }
 
 export class LocalItemStorage<Item extends Partial<IBaseItem>> {
-    public key: TStoreKeys;
-    public version = 13;
+    public key: string;
+    public version = 14;
 
     constructor(key: TStoreKeys) {
         this.key = key;

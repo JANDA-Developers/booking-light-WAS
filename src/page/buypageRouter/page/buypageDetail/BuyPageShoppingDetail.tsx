@@ -23,12 +23,9 @@ import { BackStepBar } from "../../../../component/backstepBar/BackstepBar";
 import { useBookingsInput } from "../../../../hook/useBookingInput";
 import { useCopy } from "../../../../hook/useCopy";
 import { findUnFilledAttribute } from "../../../../utils/attribute";
-import { BASKET } from "../../../../utils/Basket";
+import { BASKET, BASKET__OPTION } from "../../../../utils/Basket";
 import { Validater } from "../../../../utils/Validater";
-import {
-    BuyPageShoppingPurchase,
-    deliveryPriceGet,
-} from "../buypagePurchase/BuyPageShoppingPurchase";
+import { BuyPageShoppingPurchase } from "../buypagePurchase/BuyPageShoppingPurchase";
 import { Capacity, ShoppingGoodsSelecters } from "../components/Capacity";
 import { BuypageContext } from "../buypageList/helper/context";
 import { IBuypageProductData } from "../buypageList/helper/productMap";
@@ -39,6 +36,7 @@ import {
 import { DetailCapcitySelecter } from "../buypageList/components/productSelecter/DetailCapcitySelecter";
 import { BuyPageDetailBase } from "./BuyPageDetailBase";
 import { useBuypageDetail } from "../../../../hook/useBuypageDetail";
+import { deliveryPriceCalculate } from "../../../../utils/productBookingUtils";
 
 interface IProp {
     setDetailItem: ISet<IBuypageProductData | undefined>;
@@ -62,6 +60,7 @@ export const BuypageShoppingDetail: React.FC<IProp> = ({
 
     const buypageDetailHook = useBuypageDetail({ defaultAttrs: item.attrs });
     const {
+        options,
         bookingsInputHook,
         ValidateNodes,
         setStep,
@@ -95,11 +94,14 @@ export const BuypageShoppingDetail: React.FC<IProp> = ({
                 return { ...bk, attrs: itemAttrs, _id: bk.productId };
             })
         );
+        BASKET__OPTION.addItems(
+            options.map((option) => ({ ...option, _id: option.targetOption }))
+        );
         toast("장바구니에 추가 되었습니다.");
         updateBasket();
     };
 
-    const deliveryPrice = deliveryPriceGet(deliveryInfo, priceSum);
+    const deliveryPrice = deliveryPriceCalculate(deliveryInfo, priceSum);
     const totalPrice = deliveryPrice + priceSum;
 
     const handlePurchase = () => {

@@ -16,7 +16,9 @@ interface IProp extends Omit<ISummaryCardProps, "contents" | "contentsId"> {}
 
 export const BookingSummaryCard: React.FC<IProp> = ({ ...props }) => {
     const { items } = usePurchaseBusinessBundleList(
-        {},
+        {
+            initialViewCount: 5,
+        },
         { fetchPolicy: "cache-first" }
     );
 

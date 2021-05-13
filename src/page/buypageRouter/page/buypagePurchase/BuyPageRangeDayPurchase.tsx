@@ -14,19 +14,6 @@ interface IProp extends IBuypagePurchaseCommon {
     handleBackStep: () => void;
 }
 
-export const deliveryPriceGet = (
-    deliveryInfo: storeFindByCode_StoreFindByCode_buypage_delivery | null,
-    priceSum: number
-) => {
-    const { fee, overFreePrice } = deliveryInfo || {};
-    if (!fee) return 0;
-    if (overFreePrice) {
-        const isOver = priceSum >= overFreePrice;
-        if (isOver) return 0;
-    }
-    return fee;
-};
-
 export const BuyPageRangeDayPurchase: React.FC<IProp> = ({
     item,
     buypageDetailHook,

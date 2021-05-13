@@ -6,8 +6,10 @@ import {
     FileCreateInput,
     FileInput,
     fileUploads_FileUploads_data,
+    Ftag,
 } from "../type/api";
 import { IResizeImageOptions, resizeImage } from "../utils/fileResize";
+import { isImgFile } from "../utils/isImgFile";
 import { useFileUploads } from "./useFIle";
 
 export class LocalManager<T extends string> {
@@ -173,29 +175,39 @@ export const useSingleUpload = (
         if (!file) return;
         setLoading(true);
 
+        let allFiles: File[] = [];
+        let tags: {
+            key: string;
+            value: string;
+        }[];
 
-        const resizes = ["200", "500", "1000"];
+        if (isImgFile(file)) {
+            const resizes = ["200", "500", "1000"];
 
-        const resizeFiles: IResizeImageOptions[] = resizes.map((resize) => ({
-            file,
-            maxSize: parseInt(resize),
-            suffix: resize,
-        }));
+            const resizeFiles: IResizeImageOptions[] = resizes.map(
+                (resize) => ({
+                    file,
+                    maxSize: parseInt(resize),
+                    suffix: resize,
+                })
+            );
 
-        const resizeImages = await Promise.all(
-            resizeFiles
-                .map((resize) => resizeImage(resize))
-                .filter((val) => val)
-        );
+            const resizeImages = await Promise.all(
+                resizeFiles
+                    .map((resize) => resizeImage(resize))
+                    .filter((val) => val)
+            );
 
-        const allFiles = [file, ...resizeImages];
+            allFiles = [file, ...resizeImages];
 
-        const resizeTag = {
-            key: "resized",
-            value: resizeImages
-                .map((img) => img.name.split("---")[1])
-                .join(","),
-        };
+            const resizeTag = {
+                key: "resized",
+                value: resizeImages
+                    .map((img) => img.name.split("---")[1])
+                    .join(","),
+            };
+            tags = [resizeTag];
+        }
         //resized 된것을 tag에 저장하는방법1.
         //resized 된것을 sacle에 넣는방법.
         //resized 된것을 명명법으로 알아내는방법.
@@ -204,9 +216,8 @@ export const useSingleUpload = (
 
         const files = allFiles.map((file) => ({
             upload: file,
-            tags: [resizeTag],
+            tags,
         }));
-
 
         return uploadMu({
             variables: {

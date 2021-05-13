@@ -62,11 +62,13 @@ export const DeliveryPriceInfoViewer: React.FC<IProp> = ({
 interface IDeliveryViewerProp extends Omit<IJDalignProp, "onChange"> {
     delivery: Omit<FdeliveryInfo, "__typename">;
     editable?: boolean;
+    column?: boolean;
     onChange?: (data: Omit<FdeliveryInfo, "__typename">) => void;
 }
 
 export const DeliveryInfoViewer: React.FC<IDeliveryViewerProp> = ({
     editable,
+    column,
     delivery,
     onChange,
     ...props
@@ -128,7 +130,7 @@ export const DeliveryInfoViewer: React.FC<IDeliveryViewerProp> = ({
     }
 
     return (
-        <Flex>
+        <Flex column={column}>
             <Info label="주소" value={delivery.address} />
             <Info label="상세주소" value={delivery.addressDetail} />
             <Info label="배송비" value={autoComma(delivery.deliveryPrice)} />

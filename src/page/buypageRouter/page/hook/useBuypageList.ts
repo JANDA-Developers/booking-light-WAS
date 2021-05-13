@@ -9,34 +9,26 @@ import {
     IBuypageProductData,
     productMap,
 } from "../buypageList/helper/productMap";
-import dayjs from "dayjs";
-import { BuyPageType } from "../../../../type/enum";
-
-interface IuseBuypageConfig {}
+import { _ProductFilter } from "../../../../type/api";
+import { genProductDateFilter } from "../helpers/productListFiltert";
 
 export const useBuypageList = () => {
-    const { store, configure } = useContext(BuypageContext);
+    const { store, configure, isShoppingType, isDateRangeMall } =
+        useContext(BuypageContext);
     const [detailItem, setDetailItem] = useState<IBuypageProductData>();
-
-    const isRangeType = configure.type === BuyPageType.DAY_RANGE;
 
     let from = DATE.today;
     let to = DATE.today;
-    if (isRangeType) {
+    if (isDateRangeMall) {
         from = DATE.today;
         to = DATE.tomorrow;
     }
     const dayPickerHook = useDayPicker(from, to);
 
-    const useDateFilter = {
-        dateRangeForUse_from__gte: dayjs(dayPickerHook.from || new Date())
-            .startOf("day")
-            .valueOf(),
-        dateRangeForUse_to__lte: dayjs(dayPickerHook.to || new Date())
-            .add(isRangeType ? -1 : 1, "day")
-            .endOf("day")
-            .valueOf(),
-    };
+    const useDateFilter = genProductDateFilter(from, to, {
+        isDateRangeMall,
+        isShoppingType,
+    });
 
     const {
         items,
@@ -50,12 +42,15 @@ export const useBuypageList = () => {
         },
     });
 
-    const productListHook = useProductList({
-        fixingFilter: {
-            _storeId__eq: store._id,
+    const productListHook = useProductList(
+        {
+            fixingFilter: {
+                _storeId__eq: store._id,
+            },
+            initialViewCount: 999999999,
         },
-        initialViewCount: 999999999,
-    });
+        { skipInit: true }
+    );
     const { items: products } = productListHook;
 
     const productBundles = productMap(items, products as any);
@@ -77,10 +72,13 @@ export const useBuypageList = () => {
     }, [urlItemId, productBundles.length]);
 
     useEffect(() => {
-        if (!productListHook.getLoading)
+        if (!productListHook.getLoading) {
             productListHook.setFilter({
                 ...useDateFilter,
             });
+
+            productListHook.getData();
+        }
     }, [dayPickerHook.from?.valueOf(), dayPickerHook.to?.valueOf()]);
 
     console.log({ dayPickerHook });

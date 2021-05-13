@@ -101,7 +101,7 @@ export const BuyPageSetDetail: React.FC<IProp> = () => {
                         />
                     </Col>
                     <Col full={3} lg={12}>
-                        <JDlabel>편집</JDlabel>
+                        <JDlabel txt={"편집"} />
                         <BuypageConfiger
                             setConfig={setConfig}
                             config={config}

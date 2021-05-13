@@ -13,7 +13,10 @@ import uniq from "lodash/uniq";
 import { JDicon } from "../../../../../component/icons/Icons";
 import { cutStr } from "../../../../../utils/cutStr";
 import { useResizeDetector } from "react-resize-detector";
-import { getUniqDetails } from "../../buypagePurchase/BuyPageShoppingPurchase";
+import {
+    getPordByCapcityKey,
+    getUniqCpacities,
+} from "../../../../../utils/productBookingUtils";
 
 export type TproductRowData = Partial<IBasketItem>;
 
@@ -40,7 +43,7 @@ export const BuyPageShoppingTable: React.FC<IProp> = ({
 
     const { ref, width } = useResizeDetector();
 
-    const usageInputs = getUniqDetails(
+    const usageCpacities = getUniqCpacities(
         products.flatMap((prod) => prod.countDetails || [])
     );
 
@@ -125,7 +128,7 @@ export const BuyPageShoppingTable: React.FC<IProp> = ({
                 minRows={1}
                 defaultPageSize={20}
                 columns={columns}
-                data={usageInputs.map((input) => ({
+                data={usageCpacities.map((input) => ({
                     ...input,
                     _id: input?.key,
                 }))}
@@ -133,8 +136,4 @@ export const BuyPageShoppingTable: React.FC<IProp> = ({
             />
         </div>
     );
-};
-
-export const getPordByCapcityKey = (products: IBasketItem[], key: string) => {
-    return products.find((p) => p.countDetails?.find((cd) => cd.key === key));
 };

@@ -12,7 +12,9 @@ interface IProp {}
 
 export const SettlementSummaryCard: React.FC<IProp> = () => {
     const { items } = useSettlementTransferList(
-        {},
+        {
+            initialViewCount: 5,
+        },
         { fetchPolicy: "cache-first" }
     );
     const history = useHistory();

@@ -99,9 +99,8 @@ export const ProductCreater: React.FC<IProp> = ({
     });
     const useEndDefault = isTimeMall ? today : tomorrow;
     const defaults = cloneDeep(product?.capacityDetails || []);
-    const [capacityDetails, setCapacityDetails] = useState<
-        FproductBooking_capacityDetails[]
-    >(defaults);
+    const [capacityDetails, setCapacityDetails] =
+        useState<FproductBooking_capacityDetails[]>(defaults);
     const salesTimePicker = useDateTimepicker({
         defaultEnd: dayjs(dateRangeForSale?.to || tomorrow).toDate(),
         defaultStart: dayjs(dateRangeForSale?.from || today).toDate(),
@@ -113,8 +112,8 @@ export const ProductCreater: React.FC<IProp> = ({
 
     const isForever = isForeverSale({
         __typename: "DateRange",
-        from: salesTimePicker.endDateHook.from,
-        to: salesTimePicker.endDateHook.to,
+        from: salesTimePicker.startDate,
+        to: salesTimePicker.endDate,
     });
 
     let saleStart = salesTimePicker.startDate?.valueOf();

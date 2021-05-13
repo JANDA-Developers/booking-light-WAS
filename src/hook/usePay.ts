@@ -27,13 +27,14 @@ import {
     VerificationTarget,
 } from "../type/api";
 import { PAY_METHOD_OPS } from "../type/const";
-import { BASKET } from "../utils/Basket";
+import { BASKET, BASKET__OPTION } from "../utils/Basket";
 import { omits } from "../utils/omits";
 import { completeMsg } from "../utils/onCompletedMessage";
 import { useBasket } from "./useBasket";
 import { IBookingInputData } from "./useBookingInput";
 import { IUseBuypageDetail } from "./useBuypageDetail";
 import { useCopy } from "./useCopy";
+import { useDeliveryForm } from "./useDelivery";
 import { usePolicySelecter } from "./usePolicySelecter";
 import {
     nicePayAuthData,
@@ -43,16 +44,16 @@ import {
 import { useAnnonymouseVerifi } from "./useUser";
 
 interface IUsePurchaseProp {
-    deliveryInfo?: DeliveryInput;
+    withDelivery?: boolean;
     withBracekt?: boolean;
     buypageDetailHook: IUseBuypageDetail;
     onSucess?: (data: purchaseBundleCreate_PurchaseBundleCreate_data) => void;
 }
 export type TUsePurchase = ReturnType<typeof usePurchase>;
 export const usePurchase = ({
+    withDelivery,
     withBracekt,
     buypageDetailHook,
-    deliveryInfo,
     onSucess,
 }: IUsePurchaseProp) => {
     const { options, bookingsInputHook, itemAttrs } = buypageDetailHook;
@@ -99,6 +100,14 @@ export const usePurchase = ({
         phoneNumber: "",
         email: "",
     });
+    const [userInfo, setUserInfo] = userInfoHook;
+
+    const { deliveryInfo, setDeliveryInfo, deliverValidate } = useDeliveryForm({
+        receiverName: userInfo.name,
+        receiverPhone: userInfo.phoneNumber,
+        receiverSmaeWithBuyer: true,
+    });
+
     const extraInfo: StoreSignInAnonymousCompleteExtraInfoInput = {
         email: userInfoHook[0].email,
     };
@@ -110,17 +119,16 @@ export const usePurchase = ({
     const [anonyUserInfo] = userInfoHook;
 
     const basketItems = withBracekt ? BASKET.getItems() : [];
-
-    const [userinfo, setUserInfo] = userInfoHook;
+    const basketOptions = withBracekt ? BASKET__OPTION.getPureItems() : [];
 
     const { validate } = new Validater([
         {
-            value: userinfo.name,
+            value: userInfo.name,
             failMsg: "예약자 성함을 입력 해주세요",
             id: "NameInput",
         },
         {
-            value: isPhone(userinfo.phoneNumber),
+            value: isPhone(userInfo.phoneNumber),
             failMsg: "연락처가 올바르지 않습니다.",
             id: "PhoneNumberInput",
         },
@@ -139,9 +147,10 @@ export const usePurchase = ({
         },
     ]);
 
-    const fullList = basketItems.concat(purchaseProducts || []);
+    const fullOptionList = basketOptions.concat(options || []);
+    const fullItemList = basketItems.concat(purchaseProducts || []);
     const totalProductPrice = arraySum(
-        fullList.map((list) => list.priceOrigin || 0)
+        fullItemList.map((list) => list.priceOrigin || 0)
     );
     const totalOptionPrice = arraySum(options.map((op) => op.priceOrigin));
     const optionsAndProductsPrice = totalProductPrice + totalOptionPrice;
@@ -163,7 +172,7 @@ export const usePurchase = ({
         if (validate()) {
             let attrs: null | undefined | any[] = omits(itemAttrs);
             attrs = isEmpty(attrs) ? undefined : attrs;
-            const bookingInputs = fullList
+            const bookingInputs = fullItemList
                 .filter((list) => list.itemId)
                 .map((item) => ({
                     itemId: item.itemId,
@@ -177,15 +186,17 @@ export const usePurchase = ({
                 variables: {
                     input: {
                         purchaserEmail: anonyUserInfo.email,
-                        purchaseContact: userinfo.phoneNumber,
-                        purchaserName: userinfo.name,
+                        purchaseContact: userInfo.phoneNumber,
+                        purchaserName: userInfo.name,
                         bookingInputs: omits(bookingInputs),
                         purchaserMessage: messageHook.value,
                         paymethod: paymethodHook.selectedOption!.value,
                         priceOrigin: totalProductPrice,
-                        deliveryInput: deliveryInfo,
+                        deliveryInput: withDelivery ? deliveryInfo : undefined,
                         attrs: bundleAttrs,
-                        options: isEmpty(options) ? undefined : options,
+                        options: isEmpty(fullOptionList)
+                            ? undefined
+                            : fullOptionList,
                     },
                 },
             }).then(({ data }) => {
@@ -204,6 +215,11 @@ export const usePurchase = ({
     const setAttrs = setBundleAttrs;
 
     return {
+        fullItemList,
+        fullOptionList,
+        deliveryInfo,
+        setDeliveryInfo,
+        deliverValidate,
         policyIdHooks,
         attrs,
         setAttrs,
@@ -218,7 +234,7 @@ export const usePurchase = ({
         totalOptionPrice,
         optionsAndProductsPrice,
         openNicePayModal,
-        userinfo,
+        userInfo,
         setUserInfo,
         paymethodHook,
     };

@@ -1,6 +1,6 @@
 import { JDtypho } from "@janda-com/front";
 import React from "react";
-import { Switch } from "react-router";
+import { Switch, useHistory } from "react-router";
 import { Route } from "react-router-dom";
 import { DateWithTimeRange } from "../atom/format/DateFormat";
 import {
@@ -9,6 +9,7 @@ import {
     IDateRangeViewFactoryProps,
     TimeMallUseRangeView,
 } from "../component/dateRangeViewFacotry/DateRangeViewFactory";
+import { useBuypageDetail } from "../hook/useBuypageDetail";
 import { BuyPagePaths } from "../page/buypageRouter/BuyPageRouter";
 import { BuyPageCheck } from "../page/buypageRouter/page/buypageCheck/BuyPageCheck";
 import { BuyPageFail } from "../page/buypageRouter/page/buypageFail/BuyPageFail";
@@ -103,6 +104,8 @@ export abstract class StoreFactory {
     }
 
     get BuypageRouter(): JSX.Element {
+        const detailhook = useBuypageDetail({ defaultAttrs: [] });
+        const history = useHistory();
         return (
             <Switch>
                 <Route
@@ -121,6 +124,17 @@ export abstract class StoreFactory {
                 <Route
                     path={BuyPagePaths.check}
                     render={() => <this.BuypageCheck />}
+                />
+                <Route
+                    path={BuyPagePaths.purchase}
+                    render={() => (
+                        <this.BuypagePurchase
+                            handleBackStep={() => {
+                                history.goBack();
+                            }}
+                            buypageDetailHook={detailhook}
+                        />
+                    )}
                 />
             </Switch>
         );

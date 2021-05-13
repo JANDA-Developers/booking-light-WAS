@@ -12,7 +12,12 @@ import { ISummaryCardProps, SummaryCard } from "./SummaryCard";
 interface IProp {}
 
 export const StoreSummaryCard: React.FC<IProp> = (props) => {
-    const { items } = useStoreList({}, { fetchPolicy: "cache-first" });
+    const { items } = useStoreList(
+        {
+            initialViewCount: 5,
+        },
+        { fetchPolicy: "cache-first" }
+    );
     const history = useHistory();
 
     const handleViewMore = () => {

@@ -3,6 +3,7 @@ import {
     FproductBooking_dateRangeForSale,
     productFindById_ProductFindById_ProductBooking_usageDetails,
     productList_ProductList_items_ProductBooking,
+    storeFindByCode_StoreFindByCode_buypage_delivery,
 } from "../type/api";
 import dayjs from "dayjs";
 import { DATE, FOREVER_SALE_END_TIME } from "../type/const";
@@ -10,6 +11,10 @@ import { getDaysArray } from "./getDayArray";
 import { arraySum, isEmpty } from "@janda-com/front";
 import { IBookingInputData } from "../hook/useBookingInput";
 import { IBasketItem } from "./Basket";
+
+export const getPordByCapcityKey = (products: IBasketItem[], key: string) => {
+    return products.find((p) => p.countDetails?.find((cd) => cd.key === key));
+};
 
 export const sortByDateRangeForSale = (
     dates: productList_ProductList_items_ProductBooking[]
@@ -19,25 +24,29 @@ export const sortByDateRangeForSale = (
     );
 };
 
-export const checkIsDisableDay = (
-    salesDates: {
-        from: number;
-        to: number;
-    },
-    prods?: productList_ProductList_items_ProductBooking[]
-) => (day: Date) => {
-    if (dayjs(day).isBefore(DATE.today, "day")) return true;
-    if (dayjs(day).isBefore(dayjs().add(-1 * salesDates.from, "day"), "day"))
-        return true;
-    if (dayjs(day).isAfter(dayjs().add(salesDates.to, "day"), "day"))
-        return true;
+export const checkIsDisableDay =
+    (
+        salesDates: {
+            from: number;
+            to: number;
+        },
+        prods?: productList_ProductList_items_ProductBooking[]
+    ) =>
+    (day: Date) => {
+        if (dayjs(day).isBefore(DATE.today, "day")) return true;
+        if (
+            dayjs(day).isBefore(dayjs().add(-1 * salesDates.from, "day"), "day")
+        )
+            return true;
+        if (dayjs(day).isAfter(dayjs().add(salesDates.to, "day"), "day"))
+            return true;
 
-    const val = day.valueOf();
-    const availableItem = prods?.find((item) => rangeCheck(item, val));
+        const val = day.valueOf();
+        const availableItem = prods?.find((item) => rangeCheck(item, val));
 
-    if (prods === undefined) return false;
-    return !availableItem;
-};
+        if (prods === undefined) return false;
+        return !availableItem;
+    };
 
 // Product 범위 체크
 export const rangeCheck = (
@@ -93,6 +102,8 @@ export const getAvailableCountFromProducts = (
         if (avail < minimum) {
             minimum = avail;
         }
+        console.log({ avail });
+        console.log({ usage });
     });
     if (isEmpty(products)) return 0;
     return minimum;
@@ -179,6 +190,58 @@ export const calcuatePrice = (targetProducts: IBookingInputData[]) => {
     });
 };
 
+export const getSelectProductsFromCapcities = (
+    selectedCapacity: CapacityInput[],
+    fullItemList: IBasketItem[]
+) => {
+    const targetProducts: IBookingInputData[] = [];
+    selectedCapacity.forEach((item) => {
+        const targetProduct = getPordByCapcityKey(fullItemList, item.key);
+        if (!targetProduct) return;
+
+        const containedTargetProd = targetProducts.find(
+            (tp) => tp.productId === targetProduct._id
+        );
+
+        if (containedTargetProd) {
+            containedTargetProd.countDetails?.push({ ...item });
+        } else {
+            const newProd = {
+                ...targetProduct,
+                countDetails: [{ ...item }],
+            } as any;
+
+            targetProducts.push(newProd);
+        }
+    });
+    return targetProducts;
+};
+
+export const deliveryPriceCalculate = (
+    deliveryInfo: storeFindByCode_StoreFindByCode_buypage_delivery | null,
+    elsePriceSum: number
+) => {
+    const { fee, overFreePrice } = deliveryInfo || {};
+    if (!fee) return 0;
+    if (overFreePrice) {
+        const isOver = elsePriceSum >= overFreePrice;
+        if (isOver) return 0;
+    }
+    return fee;
+};
+
+export const getUniqCpacities = (details: CapacityInput[]) => {
+    let keys: string[] = [];
+    let result: CapacityInput[] = [];
+    details?.forEach((li) => {
+        if (!keys.includes(li.key)) {
+            keys.push(li.key);
+            result.push(li);
+        }
+    });
+    return result;
+};
+
 export const ProductBookingUtils = {
     //판매일 순으로 Product 정열
     sortByDateRangeForSale,
@@ -208,4 +271,12 @@ export const ProductBookingUtils = {
     extractDetails,
     //상품들 가격 재계산 (오브젝트에 반영)
     calcuatePrice,
+    //캐파시티 키를 가지고있는 프로덕트 가져오기
+    getPordByCapcityKey,
+    //BookingInput을 필터
+    getSelectProductsFromCapcities,
+    // 배송가격 꼐산하기
+    deliveryPriceCalculate,
+    // 유니크한 cApc
+    getUniqCpacities,
 };

@@ -60,6 +60,7 @@ const App: React.FC<IAppProp> = ({ me, contextQueryLoading }) => {
             <APPcontextProvider
                 value={{
                     ...context,
+                    type,
                     storeOptions,
                     itemOps: itemOptions,
                     isNonProfit: !!context.selectedStore?.nonProfit,
@@ -113,7 +114,12 @@ const App: React.FC<IAppProp> = ({ me, contextQueryLoading }) => {
 };
 
 export const AppWrap = () => {
-    const { data: me, called, getLoading, networkStatus } = useMe({
+    const {
+        data: me,
+        called,
+        getLoading,
+        networkStatus,
+    } = useMe({
         notifyOnNetworkStatusChange: true,
     });
     const contextQueryLoading = !called || getLoading || networkStatus < 7;

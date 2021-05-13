@@ -88,7 +88,7 @@ export const BuyPageDetailBase: React.FC<IProp> = ({
                     <Bold mb size="large">
                         {name}
                     </Bold>
-                    <Small>{cutStr(description, 800)}</Small>
+                    <Small mb>{cutStr(description, 800)}</Small>
                     <Large hide={noPayMethod} mb>
                         {" "}
                         <JDicon icon="won" />

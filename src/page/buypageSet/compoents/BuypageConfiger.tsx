@@ -42,9 +42,8 @@ interface IProp {
 }
 
 export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
-    const { selectedStoreId, selectedStore, isNonProfit } = useContext(
-        AppContext
-    );
+    const { selectedStoreId, selectedStore, isNonProfit } =
+        useContext(AppContext);
     const { type, salesDates, payMethods, texts } = config;
     const isShopping = type === BuyPageType.SHOPPING_MALL;
 
@@ -94,7 +93,7 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
         <JDcard
             foot={
                 <JDbutton onClick={handleSaveConfig} thema="primary">
-                    저장하기
+                    시작하기
                 </JDbutton>
             }
             head="페이지 설정하기"

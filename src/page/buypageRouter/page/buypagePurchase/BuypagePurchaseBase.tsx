@@ -6,9 +6,11 @@ import {
     InputText,
     JDcard,
     JDhorizen,
+    JDlabel,
     JDtypho,
     Large,
 } from "@janda-com/front";
+import { isEmpty } from "lodash";
 import React, { useContext } from "react";
 import { useHistory } from "react-router";
 import { AttributeInputs } from "../../../../component/attributeInputs/AttributeInputs";
@@ -28,6 +30,7 @@ import { PurchaseBtn } from "./components/PurchaseBtn";
 interface IProp extends TUsePurchase {
     options?: SelectOptionInput[];
     UnderAnonyMouseForm?: JSX.Element;
+    SelectUnder?: JSX.Element;
     SelectViewer?: JSX.Element;
     PriceViewer?: JSX.Element;
     OverPlace?: JSX.Element;
@@ -35,8 +38,10 @@ interface IProp extends TUsePurchase {
 }
 
 export const BuyPagePurchaseBase: React.FC<IProp> = ({
+    OverPlace,
     options,
     SelectViewer,
+    SelectUnder,
     UnderAnonyMouseForm,
     userInfoHook,
     verificationHook,
@@ -60,6 +65,7 @@ export const BuyPagePurchaseBase: React.FC<IProp> = ({
     return (
         <div>
             <BackStepBar onClick={handleBackStep} mb />
+            {OverPlace}
             <JDcard>
                 <Grid>
                     <Col lg={12} full={noPayMethod ? 12 : 6}>
@@ -70,10 +76,20 @@ export const BuyPagePurchaseBase: React.FC<IProp> = ({
                                 store,
                             })}
                         />
-                        <Large mb>선택정보</Large>
-                        {SelectViewer}
-                        <OptionsViewer options={options} />
-                        <JDhorizen margin={3} />
+                        <div>
+                            <Large mb>선택정보</Large>
+                            {SelectViewer}
+                            {!isEmpty(options) && (
+                                <div>
+                                    <JDlabel txt="선택옵션" />
+                                    <OptionsViewer options={options} />
+                                </div>
+                            )}
+                        </div>
+                        {SelectUnder}
+                        {isEmpty(options) && !SelectUnder && !SelectViewer && (
+                            <JDhorizen margin={3} />
+                        )}
                         <Large mb>예약자정보</Large>
                         <AnonyPurchaseForm
                             userInfoHook={userInfoHook}
@@ -85,6 +101,7 @@ export const BuyPagePurchaseBase: React.FC<IProp> = ({
                     {!noPayMethod && (
                         <Col lg={12} full={6}>
                             <div>
+                                <Large mb>가격정보</Large>
                                 {PriceViewer}
                                 <JDhorizen margin={3} />
                                 <PolicyBlocks

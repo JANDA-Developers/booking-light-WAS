@@ -57,6 +57,7 @@ export const ProductList: React.FC<IProps> = () => {
             _itemId__eq: itemId,
         },
     });
+    
     const {
         items,
         filter,

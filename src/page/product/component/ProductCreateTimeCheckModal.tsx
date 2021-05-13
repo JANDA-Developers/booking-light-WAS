@@ -6,6 +6,7 @@ import { useProductList } from "../../../hook/useProduct";
 import { ProductTable } from "./ProductTable";
 
 export interface IProductCreateTimeCheckModalProp {
+    productBookingId?: string;
     onContinue: () => void;
     onFailToFind: () => void;
     itemId: string;
@@ -18,7 +19,7 @@ interface IProp {
 }
 
 export const ProductCreateTimeCheckModal: React.FC<IProp> = ({ modalHook }) => {
-    const { from, itemId, to } = modalHook.info || {
+    const { from, itemId, to, productBookingId } = modalHook.info || {
         from: 0,
         itemId: "",
         onContinue: () => {},
@@ -38,7 +39,10 @@ export const ProductCreateTimeCheckModal: React.FC<IProp> = ({ modalHook }) => {
     );
 
     useEffect(() => {
-        if (!getLoading && called && isEmpty(items)) {
+        const selfExclud = items.filter(
+            (item) => item._id === productBookingId
+        );
+        if (!getLoading && called && isEmpty(selfExclud)) {
             modalHook.info?.onFailToFind();
         }
     }, [getLoading]);

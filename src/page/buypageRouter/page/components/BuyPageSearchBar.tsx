@@ -25,7 +25,7 @@ export const BuyPageSearchBar: React.FC<IProp> = ({
 
     const handleSearch = () => {};
 
-    if (!useSearchFilter || !dateTimePicker) return null;
+    if (!useSearchFilter && !dateTimePicker) return null;
 
     return (
         <JDcard {...props}>

@@ -12,6 +12,8 @@ import { useBasket } from "../../hook/useBasket";
 import { isEmpty } from "lodash";
 import { StoreFactoryMap } from "../../utils/factory";
 import { BuyPageTypeMatcher } from "../../utils/enumConverter";
+import { BASKET } from "../../utils/Basket";
+import { BuyPageType } from "../../type/enum";
 
 // 바이페이지 라우터 (에디팅용)
 // 쿼리 스트링에 id가 이 포함되어 있다면
@@ -46,7 +48,6 @@ interface IProp extends IBuyPageWrapProp {
 export const BuypageRouter: React.FC<IProp> = ({ store, propConfigure }) => {
     const configure =
         propConfigure || (store.buypage.configure as IbuypageConfig);
-    const history = useHistory();
     localStorage.setItem("storeId", store._id);
     const { updateComponent } = useBasket();
 
@@ -55,8 +56,11 @@ export const BuypageRouter: React.FC<IProp> = ({ store, propConfigure }) => {
             (cat): IselectedOption => ({ label: cat.label, value: cat._id })
         ) || [];
 
-    const Facotry = StoreFactoryMap.get(BuyPageTypeMatcher[store.type])!;
-    const FACTORY = new Facotry(store.type);
+    const storeType = store.type;
+    const buypageType = BuyPageTypeMatcher[storeType];
+    const Facotry = StoreFactoryMap.get(buypageType)!;
+    const FACTORY = new Facotry(storeType);
+    BASKET.key = store._id;
 
     const noPayMethod = isEmpty(configure.payMethods);
     return (
@@ -67,6 +71,10 @@ export const BuypageRouter: React.FC<IProp> = ({ store, propConfigure }) => {
                 store,
                 configure,
                 itemCats,
+                buypageType,
+                isDateRangeMall: buypageType === BuyPageType.DAY_RANGE,
+                isShoppingType: buypageType === BuyPageType.SHOPPING_MALL,
+                isTimeMall: buypageType === BuyPageType.TIME_MALL,
                 updateBasket: updateComponent,
             }}
         >
@@ -85,9 +93,12 @@ export const BuyPageRouterWrap: React.FC<IBuyPageWrapProp> = ({
     ...props
 }) => {
     const { storeCode } = getAllFromUrl();
-    const { item: store, loading, called, networkStatus } = useStoreFindByCode(
-        storeCode || propStoreCode
-    );
+    const {
+        item: store,
+        loading,
+        called,
+        networkStatus,
+    } = useStoreFindByCode(storeCode || propStoreCode);
     if (!called) return <div />;
     if (loading) return <div />;
     if (networkStatus < 7) return <div />;

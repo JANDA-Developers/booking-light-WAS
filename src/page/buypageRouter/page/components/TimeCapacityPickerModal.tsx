@@ -83,6 +83,7 @@ export const TimeCapacityPickerModal: React.FC<IProp> = ({
         dateRangeForUse_to__lte: endOfMonth(dayPickerHook.from),
     };
 
+    // 동시간대에 있는 프로덕트를 찾음.
     const productListHook = useProductList({
         fixingFilter: {
             _itemId__eq: itemId,
