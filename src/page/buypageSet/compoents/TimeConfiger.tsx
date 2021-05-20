@@ -14,8 +14,8 @@ export const TimeConfiger: React.FC<IProp> = ({
     config: _config,
     setConfig,
 }) => {
-    const { SHOPPING_MALL: config, type, salesDates } = _config;
-    const { useBasket, useSearchFilter } = config;
+    const { TIME_MALL: config, type, salesDates } = _config;
+    const { useSearchFilter } = config;
 
     if (type !== BuyPageType.TIME_MALL) return null;
 

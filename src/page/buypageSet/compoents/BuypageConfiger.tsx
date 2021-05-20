@@ -42,10 +42,9 @@ interface IProp {
 }
 
 export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
-    const { selectedStoreId, selectedStore, isNonProfit } =
+    const { selectedStoreId, selectedStore, isNonProfit, isShoppingType } =
         useContext(AppContext);
     const { type, salesDates, payMethods, texts } = config;
-    const isShopping = type === BuyPageType.SHOPPING_MALL;
 
     const [delivery, setDelivery] = useCopy<me_Me_stores_buypage_delivery>(
         selectedStore?.buypage?.delivery || DEFAULT_DELIVERY
@@ -93,7 +92,7 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
         <JDcard
             foot={
                 <JDbutton onClick={handleSaveConfig} thema="primary">
-                    시작하기
+                    설정하기
                 </JDbutton>
             }
             head="페이지 설정하기"
@@ -103,14 +102,14 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
                     <ScrollBox scrollSize="small" direction="horizen">
                         <Flex>
                             <Tab>일반설정</Tab>
-                            {isShopping && <Tab>배송비설정</Tab>}
+                            {isShoppingType && <Tab>배송비설정</Tab>}
                             <Tab>텍스트설정</Tab>
                         </Flex>
                     </ScrollBox>
                 </TabList>
                 <TabPanel>
                     <JDselect
-                        hide={true}
+                        hide={process.env.NODE_ENV === "production"}
                         options={BUYPAGE_TYPE_OPS}
                         selectedOption={opFind(type, BUYPAGE_TYPE_OPS)}
                         onChange={(op) => {
@@ -143,7 +142,7 @@ export const BuypageConfiger: React.FC<IProp> = ({ config, setConfig }) => {
                     <ShoppingConfiger setConfig={setConfig} config={config} />
                     <TimeConfiger setConfig={setConfig} config={config} />
                 </TabPanel>
-                {isShopping && (
+                {isShoppingType && (
                     <TabPanel>
                         <div>
                             <InputText
